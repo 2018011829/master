@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "317cfa2878a43"
+    appSecret "bea432aca0927336e19f43661898cb17"
+    SMSSDK {}
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -20,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -30,4 +39,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //添加OkHttp依赖
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        // 注册MobSDK
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+    }
 }
