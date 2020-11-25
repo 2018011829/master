@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
+/**
+ * 2020-11-25
+ * @author lrf
+ */
 public class SearchIdiom {
     public static final String APPKEY = "52836ab53d4cf3e9";
     public static final String URL = "https://api.jisuapi.com/chengyu/search";

@@ -13,6 +13,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 2020-11-25
+ * @author lrf
+ */
 public class SearchIdiomActivity extends AppCompatActivity {
 
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;

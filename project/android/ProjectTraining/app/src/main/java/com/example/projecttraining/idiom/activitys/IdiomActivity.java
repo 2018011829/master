@@ -14,6 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 2020-11-25
+ * @author lrf
+ */
 public class IdiomActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_menuMore) Button btnMenuMore;
