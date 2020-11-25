@@ -1,9 +1,9 @@
-package com.group.tiantian.classifyidiom.service;
+package com.group.tiantian.idiom.service;
 
 import java.util.List;
 
-import com.group.tiantian.classifyidiom.dao.IdiomDaoImpl;
 import com.group.tiantian.entity.Idiom;
+import com.group.tiantian.idiom.dao.IdiomDaoImpl;
 
 /**
  * 2020-11-25

@@ -1,4 +1,4 @@
-package com.group.tiantian.classifyidiom.dao;
+package com.group.tiantian.idiom.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
