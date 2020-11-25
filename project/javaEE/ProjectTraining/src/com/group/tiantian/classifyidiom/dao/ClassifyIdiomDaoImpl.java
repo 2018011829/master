@@ -59,7 +59,12 @@ public class ClassifyIdiomDaoImpl {
 		return map;
 	}
 
-	public int findClassificationByClassifyName(String classifyName) {
+	/**
+	 * 根据成语子分类名称查询该分类的id
+	 * @param classifyName
+	 * @return
+	 */
+	public int findIdByClassifyName(String classifyName) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
