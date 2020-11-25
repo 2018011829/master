@@ -28,4 +28,5 @@ public class ClassifyIdiomServiceImpl {
 	public int getIdByClassifyName(String classifyName) {
 		return new ClassifyIdiomDaoImpl().findIdByClassifyName(classifyName);
 	}
+	
 }
