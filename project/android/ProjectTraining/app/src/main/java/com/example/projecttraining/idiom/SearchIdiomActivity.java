@@ -15,6 +15,7 @@ public class SearchIdiomActivity extends AppCompatActivity {
 
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
