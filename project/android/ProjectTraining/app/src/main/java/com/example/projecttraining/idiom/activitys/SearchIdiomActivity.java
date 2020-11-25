@@ -1,15 +1,16 @@
 package com.example.projecttraining.idiom.activitys;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projecttraining.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SearchIdiomActivity extends AppCompatActivity {
@@ -21,13 +22,14 @@ public class SearchIdiomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_idiom);
+
+        ButterKnife.bind(this);
+
     }
 
-    @OnClick
+    @OnClick(R.id.cancel_searchIdiom)
     public void cancelSearch(){
-        Intent intent = new Intent();
-        intent.setClass(SearchIdiomActivity.this,IdiomActivity.class);
-        startActivity(intent);
         finish();
+        Toast.makeText(getBaseContext(),"您取消了搜索",Toast.LENGTH_SHORT).show();
     }
 }
