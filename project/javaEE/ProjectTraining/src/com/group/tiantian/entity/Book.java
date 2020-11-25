@@ -57,6 +57,9 @@ public class Book {
 		return "Book [id=" + id + ", name=" + name + ", introduce=" + introduce + ", type=" + type + ", img=" + img
 				+ ", content=" + content + ", author=" + author + "]";
 	}
+	public Book() {
+		super();
+	}
 	
 	
 }
