@@ -12,17 +12,19 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginByPhoneActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".idiom.SearchIdiomActivity"></activity>
+        <activity android:name=".idiom.IdiomActivity" />
+        <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".MainActivity">
