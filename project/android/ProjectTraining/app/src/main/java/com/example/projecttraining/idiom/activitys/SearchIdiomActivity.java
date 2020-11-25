@@ -1,10 +1,11 @@
-package com.example.projecttraining.idiom;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.projecttraining.idiom.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projecttraining.R;
 
@@ -14,7 +15,7 @@ import butterknife.OnClick;
 public class SearchIdiomActivity extends AppCompatActivity {
 
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;
-
+    @BindView(R.id.lv_idiom_search_result) ListView searchResultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

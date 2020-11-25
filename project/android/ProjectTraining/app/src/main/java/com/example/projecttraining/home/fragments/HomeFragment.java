@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.idiom.IdiomActivity;
+import com.example.projecttraining.idiom.activitys.IdiomActivity;
 
 public class HomeFragment extends Fragment {
     private Button btnToIdiom;

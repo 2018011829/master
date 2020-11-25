@@ -22,11 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".idiom.SearchIdiomActivity"></activity>
-        <activity android:name=".idiom.IdiomActivity" />
         <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
+        <activity android:name=".idiom.activitys.IdiomActivity"/>
+        <activity android:name=".idiom.activitys.SearchIdiomActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
