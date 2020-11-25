@@ -122,7 +122,6 @@ public class ParentDao {
 				parents.add(parent);
 			}	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return parents;
