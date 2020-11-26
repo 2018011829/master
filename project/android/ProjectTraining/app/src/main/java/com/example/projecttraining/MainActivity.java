@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
+import com.example.projecttraining.ui.NoScrollViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 /**
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //为ViewPager设置Adapter
         ViewPager viewPager = setViewPagerAdapter();
+
         //将ViewPager和TabLayout互相绑定
         BindViewPagerAndTabLayout(viewPager);
     }
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             //设置tab选中的监听器
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
                 switch (tab.getPosition()){
                     case 0:
                         tab.setIcon(R.mipmap.home_green);
@@ -79,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager setViewPagerAdapter() {
         //得到ViewPager和SectionsPagerAdapter，并为ViewPager设置Adapter
-        ViewPager viewPager=findViewById(R.id.view_pager);
+        NoScrollViewPager viewPager=findViewById(R.id.view_pager);
+        //设置不可滑动
+        viewPager.setNoScroll(true);
         SectionsPagerAdapter sectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager(),1);
         viewPager.setAdapter(sectionsPagerAdapter);
         return viewPager;

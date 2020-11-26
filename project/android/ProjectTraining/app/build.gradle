@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.projecttraining"
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -25,17 +25,33 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+    //添加环信IM的so目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
+    //环信IM所需要的内容
+    //use legacy for android 6.0（3.6.8版本之后移除apache library，请将下面注释掉）
+    useLibrary 'org.apache.http.legacy'
 
+    //自3.6.0开始需要java8的支持
     //BufferKnife依赖
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            //在这里添加：
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
 }
@@ -50,13 +66,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //添加Gson依赖
+    implementation 'com.google.code.gson:gson:2.8.6'
     //添加TabLayout组件依赖
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     //添加OkHttp依赖
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     //添加BufferKnife依赖
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation files('libs\\hyphenatechat_3.7.2.jar')
+    implementation project(path: ':easeui')
 }
 buildscript {
     repositories {
