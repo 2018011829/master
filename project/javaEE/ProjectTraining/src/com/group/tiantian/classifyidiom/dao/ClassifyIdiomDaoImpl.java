@@ -31,14 +31,14 @@ public class ClassifyIdiomDaoImpl {
 		conn = DBUtil.getConnection();
 		// 查询父菜单
 		try {
-			pstm = conn.prepareStatement("select classifyName from classifyidiom where parentId = 0");
+			pstm = conn.prepareStatement("select * from classifyidiom where parentId = 0");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				ClassifyIdiom classifyIdiom = new ClassifyIdiom();
 				classifyIdiom.setId(rs.getInt(1));
 				classifyIdiom.setClassifyName(rs.getString(2));
 				// 查询子菜单
-				pstm = conn.prepareStatement("select classifyName from classifyidiom where parentId = ?");
+				pstm = conn.prepareStatement("select * from classifyidiom where parentId = ?");
 				pstm.setInt(1, classifyIdiom.getId());
 				ResultSet rsChild = pstm.executeQuery();
 				List<String> list = new ArrayList<>();
