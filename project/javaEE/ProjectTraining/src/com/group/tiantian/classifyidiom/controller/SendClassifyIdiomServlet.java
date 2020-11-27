@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group.tiantian.classifyidiom.service.ClassifyIdiomServiceImpl;
-import com.group.tiantian.entity.ClassifyIdiom;
 
 /**
  * 2020-11-25
@@ -28,7 +27,6 @@ public class SendClassifyIdiomServlet extends HttpServlet {
 	 */
 	public SendClassifyIdiomServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
