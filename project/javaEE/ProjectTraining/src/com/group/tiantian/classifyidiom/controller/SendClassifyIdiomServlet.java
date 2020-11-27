@@ -19,24 +19,33 @@ import com.group.tiantian.entity.ClassifyIdiom;
  * 
  * @author lrf
  */
-@WebServlet("/SendClassfyIdiomServlet")
-public class SendClassfyIdiomServlet extends HttpServlet {
+@WebServlet("/SendClassifyIdiomServlet")
+public class SendClassifyIdiomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SendClassfyIdiomServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public SendClassifyIdiomServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+//		// 创建用于保存成语分类的LinkedHashMap
+//		LinkedHashMap<ClassifyIdiom, List<ClassifyIdiom>> idiomMap = null;
+//		// 创建ClassifyIdiomServiceImpl对象
+//		ClassifyIdiomServiceImpl serviceImpl = new ClassifyIdiomServiceImpl();
+//		// 从数据库中获取成语分类信息
+//		idiomMap = serviceImpl.getAllClassifyIdiom();
+
 		// 创建用于保存成语分类的LinkedHashMap
-		LinkedHashMap<ClassifyIdiom, List<ClassifyIdiom>> idiomMap = null;
+		LinkedHashMap<String, List<String>> idiomMap = null;
 		// 创建ClassifyIdiomServiceImpl对象
 		ClassifyIdiomServiceImpl serviceImpl = new ClassifyIdiomServiceImpl();
 		// 从数据库中获取成语分类信息
@@ -50,9 +59,11 @@ public class SendClassfyIdiomServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

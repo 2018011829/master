@@ -16,9 +16,17 @@ public class ClassifyIdiomServiceImpl {
 	 * 获取所有分类父菜单和其对应的子菜单
 	 * @return
 	 */
-	public LinkedHashMap<ClassifyIdiom, List<ClassifyIdiom>> getAllClassifyIdiom(){
-		return new ClassifyIdiomDaoImpl().findAllClassifyIdiom();
+	public LinkedHashMap<String, List<String>> getAllClassifyIdiom(){
+		return new ClassifyIdiomDaoImpl().findAllIdiomType();
 	}
+	
+	/**
+	 * 获取所有分类父菜单和其对应的子菜单
+	 * @return
+	 */
+//	public LinkedHashMap<ClassifyIdiom, List<ClassifyIdiom>> getAllClassifyIdiom(){
+//		return new ClassifyIdiomDaoImpl().findAllClassifyIdiom();
+//	}
 	
 	/**
 	 * 根据成语子分类名称查询该分类的id
