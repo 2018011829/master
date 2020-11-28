@@ -2,7 +2,6 @@ package com.group.tiantian.idiom.service;
 
 import java.util.List;
 
-import com.group.tiantian.entity.Idiom;
 import com.group.tiantian.idiom.dao.IdiomDaoImpl;
 
 /**
@@ -16,7 +15,7 @@ public class IdiomServiceImpl {
 	 * @param classification
 	 * @return
 	 */
-	public List<Idiom> listIdiomByClassification(int classification){
+	public List<String> listIdiomByClassification(int classification){
 		return new IdiomDaoImpl().findByClassification(classification);
 	}
 	

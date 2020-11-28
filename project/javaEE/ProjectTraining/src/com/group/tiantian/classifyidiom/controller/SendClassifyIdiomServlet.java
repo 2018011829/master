@@ -44,11 +44,10 @@ public class SendClassifyIdiomServlet extends HttpServlet {
 		ClassifyIdiomServiceImpl serviceImpl = new ClassifyIdiomServiceImpl();
 		// 从数据库中获取成语分类信息
 		idiomMap = serviceImpl.getAllClassifyIdiom();
-		System.out.println("获取到的成语类型：" + idiomMap.toString());
+		System.out.println("获取到的成语类型map：" + idiomMap.toString());
 		// 转换成json串返回给客户端
 		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
 		String jsonStr = gson.toJson(idiomMap);
-		System.out.println("转化成的json串：" + jsonStr);
 		OutputStream out = response.getOutputStream();
 		out.write(jsonStr.getBytes("utf-8"));
 		out.flush();

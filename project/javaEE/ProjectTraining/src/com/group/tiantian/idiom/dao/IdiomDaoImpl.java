@@ -21,11 +21,11 @@ public class IdiomDaoImpl {
 	 * @param classification 成语所属分类
 	 * @return
 	 */
-	public List<Idiom> findByClassification(int classification) {
+	public List<String> findByClassification(int classification) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<Idiom> list = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
 			pstm = conn.prepareStatement("select * from idiom where classification=" + classification + "");
@@ -35,7 +35,7 @@ public class IdiomDaoImpl {
 				idiom.setId(rs.getInt(1));
 				idiom.setIdiom(rs.getString(2));
 				idiom.setClassification(rs.getInt(3));
-				list.add(idiom);
+				list.add(idiom.getIdiom());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
