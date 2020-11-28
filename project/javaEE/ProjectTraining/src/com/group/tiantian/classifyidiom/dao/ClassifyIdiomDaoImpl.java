@@ -13,6 +13,7 @@ import com.group.tiantian.util.DBUtil;
 
 /**
  * 2020-11-25
+ * 2020-11-28
  * 
  * @author lrf
  */
@@ -51,6 +52,7 @@ public class ClassifyIdiomDaoImpl {
 				}
 				map.put(classifyIdiom.getClassifyName(), list);
 			}
+			System.out.println("数据库查询到的成语类型信息：" + map.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -58,8 +60,7 @@ public class ClassifyIdiomDaoImpl {
 		}
 		return map;
 	}
-	
-	
+
 	/**
 	 * 获取所有分类父菜单和其对应的子菜单
 	 * 
@@ -103,6 +104,7 @@ public class ClassifyIdiomDaoImpl {
 
 	/**
 	 * 根据成语子分类名称查询该分类的id
+	 * 
 	 * @param classifyName
 	 * @return
 	 */

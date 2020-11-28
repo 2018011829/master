@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.group.tiantian.classifyidiom.service.ClassifyIdiomServiceImpl;
 
 /**
  * 2020-11-25
+ * 2020-11-28
  * 
  * @author lrf
  */
@@ -35,13 +38,6 @@ public class SendClassifyIdiomServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		// 创建用于保存成语分类的LinkedHashMap
-//		LinkedHashMap<ClassifyIdiom, List<ClassifyIdiom>> idiomMap = null;
-//		// 创建ClassifyIdiomServiceImpl对象
-//		ClassifyIdiomServiceImpl serviceImpl = new ClassifyIdiomServiceImpl();
-//		// 从数据库中获取成语分类信息
-//		idiomMap = serviceImpl.getAllClassifyIdiom();
-
 		// 创建用于保存成语分类的LinkedHashMap
 		LinkedHashMap<String, List<String>> idiomMap = null;
 		// 创建ClassifyIdiomServiceImpl对象
@@ -49,10 +45,14 @@ public class SendClassifyIdiomServlet extends HttpServlet {
 		// 从数据库中获取成语分类信息
 		idiomMap = serviceImpl.getAllClassifyIdiom();
 		System.out.println("获取到的成语类型：" + idiomMap.toString());
-		String str = idiomMap.toString();
+		// 转换成json串返回给客户端
+		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+		String jsonStr = gson.toJson(idiomMap);
+		System.out.println("转化成的json串：" + jsonStr);
 		OutputStream out = response.getOutputStream();
-		out.write(str.getBytes("utf-8"));
+		out.write(jsonStr.getBytes("utf-8"));
 		out.flush();
+		// 关闭流
 		out.close();
 	}
 
@@ -62,7 +62,6 @@ public class SendClassifyIdiomServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
