@@ -53,6 +53,27 @@ public class EaseUserUtils {
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
         }
     }
+
+    /**
+     * 重写
+     * @param context
+     * @param imageView
+     */
+    public static void setUserAvatar(Context context, EaseUser easeUser, ImageView imageView){
+        if(easeUser.getAvatar() != null){
+            try {
+                Glide.with(context).load(easeUser).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(easeUser.getAvatar())
+                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
+        }
+    }
     
     /**
      * set user's nickname

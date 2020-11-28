@@ -26,6 +26,10 @@ public class ParentUtil {
     private static final String TAG="ParentUtil:shenyayu";
     //创建OkHttpClient对象
     private static OkHttpClient okHttpClient=new OkHttpClient();
+    //当前登录用户的头像地址
+    public static String currentUserAvatar="";
+    //聊天好友的头像地址
+    public static String toChatUserAvator="";
 
 
     /**
@@ -59,22 +63,28 @@ public class ParentUtil {
         });
     }
     public static void getOneParent(String phone,Handler handler){
-        FormBody formBody=new FormBody.Builder().add("phone",phone).build();
-        Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"GetOneParentInfoServlet")
-                .post(formBody)
-                .build();
-        Call call=okHttpClient.newCall(request);
-        try {
-            Response response=call.execute();
-            String json=response.body().string();
-            Parent parent=new Gson().fromJson(json,Parent.class);
-            Message message=handler.obtainMessage();
-            message.what=2;
-            message.obj=parent;
-            handler.sendMessage(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread(){
+            @Override
+            public void run() {
+                FormBody formBody=new FormBody.Builder().add("phone",phone).build();
+                Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"GetOneParentInfoServlet")
+                        .post(formBody)
+                        .build();
+                Call call=okHttpClient.newCall(request);
+                try {
+                    Response response=call.execute();
+                    String json=response.body().string();
+                    Parent parent=new Gson().fromJson(json,Parent.class);
+                    Message message=handler.obtainMessage();
+                    message.what=2;
+                    message.obj=parent;
+                    handler.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
 
     }
 }

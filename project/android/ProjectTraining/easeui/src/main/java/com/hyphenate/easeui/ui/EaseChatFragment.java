@@ -48,6 +48,7 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.VersionUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -293,7 +294,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+        titleBar.setTitle(EaseParentUtil.toChatUserNickname);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){

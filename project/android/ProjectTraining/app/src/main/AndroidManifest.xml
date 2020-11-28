@@ -55,6 +55,7 @@
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
+        <activity android:name=".contact.ChatActivity"/>
         <activity android:name=".MainActivity">
         </activity>
         <!-- 设置环信应用的AppKey -->

@@ -1,5 +1,6 @@
 package com.hyphenate.easeui.domain;
 
+
 /**
  * Created by wei on 2016/11/29.
  */

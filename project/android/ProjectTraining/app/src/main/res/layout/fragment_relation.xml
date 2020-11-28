@@ -7,6 +7,10 @@
     android:layout_marginBottom="5dp"
     android:orientation="vertical"
     tools:context=".home.fragments.RelationsFragment">
+
+    <include
+        android:id="@+id/search_bar_view"
+        layout="@layout/ease_search_bar_with_padding" />
     <!--顶部导航栏-->
 
     <com.google.android.material.tabs.TabLayout

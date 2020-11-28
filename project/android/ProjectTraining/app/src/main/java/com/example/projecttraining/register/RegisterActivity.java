@@ -22,6 +22,8 @@ import com.example.projecttraining.R;
 import com.example.projecttraining.login.LoginByPasswordActivity;
 import com.example.projecttraining.login.LoginByPhoneActivity;
 import com.example.projecttraining.util.ConfigUtil;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -161,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         FormBody body=builder.build();
         Request request=new Request.Builder()
                 .post(body)
-                .url(ConfigUtil.SERVICE_ADDRESS+"检测注册的servlet")
+                .url(ConfigUtil.SERVICE_ADDRESS+"ParentRegisterServlet")
                 .build();
         //获得call对象
         Call call=new OkHttpClient().newCall(request);
@@ -175,6 +177,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String result = response.body().string();
+                //在环信注册该用户
+                new Thread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    EMClient.getInstance().createAccount(etPhone.getText().toString().trim(),
+                                            etPassword.getText().toString().trim());
+                                    Log.e("shenyayu", "run: 注册成功");
+                                    Looper.prepare();
+                                    Toast.makeText(getBaseContext(),"注册成功！",Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                } catch (HyphenateException e) {
+                                    e.printStackTrace();
+                                    Log.e("shenyayu", "run: 注册失败");
+                                    Looper.prepare();
+                                    Toast.makeText(getBaseContext(),"注册失败！",Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }
+                        }
+                ).start();
                 //处理请求结果
                 Message msg = handler.obtainMessage();
                 msg.what = 1;

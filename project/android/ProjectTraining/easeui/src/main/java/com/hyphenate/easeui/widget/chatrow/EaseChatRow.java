@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget.chatrow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
@@ -18,6 +20,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
@@ -145,9 +148,13 @@ public abstract class EaseChatRow extends LinearLayout {
         if(userAvatarView != null) {
             //set nickname and avatar
             if (message.direct() == Direct.SEND) {
-                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+//                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+//                Log.e(TAG, "setUpBaseView: 头像地址"+EaseParentUtil.currentUserAvatar );
+                Glide.with(context).load(EaseParentUtil.currentUserAvatar).into(userAvatarView);
+
             } else {
-                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+//                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+                Glide.with(context).load(EaseParentUtil.toChatUserAvator).into(userAvatarView);
                 EaseUserUtils.setUserNick(message.getFrom(), usernickView);
             }
         }

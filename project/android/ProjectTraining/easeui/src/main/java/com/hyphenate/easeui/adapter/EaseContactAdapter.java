@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
@@ -99,8 +100,11 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                 avatarView.setRadius(avatarOptions.getAvatarRadius());
         }
 
-        EaseUserUtils.setUserNick(username, holder.nameView);
-        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+//        EaseUserUtils.setUserNick(username, holder.nameView);
+//        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+        //修改
+        holder.nameView.setText(copyUserList.get(position).getNickname());
+        Glide.with(getContext()).load(copyUserList.get(position).getAvatar()).into(holder.avatar);
         
        
         if(primaryColor != 0)
