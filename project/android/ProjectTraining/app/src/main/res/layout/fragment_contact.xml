@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".contact.ContactFragment"
     android:orientation="vertical">
+    <include
+        android:id="@+id/search_bar_view"
+        layout="@layout/ease_search_bar_with_padding" />
     <com.hyphenate.easeui.widget.EaseContactList
         android:id="@+id/ease_contact_list"
         android:layout_width="match_parent"

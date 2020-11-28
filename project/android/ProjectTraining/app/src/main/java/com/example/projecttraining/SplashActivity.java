@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.projecttraining.login.LoginByPasswordActivity;
+import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
+import com.hyphenate.exceptions.HyphenateException;
+
+import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
-
+    private TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper;
     private static final int sleepTime = 3000;
 
     @Override
@@ -23,6 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
+        tianTianSQLiteOpenHelper=new TianTianSQLiteOpenHelper(getApplicationContext(),"tiantian.db",null,1);
         new Thread(new Runnable() {
             public void run() {
                 if (EMClient.getInstance().isLoggedInBefore()) {
@@ -30,6 +36,15 @@ public class SplashActivity extends AppCompatActivity {
                     long start = System.currentTimeMillis();
                     EMClient.getInstance().chatManager().loadAllConversations();
                     EMClient.getInstance().groupManager().loadAllGroups();
+                    //加载所有好友信息
+                    try {
+                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
+                        for(String username:usernames){
+                            ParentUtil.storeOneParent(username,tianTianSQLiteOpenHelper);
+                        }
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
                     long costTime = System.currentTimeMillis() - start;
                     //wait
                     if (sleepTime - costTime > 0) {

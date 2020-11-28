@@ -199,25 +199,42 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                 final ArrayList<EaseUser> newValues = new ArrayList<EaseUser>();
                 for(int i=0;i<count;i++){
                     final EaseUser user = mOriginalList.get(i);
-                    String username = user.getUsername();
-                    
-                    if(username.startsWith(prefixString)){
+//                    String username = user.getUsername();
+                    String nickname=user.getNickname();
+                    if(nickname.contains(prefixString)){
+                        Log.e(TAG, "performFiltering: nickname"+nickname+"=="+prefixString);
                         newValues.add(user);
                     }
-                    else{
-                         final String[] words = username.split(" ");
-                         final int wordCount = words.length;
-    
-                         // Start at index 0, in case valueText starts with space(s)
-                        for (String word : words) {
-                            if (word.startsWith(prefixString)) {
-                                newValues.add(user);
-                                break;
-                            }
-                        }
-                    }
+//                    else{
+//                        final String[] words = nickname.split("");
+//                        final int wordCount = words.length;
+//                        // Start at index 0, in case valueText starts with space(s)
+//                        for (String word : words) {
+//                            if (word.contains(prefix)) {
+//                                newValues.add(user);
+//                                break;
+//                            }
+//                        }
+//                    }
+
+//                    if(username.startsWith(prefixString)){
+//                        newValues.add(user);
+//                    }
+//                    else{
+//                         final String[] words = username.split(" ");
+//                         final int wordCount = words.length;
+//
+//                         // Start at index 0, in case valueText starts with space(s)
+//                        for (String word : words) {
+//                            if (word.startsWith(prefixString)) {
+//                                newValues.add(user);
+//                                break;
+//                            }
+//                        }
+//                    }
                 }
                 results.values=newValues;
+                Log.e(TAG, "performFiltering: "+results.values.toString() );
                 results.count=newValues.size();
             }
             EMLog.d(TAG, "contacts filter results size: " + results.count);
@@ -229,10 +246,12 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                 FilterResults results) {
             userList.clear();
             userList.addAll((List<EaseUser>)results.values);
+            Log.e(TAG, "publishResults: "+results.values+results.count );
             EMLog.d(TAG, "publish contacts filter results size: " + results.count);
             if (results.count > 0) {
                 notiyfyByFilter = true;
                 notifyDataSetChanged();
+                Log.e(TAG, "publishResults: "+results.values );
                 notiyfyByFilter = false;
             } else {
                 notifyDataSetInvalidated();

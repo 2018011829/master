@@ -1,5 +1,8 @@
 package com.example.projecttraining.util;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -8,6 +11,7 @@ import android.util.Log;
 import com.example.projecttraining.contact.Parent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -62,7 +66,7 @@ public class ParentUtil {
             }
         });
     }
-    public static void getOneParent(String phone,Handler handler){
+    public static void getOneParent(String phone, Handler handler, TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper){
         new Thread(){
             @Override
             public void run() {
@@ -75,6 +79,16 @@ public class ParentUtil {
                     Response response=call.execute();
                     String json=response.body().string();
                     Parent parent=new Gson().fromJson(json,Parent.class);
+//                    //存入SQLite
+//                    SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getWritableDatabase();
+//                    ContentValues contentValues=new ContentValues();
+//                    contentValues.put("id",parent.getId());
+//                    contentValues.put("phone",parent.getPhone());
+//                    contentValues.put("nickname",parent.getNickname());
+//                    contentValues.put("avatar",parent.getAvator());
+//                    contentValues.put("password",parent.getPassword());
+//                    sqLiteDatabase.insert("parents",null,contentValues);
+                    //发送消息
                     Message message=handler.obtainMessage();
                     message.what=2;
                     message.obj=parent;
@@ -86,5 +100,43 @@ public class ParentUtil {
         }.start();
 
 
+    }
+    public static void storeOneParent(String phone ,TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper) {
+        new Thread() {
+            @Override
+            public void run() {
+                FormBody formBody = new FormBody.Builder().add("phone", phone).build();
+                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
+                        .post(formBody)
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                try {
+                    Response response = call.execute();
+                    String json = response.body().string();
+                    Parent parent = new Gson().fromJson(json, Parent.class);
+                    //存入SQLite
+                    SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getWritableDatabase();
+                    Cursor cursor=sqLiteDatabase.query("parents",
+                            new String[]{"id"},
+                            "id=?",
+                            new String[]{parent.getId()+""},
+                            null,null,null);
+                    cursor.moveToNext();
+                    Log.e(TAG, "run: "+cursor.getCount()+cursor.getInt(0));
+                    if(cursor.getCount()==0){
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("id", parent.getId());
+                    contentValues.put("phone", parent.getPhone());
+                    contentValues.put("nickname", parent.getNickname());
+                    contentValues.put("avatar", parent.getAvator());
+                    contentValues.put("password", parent.getPassword());
+                    sqLiteDatabase.insert("parents", null, contentValues);
+                    Log.e(TAG, "run: 插入SQLite成功" );
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

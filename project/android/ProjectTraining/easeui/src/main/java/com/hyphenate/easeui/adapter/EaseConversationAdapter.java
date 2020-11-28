@@ -1,6 +1,8 @@
 package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,6 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -24,6 +29,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
@@ -123,7 +129,19 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         }else {
             EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
             EaseUserUtils.setUserNick(username, holder.name);
-            holder.motioned.setVisibility(View.GONE);
+//            //修改之后
+//            TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper=new TianTianSQLiteOpenHelper(getContext(),"tiantian.db",null,1);
+//            SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getReadableDatabase();
+//            Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
+//            cursor.moveToNext();
+//            String avatar=cursor.getString(0);
+//            String nickname=cursor.getString(1);
+//            Glide.with(getContext())
+//                    .load(avatar)
+//                    .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)).into(holder.avatar);
+//            holder.name.setText(nickname);
+//            holder.motioned.setVisibility(View.GONE);
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
