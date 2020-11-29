@@ -37,6 +37,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- start book -->
+        <activity android:name=".books.activity.ReadBookActivity" />
+        <activity android:name=".books.activity.BookInfoActivity" />
+        <activity android:name=".books.activity.BooksHomePageActivity" />
+        <activity android:name=".books.activity.MoreBooksActivity" />
+        <activity android:name=".books.activity.MoreContentActivity" />
+        <!-- end book -->
+
     </application>
 
 </manifest>
