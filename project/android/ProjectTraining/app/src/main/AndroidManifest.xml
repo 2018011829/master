@@ -25,17 +25,19 @@
         <activity android:name=".mine.AddChildActivity"></activity>
         <activity android:name=".IntroAppActivity" />
         <activity android:name=".idiom.activitys.IdiomInfoActivity"></activity>
-        <activity android:name=".login.LoginByPhoneActivity" />
-        <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".login.LoginByPasswordActivity" />
-        <activity android:name=".idiom.activitys.IdiomActivity" />
-        <activity android:name=".idiom.activitys.SearchIdiomActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".login.LoginByPhoneActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".login.LoginByPasswordActivity" />
+        <activity android:name=".idiom.activitys.IdiomActivity" />
+        <activity android:name=".idiom.activitys.SearchIdiomActivity" />
+        <activity android:name=".MainActivity">
+
         </activity>
 
         <!-- start book -->

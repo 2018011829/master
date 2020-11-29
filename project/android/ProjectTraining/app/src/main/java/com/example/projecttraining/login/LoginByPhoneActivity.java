@@ -46,7 +46,6 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
     private TextView tvRegister;
     public EventHandler eh; //事件接收器
     private TimeCount mTimeCount;//计时器
-    private boolean b=false;
     //定义一个用于判断退出时的时间
     private long mExitTime;
     //定义Handler对象属性
@@ -57,7 +56,10 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
                 case 1://获得密码登录的请求结果
                     String response= (String) msg.obj;
                     if (response.equals("success")){//手机号已经注册
-                        b=true;
+                        SMSSDK.getVerificationCode("+86",etPhoneNum.getText().toString());//获取验证码
+                        mTimeCount.start();
+                    }else{
+                        Toast.makeText(LoginByPhoneActivity.this, "该手机号还未注册！", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -109,12 +111,6 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
                     if (checkTel(etPhoneNum.getText().toString().trim())) {
                         //判断该手机号是否已经注册
                         checkRegisted(etPhoneNum.getText().toString().trim());
-                        if (b){//该手机号已经注册
-                            SMSSDK.getVerificationCode("+86",etPhoneNum.getText().toString());//获取验证码
-                            mTimeCount.start();
-                        }else{
-                            Toast.makeText(LoginByPhoneActivity.this, "该手机号还未注册！", Toast.LENGTH_SHORT).show();
-                        }
                     }else{
                         Toast.makeText(LoginByPhoneActivity.this, "请输入正确的手机号码！", Toast.LENGTH_SHORT).show();
                     }
@@ -160,7 +156,7 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
         //创建请求对象
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS
-                        + "检查手机号的servlet"+"?phone="+trim)
+                        + "LoginByPhoneNumServlet"+"?phone="+trim)
                 .build();
         //创建CALL对象
         Call call = new OkHttpClient().newCall(request);
