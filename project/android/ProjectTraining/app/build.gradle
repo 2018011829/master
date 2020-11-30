@@ -42,6 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //添加TabLayout组件依赖
+    //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     //添加OkHttp依赖
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
