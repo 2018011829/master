@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,21 +128,21 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
         }else {
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EaseUserUtils.setUserNick(username, holder.name);
-//            //修改之后
-//            TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper=new TianTianSQLiteOpenHelper(getContext(),"tiantian.db",null,1);
-//            SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getReadableDatabase();
-//            Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
-//            cursor.moveToNext();
-//            String avatar=cursor.getString(0);
-//            String nickname=cursor.getString(1);
-//            Glide.with(getContext())
-//                    .load(avatar)
-//                    .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)).into(holder.avatar);
-//            holder.name.setText(nickname);
-//            holder.motioned.setVisibility(View.GONE);
+//            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+//            EaseUserUtils.setUserNick(username, holder.name);
+            //修改之后
+            TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper=TianTianSQLiteOpenHelper.getInstance(getContext());
+            SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getReadableDatabase();
+            Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
+            cursor.moveToNext();
+            String avatar=cursor.getString(0);
+            String nickname=cursor.getString(1);
+            Glide.with(getContext())
+                    .load(avatar)
+                    .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)).into(holder.avatar);
+            holder.name.setText(nickname);
+            holder.motioned.setVisibility(View.GONE);
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();

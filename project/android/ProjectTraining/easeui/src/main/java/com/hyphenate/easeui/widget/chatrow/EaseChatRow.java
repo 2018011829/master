@@ -137,7 +137,7 @@ public abstract class EaseChatRow extends LinearLayout {
             } else {
             	// show time stamp if interval with last message is > 30 seconds
                 EMMessage prevMessage = (EMMessage) adapter.getItem(position - 1);
-                if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
+                if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime()+8*60*60)) {
                     timestamp.setVisibility(View.GONE);
                 } else {
                     timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
@@ -147,6 +147,7 @@ public abstract class EaseChatRow extends LinearLayout {
         }
         if(userAvatarView != null) {
             //set nickname and avatar
+            //修改
             if (message.direct() == Direct.SEND) {
 //                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
 //                Log.e(TAG, "setUpBaseView: 头像地址"+EaseParentUtil.currentUserAvatar );

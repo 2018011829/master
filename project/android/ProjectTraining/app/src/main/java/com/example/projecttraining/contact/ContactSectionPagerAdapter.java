@@ -26,10 +26,10 @@ public class ContactSectionPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
        switch (position){
-           case 0:
+           case 1:
                Log.e(TAG, "getItem: 0");
                return new ContactFragment();
-           case 1:
+           case 0:
                return new ConversationFragment();
            case 2:
                Log.e(TAG, "getItem: 2");

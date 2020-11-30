@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
-        tianTianSQLiteOpenHelper=new TianTianSQLiteOpenHelper(getApplicationContext(),"tiantian.db",null,1);
+        tianTianSQLiteOpenHelper=TianTianSQLiteOpenHelper.getInstance(getApplicationContext());
         new Thread(new Runnable() {
             public void run() {
                 if (EMClient.getInstance().isLoggedInBefore()) {
@@ -45,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
                     } catch (HyphenateException e) {
                         e.printStackTrace();
                     }
+                    //存储当前用户的昵称和头像
+                    ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
                     long costTime = System.currentTimeMillis() - start;
                     //wait
                     if (sleepTime - costTime > 0) {

@@ -92,14 +92,13 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_contact, container, false);
         easeContactList=view.findViewById(R.id.ease_contact_list);
-        tianTianSQLiteOpenHelper=new TianTianSQLiteOpenHelper(getContext(),"tiantian.db",null,1);
+        tianTianSQLiteOpenHelper=TianTianSQLiteOpenHelper.getInstance(getContext());
         //设置联系人列表item的点击事件，跳转到聊天页面
         easeContactList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EaseParentUtil.toChatUserAvator=easeUsers.get(position).getAvatar();
                 EaseParentUtil.toChatUserNickname=easeUsers.get(position).getNickname();
-                EaseParentUtil.currentUserAvatar=easeUsers.get(0).getAvatar();
                 startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,easeUsers.get(position).getUsername()));
             }
         });

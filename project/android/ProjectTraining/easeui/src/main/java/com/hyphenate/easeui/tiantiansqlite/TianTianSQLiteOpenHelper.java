@@ -7,10 +7,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class TianTianSQLiteOpenHelper extends SQLiteOpenHelper {
-    public TianTianSQLiteOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    //属性
+    private static final String NAME="tiantian.db";
+    private static final int VERSION=1;
+    private static TianTianSQLiteOpenHelper instance;
+    //得到实例的方法
+    public static TianTianSQLiteOpenHelper getInstance(Context context){
+        if(null==instance){
+            return new TianTianSQLiteOpenHelper(context,NAME,null,VERSION);
+        }else{
+            return instance;
+        }
+    }
+    //构造方法
+    private TianTianSQLiteOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
-
+    //重写的方法
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table parents(id int primary key,phone char(11),password varchar(15),nickname varchar(20),avatar varchar(20))");

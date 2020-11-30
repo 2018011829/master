@@ -1,6 +1,7 @@
 package com.example.projecttraining.util;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import com.example.projecttraining.contact.Parent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -117,26 +119,57 @@ public class ParentUtil {
                     //存入SQLite
                     SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getWritableDatabase();
                     Cursor cursor=sqLiteDatabase.query("parents",
-                            new String[]{"id"},
+                            new String[]{"id","phone","password","nickname","avatar"},
                             "id=?",
                             new String[]{parent.getId()+""},
                             null,null,null);
                     cursor.moveToNext();
-                    Log.e(TAG, "run: "+cursor.getCount()+cursor.getInt(0));
-                    if(cursor.getCount()==0){
+//                    Log.e(TAG, "run: "+cursor.getCount()+cursor.getInt(0));
+                    if(cursor.getCount()!=0){
+                        sqLiteDatabase.delete("parents","id="+parent.getId(),null);
+                    }
                     ContentValues contentValues = new ContentValues();
                     contentValues.put("id", parent.getId());
                     contentValues.put("phone", parent.getPhone());
                     contentValues.put("nickname", parent.getNickname());
-                    contentValues.put("avatar", parent.getAvator());
+                    contentValues.put("avatar",ConfigUtil.SETVER_AVATAR+parent.getAvator());
                     contentValues.put("password", parent.getPassword());
                     sqLiteDatabase.insert("parents", null, contentValues);
                     Log.e(TAG, "run: 插入SQLite成功" );
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }.start();
+    }
+
+    public static Parent queryAvatarAndNicknameByPhone(Context context,String phone){
+        SQLiteDatabase sqLiteDatabase=TianTianSQLiteOpenHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{phone},null,null,null);
+        Parent parent=new Parent();
+        parent.setPhone(phone);
+        if(0!=cursor.getCount()){
+            cursor.moveToNext();
+            parent.setAvator(cursor.getString(0));
+            parent.setNickname(cursor.getString(1));
+        }
+        return parent;
+    }
+
+    public static void storeCurrentParent(String currentUser) {
+        FormBody formBody=new FormBody.Builder().add("phone",currentUser).build();
+        Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"GetOneParentInfoServlet")
+                .post(formBody)
+                .build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            String json=call.execute().body().string();
+            Parent parent=new Gson().fromJson(json,Parent.class);
+            EaseParentUtil.currentUserAvatar=ConfigUtil.SETVER_AVATAR+parent.getAvator();
+            EaseParentUtil.currentUserNickname=parent.getNickname();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
