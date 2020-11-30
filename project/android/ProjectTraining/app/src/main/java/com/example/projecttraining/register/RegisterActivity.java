@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (etPassword.getText() != null && !etPassword.getText().toString().equals("")) {
                         //都不为空 检查合法性
                         //检查密码长度
-                        if (6<etPassword.getText().toString().trim().length() && etPassword.getText().toString().trim().length()<20){
+                        if (6<=etPassword.getText().toString().trim().length() && etPassword.getText().toString().trim().length()<=20){
                             registerMsg();
                         }else {
                             Toast.makeText(getApplicationContext(),
@@ -161,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         FormBody body=builder.build();
         Request request=new Request.Builder()
                 .post(body)
-                .url(ConfigUtil.SERVICE_ADDRESS+"检测注册的servlet")
+                .url(ConfigUtil.SERVICE_ADDRESS+"ParentRegisterServlet")
                 .build();
         //获得call对象
         Call call=new OkHttpClient().newCall(request);

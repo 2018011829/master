@@ -5,10 +5,14 @@ buildscript {
     repositories {
         google()
         jcenter()
+        //BufferKnife依赖
+        mavenCentral()
         
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
+        //BufferKnife依赖
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -20,7 +24,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url 'https://jitpack.io' }
     }
 }
 

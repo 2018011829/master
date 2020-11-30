@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             //设置tab选中的监听器
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
                 switch (tab.getPosition()){
                     case 0:
                         tab.setIcon(R.mipmap.home_green);
