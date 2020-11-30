@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projecttraining">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -12,7 +13,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-sdk tools:overrideLibrary="top.androidman"/>
 
     <application
         android:allowBackup="true"
@@ -26,18 +29,22 @@
         <activity android:name=".IntroAppActivity" />
         <activity android:name=".idiom.activitys.IdiomInfoActivity"></activity>
         <activity android:name=".login.LoginByPhoneActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity"/>
+        <activity android:name=".home.fragments.MomentsFragment.DynamicDetails"/>
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- start book -->

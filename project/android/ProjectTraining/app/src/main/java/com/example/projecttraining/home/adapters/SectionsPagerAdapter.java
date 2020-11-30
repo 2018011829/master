@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.projecttraining.home.fragments.HomeFragment;
-import com.example.projecttraining.home.fragments.MomentsFragment;
+import com.example.projecttraining.home.fragments.MomentsFragment.MomentsFragment;
 import com.example.projecttraining.home.fragments.MyFragment;
 import com.example.projecttraining.home.fragments.RelationsFragment;
 

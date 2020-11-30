@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.fragments.MomentsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="5dp"
+    >
+    <!--顶部导航栏-->
+    <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="圈子页面" />
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        >
+        <Button
+            android:id="@+id/frag01"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff735c"
+            android:text="推荐" />
 
-</FrameLayout>
+        <Button
+            android:id="@+id/frag02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="关注" />
+
+        <Button
+            android:id="@+id/frag03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="我的" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.example.projecttraining.util.DoNotSlideUtil
+            android:id="@+id/viewpager01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="MissingClass" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/floatbutton"
+            android:backgroundTint="@color/colorPrimary"
+            app:elevation="8dp"
+            app:fabSize="mini"
+            app:pressedTranslationZ="10dp"
+            app:rippleColor="#fff">
+        </com.getbase.floatingactionbutton.FloatingActionButton>
+
+    </RelativeLayout>
+
+</LinearLayout>

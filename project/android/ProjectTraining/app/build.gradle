@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.projecttraining"
-        minSdkVersion 16
+        minSdkVersion 29
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -69,6 +69,31 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     //添加Gson依赖
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    //顶部导航栏依赖
+    implementation 'com.gerenvip.ui.tabs:tablayout:4.0.9'
+    //圆形悬浮按钮
+    //noinspection GradleCompatible
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    //九宫格形式上传动态
+    //初始化控件找ID
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    //图片选择器
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
+    //图片加载
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    //权限请求
+    implementation 'com.hjq:xxpermissions:6.5'
+
+    //下拉刷新，上拉加载更多
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.1'
+
+    //圆形头像依赖
+    implementation 'com.github.bumptech.glide:glide:4.11.0'  //圆的依赖
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
 buildscript {
     repositories {

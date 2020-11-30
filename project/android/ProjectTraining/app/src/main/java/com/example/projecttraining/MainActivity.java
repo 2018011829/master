@@ -1,5 +1,4 @@
 package com.example.projecttraining;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
