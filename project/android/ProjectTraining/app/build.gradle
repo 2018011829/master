@@ -86,9 +86,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     //九宫格形式上传动态
-    //初始化控件找ID
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     //图片选择器
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
     //图片加载
