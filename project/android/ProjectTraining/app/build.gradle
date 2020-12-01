@@ -15,9 +15,16 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
+    // side-menu.Android依赖
+    repositories {
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.projecttraining"
-        minSdkVersion 29
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -58,6 +65,9 @@ dependencies {
     //添加BufferKnife依赖
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    // 添加side-menu.Android依赖
+    implementation 'com.github.yalantis:Side-Menu.Android:1.0.2'
+    implementation 'com.github.ozodrukh:CircularReveal:2.1.0'
 
     implementation 'com.contrarywind:wheelview:4.1.0'
     //导入Glide依赖
@@ -76,9 +86,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     //九宫格形式上传动态
-    //初始化控件找ID
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     //图片选择器
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
     //图片加载

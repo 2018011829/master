@@ -5,52 +5,45 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.idiom.adapter.IdiomInfoAdapter;
-import com.example.projecttraining.idiom.entity.IdiomInfo;
-import com.example.projecttraining.idiom.entity.IdiomInfoResult;
-import com.example.projecttraining.util.IdiomJsonUtil;
-import com.google.android.material.tabs.TabLayout;
+import com.example.projecttraining.idiom.adapter.IdiomByTypeAdapter;
+import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 2020-11-26
  * 2020-11-28
- * 2020-11-30
- *
  * @author lrf
  */
-public class IdiomInfoActivity extends AppCompatActivity {
+public class IdiomByTypeActivity extends AppCompatActivity {
 
-    private String idiomName;
-    private String APPKEY = "a9b630b59585bbd480cddd11fc7de952";
-    private String url = "http://v.juhe.cn/chengyu/query";
-//    private String APPKEY = "52836ab53d4cf3e9";
-//    private String url = "https://api.jisuapi.com/chengyu/detail";
+    @BindView(R.id.tv_idiom_type_name) TextView tvIdiomTypeName;
+    @BindView(R.id.grid_idiom_by_type) GridView gVIdiomByType;
 
-    @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
-    @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
-    @BindView(R.id.idiom_view_pager) ViewPager viewPager;
-
+    private String idiomType;
+    private List<String> idiomList;
+    private IdiomByTypeAdapter idiomByTypeAdapter;
     private Handler myHandler;
     //定义Gson对象属性
     private Gson gson;
@@ -58,24 +51,17 @@ public class IdiomInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_idiom_info);
+        setContentView(R.layout.activity_idiom_by_type);
 
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        idiomName = intent.getStringExtra("name");
+        idiomType = intent.getStringExtra("idiomType");
 
-        getIdiomInfoFromAPI(idiomName);
-
-        tvIdiomName.setText(idiomName);
         //Gson对象实例化
         initGson();
 
-        //为ViewPager设置Adapter
-        ViewPager viewPager = setViewPagerAdapter();
-        //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+        getIdiomByType(ConfigUtil.SERVICE_ADDRESS + "SendIdiomByTypeServlet",idiomType);
 
         myHandler = new Handler(){
             @Override
@@ -83,16 +69,23 @@ public class IdiomInfoActivity extends AppCompatActivity {
                 switch (msg.what){
                     case 1:
                         String json = (String) msg.obj;
-                        Log.e("lrf_json",json);
-                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfo(json);
-                        Log.e("lrf_反序列化",idiomInfo.toString());
-                        IdiomInfoResult idiomInfoResult = idiomInfo.getIdiomInfoResult();
-
+                        // 得到集合类型
+                        Type type = new TypeToken<List<String>>(){}.getType();
+                        // 反序列化
+                        idiomList = gson.fromJson(json,type);
+                        Log.e("lrf",idiomList.toString());
+                        initView();
                         break;
                 }
             }
         };
 
+    }
+
+    private void initView(){
+        idiomByTypeAdapter = new IdiomByTypeAdapter(this,idiomList, R.layout.idiom_gridview_by_type);
+        gVIdiomByType.setAdapter(idiomByTypeAdapter);
+        tvIdiomTypeName.setText(idiomType);
     }
 
     /**
@@ -107,31 +100,33 @@ public class IdiomInfoActivity extends AppCompatActivity {
     }
 
     /**
-     * 调用成语API接口，查询某成语的详细信息
-     * @param word
-     * @return
+     * 向服务器请求用户点击的某类型的成语信息
+     * @param url
+     * @param idiomType
      */
-    private void getIdiomInfoFromAPI(String word) {
+    private void getIdiomByType(String url,String idiomType) {
         new Thread(){
             @Override
             public void run() {
                 try {
-                    // 创建URL对象
-                    URL urlPath = new URL(url + "?word="+ URLEncoder.encode(word, "utf-8")+"&dtype=&key="+APPKEY);
-//                    URL urlPath = new URL(url+"?appkey=" + APPKEY + "&chengyu="+ URLEncoder.encode(word, "utf-8"));
+                    //创建URL对象
+                    URL urlPath = new URL(url);
                     HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
-                    // 设置网络请求方式为POST
+                    //设置网络请求方式为POST
                     conn.setRequestMethod("POST");
-                    // 获取网络输入流
+                    //获取网络输出流
+                    OutputStream out = conn.getOutputStream();
+                    out.write(idiomType.getBytes());
+                    //获取网络输入流
                     InputStream in = conn.getInputStream();
-                    // 使用字符流读取
+                    //使用字符流读取
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
-                    // 读取字符信息
+                    //读取字符信息
                     String json = reader.readLine();
-                    Log.e("lrf",json);
-                    // 关闭流
+                    //关闭流
                     reader.close();
                     in.close();
+                    out.close();
                     //通过发送message对象将数据发布出去
                     //获取Message对象
                     Message msg = myHandler.obtainMessage();
@@ -149,16 +144,4 @@ public class IdiomInfoActivity extends AppCompatActivity {
         }.start();
     }
 
-
-    /**
-     * 得到ViewPager引用，并设置Adapter
-     *
-     * @return ViewPager
-     */
-    private ViewPager setViewPagerAdapter() {
-        //得到ViewPager和IdiomInfoAdapter，并为ViewPager设置Adapter
-        IdiomInfoAdapter idiomInfoAdapter = new IdiomInfoAdapter(getSupportFragmentManager(), 1);
-        viewPager.setAdapter(idiomInfoAdapter);
-        return viewPager;
-    }
 }

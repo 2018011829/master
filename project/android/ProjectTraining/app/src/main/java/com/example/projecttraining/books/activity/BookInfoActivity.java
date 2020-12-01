@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ import okhttp3.Response;
 
 public class BookInfoActivity extends Activity implements View.OnClickListener {
 
+    private ProgressBar progressbar; //进度条
     private TextView tvGetMoreContents;
     private ImageView ivBack;
     private TextView tvTitleName;
@@ -67,7 +69,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
-                case 1://得到所有图书的Gson字符串，将字符串转换成装有图书的集合
+                case 1://得到图书所有章节列表的Gson字符串，将字符串转换成装有集合
                     String strGsonBooks= (String) msg.obj;
                     //解析Gson串
                     //集合反序列化
@@ -78,6 +80,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                     Log.e("contents",contents.toString());
                     //初始化控件
                     initViews();
+                    progressbar.setVisibility(View.INVISIBLE);
                     break;
                 case 2: //显示错误信息
                     String errorInfo= (String) msg.obj;
@@ -133,9 +136,17 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(BookInfoActivity.this,
-                        "点击了"+data.get(i),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BookInfoActivity.this,
+//                        "点击了"+data.get(i),
+//                        Toast.LENGTH_SHORT).show();
+                Intent intentRead=new Intent(BookInfoActivity.this,ReadBookActivity.class);
+                intentRead.putExtra("currentIndex",i);
+                intentRead.putExtra("contentObj", (Serializable) contents);
+                intentRead.putStringArrayListExtra("contents", (ArrayList<String>) data);
+                intentRead.putExtra("book",book);
+                intentRead.putExtra("activity","BookInfoActivity");
+                startActivity(intentRead);
+                finish();
             }
         });
     }
@@ -214,9 +225,6 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.tv_get_more_content://点击显示更多目录
                 Intent intentContent=new Intent(BookInfoActivity.this,MoreContentActivity.class);
-//                Bundle bundle=new Bundle();
-//                bundle.putSerializable("contentObj", (Serializable) contents);
-//                intentContent.putExtra("bundle",bundle);
                 intentContent.putExtra("contentObj",(Serializable) contents);
                 intentContent.putStringArrayListExtra("contents", (ArrayList<String>) data);
                 intentContent.putExtra("book",book);
@@ -261,6 +269,8 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
     }
 
     private void findViews() {
+        progressbar=findViewById(R.id.progressbar);
+        progressbar.setVisibility(View.VISIBLE);
         tvGetMoreContents=findViewById(R.id.tv_get_more_content);
         ivBack=findViewById(R.id.iv_back);
         tvTitleName=findViewById(R.id.tv_title_name);
