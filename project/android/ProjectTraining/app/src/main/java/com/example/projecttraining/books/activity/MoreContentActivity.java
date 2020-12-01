@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Content;
@@ -53,8 +54,7 @@ public class MoreContentActivity extends Activity {
                 Content content=contentObj.get(i);
                 //跳转到阅读界面
                 Intent intentRead=new Intent(MoreContentActivity.this,ReadBookActivity.class);
-                intentRead.putExtra("currentContent",content);
-                intentRead.putExtra("nextContent",contentObj.get(i+1));
+                intentRead.putExtra("currentIndex",i);
                 intentRead.putExtra("book",book);
                 intentRead.putExtra("contentObj", (Serializable) contentObj);
                 intentRead.putStringArrayListExtra("contents",data);

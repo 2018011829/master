@@ -3,11 +3,13 @@ package com.example.projecttraining.books.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -15,13 +17,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.SettingsPopupWindow;
+import com.example.projecttraining.books.TextSizeSettingPopupWindow;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Content;
 import com.example.projecttraining.util.ConfigUtil;
@@ -43,14 +48,19 @@ import okhttp3.Response;
 
 public class ReadBookActivity extends Activity {
 
+    private int changedY;
+    private String flag; //标记从图书详情也跳转来
+    private ScrollView scrollView;
     private ProgressBar pb; //进度条
     private TextView textContent;
-    private Content currentContent;
-    private Content nextContent;
+    private int currentIndex; //当前章节下标
+    private Content currentContent; //当前章节
+    private Content nextContent; //下一章
     private Book book;
     private List<Content> contentObj; //所有的目录对象：书所在的文件名称  章节名称  开始的行数
     private ArrayList<String> data;
-    private SettingsPopupWindow settingsPopupWindow; //弹出框
+    private SettingsPopupWindow settingsPopupWindow; //全部设置的弹出框
+    private TextSizeSettingPopupWindow textSizeSettingPopupWindow; //字体设置弹出框
     private Handler handler=new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -75,6 +85,7 @@ public class ReadBookActivity extends Activity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,19 +93,21 @@ public class ReadBookActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_read_book);
 
+        scrollView=findViewById(R.id.scrollView);
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                //改变后的x 改编后的y
+                changedY=i;
+                Log.e("改变后的y",""+changedY);
+            }
+        });
         pb=findViewById(R.id.progressbar);
         pb.setVisibility(View.VISIBLE);
         textContent=findViewById(R.id.text_content);
 
-        Intent intent=getIntent();
-        book= (Book) intent.getSerializableExtra("book");
-        contentObj= (List<Content>) intent.getSerializableExtra("contentObj");
-//        Log.e("contentObj",contentObj.toString());
-        data=intent.getStringArrayListExtra("contents");
-
-        //获取要读的当前页的信息
-        currentContent= (Content) intent.getSerializableExtra("currentContent");
-        nextContent= (Content) intent.getSerializableExtra("nextContent");
+        //获取信息
+        getExtrasFromIntent();
 
         //如果是从章节界面跳转过来 获取对应章节内容
         if (book!=null && contentObj!=null && data!=null && currentContent!=null && nextContent!=null){
@@ -107,6 +120,27 @@ public class ReadBookActivity extends Activity {
 
         //TextView的点击事件  上一章  下一章  菜单设置
         textContent.setOnTouchListener(new TouchListener());
+    }
+
+    /**
+     * 获取信息
+     */
+    private void getExtrasFromIntent() {
+        Intent intent=getIntent();
+        flag=intent.getStringExtra("activity");
+        book= (Book) intent.getSerializableExtra("book");
+        contentObj= (List<Content>) intent.getSerializableExtra("contentObj");
+        data=intent.getStringArrayListExtra("contents");
+
+        //获取要读的当前页的信息
+        currentIndex=intent.getIntExtra("currentIndex",0);
+        currentContent=contentObj.get(currentIndex);
+        if (currentIndex<contentObj.size()-1){
+            nextContent=contentObj.get(currentIndex+1);
+        }else {
+            nextContent=contentObj.get(currentIndex);
+        }
+
     }
 
     private class TouchListener implements View.OnTouchListener{
@@ -135,10 +169,10 @@ public class ReadBookActivity extends Activity {
 //                        "x："+x+",y："+y,
 //                        Toast.LENGTH_SHORT).show();
                 //点击屏幕中间
-                if (middenHeight-200<=y && middenHeight+200>=y && middenWidth-200<=x && middenWidth+200>=x){
-//                    Log.e("屏幕中间的高度-20",middenHeight-20+"");
+                if (middenWidth-200<=x && middenWidth+200>=x){
+ //                    Log.e("屏幕中间的高度-20",middenHeight-20+"");
 //                    Log.e("屏幕中间的宽度-20",middenWidth-20+"");
-                    //如果弹出框已经出现 弹出框消失
+//                    如果弹出框已经出现 弹出框消失
 //                    if (settingsPopupWindow.isShowing()){
 //                        settingsPopupWindow.dismiss();
 //                    }else {//否则 出现弹出框
@@ -147,17 +181,43 @@ public class ReadBookActivity extends Activity {
                         settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main), Gravity.NO_GRAVITY,0,0);
 //                    }
                 }
-                if (middenHeight-200<=y && middenHeight+200>=y && 0<=x && 100>=x){
+                if (0<=x && 200>=x){
                     //上一章
-                    Toast.makeText(ReadBookActivity.this,
-                            "上一章",
-                            Toast.LENGTH_SHORT).show();
+                    if (currentIndex==0){
+                        Toast.makeText(ReadBookActivity.this,
+                                "亲，已经到头了！",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        currentIndex=currentIndex-1;
+                        currentContent=contentObj.get(currentIndex);
+                        nextContent=contentObj.get(currentIndex+1);
+                        //从服务器获取上一章的内容
+                        getBookTextFromServer();
+                    }
+//                    Toast.makeText(ReadBookActivity.this,
+//                            "上一章",
+//                            Toast.LENGTH_SHORT).show();
                 }
-                if (middenHeight-200<=y && middenHeight+200>=y && screenWidth-200<=x && screenWidth>=x){
+                if (screenWidth-200<=x && screenWidth>=x){
                     //下一章
-                    Toast.makeText(ReadBookActivity.this,
-                            "下一章",
-                            Toast.LENGTH_SHORT).show();
+                    if (currentIndex==contentObj.size()-1){
+                        nextContent=contentObj.get(currentIndex);
+                        Toast.makeText(ReadBookActivity.this,
+                                "亲，已经到最后一章了！",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        currentIndex=currentIndex+1;
+                        Log.e("currentIndex",""+currentIndex);
+                        currentContent=contentObj.get(currentIndex);
+                        if (currentIndex==contentObj.size()-1){
+                            nextContent=contentObj.get(currentIndex);
+                            Toast.makeText(ReadBookActivity.this,
+                                    "亲，已经到最后一章了！",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        //从服务器获取下一章的内容
+                        getBookTextFromServer();
+                    }
                 }
                 return true;
             }
@@ -172,10 +232,11 @@ public class ReadBookActivity extends Activity {
 
         @Override
         public void onClick(View view) {
+            int size=0;
             switch (view.getId()){
                 case R.id.iv_back://点击返回
                     //返回上一页
-                    if (contentObj!=null){
+                    if (contentObj!=null && flag==null){
                         Intent intent=new Intent(ReadBookActivity.this,MoreContentActivity.class);
                         intent.putExtra("book",book);
                         intent.putExtra("contentObj", (Serializable) contentObj);
@@ -199,14 +260,37 @@ public class ReadBookActivity extends Activity {
                             Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.before_text://点击上一章
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击上一章",
-                            Toast.LENGTH_SHORT).show();
+                    if (currentIndex==0){
+                        Toast.makeText(ReadBookActivity.this,
+                                "亲，已经到头了！",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        currentIndex=currentIndex-1;
+                        currentContent=contentObj.get(currentIndex);
+                        nextContent=contentObj.get(currentIndex+1);
+                        //从服务器获取上一章的内容
+                        getBookTextFromServer();
+                    }
                     break;
                 case R.id.next_text://点击下一章
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击下一章",
-                            Toast.LENGTH_SHORT).show();
+                    if (currentIndex==contentObj.size()-1){
+                        nextContent=contentObj.get(currentIndex);
+                        Toast.makeText(ReadBookActivity.this,
+                                "亲，已经到最后一章了！",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        currentIndex=currentIndex+1;
+                        Log.e("currentIndex",""+currentIndex);
+                        currentContent=contentObj.get(currentIndex);
+                        if (currentIndex==contentObj.size()-1){
+                            nextContent=contentObj.get(currentIndex);
+                            Toast.makeText(ReadBookActivity.this,
+                                    "亲，已经到最后一章了！",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        //从服务器获取下一章的内容
+                        getBookTextFromServer();
+                    }
                     break;
                 case R.id.book_contents_list://点击目录
                     Toast.makeText(ReadBookActivity.this,
@@ -214,9 +298,15 @@ public class ReadBookActivity extends Activity {
                             Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.book_text_size://点击字体大小
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击字体大小",
-                            Toast.LENGTH_SHORT).show();
+                    //获取当前字体大小
+                    size=Double.valueOf(textContent.getTextSize()-1).intValue();
+                    if (settingsPopupWindow.isShowing()){
+                        settingsPopupWindow.dismiss();
+                        changeCurrentTextSize(size);
+                    }
+//                    Toast.makeText(ReadBookActivity.this,
+//                            "点击字体大小",
+//                            Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.book_night_model://点击夜间模式
                     Toast.makeText(ReadBookActivity.this,
@@ -239,9 +329,38 @@ public class ReadBookActivity extends Activity {
                         }
                     }.start();
                     break;
+                case R.id.iv_change_text_small://点击缩小字体
+                    size=Double.valueOf(textContent.getTextSize()-25).intValue();
+                    textContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,size);
+                    changeCurrentTextSize(size);
+//                    Toast.makeText(ReadBookActivity.this,
+//                            "点击缩小字体",
+//                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.iv_change_text_big://点击加大字体
+                    size=Double.valueOf(textContent.getTextSize()+25).intValue();
+                    textContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,size);
+                    changeCurrentTextSize(size);
+//                    Toast.makeText(ReadBookActivity.this,
+//                            "点击加大字体",
+//                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.tv_change_text_style://点击改变字体样式
+                    Toast.makeText(ReadBookActivity.this,
+                            "点击改变字体样式",
+                            Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
+
+    /**
+     * 改变阅读书籍时的字体大小
+     */
+    private void changeCurrentTextSize(int size) {
+        textSizeSettingPopupWindow=new TextSizeSettingPopupWindow(ReadBookActivity.this,itemClickListener,size);
+        textSizeSettingPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),Gravity.NO_GRAVITY,0,0);
+    }
 
     /**
      * 读取服务端本书的所有内容
@@ -286,7 +405,7 @@ public class ReadBookActivity extends Activity {
     }
 
     /**
-     * 从服务器获取要读的书的内容，并显示在空间中
+     * 从服务器获取要读的章节的书的内容，并显示在空间中
      */
     private void getBookTextFromServer() {
         //将章节对象转成gson串
@@ -333,7 +452,7 @@ public class ReadBookActivity extends Activity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //返回上一页
-            if (contentObj!=null){
+            if (contentObj!=null && flag==null){
                 Intent intent=new Intent(ReadBookActivity.this,MoreContentActivity.class);
                 intent.putExtra("book",book);
                 intent.putExtra("contentObj", (Serializable) contentObj);
