@@ -48,8 +48,7 @@ public class IdiomInfoActivity extends AppCompatActivity {
 //    private String url = "https://api.jisuapi.com/chengyu/detail";
 
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
-    @BindView(R.id.idiom_info_tab)
-    TabLayout tabLayout;
+    @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
     @BindView(R.id.idiom_view_pager) ViewPager viewPager;
 
     private Handler myHandler;
@@ -76,6 +75,7 @@ public class IdiomInfoActivity extends AppCompatActivity {
         ViewPager viewPager = setViewPagerAdapter();
         //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
         myHandler = new Handler(){
             @Override
