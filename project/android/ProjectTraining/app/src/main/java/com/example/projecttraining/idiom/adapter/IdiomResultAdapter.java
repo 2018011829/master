@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.idiom.activitys.IdiomInfoActivity;
@@ -65,13 +66,14 @@ public class IdiomResultAdapter extends BaseAdapter {
         //设置控件内容
         tvResult.setText(results.get(i).getName());
 
-        //设置监听器
+        //设置监听器（点击某个成语，跳转到该成语的详情界面）
         tvResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(myContext, IdiomInfoActivity.class);
                 String name = results.get(i).getName();
+                Toast.makeText(myContext,name,Toast.LENGTH_SHORT).show();
                 intent.putExtra("name",name);
                 myContext.startActivity(intent);
             }

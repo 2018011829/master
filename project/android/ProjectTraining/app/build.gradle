@@ -15,6 +15,13 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
+    // side-menu.Android依赖
+    repositories {
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.projecttraining"
         minSdkVersion 21
@@ -58,6 +65,9 @@ dependencies {
     //添加BufferKnife依赖
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    // 添加side-menu.Android依赖
+    implementation 'com.github.yalantis:Side-Menu.Android:1.0.2'
+    implementation 'com.github.ozodrukh:CircularReveal:2.1.0'
 
     implementation 'com.contrarywind:wheelview:4.1.0'
     //导入Glide依赖
