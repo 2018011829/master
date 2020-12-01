@@ -3,6 +3,7 @@ package com.example.projecttraining.home.fragments.MomentsFragment.Beans;
 import java.util.List;
 
 public class Moments {//动态类（每个说说）
+    private int id;//id
     private String phoneNumber;//发表人手机号
     private String headPortraitUrl;//用户头像地址
     private String name;//用户昵称
@@ -15,12 +16,24 @@ public class Moments {//动态类（每个说说）
 
     public Moments() {
     }
+    public Moments(String content,List<String> pictureUrl) {
+        this.content = content;
+        this.pictureUrl = pictureUrl;
+    }
 
     public Moments(String headPortraitUrl, String name, String content, List<String> pictureUrl) {
         this.headPortraitUrl = headPortraitUrl;
         this.name = name;
         this.content = content;
         this.pictureUrl = pictureUrl;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPhoneNumber() {

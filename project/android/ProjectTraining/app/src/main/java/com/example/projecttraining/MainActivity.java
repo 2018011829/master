@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
+import com.example.projecttraining.home.fragments.MomentsFragment.MomentsFragment;
 import com.example.projecttraining.util.AppConstantsUtil;
 import com.example.projecttraining.util.SpUtils;
 import com.google.android.material.tabs.TabLayout;
@@ -36,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-
         //为ViewPager设置Adapter
         ViewPager viewPager = setViewPagerAdapter();
         //将ViewPager和TabLayout互相绑定
         BindViewPagerAndTabLayout(viewPager);
+
+
     }
 
     /**
