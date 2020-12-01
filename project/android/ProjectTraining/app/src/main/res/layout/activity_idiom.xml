@@ -1,48 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:padding="20dp"
-    android:orientation="vertical"
+<!--2020-11-25-->
+<!--2020-11-26-->
+<!--2020-11-27-->
+<!--2020-11-28-->
+<!--@author lrf-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-        <Button
-            android:id="@+id/btn_menuMore"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:background="@drawable/menu_more"/>
-        <LinearLayout
-            android:id="@+id/search_idiom"
-            android:layout_marginLeft="12dp"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <io.codetail.widget.RevealFrameLayout
+            android:id="@+id/container_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/black_border">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/search"
-                android:layout_marginLeft="16dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:textSize="16sp"
-                android:gravity="center_vertical"
-                android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
-                android:layout_width="match_parent"
-                android:text="请输入要搜索的成语相关信息"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <GridView
-        android:id="@+id/gv_idiomClassify"
-        android:numColumns="2"
-        android:layout_marginTop="20dp"
-        android:verticalSpacing="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/content_overlay"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background" />
+
+            <LinearLayout
+                android:id="@+id/content_frame"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background">
+
+                <LinearLayout
+                    android:id="@+id/search_idiom"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/black_border">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/search"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:text="请输入成语相关信息"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </io.codetail.widget.RevealFrameLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="@dimen/sliding_menu_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:scrollbarThumbVertical="@android:color/transparent">
+            <!--左面侧拉框-->
+            <LinearLayout
+                android:id="@+id/left_drawer"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/sliding_menu_width"
+                android:divider="@android:color/transparent"
+                android:background="@android:color/transparent"/>
+        </ScrollView>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

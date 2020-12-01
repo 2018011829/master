@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--2020-11-25-->
+<!--2020-11-30-->
+<!--@author lrf-->
 <LinearLayout
     android:padding="20dp"
     android:orientation="vertical"
@@ -11,17 +14,63 @@
         android:textSize="28sp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"/>
 
     <TextView
         android:id="@+id/tv_idiom_pronounce"
         android:textSize="28sp"
         android:gravity="center"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_dark"/>
 
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
+        <!--上方导航栏-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/idiom_info_tab"
+            app:tabIndicatorHeight="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:tabTextColor="@android:color/black"
+            app:tabIndicatorColor="@android:color/holo_red_dark"
+            app:tabSelectedTextColor="@android:color/holo_red_dark">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_1"
+                android:text="成语意思"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_2"
+                android:text="近反义词"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_3"
+                android:text="典故出处"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_4"
+                android:text="遣词造句"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.tabs.TabLayout>
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/idiom_view_pager"
+            android:layout_marginTop="75dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 </LinearLayout>

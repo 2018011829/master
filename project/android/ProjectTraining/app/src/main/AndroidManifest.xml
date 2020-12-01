@@ -27,11 +27,12 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".mine.AddChildActivity"></activity>
         <activity android:name=".IntroAppActivity" />
-        <activity android:name=".idiom.activitys.IdiomInfoActivity"></activity>
-        <activity android:name=".login.LoginByPhoneActivity" >
-
-
-        </activity>
+        <activity android:name=".login.LoginByPhoneActivity" ></activity>
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".login.LoginByPasswordActivity" />
+        <activity android:name=".idiom.activitys.IdiomByTypeActivity"></activity>
+        <activity android:name=".idiom.activitys.IdiomInfoActivity" />
+        <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
