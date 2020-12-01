@@ -32,9 +32,12 @@
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".idiom.activitys.IdiomByTypeActivity"></activity>
         <activity android:name=".idiom.activitys.IdiomInfoActivity" />
-        <activity android:name=".login.LoginByPhoneActivity" />
-        <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".login.LoginByPasswordActivity" />
+        <activity android:name=".login.LoginByPhoneActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".register.RegisterActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".login.LoginByPasswordActivity"
+            tools:ignore="DuplicateActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>

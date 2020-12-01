@@ -177,6 +177,5 @@
                     android:text="开始阅读"/>
             </LinearLayout>
         </LinearLayout>
-    </>
-
+    </com.example.projecttraining.books.tools.MyScrollView>
 </LinearLayout>
