@@ -9,4 +9,6 @@
     <color name="grey">#cd545d</color>
     <color name="white">#03DAC5</color>
     <color name="comment">#cdff96</color>
+    <color name="colorTheme">#2aa515</color>
+>
 </resources>

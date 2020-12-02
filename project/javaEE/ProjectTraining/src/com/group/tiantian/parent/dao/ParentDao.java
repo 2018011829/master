@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.group.tiantian.entity.Parent;
 import com.group.tiantian.util.DBUtil;
-
 public class ParentDao {
 	public static Connection connection;
 	public static ParentDao parentDao;
@@ -103,27 +100,28 @@ public class ParentDao {
 	}
 	
 	/**
-	 *查询所有Parent的信息
-	 * @return Parent对象的列表
+	 * 返回某个Parent的信息
+	 * @param phone 根据号码查找该父母
+	 * @return Parent对象
 	 */
-	public List<Parent> selectAllParents(){
-		List<Parent> parents=new ArrayList<Parent>();
-		String sql="select * from parents";
+	public Parent selectOneParent(String phone) {
+		Parent parent=new Parent();
+		String sql="select * from parents where phone=?";
 		try {
 			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, phone);
 			ResultSet resultSet=preparedStatement.executeQuery();
-			while(resultSet.next()) {
-				Parent parent=new Parent();
-				parent.setId(resultSet.getInt(1));
-				parent.setPhone(resultSet.getString(2));
-				parent.setPassword(resultSet.getString(3));
-				parent.setNickname(resultSet.getString(4));
-				parent.setAvator(resultSet.getString(5));
-				parents.add(parent);
-			}	
+			resultSet.next();
+			parent.setId(resultSet.getInt(1));
+			parent.setPhone(resultSet.getString(2));
+			parent.setPassword(resultSet.getString(3));
+			parent.setNickname(resultSet.getString(4));
+			parent.setAvator(resultSet.getString(5));
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return parents;
+		return parent;
+		
 	}
 }
