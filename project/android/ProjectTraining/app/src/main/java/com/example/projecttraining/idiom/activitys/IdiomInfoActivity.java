@@ -43,7 +43,6 @@ import butterknife.ButterKnife;
  * 2020-11-28
  * 2020-11-30
  * 2020-12-2
- *
  * @author lrf
  */
 public class IdiomInfoActivity extends AppCompatActivity {
@@ -100,6 +99,7 @@ public class IdiomInfoActivity extends AppCompatActivity {
                         //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
                         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
 
                         break;
                 }
