@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.idiom.entity.IdiomInfoJiSu;
-import com.example.projecttraining.idiom.entity.IdiomInfoResultJiSu;
+import com.example.projecttraining.idiom.entity.IdiomInfo;
+import com.example.projecttraining.idiom.entity.IdiomInfoResult;
 import com.example.projecttraining.idiom.fragment.IdiomAllusionFragment;
 import com.example.projecttraining.idiom.fragment.IdiomExampleSentenceFragment;
 import com.example.projecttraining.idiom.fragment.IdiomMeanFragment;
@@ -50,19 +50,18 @@ import butterknife.OnClick;
 public class IdiomInfoActivity extends AppCompatActivity {
 
     private String idiomName;
-//    private String APPKEY_JUHE = "a9b630b59585bbd480cddd11fc7de952";
-//    private String url_juhe = "http://v.juhe.cn/chengyu/query";
-    private String APPKEY_JISU = "52836ab53d4cf3e9";
-    private String url_jisu = "https://api.jisuapi.com/chengyu/detail";
+    private String APPKEY = "52836ab53d4cf3e9";
+    private String url = "https://api.jisuapi.com/chengyu/detail";
 
     @BindView(R.id.linear_forward) LinearLayout linearForward;
+    @BindView(R.id.read_idiom) LinearLayout readIdiom;
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
     @BindView(R.id.tv_idiom_pronounce) TextView tvIdiomPronounce;
     @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
     @BindView(R.id.idiom_view_pager) ViewPager viewPager;
 
     private Handler myHandler;
-    private IdiomInfoResultJiSu idiomInfoResultJiSu;
+    private IdiomInfoResult idiomInfoResult;
     //定义Gson对象属性
     private Gson gson;
 
@@ -89,13 +88,10 @@ public class IdiomInfoActivity extends AppCompatActivity {
                     case 1:
                         String json = (String) msg.obj;
                         Log.e("lrf_json", json);
-//                        IdiomInfoJuHe idiomInfoJuHe = IdiomJsonUtil.convertToIdiomInfoJuHe(json);
-//                        Log.e("lrf_反序列化", idiomInfoJuHe.toString());
-//                        IdiomInfoResultJuHe idiomInfoResultJuHe = idiomInfoJuHe.getIdiomInfoResultJuHe();
-                        IdiomInfoJiSu idiomInfoJiSu = IdiomJsonUtil.convertToIdiomInfoJiSu(json);
-                        Log.e("lrf_反序列化", idiomInfoJiSu.toString());
-                        idiomInfoResultJiSu = idiomInfoJiSu.getIdiomInfoResultJiSu();
-                        tvIdiomPronounce.setText(idiomInfoResultJiSu.getPronounce());
+                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfoJiSu(json);
+                        Log.e("lrf_反序列化", idiomInfo.toString());
+                        idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        tvIdiomPronounce.setText(idiomInfoResult.getPronounce());
 
                         //为ViewPager设置Adapter
                         ViewPager viewPager = setViewPagerAdapter();
@@ -110,9 +106,16 @@ public class IdiomInfoActivity extends AppCompatActivity {
 
     }
 
+    // 点击返回
     @OnClick(R.id.linear_forward)
     public void clickToForward(){
         finish();
+    }
+
+    // 点击播放，则播放该成语读音
+    @OnClick(R.id.read_idiom)
+    public void clickReadIdiom(){
+
     }
 
     /**
@@ -138,8 +141,7 @@ public class IdiomInfoActivity extends AppCompatActivity {
             public void run() {
                 try {
                     // 创建URL对象
-//                    URL urlPath = new URL(url_juhe + "?word="+ URLEncoder.encode(word, "utf-8")+"&dtype=&key="+APPKEY_JUHE);
-                    URL urlPath = new URL(url_jisu + "?appkey=" + APPKEY_JISU + "&chengyu=" + URLEncoder.encode(word, "utf-8"));
+                    URL urlPath = new URL(url + "?appkey=" + APPKEY + "&chengyu=" + URLEncoder.encode(word, "utf-8"));
                     HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
                     // 设置网络请求方式为POST
                     conn.setRequestMethod("POST");
@@ -177,9 +179,6 @@ public class IdiomInfoActivity extends AppCompatActivity {
      * @return ViewPager
      */
     private ViewPager setViewPagerAdapter() {
-//        //得到ViewPager和IdiomInfoAdapter，并为ViewPager设置Adapter
-//        IdiomInfoAdapter idiomInfoAdapter = new IdiomInfoAdapter(getSupportFragmentManager(), 1);
-//        viewPager.setAdapter(idiomInfoAdapter);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
             @NonNull
             @Override
@@ -188,23 +187,23 @@ public class IdiomInfoActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         IdiomMeanFragment idiomMeanFragment = new IdiomMeanFragment();
-                        bundle.putString("content",idiomInfoResultJiSu.getContent());
+                        bundle.putString("content", idiomInfoResult.getContent());
                         idiomMeanFragment.setArguments(bundle);
                         return idiomMeanFragment;
                     case 1:
                         IdiomNearAntonymsFragment idiomNearAntonymsFragment = new IdiomNearAntonymsFragment();
-                        bundle.putStringArrayList("antonym", (ArrayList<String>) idiomInfoResultJiSu.getAntonym());
-                        bundle.putStringArrayList("thesaurus", (ArrayList<String>) idiomInfoResultJiSu.getThesaurus());
+                        bundle.putStringArrayList("antonym", (ArrayList<String>) idiomInfoResult.getAntonym());
+                        bundle.putStringArrayList("thesaurus", (ArrayList<String>) idiomInfoResult.getThesaurus());
                         idiomNearAntonymsFragment.setArguments(bundle);
                         return idiomNearAntonymsFragment;
                     case 2:
                         IdiomAllusionFragment idiomAllusionFragment = new IdiomAllusionFragment();
-                        bundle.putString("comefrom",idiomInfoResultJiSu.getComefrom());
+                        bundle.putString("comefrom", idiomInfoResult.getComefrom());
                         idiomAllusionFragment.setArguments(bundle);
                         return idiomAllusionFragment;
                     case 3:
                         IdiomExampleSentenceFragment idiomExampleSentenceFragment = new IdiomExampleSentenceFragment();
-                        bundle.putString("example",idiomInfoResultJiSu.getExample());
+                        bundle.putString("example", idiomInfoResult.getExample());
                         idiomExampleSentenceFragment.setArguments(bundle);
                         return idiomExampleSentenceFragment;
                     default:

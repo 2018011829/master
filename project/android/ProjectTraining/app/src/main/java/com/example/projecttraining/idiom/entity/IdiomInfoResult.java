@@ -6,7 +6,7 @@ import java.util.List;
  * 2020-12-2
  * @author lrf
  */
-public class IdiomInfoResultJiSu {
+public class IdiomInfoResult {
     private String name;
     private String pronounce;
     private String content;
@@ -71,10 +71,10 @@ public class IdiomInfoResultJiSu {
         this.example = example;
     }
 
-    public IdiomInfoResultJiSu() {
+    public IdiomInfoResult() {
     }
 
-    public IdiomInfoResultJiSu(String name, String pronounce, String content, String comefrom, List<String> antonym, List<String> thesaurus, String example) {
+    public IdiomInfoResult(String name, String pronounce, String content, String comefrom, List<String> antonym, List<String> thesaurus, String example) {
         this.name = name;
         this.pronounce = pronounce;
         this.content = content;
@@ -86,7 +86,7 @@ public class IdiomInfoResultJiSu {
 
     @Override
     public String toString() {
-        return "IdiomInfoResultJiSu{" +
+        return "IdiomInfoResult{" +
                 "name='" + name + '\'' +
                 ", pronounce='" + pronounce + '\'' +
                 ", content='" + content + '\'' +
