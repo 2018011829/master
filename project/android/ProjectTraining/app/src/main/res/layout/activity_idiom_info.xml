@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tv_idiom_pronounce"
-        android:textSize="28sp"
+        android:textSize="21sp"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
