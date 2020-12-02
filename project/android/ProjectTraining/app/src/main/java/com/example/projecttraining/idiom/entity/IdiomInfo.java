@@ -4,10 +4,10 @@ package com.example.projecttraining.idiom.entity;
  * 2020-12-2
  * @author lrf
  */
-public class IdiomInfoJiSu {
+public class IdiomInfo {
     private int status;
     private String msg;
-    private IdiomInfoResultJiSu idiomInfoResultJiSu;
+    private IdiomInfoResult idiomInfoResult;
 
     public int getStatus() {
         return status;
@@ -25,29 +25,29 @@ public class IdiomInfoJiSu {
         this.msg = msg;
     }
 
-    public IdiomInfoResultJiSu getIdiomInfoResultJiSu() {
-        return idiomInfoResultJiSu;
+    public IdiomInfoResult getIdiomInfoResult() {
+        return idiomInfoResult;
     }
 
-    public void setIdiomInfoResultJiSu(IdiomInfoResultJiSu idiomInfoResultJiSu) {
-        this.idiomInfoResultJiSu = idiomInfoResultJiSu;
+    public void setIdiomInfoResult(IdiomInfoResult idiomInfoResult) {
+        this.idiomInfoResult = idiomInfoResult;
     }
 
-    public IdiomInfoJiSu() {
+    public IdiomInfo() {
     }
 
-    public IdiomInfoJiSu(int status, String msg, IdiomInfoResultJiSu idiomInfoResultJiSu) {
+    public IdiomInfo(int status, String msg, IdiomInfoResult idiomInfoResult) {
         this.status = status;
         this.msg = msg;
-        this.idiomInfoResultJiSu = idiomInfoResultJiSu;
+        this.idiomInfoResult = idiomInfoResult;
     }
 
     @Override
     public String toString() {
-        return "IdiomInfoJiSu{" +
+        return "IdiomInfo{" +
                 "status=" + status +
                 ", msg='" + msg + '\'' +
-                ", idiomInfoResultJiSu=" + idiomInfoResultJiSu +
+                ", idiomInfoResult=" + idiomInfoResult +
                 '}';
     }
 }
