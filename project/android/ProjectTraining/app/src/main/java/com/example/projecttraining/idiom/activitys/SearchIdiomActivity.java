@@ -3,6 +3,8 @@ package com.example.projecttraining.idiom.activitys;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +39,7 @@ import butterknife.OnClick;
 
 /**
  * 2020-11-25
+ * 2020-12-2
  * @author lrf
  */
 public class SearchIdiomActivity extends AppCompatActivity {
@@ -44,14 +47,13 @@ public class SearchIdiomActivity extends AppCompatActivity {
     private List<Result> resultList = new ArrayList<>();
     private IdiomResultAdapter resultAdapter;
     private String keyword;
+    private Handler myHandler;
     private String APPKEY = "52836ab53d4cf3e9";
     private String url = "https://api.jisuapi.com/chengyu/search";
-    private Handler myHandler;
 
     @BindView(R.id.tv_search_idiom) EditText etKeyword;
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;
     @BindView(R.id.lv_idiom_search_result) ListView lvResult;
-    @BindView(R.id.iv_searchImg) ImageView ivSearchImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,29 +61,44 @@ public class SearchIdiomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_idiom_search);
 
         ButterKnife.bind(this);
-        ivSearchImg.setOnClickListener(new View.OnClickListener() {
+        etKeyword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                keyword = etKeyword.getText().toString().trim();
-                getIdiomSearchResult(keyword);
-            }
-        });
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        myHandler = new Handler(){
+            }
+
+            // 实时监听输入框，并根据输入框中的内容即时搜索成语
             @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
-                    case 1:
-                        String json = (String) msg.obj;
-                        Log.e("lrf",json);
-                        IdiomResult idiomResult = IdiomJsonUtil.convertToIdiomResult(json);
-                        Log.e("lrf_search反序列化",idiomResult.toString());
-                        resultList = idiomResult.getResult();
-                        initView();
-                        break;
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!charSequence.toString().trim().equals("") && charSequence.toString().trim().length() != 0){
+                    keyword = charSequence.toString().trim();
+                    getIdiomSearchResult(keyword);
                 }
             }
-        };
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                myHandler = new Handler(){
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        switch (msg.what){
+                            case 1:
+                                String json = (String) msg.obj;
+                                Log.e("lrf",json);
+                                IdiomResult idiomResult = IdiomJsonUtil.convertToIdiomResult(json);
+                                Log.e("lrf_search反序列化",idiomResult.toString());
+                                resultList = idiomResult.getResult();
+                                initView();
+                                break;
+//                            default:
+//                                resultList = null;
+//                                initView();
+//                                break;
+                        }
+                    }
+                };
+            }
+        });
 
     }
 
