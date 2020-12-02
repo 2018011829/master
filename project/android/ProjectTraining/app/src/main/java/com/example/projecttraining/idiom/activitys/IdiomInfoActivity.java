@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 2020-11-26
@@ -53,6 +55,7 @@ public class IdiomInfoActivity extends AppCompatActivity {
     private String APPKEY_JISU = "52836ab53d4cf3e9";
     private String url_jisu = "https://api.jisuapi.com/chengyu/detail";
 
+    @BindView(R.id.linear_forward) LinearLayout linearForward;
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
     @BindView(R.id.tv_idiom_pronounce) TextView tvIdiomPronounce;
     @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
@@ -100,12 +103,16 @@ public class IdiomInfoActivity extends AppCompatActivity {
                         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
-
                         break;
                 }
             }
         };
 
+    }
+
+    @OnClick(R.id.linear_forward)
+    public void clickToForward(){
+        finish();
     }
 
     /**

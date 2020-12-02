@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--2020-11-25-->
 <!--2020-11-30-->
+<!--2020-12-2-->
 <!--@author lrf-->
 <LinearLayout
     android:padding="20dp"
@@ -8,6 +9,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/linear_forward"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/forward"/>
+        <TextView
+            android:text="返回"
+            android:textSize="23sp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_idiom_name"
@@ -70,7 +88,8 @@
             android:id="@+id/idiom_view_pager"
             android:layout_marginTop="75dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"/>
     </RelativeLayout>
 
 </LinearLayout>
