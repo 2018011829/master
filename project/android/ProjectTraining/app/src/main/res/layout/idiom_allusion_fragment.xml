@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 2020-11-30 -->
+<!--2020-12-2-->
 <!-- @author lrf -->
 <LinearLayout
     android:orientation="vertical"
@@ -7,9 +8,29 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TextView
-        android:text="典故出处"
+    <LinearLayout
+        android:gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="23dp"
+            android:src="@drawable/fenge"/>
+        <TextView
+            android:text="典故出处"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_idiom_comeform"
+        android:textSize="21sp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"/>
 
 </LinearLayout>

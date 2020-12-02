@@ -56,7 +56,7 @@ public class SearchIdiomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_idiom);
+        setContentView(R.layout.activity_idiom_search);
 
         ButterKnife.bind(this);
         ivSearchImg.setOnClickListener(new View.OnClickListener() {
