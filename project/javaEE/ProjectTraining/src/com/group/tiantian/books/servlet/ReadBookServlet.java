@@ -53,12 +53,16 @@ public class ReadBookServlet extends HttpServlet {
 				// 根据章节信息 获取书的章节内容
 				text = getBookTextByContent(currentContent, nextContent);
 			}
-			System.out.println(text);
-			response.getWriter().write(text);
+			if(text!=null) {
+				System.out.println(text);
+				response.getWriter().write(text);
+			}else {
+				System.out.println("未获取到章节信息！");
+			}
+			
 		} else {
-			System.out.println("未获取到章节信息！");
+			System.out.println("未获取到发送的消息！");
 		}
-
 	}
 
 	/**
