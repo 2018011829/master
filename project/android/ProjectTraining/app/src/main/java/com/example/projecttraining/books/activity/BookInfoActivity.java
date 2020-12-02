@@ -136,9 +136,6 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(BookInfoActivity.this,
-//                        "点击了"+data.get(i),
-//                        Toast.LENGTH_SHORT).show();
                 Intent intentRead=new Intent(BookInfoActivity.this,ReadBookActivity.class);
                 intentRead.putExtra("currentIndex",i);
                 intentRead.putExtra("contentObj", (Serializable) contents);
