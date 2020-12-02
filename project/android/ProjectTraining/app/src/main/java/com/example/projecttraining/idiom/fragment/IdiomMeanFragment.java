@@ -30,12 +30,13 @@ public class IdiomMeanFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.idiom_mean_fragment,container,false);
 
-        ButterKnife.bind(view);
+        ButterKnife.bind(this,view);
 
         Bundle bundle = getArguments();
         String content = bundle.getString("content");
         Log.e("lrf_idiom_mean",content);
-        if(null != content){
+
+        if(null != content && !content.equals("null")){
             tvIdiomContent.setText(content);
         }else {
             tvIdiomContent.setText("暂无该成语的解释");

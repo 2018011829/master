@@ -30,13 +30,13 @@ public class IdiomExampleSentenceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.idiom_example_sentence_fragment,container,false);
 
-        ButterKnife.bind(view);
+        ButterKnife.bind(this,view);
 
         Bundle bundle = getArguments();
         String example = bundle.getString("example");
         Log.e("lrf_idiom_example",example);
 
-        if(null != example){
+        if(null != example && !example.equals("")){
             tvIdiomExample.setText(example);
         }else {
             tvIdiomExample.setText("暂无该成语的例句");

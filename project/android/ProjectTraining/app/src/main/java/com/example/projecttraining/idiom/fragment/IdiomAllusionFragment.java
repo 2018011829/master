@@ -30,13 +30,13 @@ public class IdiomAllusionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.idiom_allusion_fragment,container,false);
 
-        ButterKnife.bind(view);
+        ButterKnife.bind(this,view);
 
         Bundle bundle = getArguments();
         String comefrom = bundle.getString("comefrom");
         Log.e("lrf_idiom_comefrom",comefrom);
 
-        if(null != comefrom){
+        if(null != comefrom && !comefrom.equals("null")){
             tvIdiomComefrom.setText(comefrom);
         }else {
             tvIdiomComefrom.setText("暂无该成语的典故出处");
