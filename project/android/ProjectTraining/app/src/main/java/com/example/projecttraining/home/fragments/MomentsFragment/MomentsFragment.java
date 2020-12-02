@@ -14,9 +14,13 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
+import com.example.projecttraining.home.fragments.HomeFragment;
 import com.example.projecttraining.home.fragments.MomentsFragment.Adapter.MomentsFragmentAdapter;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag01;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag02;
@@ -65,7 +69,6 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
                 showPopupWindow(view);
             }
         });
-
         return view;
     }
     //显示PopupWindow菜单
@@ -85,7 +88,8 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UploadDynamic.class);
-                startActivity(intent);
+                intent.putExtra("item",2);
+                startActivity(intent);//fragment跳转到activity附带值是1的请求码
             }
         });
         //显示PopupWindow
@@ -97,6 +101,17 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
                 mPopWindow.dismiss();
             }
         });
+    }
+    //重写onActivityResult，判断响应吗和请求码，如果一致，用事物开启FragmentB
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if (requestCode==1&&resultCode==10){//判断响应码和请求码
+            MainActivity mainActivity = (MainActivity)getActivity();
+            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.floating_action_button,new HomeFragment());
+            fragmentTransaction.commit();
+        }
     }
     //初始化
     private void initView() {
@@ -117,7 +132,6 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
         //为viewPager添加adapter
         viewPager.setAdapter(new MomentsFragmentAdapter(getFragmentManager(),list));
         viewPager.addOnPageChangeListener(this);
-
     }
     //滚动事件
     public void onPageScrolled(int i, float v, int i1) {

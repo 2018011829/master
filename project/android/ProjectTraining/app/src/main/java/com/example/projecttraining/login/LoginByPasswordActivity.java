@@ -210,7 +210,6 @@ private final static String TAG="LoginByPasswordActivity";
 
     public void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-
             Toast.makeText(LoginByPasswordActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             mExitTime = System.currentTimeMillis();
         } else {

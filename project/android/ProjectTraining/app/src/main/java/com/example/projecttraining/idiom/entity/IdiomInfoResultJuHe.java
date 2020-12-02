@@ -2,7 +2,11 @@ package com.example.projecttraining.idiom.entity;
 
 import java.util.List;
 
-public class IdiomInfoResult {
+/**
+ * 2020-11-30
+ * @author lrf
+ */
+public class IdiomInfoResultJuHe {
     private String bushou;
     private String head;
     private String pinyin;
@@ -103,10 +107,10 @@ public class IdiomInfoResult {
         this.fanyi = fanyi;
     }
 
-    public IdiomInfoResult() {
+    public IdiomInfoResultJuHe() {
     }
 
-    public IdiomInfoResult(String bushou, String head, String pinyin, String chengyujs, String from_, String example, String yufa, String ciyujs, String yinzhengjs, List<String> tongyi, List<String> fanyi) {
+    public IdiomInfoResultJuHe(String bushou, String head, String pinyin, String chengyujs, String from_, String example, String yufa, String ciyujs, String yinzhengjs, List<String> tongyi, List<String> fanyi) {
         this.bushou = bushou;
         this.head = head;
         this.pinyin = pinyin;
@@ -122,7 +126,7 @@ public class IdiomInfoResult {
 
     @Override
     public String toString() {
-        return "IdiomInfoResult{" +
+        return "IdiomInfoResultJuHe{" +
                 "bushou='" + bushou + '\'' +
                 ", head='" + head + '\'' +
                 ", pinyin='" + pinyin + '\'' +

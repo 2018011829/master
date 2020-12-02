@@ -110,7 +110,6 @@ public class Frag01 extends Fragment {
         pictureUrl.add(url1);
         Moments moment = new Moments("123","李仕奇","气死本仕奇了",pictureUrl);//测试数据
         moments.add(moment);
-
         return list;
     }
     /**
