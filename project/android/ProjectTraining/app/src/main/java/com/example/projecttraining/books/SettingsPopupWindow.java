@@ -34,7 +34,7 @@ public class SettingsPopupWindow extends PopupWindow {
         this.setWidth(ActionBar.LayoutParams.MATCH_PARENT);
         //设置弹出框的高
         this.setHeight(ActionBar.LayoutParams.WRAP_CONTENT);
-        // 实例化一个ColorDrawable颜色为半透明
+        // 实例化一个ColorDrawable颜色为透明
         ColorDrawable dw = new ColorDrawable(0x00000000);
         // 设置弹出窗体的背景
         this.setBackgroundDrawable(dw);

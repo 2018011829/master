@@ -98,6 +98,8 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     //添加Gson依赖
     implementation 'com.google.code.gson:gson:2.8.6'
+    //调节亮度依赖
+    implementation 'com.blankj:utilcode:1.30.4'
 
     //顶部导航栏依赖
     implementation 'com.gerenvip.ui.tabs:tablayout:4.0.9'

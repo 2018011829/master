@@ -2,14 +2,21 @@ package com.example.projecttraining.books;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BrightnessUtils;
 import com.example.projecttraining.R;
 
 public class TextSizeSettingPopupWindow extends PopupWindow {
@@ -19,8 +26,17 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
     private ImageView ivChangeBig;
     private TextView tvShowSize;
     private TextView tvChangeTextStyle;
+    private SeekBar changeLight; //调整系统亮度的进度条
+    private int currentLight; //当前亮度
 
-    public TextSizeSettingPopupWindow(Context context, View.OnClickListener itemsOnclick,int textSize) {
+
+    public void setTvShowSize(int size) {
+
+        this.tvShowSize.setText(size+"");
+        this.setContentView(mMenuView);
+    }
+
+    public TextSizeSettingPopupWindow(Context context, View.OnClickListener itemsOnclick, int textSize) {
         //加载布局 获取控件
         findViews(context,itemsOnclick,textSize);
         //设置弹出框的宽
@@ -58,7 +74,7 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
      * @param context
      * @param itemsOnclick
      */
-    private void findViews(Context context, View.OnClickListener itemsOnclick,int textSize) {
+    private void findViews(final Context context, View.OnClickListener itemsOnclick, int textSize) {
         this.mMenuView= LayoutInflater.from(context).inflate(R.layout.textsize_settings_popup_window,null);
         this.setContentView(mMenuView);
         //获取控件
@@ -70,5 +86,44 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
         ivChangeSmall.setOnClickListener(itemsOnclick);
         ivChangeBig.setOnClickListener(itemsOnclick);
         tvChangeTextStyle.setOnClickListener(itemsOnclick);
+
+        //进度条
+        changeLight=mMenuView.findViewById(R.id.seekbar_change_light);
+        currentLight= BrightnessUtils.getBrightness();
+        changeLight.setProgress(currentLight);
+        //设置进度条改变的监听器
+        changeLight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                //设置系统亮度
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    //非系统签名应用，引导用户手动授权修改Settings权限
+                    if (!Settings.System.canWrite(context)) {
+                        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        intent.setData(Uri.parse("package:" + context.getPackageName()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } else {
+                        //有了权限，具体的动作
+                        Settings.System.putInt(context.getContentResolver(),
+                                Settings.System.SCREEN_BRIGHTNESS, i);
+                        Log.e("当前屏幕亮度", BrightnessUtils.getBrightness() +"");
+                        BrightnessUtils.setBrightness((int)(255*i*0.01));
+//                        tvProgress.setText("当前屏幕的亮度是：" + i + "%");
+                    }
+                }
+                Log.e("onProgressChanged","正在拖动");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.e("onStartTrackingTouch","开始拖动");
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.e("onStopTrackingTouch","停止拖动");
+            }
+        });
     }
 }
