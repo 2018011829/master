@@ -13,8 +13,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.idiom.adapter.IdiomInfoAdapter;
-import com.example.projecttraining.idiom.entity.IdiomInfo;
-import com.example.projecttraining.idiom.entity.IdiomInfoResult;
+import com.example.projecttraining.idiom.entity.IdiomInfoJiSu;
+import com.example.projecttraining.idiom.entity.IdiomInfoJuHe;
+import com.example.projecttraining.idiom.entity.IdiomInfoResultJiSu;
+import com.example.projecttraining.idiom.entity.IdiomInfoResultJuHe;
 import com.example.projecttraining.util.IdiomJsonUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -36,20 +38,24 @@ import butterknife.ButterKnife;
  * 2020-11-26
  * 2020-11-28
  * 2020-11-30
+ * 2020-12-2
  *
  * @author lrf
  */
 public class IdiomInfoActivity extends AppCompatActivity {
 
     private String idiomName;
-    private String APPKEY = "a9b630b59585bbd480cddd11fc7de952";
-    private String url = "http://v.juhe.cn/chengyu/query";
-//    private String APPKEY = "52836ab53d4cf3e9";
-//    private String url = "https://api.jisuapi.com/chengyu/detail";
+    //    private String APPKEY_JUHE = "a9b630b59585bbd480cddd11fc7de952";
+//    private String url_juhe = "http://v.juhe.cn/chengyu/query";
+    private String APPKEY_JISU = "52836ab53d4cf3e9";
+    private String url_jisu = "https://api.jisuapi.com/chengyu/detail";
 
-    @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
-    @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
-    @BindView(R.id.idiom_view_pager) ViewPager viewPager;
+    @BindView(R.id.tv_idiom_name)
+    TextView tvIdiomName;
+    @BindView(R.id.idiom_info_tab)
+    TabLayout tabLayout;
+    @BindView(R.id.idiom_view_pager)
+    ViewPager viewPager;
 
     private Handler myHandler;
     //定义Gson对象属性
@@ -77,16 +83,19 @@ public class IdiomInfoActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
-        myHandler = new Handler(){
+        myHandler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
+                switch (msg.what) {
                     case 1:
                         String json = (String) msg.obj;
-                        Log.e("lrf_json",json);
-                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfo(json);
-                        Log.e("lrf_反序列化",idiomInfo.toString());
-                        IdiomInfoResult idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        Log.e("lrf_json", json);
+//                        IdiomInfoJuHe idiomInfoJuHe = IdiomJsonUtil.convertToIdiomInfoJuHe(json);
+//                        Log.e("lrf_反序列化", idiomInfoJuHe.toString());
+//                        IdiomInfoResultJuHe idiomInfoResultJuHe = idiomInfoJuHe.getIdiomInfoResultJuHe();
+                        IdiomInfoJiSu idiomInfoJiSu = IdiomJsonUtil.convertToIdiomInfoJiSu(json);
+                        Log.e("lrf_反序列化", idiomInfoJiSu.toString());
+                        IdiomInfoResultJiSu idiomInfoResultJiSu = idiomInfoJiSu.getIdiomInfoResultJiSu();
 
                         break;
                 }
@@ -108,27 +117,28 @@ public class IdiomInfoActivity extends AppCompatActivity {
 
     /**
      * 调用成语API接口，查询某成语的详细信息
+     *
      * @param word
      * @return
      */
     private void getIdiomInfoFromAPI(String word) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
                     // 创建URL对象
-                    URL urlPath = new URL(url + "?word="+ URLEncoder.encode(word, "utf-8")+"&dtype=&key="+APPKEY);
-//                    URL urlPath = new URL(url+"?appkey=" + APPKEY + "&chengyu="+ URLEncoder.encode(word, "utf-8"));
+//                    URL urlPath = new URL(url_juhe + "?word="+ URLEncoder.encode(word, "utf-8")+"&dtype=&key="+APPKEY_JUHE);
+                    URL urlPath = new URL(url_jisu + "?appkey=" + APPKEY_JISU + "&chengyu=" + URLEncoder.encode(word, "utf-8"));
                     HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
                     // 设置网络请求方式为POST
                     conn.setRequestMethod("POST");
                     // 获取网络输入流
                     InputStream in = conn.getInputStream();
                     // 使用字符流读取
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     // 读取字符信息
                     String json = reader.readLine();
-                    Log.e("lrf",json);
+                    Log.e("lrf", json);
                     // 关闭流
                     reader.close();
                     in.close();

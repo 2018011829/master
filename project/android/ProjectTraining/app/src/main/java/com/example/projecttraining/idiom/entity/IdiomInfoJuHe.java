@@ -1,9 +1,13 @@
 package com.example.projecttraining.idiom.entity;
 
-public class IdiomInfo {
+/**
+ * 2020-11-30
+ * @author lrf
+ */
+public class IdiomInfoJuHe {
     private int error_code;
     private String reason;
-    private IdiomInfoResult idiomInfoResult;
+    private IdiomInfoResultJuHe idiomInfoResultJuHe;
 
     public int getError_code() {
         return error_code;
@@ -21,29 +25,29 @@ public class IdiomInfo {
         this.reason = reason;
     }
 
-    public IdiomInfoResult getIdiomInfoResult() {
-        return idiomInfoResult;
+    public IdiomInfoResultJuHe getIdiomInfoResultJuHe() {
+        return idiomInfoResultJuHe;
     }
 
-    public void setIdiomInfoResult(IdiomInfoResult idiomInfoResult) {
-        this.idiomInfoResult = idiomInfoResult;
+    public void setIdiomInfoResultJuHe(IdiomInfoResultJuHe idiomInfoResultJuHe) {
+        this.idiomInfoResultJuHe = idiomInfoResultJuHe;
     }
 
-    public IdiomInfo() {
+    public IdiomInfoJuHe() {
     }
 
-    public IdiomInfo(int error_code, String reason, IdiomInfoResult idiomInfoResult) {
+    public IdiomInfoJuHe(int error_code, String reason, IdiomInfoResultJuHe idiomInfoResultJuHe) {
         this.error_code = error_code;
         this.reason = reason;
-        this.idiomInfoResult = idiomInfoResult;
+        this.idiomInfoResultJuHe = idiomInfoResultJuHe;
     }
 
     @Override
     public String toString() {
-        return "IdiomInfo{" +
+        return "IdiomInfoJuHe{" +
                 "error_code=" + error_code +
                 ", reason='" + reason + '\'' +
-                ", idiomInfoResult=" + idiomInfoResult +
+                ", idiomInfoResultJuHe=" + idiomInfoResultJuHe +
                 '}';
     }
 }

@@ -1,7 +1,9 @@
 package com.example.projecttraining.util;
 
-import com.example.projecttraining.idiom.entity.IdiomInfo;
-import com.example.projecttraining.idiom.entity.IdiomInfoResult;
+import com.example.projecttraining.idiom.entity.IdiomInfoJiSu;
+import com.example.projecttraining.idiom.entity.IdiomInfoJuHe;
+import com.example.projecttraining.idiom.entity.IdiomInfoResultJiSu;
+import com.example.projecttraining.idiom.entity.IdiomInfoResultJuHe;
 import com.example.projecttraining.idiom.entity.IdiomResult;
 import com.example.projecttraining.idiom.entity.Result;
 import com.google.gson.Gson;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * 2020-11-25
  * 2020-11-30
- *
+ * 2020-12-2
  * @author lrf
  */
 public class IdiomJsonUtil {
@@ -31,13 +33,64 @@ public class IdiomJsonUtil {
             .create();//创建Gson对象
 
     /**
-     * 将json串解析为IdiomInfo
+     * 将json串解析为IdiomInfoJiSu
      * @param json
      * @return
      */
-    public static IdiomInfo convertToIdiomInfo(String json) {
-        IdiomInfo idiomInfo = new IdiomInfo();
-        IdiomInfoResult idiomInfoResult = new IdiomInfoResult();
+    public static IdiomInfoJiSu convertToIdiomInfoJiSu(String json) {
+        IdiomInfoJiSu idiomInfoJiSu = new IdiomInfoJiSu();
+        IdiomInfoResultJiSu idiomInfoResultJiSu = new IdiomInfoResultJiSu();
+        try {
+            // 创建外层JSONObject对象
+            JSONObject jObj = new JSONObject(json);
+            // 获取外层JSONObject中的元素
+            int status = jObj.getInt("status");
+            String msg = jObj.getString("msg");
+
+            idiomInfoJiSu.setStatus(status);
+            idiomInfoJiSu.setMsg(msg);
+
+            // 创建内层JSONObject对象
+            JSONObject result = jObj.getJSONObject("result");
+
+            // 获取内层JSONObject中的元素
+            String name = result.getString("name");
+            String pronounce = result.getString("pronounce");
+            String content = result.getString("content");
+            String comefrom = result.getString("comefrom");
+            String tongyiJson = result.getString("antonym");
+            String fanyiJson = result.getString("thesaurus");
+            String example = result.getString("example");
+
+            // 借助Gson，对List<String>解析
+            Type type = new TypeToken<List<String>>(){}.getType();
+            List<String> antonym = gson.fromJson(tongyiJson,type);
+            List<String> thesaurus = gson.fromJson(fanyiJson,type);
+
+            idiomInfoResultJiSu.setName(name);
+            idiomInfoResultJiSu.setPronounce(pronounce);
+            idiomInfoResultJiSu.setContent(content);
+            idiomInfoResultJiSu.setComefrom(comefrom);
+            idiomInfoResultJiSu.setAntonym(antonym);
+            idiomInfoResultJiSu.setThesaurus(thesaurus);
+            idiomInfoResultJiSu.setExample(example);
+
+            idiomInfoJiSu.setIdiomInfoResultJiSu(idiomInfoResultJiSu);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return idiomInfoJiSu;
+    }
+
+
+    /**
+     * 将json串解析为IdiomInfoJuHe
+     * @param json
+     * @return
+     */
+    public static IdiomInfoJuHe convertToIdiomInfoJuHe(String json) {
+        IdiomInfoJuHe idiomInfoJuHe = new IdiomInfoJuHe();
+        IdiomInfoResultJuHe idiomInfoResultJuHe = new IdiomInfoResultJuHe();
         try {
             // 创建外层JSONObject对象
             JSONObject jObj = new JSONObject(json);
@@ -45,8 +98,8 @@ public class IdiomJsonUtil {
             int error_code = jObj.getInt("error_code");
             String reason = jObj.getString("reason");
 
-            idiomInfo.setError_code(error_code);
-            idiomInfo.setReason(reason);
+            idiomInfoJuHe.setError_code(error_code);
+            idiomInfoJuHe.setReason(reason);
 
             // 创建内层JSONObject对象
             JSONObject result = jObj.getJSONObject("result");
@@ -69,23 +122,23 @@ public class IdiomJsonUtil {
             List<String> tongyi = gson.fromJson(tongyiJson,type);
             List<String> fanyi = gson.fromJson(fanyiJson,type);
 
-            idiomInfoResult.setBushou(bushou);
-            idiomInfoResult.setHead(head);
-            idiomInfoResult.setPinyin(pinyin);
-            idiomInfoResult.setChengyujs(chengyujs);
-            idiomInfoResult.setFrom_(from_);
-            idiomInfoResult.setExample(example);
-            idiomInfoResult.setYufa(yufa);
-            idiomInfoResult.setCiyujs(ciyujs);
-            idiomInfoResult.setYinzhengjs(yinzhengjs);
-            idiomInfoResult.setTongyi(tongyi);
-            idiomInfoResult.setFanyi(fanyi);
+            idiomInfoResultJuHe.setBushou(bushou);
+            idiomInfoResultJuHe.setHead(head);
+            idiomInfoResultJuHe.setPinyin(pinyin);
+            idiomInfoResultJuHe.setChengyujs(chengyujs);
+            idiomInfoResultJuHe.setFrom_(from_);
+            idiomInfoResultJuHe.setExample(example);
+            idiomInfoResultJuHe.setYufa(yufa);
+            idiomInfoResultJuHe.setCiyujs(ciyujs);
+            idiomInfoResultJuHe.setYinzhengjs(yinzhengjs);
+            idiomInfoResultJuHe.setTongyi(tongyi);
+            idiomInfoResultJuHe.setFanyi(fanyi);
 
-            idiomInfo.setIdiomInfoResult(idiomInfoResult);
+            idiomInfoJuHe.setIdiomInfoResultJuHe(idiomInfoResultJuHe);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return idiomInfo;
+        return idiomInfoJuHe;
     }
 
 
