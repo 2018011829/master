@@ -135,13 +135,16 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getReadableDatabase();
             Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
             cursor.moveToNext();
-            String avatar=cursor.getString(0);
-            String nickname=cursor.getString(1);
-            Glide.with(getContext())
-                    .load(avatar)
-                    .into(holder.avatar);
-            holder.name.setText(nickname);
-            holder.motioned.setVisibility(View.GONE);
+            if(cursor.getCount()>0){
+                String avatar=cursor.getString(0);
+                String nickname=cursor.getString(1);
+                Glide.with(getContext())
+                        .load(avatar)
+                        .into(holder.avatar);
+                holder.name.setText(nickname);
+                holder.motioned.setVisibility(View.GONE);
+            }
+
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();

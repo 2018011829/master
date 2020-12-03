@@ -74,4 +74,9 @@ public class ParentService {
 	public String getOneParentInfo(String phone) {
 		return new Gson().toJson(parentDao.selectOneParent(phone));
 	}
+
+	public String searchParentsByPhone(String query) {
+		return new Gson().toJson(parentDao.queryParentsByPhone(query));
+		
+	}
 }

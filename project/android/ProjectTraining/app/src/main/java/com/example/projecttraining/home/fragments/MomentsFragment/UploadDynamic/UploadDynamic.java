@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,10 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projecttraining.MainActivity;
+
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
-import com.example.projecttraining.home.fragments.MomentsFragment.Beans.PersonalInfo;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,8 +30,18 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,6 +53,7 @@ import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UploadDynamic extends AppCompatActivity {
@@ -159,7 +170,7 @@ public class UploadDynamic extends AppCompatActivity {
                         .imageEngine(GlideEngine.createGlideEngine()) // 选择器展示不出图片则添加
                         .openExternalPreview(position, selectList);
                 //②:自定义布局预览
-                //Tools.startPhotoViewActivity(MainActivity.this, categoryLists, position);
+                Tools.startPhotoViewActivity(UploadDynamic.this, categoryLists, position);
             }
         });
     }
@@ -168,7 +179,7 @@ public class UploadDynamic extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             // 结果回调
-            List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+            selectList = PictureSelector.obtainMultipleResult(data);
             showSelectPic(selectList);
         }
     }
@@ -204,18 +215,24 @@ public class UploadDynamic extends AppCompatActivity {
                 }
                 Log.e(TAG, "内容: " + content);
                 Log.e(TAG, "图片: " + allSelectList.toString());
-                //传递内容和图片
-                simpStringParamPostRequest(content);
-                Intent intent = new Intent(UploadDynamic.this,MainActivity.class);
-                String item = intent.getStringExtra("item");
-                startActivity(intent);
+                sendTimeStringToServer();//发送当前时间字符串
+                sendContentToServer(content);//发送文本
+                String pictureUrl = allSelectList.toString().substring(1,allSelectList.toString().length()-1);//图片路径集合
+                List<String> pictureUrls = Arrays.asList(pictureUrl.split(", "));//将图片路径集合分割开
+                for(int i=0;i<pictureUrls.size();i++){
+                    sendPictureToServer(pictureUrls.get(i));//循环发送多张图片
+                }
+
+//                Intent intent = new Intent(UploadDynamic.this,PictureActivity.class);
+//                intent.putExtra("pictureUrl",pictureUrl);
+//                startActivity(intent);
                 break;
         }
     }
     /**
-     * 采用POST请求方式提交个人信息
+     * 采用POST请求方式说说信息
      */
-    private void simpStringParamPostRequest(String content) {
+    private void sendContentToServer(String content) {
         //2 创建Request对象
         //1) 使用RequestBody封装请求数据
         //获取待传输数据对应的MIME类型
@@ -227,11 +244,10 @@ public class UploadDynamic extends AppCompatActivity {
         FormBody formBody =
                 new FormBody.Builder()
                         .add("content",content)
-                        .add("pictueUrl",json)
                         .build();
         //2) 创建请求对象
         Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS + "MomentsInfoServlet")
+                .url(ConfigUtil.SERVICE_ADDRESS +"MomentsContentServlet")
                 .post(formBody)
                 .build();
         //3. 创建CALL对象
@@ -252,4 +268,74 @@ public class UploadDynamic extends AppCompatActivity {
             }
         });
     }
+
+
+    //向服务端发送图片
+    private void sendPictureToServer(String urlPath) {
+        final String path=ConfigUtil.SERVICE_ADDRESS+"MomentsPicturesServlet";
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url=new URL(path);
+                    HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    OutputStream os=conn.getOutputStream();
+                    InputStream inputStream=new FileInputStream(urlPath);
+                    int b=-1;
+                    while ((b=inputStream.read())!=-1){
+                        os.write(b);
+                    }
+                    conn.getInputStream();
+                    os.flush();
+                    os.close();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    /**
+     * 采用POST请求方式提交当前时间的字符串用于区分动态
+     */
+    private void sendTimeStringToServer() {
+        //2 创建Request对象
+        //1) 使用RequestBody封装请求数据
+        //获取待传输数据对应的MIME类型
+        MediaType type = MediaType.parse("text/plain");
+        //创建FormBody对象
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        //序列化
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("time",formatter.format(date))
+                        .build();
+        //2) 创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS +"TimeStringServlet")
+                .post(formBody)
+                .build();
+        //3. 创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //4. 提交请求并获取响应
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.i("lww", "请求失败");
+            }
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String result = response.body().string();
+                Message msg = handler.obtainMessage();
+                msg.what = 1;
+                msg.obj = result;
+                handler.sendMessage(msg);
+            }
+        });
+    }
+
+
 }

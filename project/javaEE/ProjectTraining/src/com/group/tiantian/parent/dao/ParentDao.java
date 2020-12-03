@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.group.tiantian.entity.Parent;
 import com.group.tiantian.util.DBUtil;
 public class ParentDao {
@@ -123,5 +126,29 @@ public class ParentDao {
 		}
 		return parent;
 		
+	}
+
+
+	public List<Parent> queryParentsByPhone(String query) {
+		String sql="select * from parents where phone=?";
+		List<Parent> parents=new ArrayList<Parent>();
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, query);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Parent parent=new Parent();
+				parent.setId(resultSet.getInt(1));
+				parent.setPhone(resultSet.getString(2));
+				parent.setPassword(resultSet.getString(3));
+				parent.setNickname(resultSet.getString(4));
+				parent.setAvator(resultSet.getString(5));
+				parents.add(parent);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return parents;
 	}
 }

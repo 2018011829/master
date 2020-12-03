@@ -71,6 +71,12 @@ public class SearchIdiomActivity extends AppCompatActivity {
                 if(!charSequence.toString().trim().equals("") && charSequence.toString().trim().length() != 0){
                     keyword = charSequence.toString().trim();
                     getIdiomSearchResult(keyword);
+<<<<<<< HEAD
+=======
+                }else {
+                    resultList = null;
+                    initView();
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                 }
             }
 
@@ -88,10 +94,13 @@ public class SearchIdiomActivity extends AppCompatActivity {
                                 resultList = idiomResult.getResult();
                                 initView();
                                 break;
+<<<<<<< HEAD
 //                            default:
 //                                resultList = null;
 //                                initView();
 //                                break;
+=======
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                         }
                     }
                 };

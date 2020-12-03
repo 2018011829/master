@@ -12,8 +12,10 @@ import android.util.Log;
 import com.example.projecttraining.contact.Parent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +38,18 @@ public class ParentUtil {
     public static String currentUserAvatar="";
     //聊天好友的头像地址
     public static String toChatUserAvator="";
+    //当前用户的所有联系人
+    public static List<String> allContacts;
+    //联系人个数是否有变动
+    public static boolean isContactAddedOrDeleted=false;
+
+    static {
+        try {
+            allContacts = EMClient.getInstance().contactManager().getAllContactsFromServer();
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -68,7 +82,7 @@ public class ParentUtil {
             }
         });
     }
-    public static void getOneParent(String phone, Handler handler, TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper){
+    public static void getOneParent(String phone, Handler handler){
         new Thread(){
             @Override
             public void run() {
@@ -158,10 +172,47 @@ public class ParentUtil {
             String json=call.execute().body().string();
             Parent parent=new Gson().fromJson(json,Parent.class);
             EaseParentUtil.currentUserAvatar=ConfigUtil.SETVER_AVATAR+parent.getAvator();
+            Log.e(TAG, "storeCurrentParent: "+parent.getAvator());
             EaseParentUtil.currentUserNickname=parent.getNickname();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static void searchParentsByPhone(String query, Handler handler) {
+        new Thread(){
+            @Override
+            public void run() {
+                Log.e(TAG, "run: searchParentsByPhone"+query);
+                FormBody formBody=new FormBody.Builder().add("query",query).build();
+                Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"SearchParentsByPhoneServlet")
+                        .post(formBody)
+                        .build();
+                Call call=okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        String json=response.body().string();
+                        Gson gson=new Gson();
+                        Log.e(TAG, "run: "+json );
+                        //得到集合的类型
+                        Type type=new TypeToken<List<Parent>>(){}.getType();
+                        List<Parent> parents=gson.fromJson(json,type);
+                        Log.e(TAG, "onResponse: 得到的搜索列表"+parents );
+                        //通过message通知主线程
+                        Message message=handler.obtainMessage();
+                        message.what=3;
+                        message.obj=parents;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        }.start();
     }
 }

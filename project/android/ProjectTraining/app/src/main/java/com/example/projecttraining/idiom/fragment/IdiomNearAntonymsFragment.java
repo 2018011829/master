@@ -41,15 +41,23 @@ public class IdiomNearAntonymsFragment extends Fragment {
         ButterKnife.bind(this,view);
 
         Bundle bundle = getArguments();
+<<<<<<< HEAD
         List<String> antonym = bundle.getStringArrayList("antonym");
         List<String> thesaurus = bundle.getStringArrayList("thesaurus");
 
         if(null != antonym){
+=======
+        List<String> thesaurus = bundle.getStringArrayList("thesaurus");
+        List<String> antonym = bundle.getStringArrayList("antonym");
+
+        if(null != thesaurus){
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
             FlowLayout flowLayout = new FlowLayout(getContext());
             flowLayout.setPadding(20,20,20,20);
             flowLayout.setVerticalSpacing(30);
             flowLayout.setHorizontalSpacing(30);
 
+<<<<<<< HEAD
             idiomAntonym.addView(flowLayout);
 
             for(int i = 0; i < antonym.size(); ++i){
@@ -57,6 +65,15 @@ public class IdiomNearAntonymsFragment extends Fragment {
                 button.setId(i);
                 button.setTextSize(16);
                 button.setText(antonym.get(i));
+=======
+            idiomThesaurus.addView(flowLayout);
+
+            for(int i = 0; i < thesaurus.size(); ++i){
+                final Button button = new Button(getContext());
+                button.setId(i);
+                button.setTextSize(16);
+                button.setText(thesaurus.get(i));
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                 button.setBackgroundResource(R.drawable.black_border);
                 button.setPadding(20,20,20,20);
                 //添加到布局文件中去
@@ -81,7 +98,11 @@ public class IdiomNearAntonymsFragment extends Fragment {
             flowLayout.setVerticalSpacing(30);
             flowLayout.setHorizontalSpacing(30);
 
+<<<<<<< HEAD
             idiomAntonym.addView(flowLayout);
+=======
+            idiomThesaurus.addView(flowLayout);
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
 
             TextView textView = new TextView(getContext());
             textView.setText("暂无该成语的近义词");
@@ -92,12 +113,17 @@ public class IdiomNearAntonymsFragment extends Fragment {
             flowLayout.invalidate();
         }
 
+<<<<<<< HEAD
         if(null != thesaurus){
+=======
+        if(null != antonym){
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
             FlowLayout flowLayout = new FlowLayout(getContext());
             flowLayout.setPadding(20,20,20,20);
             flowLayout.setVerticalSpacing(30);
             flowLayout.setHorizontalSpacing(30);
 
+<<<<<<< HEAD
             idiomThesaurus.addView(flowLayout);
 
             for(int i = 0; i < thesaurus.size(); ++i){
@@ -105,6 +131,15 @@ public class IdiomNearAntonymsFragment extends Fragment {
                 button.setId(i);
                 button.setTextSize(16);
                 button.setText(thesaurus.get(i));
+=======
+            idiomAntonym.addView(flowLayout);
+
+            for(int i = 0; i < antonym.size(); ++i){
+                final Button button = new Button(getContext());
+                button.setId(i);
+                button.setTextSize(16);
+                button.setText(antonym.get(i));
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                 button.setBackgroundResource(R.drawable.black_border);
                 button.setPadding(20,20,20,20);
                 //添加到布局文件中去
@@ -129,7 +164,11 @@ public class IdiomNearAntonymsFragment extends Fragment {
             flowLayout.setVerticalSpacing(30);
             flowLayout.setHorizontalSpacing(30);
 
+<<<<<<< HEAD
             idiomThesaurus.addView(flowLayout);
+=======
+            idiomAntonym.addView(flowLayout);
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
 
             TextView textView = new TextView(getContext());
             textView.setText("暂无该成语的反义词");
@@ -139,6 +178,10 @@ public class IdiomNearAntonymsFragment extends Fragment {
             //更新界面
             flowLayout.invalidate();
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
 
         return view;
     }

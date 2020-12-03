@@ -18,13 +18,17 @@ import android.widget.Toast;
 
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.ContactManager;
 import com.example.projecttraining.register.RegisterActivity;
 import com.example.projecttraining.util.ConfigUtil;
+import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -138,6 +142,9 @@ private final static String TAG="LoginByPasswordActivity";
                 new EMCallBack() {
                     @Override
                     public void onSuccess() {
+                        //存储当前用户的昵称和头像
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                        ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(),new ArrayList<>());
                         startActivity(new Intent(LoginByPasswordActivity.this, MainActivity.class));
                         Looper.prepare();
                         Toast.makeText(getBaseContext(), "登录成功！", Toast.LENGTH_SHORT).show();
