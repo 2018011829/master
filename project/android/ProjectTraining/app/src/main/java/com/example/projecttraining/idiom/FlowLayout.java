@@ -47,15 +47,9 @@ public class FlowLayout extends ViewGroup {
         //3.遍历所有的子Button，进行分行操作
         Line line = new Line();//只要不换行，始终都是同一个Line对象
         for (int i = 0; i < getChildCount(); i++) {
-<<<<<<< HEAD
-            View childView = getChildAt(i);//获取子TextView
-            childView.measure(0, 0);//引起view的onMeasure方法回调，从而保证后面的方法能够有值
-            //4.如果当前line中 没有TextView，则直接放入当前Line中
-=======
             View childView = getChildAt(i);//获取子Button
             childView.measure(0, 0);//引起view的onMeasure方法回调，从而保证后面的方法能够有值
             //4.如果当前line中 没有Button，则直接放入当前Line中
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
             if (line.getViewList().size() == 0) {
                 line.addLineView(childView);
             } else if (line.getWidth() + horizontalSpacing + childView.getMeasuredWidth() > noPaddingWidth) {
@@ -75,13 +69,8 @@ public class FlowLayout extends ViewGroup {
             }
         }
 
-<<<<<<< HEAD
-        //for循环结束后，lineList就存放了所有的Line对象，而每个line中有记录自己的所有TextView
-        //为了能够垂直的摆放所有的Line的TextView，所以要给当前FlowLayout设置对应的宽高,
-=======
         //for循环结束后，lineList就存放了所有的Line对象，而每个line中有记录自己的所有Button
         //为了能够垂直的摆放所有的Line的Button，所以要给当前FlowLayout设置对应的宽高,
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
         //计算所需要的高度：上下的padding + 所有line的高度   + 所有line之间的垂直间距
         int height = getPaddingTop() + getPaddingBottom();
         for (int i = 0; i < lineList.size(); i++) {
@@ -92,11 +81,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     /**
-<<<<<<< HEAD
-     * 摆放操作，让所有的子TextView摆放到指定的位置上面
-=======
      * 摆放操作，让所有的子Button摆放到指定的位置上面
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
      */
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -108,25 +93,6 @@ public class FlowLayout extends ViewGroup {
             if (i > 0) {
                 paddingTop += lineList.get(i - 1).getHeight() + verticalSpacing;
             }
-<<<<<<< HEAD
-            ArrayList<View> viewList = line.getViewList();//获取line所有的TextView
-            //1.计算出当前line的留白区域的值
-            int remainSpacing = getLineRemainSpacing(line);
-            //2.计算每个TextView分到多少留白
-            float perSpacing = remainSpacing / viewList.size();
-
-            for (int j = 0; j < viewList.size(); j++) {
-                View childView = viewList.get(j);//获取每个TextView
-                //3.将perSpacing增加到每个TextView的宽度上
-                int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) (childView.getMeasuredWidth() + perSpacing), MeasureSpec.EXACTLY);
-                childView.measure(widthMeasureSpec, 0);
-                if (j == 0) {
-                    //摆放每行的第一个TextView
-                    childView.layout(paddingLeft, paddingTop, paddingLeft + childView.getMeasuredWidth()
-                            , paddingTop + childView.getMeasuredHeight());
-                } else {
-                    //摆放后面的TextView，需要参照前一个View
-=======
             ArrayList<View> viewList = line.getViewList();//获取line所有的Button
             //1.计算出当前line的留白区域的值
             int remainSpacing = getLineRemainSpacing(line);
@@ -144,7 +110,6 @@ public class FlowLayout extends ViewGroup {
                             , paddingTop + childView.getMeasuredHeight());
                 } else {
                     //摆放后面的Button，需要参照前一个View
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                     View preView = viewList.get(j - 1);
                     int left = preView.getRight() + horizontalSpacing;
                     childView.layout(left, preView.getTop(), left + childView.getMeasuredWidth(),
@@ -165,34 +130,20 @@ public class FlowLayout extends ViewGroup {
     }
 
     /**
-<<<<<<< HEAD
-     * 定义行对象，用来封装每行的所有TextView，以及宽和高
-=======
      * 定义行对象，用来封装每行的所有Button，以及宽和高
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
      *
      * @author Administrator
      */
-    class Line {
-<<<<<<< HEAD
-        //用来记录当前行的所有TextView
-        private ArrayList<View> viewList = new ArrayList<View>();
-        //表示当前行所有TextView的宽，还有他们之间的水平间距
-=======
+    class  Line {
         //用来记录当前行的所有Button
         private ArrayList<View> viewList = new ArrayList<View>();
         //表示当前行所有Button的宽，还有他们之间的水平间距
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
         private int width;
         //当前行的高度
         private int height;
 
         /**
-<<<<<<< HEAD
-         * 添加一个TextView到viewList中
-=======
          * 添加一个Button到viewList中
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
          *
          * @param lineView
          */
@@ -202,31 +153,19 @@ public class FlowLayout extends ViewGroup {
 
                 //更新width
                 if (viewList.size() == 1) {
-<<<<<<< HEAD
-                    //如果是第一个TextView，那么width就是lineView的宽度
-=======
                     //如果是第一个Button，那么width就是lineView的宽度
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                     width = lineView.getMeasuredWidth();
                 } else {
                     //如果不是第一个，则要在当前width的基础上+水平间距+lineView的宽度
                     width += horizontalSpacing + lineView.getMeasuredWidth();
                 }
-<<<<<<< HEAD
-                //更新height,在此所有的TextView的高度都是一样的
-=======
                 //更新height,在此所有的Button的高度都是一样的
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
                 height = Math.max(height, lineView.getMeasuredHeight());
             }
         }
 
         /**
-<<<<<<< HEAD
-         * 获取当前Line中的所有TextView
-=======
          * 获取当前Line中的所有Button
->>>>>>> f6a91be86ac7c1a0bd45e5f5730da673a1d41b5e
          *
          * @return
          */
