@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--2020-11-25-->
 <!--2020-11-30-->
+<!--2020-12-2-->
 <!--@author lrf-->
 <LinearLayout
     android:padding="20dp"
@@ -9,22 +10,68 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tv_idiom_name"
-        android:textSize="28sp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"/>
+    <LinearLayout
+        android:id="@+id/linear_forward"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/forward"/>
+        <TextView
+            android:text="返回"
+            android:textSize="23sp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_idiom_pronounce"
-        android:textSize="28sp"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_idiom_name"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"/>
+
+        <TextView
+            android:id="@+id/tv_idiom_pronounce"
+            android:textSize="21sp"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_idiom_name"
+            android:textColor="@android:color/black"/>
+
+        <LinearLayout
+            android:id="@+id/read_idiom"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/read_idiom"/>
+
+            <TextView
+                android:text="播放"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:orientation="vertical"
@@ -70,7 +117,8 @@
             android:id="@+id/idiom_view_pager"
             android:layout_marginTop="75dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 /**
  * 2020-11-25
+ * 2020-12-2
  * @author lrf
  */
 public class IdiomResultAdapter extends BaseAdapter {
@@ -62,12 +64,13 @@ public class IdiomResultAdapter extends BaseAdapter {
         }
 
         //获取item中控件的引用
+        RelativeLayout relativeSearch = convertView.findViewById(R.id.relative_search);
         TextView tvResult = convertView.findViewById(R.id.tv_idiom_search_result);
         //设置控件内容
         tvResult.setText(results.get(i).getName());
 
         //设置监听器（点击某个成语，跳转到该成语的详情界面）
-        tvResult.setOnClickListener(new View.OnClickListener() {
+        relativeSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();

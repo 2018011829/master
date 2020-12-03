@@ -2,57 +2,65 @@ package com.example.projecttraining.idiom.entity;
 
 import java.util.List;
 
+/**
+ * 2020-12-2
+ * @author lrf
+ */
 public class IdiomInfoResult {
-    private String bushou;
-    private String head;
-    private String pinyin;
-    private String chengyujs;
-    private String from_;
+    private String name;
+    private String pronounce;
+    private String content;
+    private String comefrom;
+    private List<String> antonym;
+    private List<String> thesaurus;
     private String example;
-    private String yufa;
-    private String ciyujs;
-    private String yinzhengjs;
-    private List<String> tongyi;
-    private List<String> fanyi;
 
-    public String getBushou() {
-        return bushou;
+    public String getName() {
+        return name;
     }
 
-    public void setBushou(String bushou) {
-        this.bushou = bushou;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getHead() {
-        return head;
+    public String getPronounce() {
+        return pronounce;
     }
 
-    public void setHead(String head) {
-        this.head = head;
+    public void setPronounce(String pronounce) {
+        this.pronounce = pronounce;
     }
 
-    public String getPinyin() {
-        return pinyin;
+    public String getContent() {
+        return content;
     }
 
-    public void setPinyin(String pinyin) {
-        this.pinyin = pinyin;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getChengyujs() {
-        return chengyujs;
+    public String getComefrom() {
+        return comefrom;
     }
 
-    public void setChengyujs(String chengyujs) {
-        this.chengyujs = chengyujs;
+    public void setComefrom(String comefrom) {
+        this.comefrom = comefrom;
     }
 
-    public String getFrom_() {
-        return from_;
+    public List<String> getAntonym() {
+        return antonym;
     }
 
-    public void setFrom_(String from_) {
-        this.from_ = from_;
+    public void setAntonym(List<String> antonym) {
+        this.antonym = antonym;
+    }
+
+    public List<String> getThesaurus() {
+        return thesaurus;
+    }
+
+    public void setThesaurus(List<String> thesaurus) {
+        this.thesaurus = thesaurus;
     }
 
     public String getExample() {
@@ -63,77 +71,29 @@ public class IdiomInfoResult {
         this.example = example;
     }
 
-    public String getYufa() {
-        return yufa;
-    }
-
-    public void setYufa(String yufa) {
-        this.yufa = yufa;
-    }
-
-    public String getCiyujs() {
-        return ciyujs;
-    }
-
-    public void setCiyujs(String ciyujs) {
-        this.ciyujs = ciyujs;
-    }
-
-    public String getYinzhengjs() {
-        return yinzhengjs;
-    }
-
-    public void setYinzhengjs(String yinzhengjs) {
-        this.yinzhengjs = yinzhengjs;
-    }
-
-    public List<String> getTongyi() {
-        return tongyi;
-    }
-
-    public void setTongyi(List<String> tongyi) {
-        this.tongyi = tongyi;
-    }
-
-    public List<String> getFanyi() {
-        return fanyi;
-    }
-
-    public void setFanyi(List<String> fanyi) {
-        this.fanyi = fanyi;
-    }
-
     public IdiomInfoResult() {
     }
 
-    public IdiomInfoResult(String bushou, String head, String pinyin, String chengyujs, String from_, String example, String yufa, String ciyujs, String yinzhengjs, List<String> tongyi, List<String> fanyi) {
-        this.bushou = bushou;
-        this.head = head;
-        this.pinyin = pinyin;
-        this.chengyujs = chengyujs;
-        this.from_ = from_;
+    public IdiomInfoResult(String name, String pronounce, String content, String comefrom, List<String> antonym, List<String> thesaurus, String example) {
+        this.name = name;
+        this.pronounce = pronounce;
+        this.content = content;
+        this.comefrom = comefrom;
+        this.antonym = antonym;
+        this.thesaurus = thesaurus;
         this.example = example;
-        this.yufa = yufa;
-        this.ciyujs = ciyujs;
-        this.yinzhengjs = yinzhengjs;
-        this.tongyi = tongyi;
-        this.fanyi = fanyi;
     }
 
     @Override
     public String toString() {
         return "IdiomInfoResult{" +
-                "bushou='" + bushou + '\'' +
-                ", head='" + head + '\'' +
-                ", pinyin='" + pinyin + '\'' +
-                ", chengyujs='" + chengyujs + '\'' +
-                ", from_='" + from_ + '\'' +
+                "name='" + name + '\'' +
+                ", pronounce='" + pronounce + '\'' +
+                ", content='" + content + '\'' +
+                ", comefrom='" + comefrom + '\'' +
+                ", antonym=" + antonym +
+                ", thesaurus=" + thesaurus +
                 ", example='" + example + '\'' +
-                ", yufa='" + yufa + '\'' +
-                ", ciyujs='" + ciyujs + '\'' +
-                ", yinzhengjs='" + yinzhengjs + '\'' +
-                ", tongyi=" + tongyi +
-                ", fanyi=" + fanyi +
                 '}';
     }
 }

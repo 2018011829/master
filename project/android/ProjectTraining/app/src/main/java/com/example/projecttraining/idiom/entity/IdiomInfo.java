@@ -1,24 +1,28 @@
 package com.example.projecttraining.idiom.entity;
 
+/**
+ * 2020-12-2
+ * @author lrf
+ */
 public class IdiomInfo {
-    private int error_code;
-    private String reason;
+    private int status;
+    private String msg;
     private IdiomInfoResult idiomInfoResult;
 
-    public int getError_code() {
-        return error_code;
+    public int getStatus() {
+        return status;
     }
 
-    public void setError_code(int error_code) {
-        this.error_code = error_code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getReason() {
-        return reason;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public IdiomInfoResult getIdiomInfoResult() {
@@ -32,17 +36,17 @@ public class IdiomInfo {
     public IdiomInfo() {
     }
 
-    public IdiomInfo(int error_code, String reason, IdiomInfoResult idiomInfoResult) {
-        this.error_code = error_code;
-        this.reason = reason;
+    public IdiomInfo(int status, String msg, IdiomInfoResult idiomInfoResult) {
+        this.status = status;
+        this.msg = msg;
         this.idiomInfoResult = idiomInfoResult;
     }
 
     @Override
     public String toString() {
         return "IdiomInfo{" +
-                "error_code=" + error_code +
-                ", reason='" + reason + '\'' +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
                 ", idiomInfoResult=" + idiomInfoResult +
                 '}';
     }

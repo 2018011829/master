@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,13 +32,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 2020-11-28
+ * 2020-12-2
  * @author lrf
  */
 public class IdiomByTypeActivity extends AppCompatActivity {
 
+    @BindView(R.id.linear_forward) LinearLayout linearForward;
     @BindView(R.id.tv_idiom_type_name) TextView tvIdiomTypeName;
     @BindView(R.id.grid_idiom_by_type) GridView gVIdiomByType;
 
@@ -80,6 +84,11 @@ public class IdiomByTypeActivity extends AppCompatActivity {
             }
         };
 
+    }
+
+    @OnClick(R.id.linear_forward)
+    public void clickToForward(){
+        finish();
     }
 
     private void initView(){

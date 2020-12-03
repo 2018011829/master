@@ -5,16 +5,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.idiom.adapter.IdiomInfoAdapter;
 import com.example.projecttraining.idiom.entity.IdiomInfo;
 import com.example.projecttraining.idiom.entity.IdiomInfoResult;
+import com.example.projecttraining.idiom.fragment.IdiomAllusionFragment;
+import com.example.projecttraining.idiom.fragment.IdiomExampleSentenceFragment;
+import com.example.projecttraining.idiom.fragment.IdiomMeanFragment;
+import com.example.projecttraining.idiom.fragment.IdiomNearAntonymsFragment;
 import com.example.projecttraining.util.IdiomJsonUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -28,30 +34,34 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 2020-11-26
  * 2020-11-28
  * 2020-11-30
- *
+ * 2020-12-2
  * @author lrf
  */
 public class IdiomInfoActivity extends AppCompatActivity {
 
     private String idiomName;
-    private String APPKEY = "a9b630b59585bbd480cddd11fc7de952";
-    private String url = "http://v.juhe.cn/chengyu/query";
-//    private String APPKEY = "52836ab53d4cf3e9";
-//    private String url = "https://api.jisuapi.com/chengyu/detail";
+    private String APPKEY = "52836ab53d4cf3e9";
+    private String url = "https://api.jisuapi.com/chengyu/detail";
 
+    @BindView(R.id.linear_forward) LinearLayout linearForward;
+    @BindView(R.id.read_idiom) LinearLayout readIdiom;
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
+    @BindView(R.id.tv_idiom_pronounce) TextView tvIdiomPronounce;
     @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
     @BindView(R.id.idiom_view_pager) ViewPager viewPager;
 
     private Handler myHandler;
+    private IdiomInfoResult idiomInfoResult;
     //定义Gson对象属性
     private Gson gson;
 
@@ -71,27 +81,40 @@ public class IdiomInfoActivity extends AppCompatActivity {
         //Gson对象实例化
         initGson();
 
-        //为ViewPager设置Adapter
-        ViewPager viewPager = setViewPagerAdapter();
-        //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-        myHandler = new Handler(){
+        myHandler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
+                switch (msg.what) {
                     case 1:
                         String json = (String) msg.obj;
-                        Log.e("lrf_json",json);
-                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfo(json);
-                        Log.e("lrf_反序列化",idiomInfo.toString());
-                        IdiomInfoResult idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        Log.e("lrf_json", json);
+                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfoJiSu(json);
+                        Log.e("lrf_反序列化", idiomInfo.toString());
+                        idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        tvIdiomPronounce.setText(idiomInfoResult.getPronounce());
+
+                        //为ViewPager设置Adapter
+                        ViewPager viewPager = setViewPagerAdapter();
+                        //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
+                        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
                         break;
                 }
             }
         };
+
+    }
+
+    // 点击返回
+    @OnClick(R.id.linear_forward)
+    public void clickToForward(){
+        finish();
+    }
+
+    // 点击播放，则播放该成语读音
+    @OnClick(R.id.read_idiom)
+    public void clickReadIdiom(){
 
     }
 
@@ -108,27 +131,27 @@ public class IdiomInfoActivity extends AppCompatActivity {
 
     /**
      * 调用成语API接口，查询某成语的详细信息
+     *
      * @param word
      * @return
      */
     private void getIdiomInfoFromAPI(String word) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
                     // 创建URL对象
-                    URL urlPath = new URL(url + "?word="+ URLEncoder.encode(word, "utf-8")+"&dtype=&key="+APPKEY);
-//                    URL urlPath = new URL(url+"?appkey=" + APPKEY + "&chengyu="+ URLEncoder.encode(word, "utf-8"));
+                    URL urlPath = new URL(url + "?appkey=" + APPKEY + "&chengyu=" + URLEncoder.encode(word, "utf-8"));
                     HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
                     // 设置网络请求方式为POST
                     conn.setRequestMethod("POST");
                     // 获取网络输入流
                     InputStream in = conn.getInputStream();
                     // 使用字符流读取
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     // 读取字符信息
                     String json = reader.readLine();
-                    Log.e("lrf",json);
+                    Log.e("lrf", json);
                     // 关闭流
                     reader.close();
                     in.close();
@@ -156,9 +179,43 @@ public class IdiomInfoActivity extends AppCompatActivity {
      * @return ViewPager
      */
     private ViewPager setViewPagerAdapter() {
-        //得到ViewPager和IdiomInfoAdapter，并为ViewPager设置Adapter
-        IdiomInfoAdapter idiomInfoAdapter = new IdiomInfoAdapter(getSupportFragmentManager(), 1);
-        viewPager.setAdapter(idiomInfoAdapter);
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                Bundle bundle = new Bundle();
+                switch (position){
+                    case 0:
+                        IdiomMeanFragment idiomMeanFragment = new IdiomMeanFragment();
+                        bundle.putString("content", idiomInfoResult.getContent());
+                        idiomMeanFragment.setArguments(bundle);
+                        return idiomMeanFragment;
+                    case 1:
+                        IdiomNearAntonymsFragment idiomNearAntonymsFragment = new IdiomNearAntonymsFragment();
+                        bundle.putStringArrayList("antonym", (ArrayList<String>) idiomInfoResult.getAntonym());
+                        bundle.putStringArrayList("thesaurus", (ArrayList<String>) idiomInfoResult.getThesaurus());
+                        idiomNearAntonymsFragment.setArguments(bundle);
+                        return idiomNearAntonymsFragment;
+                    case 2:
+                        IdiomAllusionFragment idiomAllusionFragment = new IdiomAllusionFragment();
+                        bundle.putString("comefrom", idiomInfoResult.getComefrom());
+                        idiomAllusionFragment.setArguments(bundle);
+                        return idiomAllusionFragment;
+                    case 3:
+                        IdiomExampleSentenceFragment idiomExampleSentenceFragment = new IdiomExampleSentenceFragment();
+                        bundle.putString("example", idiomInfoResult.getExample());
+                        idiomExampleSentenceFragment.setArguments(bundle);
+                        return idiomExampleSentenceFragment;
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 4;
+            }
+        });
         return viewPager;
     }
 }
