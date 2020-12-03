@@ -77,6 +77,9 @@
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PictureActivity"></activity>
         <activity android:name=".idiom.activitys.IdiomByTypeActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
+        <activity android:name=".idiom.activitys.IdiomInfoActivity"/>
+        <activity android:name=".idiom.activitys.IdiomActivity"/>
+
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
