@@ -55,4 +55,5 @@ public class ChatActivity extends EaseBaseActivity{
     public String getToChatUsername(){
         return toChatUsername;
     }
+
 }

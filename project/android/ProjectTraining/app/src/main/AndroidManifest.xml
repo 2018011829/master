@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projecttraining">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,7 +21,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
@@ -29,12 +30,12 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".EMApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -44,10 +45,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".mine.AddChildActivity"></activity>
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+        <activity android:name=".contact.AddFriendsActivity"/>
+        <activity
+            android:name=".contact.NewFriendsActivity"
+            android:label="@string/title_activity_new_friends"/>
+        <activity android:name=".mine.AddChildActivity" />
         <activity android:name=".IntroAppActivity" />
-        <activity android:name=".idiom.activitys.IdiomInfoActivity"></activity>
-        <activity android:name=".login.LoginByPhoneActivity" ></activity>
+        <activity android:name=".idiom.activitys.IdiomInfoActivity" />
+        <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,29 +67,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".idiom.activitys.IdiomInfoActivity"
+        <activity
+            android:name=".idiom.activitys.IdiomInfoActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
-        <activity android:name=".idiom.activitys.IdiomByTypeActivity"></activity>
-        <activity android:name=".login.LoginByPhoneActivity"
+        <activity android:name=".idiom.activitys.IdiomByTypeActivity" />
+        <activity
+            android:name=".login.LoginByPhoneActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".register.RegisterActivity"
+        <activity
+            android:name=".register.RegisterActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".login.LoginByPasswordActivity"
+        <activity
+            android:name=".login.LoginByPasswordActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
-        <activity android:name=".idiom.activitys.IdiomByTypeActivity"
+        <activity
+            android:name=".idiom.activitys.IdiomByTypeActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".idiom.activitys.IdiomInfoActivity"
+        <activity
+            android:name=".idiom.activitys.IdiomInfoActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity"/>
-        <activity android:name=".home.fragments.MomentsFragment.DynamicDetails"/>
-        <activity android:name=".contact.ChatActivity"/>
-        <activity android:name=".MainActivity"/>
-        <!-- 设置环信应用的AppKey -->
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic" />
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
+        <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
+        <activity android:name=".contact.ChatActivity" />
+        <activity android:name=".MainActivity" /> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="1157201101107092#demo" />
@@ -90,7 +107,8 @@
             android:name="com.easemob.chat.EMJobService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            tools:ignore="WrongManifestParent" /> <!-- 声明sdk所需的receiver -->
+            tools:ignore="WrongManifestParent" />
+        <!-- 声明sdk所需的receiver -->
         <receiver
             android:name="com.easemob.chat.EMMonitorReceiver"
             tools:ignore="WrongManifestParent">
@@ -104,14 +122,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-        <!-- start book -->
+        </receiver> <!-- start book -->
         <activity android:name=".books.activity.ReadBookActivity" />
         <activity android:name=".books.activity.BookInfoActivity" />
         <activity android:name=".books.activity.BooksHomePageActivity" />
         <activity android:name=".books.activity.MoreBooksActivity" />
         <activity android:name=".books.activity.MoreContentActivity" />
-        <!-- end book -->
     </application>
 
 </manifest>

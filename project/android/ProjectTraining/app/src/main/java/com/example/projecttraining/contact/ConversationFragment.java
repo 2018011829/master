@@ -2,6 +2,7 @@ package com.example.projecttraining.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -22,8 +23,10 @@ import android.widget.ImageButton;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ParentUtil;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
@@ -43,12 +46,19 @@ public class ConversationFragment extends Fragment {
     protected ImageButton clearSearch;
     protected EditText query;
     protected InputMethodManager inputMethodManager;
-    EaseConversationList easeConversationList;
+    private EaseConversationList easeConversationList;
+    private List<EMConversation> copyConversations;
+    List<EMConversation> conversations;
 
     @Override
     public void onResume() {
         super.onResume();
+        conversations.clear();
+        conversations.addAll(loadConversationList());
         easeConversationList.refresh();
+        copyConversations.clear();
+        copyConversations.addAll(conversations);
+
     }
 
     @Override
@@ -57,8 +67,10 @@ public class ConversationFragment extends Fragment {
         Log.e(TAG, "onCreateView: ");
         View view=inflater.inflate(R.layout.fragment_conversation, container, false);
         easeConversationList=view.findViewById(R.id.ease_conversation_list);
-        List<EMConversation> conversations = new ArrayList<EMConversation>();
+        conversations = new ArrayList<EMConversation>();
+        copyConversations = new ArrayList<EMConversation>();
         conversations.addAll(loadConversationList());
+        copyConversations.addAll(conversations);
         easeConversationList.init(conversations);
         //获取搜索框相关控件
         query = (EditText) view.findViewById(R.id.query);
@@ -73,7 +85,25 @@ public class ConversationFragment extends Fragment {
         //设置搜索框的搜索事件
         query.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                easeConversationList.filter(s);
+//                easeConversationList.filter(s);
+                synchronized (conversations) {
+                    conversations.clear();
+                    conversations.addAll(copyConversations);
+                    for (EMConversation emConversation : copyConversations) {
+                        String username = emConversation.conversationId();
+                        TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper = TianTianSQLiteOpenHelper.getInstance(getContext());
+                        SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getReadableDatabase();
+                        Cursor cursor = sqLiteDatabase.query("parents", new String[]{"nickname"}, "phone=?", new String[]{username}, null, null, null);
+                        if (cursor.getCount() > 0) {
+                            cursor.moveToNext();
+                            String nickname = cursor.getString(0);
+                            if (!nickname.contains(s)) {
+                                conversations.remove(emConversation);
+                            }
+                        }
+                    }
+                    easeConversationList.refresh();
+                }
                 if (s.length() > 0) {
                     clearSearch.setVisibility(View.VISIBLE);
                 } else {
@@ -81,7 +111,6 @@ public class ConversationFragment extends Fragment {
 
                 }
             }
-
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -98,10 +127,51 @@ public class ConversationFragment extends Fragment {
                 Parent chatToParent=ParentUtil.queryAvatarAndNicknameByPhone(getContext(),conversations.get(position).conversationId());
                 EaseParentUtil.toChatUserNickname=chatToParent.getNickname();
                 EaseParentUtil.toChatUserAvator=chatToParent.getAvator();
+                //存储当前用户的昵称和头像
+                new Thread(){
+                    @Override
+                    public void run() {
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                    }
+                }.start();
                 startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,conversations.get(position).conversationId()));
             }
         });
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
+            @Override
+            public void onMessageReceived(List<EMMessage> list) {
+                conversations.clear();
+                conversations.addAll(loadConversationList());
+                easeConversationList.refresh();
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRecalled(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage emMessage, Object o) {
+
+            }
+        });
 
         return view;
     }

@@ -145,6 +145,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean roaming) {
         isRoaming = roaming;
+        setChatFragmentHelper(chatFragmentHelper);
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 
@@ -1273,6 +1274,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected EaseChatFragmentHelper chatFragmentHelper;
+
     public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper){
         this.chatFragmentHelper = chatFragmentHelper;
     }
