@@ -1,2 +1,2 @@
 rootProject.name='ProjectTraining'
-include ':app'
+include ':app', ':easeui'

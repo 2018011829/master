@@ -6,9 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
+
 import com.example.projecttraining.home.fragments.MomentsFragment.MomentsFragment;
+
 import com.example.projecttraining.util.AppConstantsUtil;
 import com.example.projecttraining.util.SpUtils;
+
+import com.example.projecttraining.ui.NoScrollViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 
 /**
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //为ViewPager设置Adapter
         ViewPager viewPager = setViewPagerAdapter();
+
         //将ViewPager和TabLayout互相绑定
         BindViewPagerAndTabLayout(viewPager);
 
@@ -99,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager setViewPagerAdapter() {
         //得到ViewPager和SectionsPagerAdapter，并为ViewPager设置Adapter
-        ViewPager viewPager=findViewById(R.id.view_pager);
+        NoScrollViewPager viewPager=findViewById(R.id.view_pager);
+        //设置不可滑动
+        viewPager.setNoScroll(true);
         SectionsPagerAdapter sectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager(),1);
         viewPager.setAdapter(sectionsPagerAdapter);
         return viewPager;

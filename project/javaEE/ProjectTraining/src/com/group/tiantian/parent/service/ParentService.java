@@ -1,5 +1,6 @@
 package com.group.tiantian.parent.service;
 
+import com.google.gson.Gson;
 import com.group.tiantian.parent.dao.ParentDao;
 
 public class ParentService {
@@ -63,5 +64,19 @@ public class ParentService {
 			b = true;
 		}
 		return b;
+	}
+	
+	/**
+	 * 返回某个父母信息的Json串
+	 * @param phone
+	 * @return json串
+	 */
+	public String getOneParentInfo(String phone) {
+		return new Gson().toJson(parentDao.selectOneParent(phone));
+	}
+
+	public String searchParentsByPhone(String query) {
+		return new Gson().toJson(parentDao.queryParentsByPhone(query));
+		
 	}
 }

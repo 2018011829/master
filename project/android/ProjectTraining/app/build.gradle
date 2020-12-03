@@ -14,6 +14,16 @@ MobSDK {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
+    //添加环信IM的so目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    //环信IM所需要的内容
+    //use legacy for android 6.0（3.6.8版本之后移除apache library，请将下面注释掉）
+    useLibrary 'org.apache.http.legacy'
 
     // side-menu.Android依赖
     repositories {
@@ -24,7 +34,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.projecttraining"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -34,8 +44,13 @@ android {
 
     buildTypes {
         release {
+            //在这里添加：
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -49,22 +64,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.wear:wear:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //添加TabLayout组件依赖
-    //noinspection GradleCompatible
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     //添加OkHttp依赖
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     //添加BufferKnife依赖
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation files('libs\\hyphenatechat_3.7.2.jar')
+    implementation project(path: ':easeui')
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+
     // 添加side-menu.Android依赖
     implementation 'com.github.yalantis:Side-Menu.Android:1.0.2'
     implementation 'com.github.ozodrukh:CircularReveal:2.1.0'
@@ -101,6 +120,7 @@ dependencies {
     //圆形头像依赖
     implementation 'com.github.bumptech.glide:glide:4.11.0'  //圆的依赖
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
 }
 buildscript {
     repositories {

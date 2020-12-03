@@ -18,12 +18,17 @@ import android.widget.Toast;
 
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.ContactManager;
 import com.example.projecttraining.register.RegisterActivity;
 import com.example.projecttraining.util.ConfigUtil;
-
+import com.example.projecttraining.util.ParentUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +38,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginByPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+private final static String TAG="LoginByPasswordActivity";
+
 
     private EditText etPhone;
     private EditText etPassword;
@@ -42,20 +49,21 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
     //定义一个用于判断退出时的时间
     private long mExitTime;
     //定义Handler对象属性
-    private Handler handler=new Handler(Looper.getMainLooper()){
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1://获得密码登录的请求结果
-                    String response= (String) msg.obj;
-                    if (response.equals("success")){//登录成功 跳转到首页
-                        Intent intent=new Intent();
+                    String response = (String) msg.obj;
+                    if (response.equals("success")) {
+                        //登录成功 跳转到首页
+                        Intent intent = new Intent();
                         intent.setClass(LoginByPasswordActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
-                    }else{//登录失败 显示错误信息
+                    } else {//登录失败 显示错误信息
                         Toast.makeText(getApplicationContext(),
-                                ""+response,
+                                "" + response,
                                 Toast.LENGTH_LONG).show();
                     }
                     break;
@@ -67,7 +75,6 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_by_password);
-
         findViews();
     }
 
@@ -90,14 +97,14 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
                 checkPhoneNumAndPassword();
                 break;
             case R.id.tv_register://点击注册
-                Intent intentRegister=new Intent();
+                Intent intentRegister = new Intent();
                 intentRegister.setClass(LoginByPasswordActivity.this, RegisterActivity.class);
                 startActivity(intentRegister);
                 finish();
                 break;
             case R.id.tv_login_by_msg://点击短信验证码登录
-                Intent intentLoginByMsg=new Intent();
-                intentLoginByMsg.setClass(LoginByPasswordActivity.this,LoginByPhoneActivity.class);
+                Intent intentLoginByMsg = new Intent();
+                intentLoginByMsg.setClass(LoginByPasswordActivity.this, LoginByPhoneActivity.class);
                 startActivity(intentLoginByMsg);
                 finish();
                 break;
@@ -112,7 +119,8 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
         if (etPhone.getText() != null && !etPhone.getText().toString().equals("")) {
             if (etPassword.getText() != null && !etPassword.getText().toString().equals("")) {
                 //都不为空 检查合法性
-                checkPhoneNumAndPwd();
+//                checkPhoneNumAndPwd();
+                EMLogin();
             } else {
                 Toast.makeText(getApplicationContext(),
                         "密码不能为空！",
@@ -126,21 +134,57 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
     }
 
     /**
+     * 连接环信服务器进行登录
+     */
+    private void EMLogin() {
+        EMClient.getInstance().login(etPhone.getText().toString().trim(),
+                etPassword.getText().toString().trim(),
+                new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        //存储当前用户的昵称和头像
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                        ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(),new ArrayList<>());
+                        startActivity(new Intent(LoginByPasswordActivity.this, MainActivity.class));
+                        Looper.prepare();
+                        Toast.makeText(getBaseContext(), "登录成功！", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                        Log.e(TAG, "登录成功");
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        Looper.prepare();
+                        Toast.makeText(getBaseContext(), "登录失败！", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                        Log.e(TAG, "登录失败");
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s) {
+
+                    }
+
+                });
+    }
+
+    /**
      * OkHttp
      * 连接服务器 查找用户是否存在
      */
     private void checkPhoneNumAndPwd() {
         //提交键值对格式的数据
-        FormBody.Builder builder=new FormBody.Builder();
-        builder.add("phone",etPhone.getText().toString().trim());
-        builder.add("password",etPassword.getText().toString().trim());
-        FormBody body=builder.build();
-        Request request=new Request.Builder()
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("phone", etPhone.getText().toString().trim());
+        builder.add("password", etPassword.getText().toString().trim());
+        FormBody body = builder.build();
+        Request request = new Request.Builder()
                 .post(body)
-                .url(ConfigUtil.SERVICE_ADDRESS+"LoginByPhoneAndPwdServlet")
+                .url(ConfigUtil.SERVICE_ADDRESS + "LoginByPhoneAndPwdServlet")
                 .build();
         //获得call对象
-        Call call=new OkHttpClient().newCall(request);
+        Call call = new OkHttpClient().newCall(request);
         //提交请求并获取响应
         call.enqueue(new Callback() {
             @Override
