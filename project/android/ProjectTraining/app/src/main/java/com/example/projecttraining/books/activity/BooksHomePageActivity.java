@@ -44,6 +44,7 @@ import okhttp3.Response;
 
 public class BooksHomePageActivity extends Activity {
 
+    public static BooksHomePageActivity activity;
     private ProgressBar pb; //进度条
     private Banner banner; //轮播图控件
     private ImageView ivBack;
@@ -91,6 +92,8 @@ public class BooksHomePageActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_books_home_page);
 
+        Intent intent=getIntent();
+        activity=this;
         pb=findViewById(R.id.progressbar);
         pb.setVisibility(View.VISIBLE);
         banner=findViewById(R.id.home_page_banner);

@@ -89,7 +89,14 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
 
         //进度条
         changeLight=mMenuView.findViewById(R.id.seekbar_change_light);
-        currentLight= BrightnessUtils.getBrightness();
+        //获取系统当前亮度
+//        try {
+//            currentLight=Settings.System.getInt(context.getContentResolver(),
+//                    Settings.System.SCREEN_BRIGHTNESS);
+//        } catch (Settings.SettingNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        currentLight=BrightnessUtils.getBrightness();
         changeLight.setProgress(currentLight);
         //设置进度条改变的监听器
         changeLight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

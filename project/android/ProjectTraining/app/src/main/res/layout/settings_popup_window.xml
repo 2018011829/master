@@ -117,14 +117,14 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
-                    android:src="@mipmap/textsize"/>
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/shezhi"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="字体大小"
+                    android:text="设置"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
 
@@ -137,13 +137,17 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/iv_night_model"
+                    android:layout_marginTop="3dp"
                     android:layout_width="30dp"
-                    android:layout_height="25dp"
+                    android:layout_height="23dp"
                     android:src="@mipmap/nightmodel"/>
 
                 <TextView
+                    android:id="@+id/tv_night_model"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="夜间模式"
                     android:textColor="@android:color/white"/>
             </LinearLayout>

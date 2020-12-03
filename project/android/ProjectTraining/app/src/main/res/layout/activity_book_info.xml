@@ -139,7 +139,7 @@
 
                 <com.example.projecttraining.books.tools.UnScrollListView
                     android:id="@+id/book_contents_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
                     android:paddingRight="30dp"/>
@@ -178,4 +178,5 @@
             </LinearLayout>
         </LinearLayout>
     </com.example.projecttraining.books.tools.MyScrollView>
+
 </LinearLayout>

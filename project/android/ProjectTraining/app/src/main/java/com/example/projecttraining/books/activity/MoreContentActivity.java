@@ -40,6 +40,7 @@ public class MoreContentActivity extends Activity {
         Intent intent=getIntent();
         book= (Book) intent.getSerializableExtra("book");
         contentObj= (List<Content>) intent.getSerializableExtra("contentObj");
+//        Log.e("contentObj",contentObj.toString());
         final ArrayList<String> data=intent.getStringArrayListExtra("contents");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(MoreContentActivity.this,
                 android.R.layout.simple_list_item_1,data);

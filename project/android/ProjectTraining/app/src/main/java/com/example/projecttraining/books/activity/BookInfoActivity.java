@@ -2,6 +2,7 @@ package com.example.projecttraining.books.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
@@ -81,6 +83,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                     //初始化控件
                     initViews();
                     progressbar.setVisibility(View.INVISIBLE);
+                    tvGetMoreContents.setVisibility(View.VISIBLE);
                     break;
                 case 2: //显示错误信息
                     String errorInfo= (String) msg.obj;
@@ -107,6 +110,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         findViews();
         //获取intent中的数据，并进行解析显示在控件中
         Intent intent=getIntent();
+        BooksHomePageActivity.activity.finish();
         book= (Book) intent.getSerializableExtra("book");
         flag=intent.getStringExtra("flag");
         Log.e("book",book.toString());
@@ -131,7 +135,8 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
             }
             i++;
         }
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(BookInfoActivity.this,android.R.layout.simple_list_item_1,list);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(BookInfoActivity.this,
+                android.R.layout.simple_list_item_1,list);
         bookList.setAdapter(adapter);
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -206,6 +211,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         type=book.getType();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -229,6 +235,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.iv_shou_cang://点击收藏
+//                ivShouCang.setImageDrawable(getResources().getDrawable(R.mipmap.shoucangchenggong,null));
+                //将收藏的数据发送到服务端保存
+//                sendCollectionByBookToServer();
                 break;
             case R.id.iv_share://点击分享
                 break;
@@ -242,6 +251,15 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
         }
+    }
+
+    /**
+     * 将收藏的书本数据保存到服务端
+     */
+    private void sendCollectionByBookToServer() {
+        Toast.makeText(BookInfoActivity.this,
+                "收藏成功",
+                Toast.LENGTH_SHORT).show();
     }
 
     //对返回键进行监听
@@ -282,6 +300,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         btnAddBookshelf=findViewById(R.id.add_bookshelf);
         btnStartRead=findViewById(R.id.start_read);
         tvGetMoreContents.setOnClickListener(this);
+        tvGetMoreContents.setVisibility(View.INVISIBLE);
         ivBack.setOnClickListener(this);
         ivShouCang.setOnClickListener(this);
         ivShare.setOnClickListener(this);

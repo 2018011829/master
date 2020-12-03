@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.example.projecttraining.books.tools.MyScrollView
+    <net.onest.bookapplication.util.MyScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,12 +48,12 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center"/>
 
-            <com.example.projecttraining.books.tools.UnScrollListView
+            <net.onest.bookapplication.util.UnScrollListView
                 android:id="@+id/book_homepage_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-    </com.example.projecttraining.books.tools.MyScrollView>
+    </net.onest.bookapplication.util.MyScrollView>
 
 </LinearLayout>

@@ -116,6 +116,7 @@ public class ReadBookActivity extends Activity {
             getBookTextFromServer();
         } else {//如果是从书籍详情信息界面跳转过来 获取全本书的内容
             //读取服务端本书的所有内容
+            Log.e("读取整本书的内容","开始");
             getWholeBookTextFromServer();
         }
 
@@ -287,10 +288,25 @@ public class ReadBookActivity extends Activity {
                         changeCurrentTextSize(currentTextSize);
                     }
                     break;
-                case R.id.book_night_model://点击夜间模式
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击夜间模式",
-                            Toast.LENGTH_SHORT).show();
+                case R.id.book_night_model://点击夜间模式/白天模式
+                    //获取当前字体颜色，如果为白色则为夜间模式，改变其状态为白天
+                    if (textContent.getCurrentTextColor()==getResources().getColor(android.R.color.white)){
+                        //改为白天模式
+                        //改变字体颜色
+                        textContent.setTextColor(getResources().getColor(android.R.color.black));
+                        //改变背景颜色
+                        scrollView.setBackgroundColor(getResources().getColor(android.R.color.white));
+                        //改变图片显示为太阳
+                        changeModelImage(R.mipmap.baitian,"白天模式");
+                    }else {
+                        //改变字体颜色
+                        textContent.setTextColor(getResources().getColor(android.R.color.white));
+                        //改变背景颜色
+                        scrollView.setBackgroundColor(getResources().getColor(android.R.color.black));
+                        //改变图片显示为太阳
+                        changeModelImage(R.mipmap.nightmodel,"夜间模式");
+                    }
+
                     break;
                 case R.id.book_download://点击下载
                     new Thread() {
@@ -339,6 +355,23 @@ public class ReadBookActivity extends Activity {
             }
         }
     };
+
+    /**
+     * 模式：改变控件中的图片
+     * @param imgRes 图片资源
+     * @param text 显示文字
+     */
+    private void changeModelImage(int imgRes,String text) {
+        if (settingsPopupWindow==null){
+            settingsPopupWindow = new SettingsPopupWindow(ReadBookActivity.this,itemClickListener);
+            settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),
+                    Gravity.NO_GRAVITY, 0, 0);
+        }else {
+            settingsPopupWindow.setModel(imgRes,text);
+            settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),
+                    Gravity.NO_GRAVITY, 0, 0);
+        }
+    }
 
     /**
      * 改变阅读书籍时的字体大小

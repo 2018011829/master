@@ -26,7 +26,15 @@ public class SettingsPopupWindow extends PopupWindow {
     private LinearLayout linearContents;
     private LinearLayout linearTextSize;
     private LinearLayout linearNightModel;
+    private ImageView ivNightModel;
+    private TextView tvNightModel;
     private LinearLayout linearDownload;
+
+    public void setModel(int imgRes,String text){
+        ivNightModel.setImageResource(imgRes);
+        tvNightModel.setText(text);
+    }
+
     public SettingsPopupWindow(Context context, View.OnClickListener itemsOnclick) {
         //加载布局文件
         findViews(context,itemsOnclick);
@@ -82,6 +90,8 @@ public class SettingsPopupWindow extends PopupWindow {
         linearTextSize.setOnClickListener(itemsOnclick);
         this.linearNightModel=mMenuView.findViewById(R.id.book_night_model);
         linearNightModel.setOnClickListener(itemsOnclick);
+        this.ivNightModel=mMenuView.findViewById(R.id.iv_night_model);
+        this.tvNightModel=mMenuView.findViewById(R.id.tv_night_model);
         this.linearDownload=mMenuView.findViewById(R.id.book_download);
         linearDownload.setOnClickListener(itemsOnclick);
     }
