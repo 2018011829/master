@@ -23,7 +23,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/fenge"/>
             <TextView
-                android:text="反义词"
+                android:text="近义词"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
@@ -50,7 +50,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/fenge"/>
             <TextView
-                android:text="近义词"
+                android:text="反义词"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
