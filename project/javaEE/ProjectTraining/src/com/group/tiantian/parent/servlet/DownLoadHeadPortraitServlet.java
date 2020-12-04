@@ -45,7 +45,7 @@ public class DownLoadHeadPortraitServlet extends HttpServlet {
 				String picture = "android" + System.currentTimeMillis() + ".jpg";//Í¼Æ¬ÃüÃû
 				application.setAttribute("headImgName",picture);
 				System.out.println(picture);
-				OutputStream os = new FileOutputStream(path + "headportraitimgs/" + picture);
+				OutputStream os = new FileOutputStream(path + "avatar/" + picture);
 				// Ñ­»·¶ÁÐ´
 				int b = -1;
 				while ((b = is.read()) != -1) {

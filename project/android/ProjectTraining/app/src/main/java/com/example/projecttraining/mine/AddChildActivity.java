@@ -2,11 +2,11 @@ package com.example.projecttraining.mine;
 
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.contrarywind.adapter.WheelAdapter;
@@ -46,13 +47,30 @@ public class AddChildActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_child);
+        setContentView(R.layout.activity_mine_add_child);
+
+        //给界面添加返回按钮相关代码
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         initDateSource();
         initViews();
         setViewListener();
     }
 
+    //给界面添加返回按钮相关代码
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /*
     * 给界面布局文件设置监听器
@@ -129,6 +147,7 @@ public class AddChildActivity extends AppCompatActivity {
                         ||edt_name.getText().toString().trim().equals("")||edt_name.getText().toString().trim().length()==0){
                     Toast.makeText(AddChildActivity.this,"请补全孩子信息",Toast.LENGTH_LONG).show();
                 }else {
+                    Toast.makeText(AddChildActivity.this,"成功添加孩子信息",Toast.LENGTH_SHORT);
                     finish();
                 }
             }
@@ -170,7 +189,7 @@ public class AddChildActivity extends AppCompatActivity {
         //设置popupwindow显示的宽度（默认不占满屏幕）
         popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         //加载popupwindow布局
-        View view = getLayoutInflater().inflate(R.layout.activity_child_popupwindow,null);
+        View view = getLayoutInflater().inflate(R.layout.activity_mine_child_popupwindow,null);
 
         /*
         * 加载popupwindow布局文件

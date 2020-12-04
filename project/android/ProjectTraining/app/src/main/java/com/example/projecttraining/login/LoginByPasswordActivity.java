@@ -59,6 +59,7 @@ private final static String TAG="LoginByPasswordActivity";
                         //登录成功 跳转到首页
                         Intent intent = new Intent();
                         intent.setClass(LoginByPasswordActivity.this, MainActivity.class);
+                        intent.putExtra("phone",etPhone.getText().toString().trim());
                         startActivity(intent);
                         finish();
                     } else {//登录失败 显示错误信息

@@ -42,7 +42,7 @@ public class ParentMessageServlet extends HttpServlet {
 		ParentService parentService = ParentService.getInstance();
 		ParentMessage parentMessage = parentService.selectParentByPhone(phone);
 		
-		String path = this.getServletContext().getRealPath("/headportraitimgs");
+		String path = this.getServletContext().getRealPath("/avatar");
 		
 		//Æ´½ÓJSON¸ñÊ½×Ö·û´®
 		String json = "{'phone':'"+parentMessage.getPhone()+"','sex':'"+parentMessage.getSex()+"','nickName':'"+parentMessage.getNickName()+"','headphoto':'"+parentMessage.getHeadPortrait()+"'}";

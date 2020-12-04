@@ -16,8 +16,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.activity.BooksHomePageActivity;
+import com.example.projecttraining.home.MyImageLoader;
 import com.example.projecttraining.idiom.activitys.IdiomActivity;
 import com.example.projecttraining.util.ConfigUtil;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,17 +29,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private Button btnToIdiom;//成语专区
     private Button btnToRead;//阅读专区
     private Handler myHandler;
-
+    private Banner mBanner;
+    private Banner mBanner2;
+    private List<Integer> imgPath = new ArrayList<>();
+    private List<Integer> imgPath2 = new ArrayList<>();
+    private MyImageLoader myImageLoader = new MyImageLoader();
+    private MyImageLoader myImageLoader2 = new MyImageLoader();
+    private View view;
+    private int tag = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_home,container,false);
+        view=inflater.inflate(R.layout.fragment_home,container,false);
+        initViews();
+        initData();
 
         /**
          * 成语
@@ -76,10 +91,40 @@ public class HomeFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-
         return view;
     }
 
+    private void initData() {
+        if(tag<=0) {
+            imgPath.add(R.drawable.banner1);
+            imgPath.add(R.drawable.banner2);
+            imgPath.add(R.drawable.banner3);
+            tag++;
+        }
+
+        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                .setImages(imgPath)
+                .setBannerAnimation(Transformer.Default)
+                .setImageLoader(myImageLoader)
+                .setIndicatorGravity(BannerConfig.CENTER)
+                .isAutoPlay(true)
+                .setDelayTime(2000)
+                .start();
+
+        mBanner2.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                .setImages(imgPath)
+                .setBannerAnimation(Transformer.Default)
+                .setImageLoader(myImageLoader2)
+                .setIndicatorGravity(BannerConfig.CENTER)
+                .isAutoPlay(true)
+                .setDelayTime(2000)
+                .start();
+    }
+
+    private void initViews() {
+        mBanner = view.findViewById(R.id.home_banner);
+        mBanner2 = view.findViewById(R.id.home_banner2);
+    }
 
     /**
      * 获取成语类型
