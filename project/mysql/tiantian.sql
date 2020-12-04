@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-04 09:21:47
+Date: 2020-12-04 14:20:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1705,6 +1705,26 @@ INSERT INTO `moments_pictureurl` VALUES ('40', 'android1607043242132.jpg', '33',
 INSERT INTO `moments_pictureurl` VALUES ('41', 'android1607043242119.jpg', '33', '2020-12-04 at 00:54:01 GMT+00:00', '15033479381');
 INSERT INTO `moments_pictureurl` VALUES ('42', 'android1607043282498.jpg', '34', '2020-12-04 at 00:54:41 GMT+00:00', '15033479381');
 INSERT INTO `moments_pictureurl` VALUES ('43', 'android1607043282507.jpg', '34', '2020-12-04 at 00:54:41 GMT+00:00', '15033479381');
+
+-- ----------------------------
+-- Table structure for `parentmessage`
+-- ----------------------------
+DROP TABLE IF EXISTS `parentmessage`;
+CREATE TABLE `parentmessage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `headportrait` varchar(50) DEFAULT NULL,
+  `phone` varchar(11) NOT NULL,
+  `nickname` varchar(20) NOT NULL,
+  `sex` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of parentmessage
+-- ----------------------------
+INSERT INTO `parentmessage` VALUES ('1', 'android1607001422406.jpg', '19831127142', 'tiantian李哲', '男');
+INSERT INTO `parentmessage` VALUES ('2', 'default.jpg', '15091826027', 'lg', '女');
+INSERT INTO `parentmessage` VALUES ('3', 'default_avatar.png', '18730094411', '亚雨', '女');
 
 -- ----------------------------
 -- Table structure for `parents`
