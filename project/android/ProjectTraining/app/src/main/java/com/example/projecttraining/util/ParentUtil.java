@@ -36,6 +36,8 @@ public class ParentUtil {
     private static OkHttpClient okHttpClient=new OkHttpClient();
     //当前登录用户的头像地址
     public static String currentUserAvatar="";
+    //当前登录用户的昵称
+    public static String currenUserNickname="";
     //聊天好友的头像地址
     public static String toChatUserAvator="";
     //当前用户的所有联系人
