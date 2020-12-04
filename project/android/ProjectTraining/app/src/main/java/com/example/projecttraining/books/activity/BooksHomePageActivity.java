@@ -118,7 +118,7 @@ public class BooksHomePageActivity extends Activity {
      */
     private void initViews() {
         //adapter
-        BooksHomeAdapter adapter=new BooksHomeAdapter(getApplicationContext(),
+        BooksHomeAdapter adapter=new BooksHomeAdapter(BooksHomePageActivity.this,
                 R.layout.book_homepage_listitem,treeMap);
         //绑定adapter
         bookHomepageList.setAdapter(adapter);
