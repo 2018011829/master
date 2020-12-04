@@ -118,9 +118,9 @@
         </receiver>
         <!-- start book -->
         <activity android:name=".books.activity.BooksHomePageActivity"/>
-        <activity android:name=".books.activity.MoreContentActivity"/>
-        <activity android:name=".books.activity.MoreBooksActivity"/>
         <activity android:name=".books.activity.BookInfoActivity"/>
+        <activity android:name=".books.activity.MoreBooksActivity"/>
+        <activity android:name=".books.activity.MoreContentActivity"/>
         <activity android:name=".books.activity.ReadBookActivity"/>
     </application>
 </manifest>
