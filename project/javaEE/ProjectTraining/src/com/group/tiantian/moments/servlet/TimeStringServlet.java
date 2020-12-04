@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.group.tiantian.moments.util.Time;
+import com.group.tiantian.moments.service.AddMomentsService;
+
 
 
 /**
@@ -42,14 +43,18 @@ public class TimeStringServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		// 获取请求数据
 		String time = request.getParameter("time");
-		System.out.println(time);
+		String personalPhone = request.getParameter("personalPhone");
+		System.out.println("time"+time);
+		System.out.println("personalPhone"+personalPhone);
 		
-		ServletContext application = this.getServletContext();
+		ServletContext application = this.getServletContext();//将time写入作用域
 		application.setAttribute("time",time);
-		
+		application.setAttribute("personalPhone",personalPhone);
 		// 返回响应
 		response.getWriter().write("收到数据：" + time);
-		
+
+		AddMomentsService addMomentsService =AddMomentsService.getInstance();
+		addMomentsService.insertPersonalInfo(personalPhone,time);
 		
 	
 	}

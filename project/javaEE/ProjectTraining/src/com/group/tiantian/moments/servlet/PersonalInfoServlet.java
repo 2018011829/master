@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.group.tiantian.entity.moments.PersonalInfo;
+import com.group.tiantian.moments.service.AddMomentsService;
 
 /**
  * Servlet implementation class PersonalInfoServlet
@@ -44,6 +46,7 @@ public class PersonalInfoServlet extends HttpServlet {
 		System.out.println("收到数据:" + name + ":" + photoUrl + ":" + personalPhone);
 		// 返回响应
 		response.getWriter().write("收到数据：" + name + "--" + photoUrl);
+		
 	}
 
 	/**

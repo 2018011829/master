@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.group.tiantian.moments.util.Time;
+import com.group.tiantian.moments.service.AddMomentsService;
 
 /**
  * Servlet implementation class MomentsInfoServlet
@@ -62,10 +62,13 @@ public class MomentsPicturesServlet extends HttpServlet {
 		System.out.println("下载完成！");
 		
 		ServletContext application = this.getServletContext();
-		String time = (String)application.getAttribute("time");
-		System.out.println("time"+time);
-
-	
+		String time = (String) application.getAttribute("time");//获取当前发说说的时间
+		String personalPhone = (String) application.getAttribute("personalPhone");//获取当前发说说的手机号
+		
+		AddMomentsService addMomentsService =AddMomentsService.getInstance();
+		int momentsId = addMomentsService.serchMomentsId(personalPhone, time);//得到手机号和时间对应的说说的id
+		addMomentsService.insertPictureUrl(pictureName, momentsId, time,personalPhone);//将图片名称，说说id，手机号，时间存入数据库
+		
 		
 	}
 
