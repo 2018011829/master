@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.google.gson.JsonElement;
 import com.group.tiantian.entity.Parent;
+import com.group.tiantian.entity.ParentMessage;
 import com.group.tiantian.util.DBUtil;
 public class ParentDao {
 	public static Connection connection;
@@ -150,5 +151,54 @@ public class ParentDao {
 			e.printStackTrace();
 		}
 		return parents;
+	}
+	
+	/**
+	 *查询指定Parent的信息
+	 * @return Parent对象
+	 */
+	public ParentMessage selectParentByPhone(String phone){
+		ParentMessage parentMessage=new ParentMessage();
+		String sql="select * from parentmessage where phone = ?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,phone);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				parentMessage.setId(resultSet.getInt(1));
+				parentMessage.setHeadPortrait(resultSet.getString(2));
+				parentMessage.setPhone(resultSet.getString(3));
+				parentMessage.setNickName(resultSet.getString(4));
+				parentMessage.setSex(resultSet.getString(5));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return parentMessage;
+	}
+	
+	/**
+	 *根据手机号更新指定家长信息
+	 * @return 更新是否成功
+	 */
+	public Boolean updateParentMessage(String phone,String sex,String nickName,String headName) {
+		boolean b=false;
+		try {
+			preparedStatement=connection.prepareStatement("update parentmessage set headportrait=?,nickname=?,sex=?where phone=?");
+			preparedStatement.setString(1, headName);
+			preparedStatement.setString(2, nickName);
+			preparedStatement.setString(3, sex);
+			preparedStatement.setString(4, phone);
+			int rows=preparedStatement.executeUpdate();
+			if(rows>0) {
+				b=true;
+				System.out.println("更新成功");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+		
 	}
 }
