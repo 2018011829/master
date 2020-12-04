@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group.tiantian.entity.Parent;
 import com.group.tiantian.entity.ParentMessage;
 import com.group.tiantian.parent.service.ParentService;
 
