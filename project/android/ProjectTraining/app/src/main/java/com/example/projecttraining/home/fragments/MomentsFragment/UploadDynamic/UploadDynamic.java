@@ -8,9 +8,11 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -222,13 +224,22 @@ public class UploadDynamic extends AppCompatActivity {
                 for(int i=0;i<pictureUrls.size();i++){
                     sendPictureToServer(pictureUrls.get(i));//循环发送多张图片
                 }
-
-//                Intent intent = new Intent(UploadDynamic.this,PictureActivity.class);
-//                intent.putExtra("pictureUrl",pictureUrl);
+                Toast.makeText(UploadDynamic.this,"上传成功",Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(UploadDynamic.this,MainActivity.class);
 //                startActivity(intent);
                 break;
         }
     }
+
+    //加载个人信息的布局文件
+    private String getPersonalPhone(){
+        LayoutInflater mInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        View contentView  = mInflater.inflate(R.layout.fragment_my,null);
+        TextView text = (TextView)contentView.findViewById(R.id.tv_mine_phone);
+        Log.e("lzz",text.getText().toString());
+        return text.getText().toString();
+    }
+
     /**
      * 采用POST请求方式说说信息
      */
@@ -308,10 +319,12 @@ public class UploadDynamic extends AppCompatActivity {
         //创建FormBody对象
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
+        String personalPhone = getPersonalPhone();
         //序列化
         FormBody formBody =
                 new FormBody.Builder()
                         .add("time",formatter.format(date))
+                        .add("personalPhone",personalPhone)
                         .build();
         //2) 创建请求对象
         Request request = new Request.Builder()

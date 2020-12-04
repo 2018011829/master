@@ -18,12 +18,9 @@ public class Moments {
     }
     
 
-    public Moments(String name, List<String> pictureUrl) {
-		super();
-		this.name = name;
-		this.pictureUrl = pictureUrl;
+    public Moments(int id) {
+		this.id = id;
 	}
-
 
 	public Moments(String headPortraitUrl, String name, String content, List<String> pictureUrl) {
         this.headPortraitUrl = headPortraitUrl;

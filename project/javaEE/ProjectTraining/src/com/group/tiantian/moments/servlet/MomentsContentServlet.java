@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group.tiantian.moments.service.AddMomentsService;
+
 /**
  * Servlet implementation class MomentsContentServlet
  */
@@ -37,10 +39,16 @@ public class MomentsContentServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		System.out.println("收到数据:" + content);
 		// 返回响应
-		//response.getWriter().write("收到数据：" + content);
+		response.getWriter().write("收到数据：" + content);
 		
-//		String time = (String) request.getAttribute("time");
-//		System.out.println("time"+time);
+		ServletContext application = this.getServletContext();
+		String time = (String) application.getAttribute("time");//获取当前发说说的时间
+		String personalPhone = (String) application.getAttribute("personalPhone");//获取当前发说说的手机号
+		
+		AddMomentsService addMomentsService =AddMomentsService.getInstance();
+		int momentsId = addMomentsService.serchMomentsId(personalPhone, time);//得到手机号和时间对应的说说的id
+		addMomentsService.insertContent(content, momentsId, time,personalPhone);//将图片名称，说说id，手机号，时间存入数据库
+		
 	}
 
 	/**
