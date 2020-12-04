@@ -1,6 +1,7 @@
 package com.group.tiantian.parent.service;
 
 import com.google.gson.Gson;
+import com.group.tiantian.entity.ParentMessage;
 import com.group.tiantian.parent.dao.ParentDao;
 
 public class ParentService {
@@ -79,4 +80,28 @@ public class ParentService {
 		return new Gson().toJson(parentDao.queryParentsByPhone(query));
 		
 	}
+	
+	/**
+	 * 判断用户名和密码是否匹配 即用户是否存在
+	 * 
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
+	public ParentMessage selectParentByPhone(String phone) {
+		
+		return parentDao.selectParentByPhone(phone);
+		
+	}
+	
+	/**
+	 *根据手机号更新指定家长信息
+	 * @return 更新是否成功
+	 */
+	public Boolean updateParentMessage(String phone,String sex,String nickName,String headName) {
+		
+		return parentDao.updateParentMessage(phone, sex, nickName, headName);
+		
+	}
+	
 }

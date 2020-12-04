@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-04 09:21:47
+Date: 2020-12-04 19:58:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1609,7 +1609,7 @@ CREATE TABLE `moments` (
   `comments` char(255) DEFAULT NULL,
   `moments_time` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments
@@ -1620,6 +1620,7 @@ INSERT INTO `moments` VALUES ('31', '15033479381', null, null, null, null, null,
 INSERT INTO `moments` VALUES ('32', '15033479381', null, null, null, null, null, null, '2020-12-04 at 00:53:56 GMT+00:00');
 INSERT INTO `moments` VALUES ('33', '15033479381', null, null, null, null, null, null, '2020-12-04 at 00:54:01 GMT+00:00');
 INSERT INTO `moments` VALUES ('34', '15033479381', null, null, null, null, null, null, '2020-12-04 at 00:54:41 GMT+00:00');
+INSERT INTO `moments` VALUES ('35', '18730094411', null, null, null, null, null, null, '2020-12-04 at 06:52:06 GMT+00:00');
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -1647,7 +1648,7 @@ CREATE TABLE `moments_content` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_content
@@ -1658,6 +1659,7 @@ INSERT INTO `moments_content` VALUES ('10', '的撒', '31', '2020-12-04 at 00:53
 INSERT INTO `moments_content` VALUES ('11', '的撒', '32', '2020-12-04 at 00:53:56 GMT+00:00', '15033479381');
 INSERT INTO `moments_content` VALUES ('12', '的撒', '33', '2020-12-04 at 00:54:01 GMT+00:00', '15033479381');
 INSERT INTO `moments_content` VALUES ('13', '的阿斯顿啊', '34', '2020-12-04 at 00:54:41 GMT+00:00', '15033479381');
+INSERT INTO `moments_content` VALUES ('14', '大', '35', '2020-12-04 at 06:52:06 GMT+00:00', '18730094411');
 
 -- ----------------------------
 -- Table structure for `moments_friendname`
@@ -1685,7 +1687,7 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_pictureurl
@@ -1705,6 +1707,27 @@ INSERT INTO `moments_pictureurl` VALUES ('40', 'android1607043242132.jpg', '33',
 INSERT INTO `moments_pictureurl` VALUES ('41', 'android1607043242119.jpg', '33', '2020-12-04 at 00:54:01 GMT+00:00', '15033479381');
 INSERT INTO `moments_pictureurl` VALUES ('42', 'android1607043282498.jpg', '34', '2020-12-04 at 00:54:41 GMT+00:00', '15033479381');
 INSERT INTO `moments_pictureurl` VALUES ('43', 'android1607043282507.jpg', '34', '2020-12-04 at 00:54:41 GMT+00:00', '15033479381');
+INSERT INTO `moments_pictureurl` VALUES ('44', 'android1607064727359.jpg', '35', '2020-12-04 at 06:52:06 GMT+00:00', '18730094411');
+
+-- ----------------------------
+-- Table structure for `parentmessage`
+-- ----------------------------
+DROP TABLE IF EXISTS `parentmessage`;
+CREATE TABLE `parentmessage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `headportrait` varchar(50) DEFAULT NULL,
+  `phone` varchar(11) NOT NULL,
+  `nickname` varchar(20) NOT NULL,
+  `sex` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of parentmessage
+-- ----------------------------
+INSERT INTO `parentmessage` VALUES ('1', 'android1607001422406.jpg', '19831127142', 'tiantian李哲', '男');
+INSERT INTO `parentmessage` VALUES ('2', 'default.jpg', '15091826027', 'lg', '女');
+INSERT INTO `parentmessage` VALUES ('3', 'default_avatar.png', '18730094411', '亚雨', '女');
 
 -- ----------------------------
 -- Table structure for `parents`

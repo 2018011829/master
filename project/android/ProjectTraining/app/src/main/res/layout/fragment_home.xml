@@ -1,23 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="主页" />
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:id="@+id/btn_toIdiom"
-        android:text="成语专区"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <com.youth.banner.Banner
+            android:id="@+id/home_banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_toRead"
+                    android:gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:text="阅读专区"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:background="@android:color/holo_orange_light"/>
 
-    <Button
-        android:id="@+id/btn_toRead"
-        android:text="阅读专区"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+                <Button
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:text="练字专区"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:background="@android:color/holo_green_light"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_toIdiom"
+                    android:gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:text="成语专区"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:background="@android:color/holo_blue_bright"/>
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:text="更多专区"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:background="@android:color/holo_purple"/>
+            </RelativeLayout>
+            
+            <com.youth.banner.Banner
+                android:layout_marginTop="30dp"
+                android:id="@+id/home_banner2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="每日推荐"
+                android:textSize="25sp"
+                android:textColor="@android:color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:gravity="center">
+                
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/mine_head_photo"/>
+                <TextView
+                    android:text="程序员暂时不想设置这个推荐"
+                    android:textSize="17sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/mine_head_photo"/>
+                <TextView
+                    android:text="程序员暂时不想设置这个推荐"
+                    android:textSize="17sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

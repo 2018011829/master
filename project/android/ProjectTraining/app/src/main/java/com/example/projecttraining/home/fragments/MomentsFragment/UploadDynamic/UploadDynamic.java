@@ -236,8 +236,9 @@ public class UploadDynamic extends AppCompatActivity {
         LayoutInflater mInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
         View contentView  = mInflater.inflate(R.layout.fragment_my,null);
         TextView text = (TextView)contentView.findViewById(R.id.tv_mine_phone);
+        String arr = "18730094411";
         Log.e("lzz",text.getText().toString());
-        return text.getText().toString();
+        return arr;
     }
 
     /**

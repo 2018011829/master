@@ -71,6 +71,7 @@
         <activity android:name=".contact.NewFriendsActivity"/>
         <activity android:name=".contact.ChatActivity" />
 
+        <activity android:name=".mine.EditorParentActivity" />
         <activity android:name=".mine.AddChildActivity" />
         <activity android:name=".IntroAppActivity" />
         <activity android:name=".idiom.activitys.IdiomInfoActivity" />
@@ -84,6 +85,7 @@
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
         <activity android:name=".MainActivity"/>
+
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
@@ -115,9 +117,9 @@
         </receiver>
         <!-- start book -->
         <activity android:name=".books.activity.BooksHomePageActivity"/>
-        <activity android:name=".books.activity.MoreContentActivity"/>
-        <activity android:name=".books.activity.MoreBooksActivity"/>
         <activity android:name=".books.activity.BookInfoActivity"/>
+        <activity android:name=".books.activity.MoreBooksActivity"/>
+        <activity android:name=".books.activity.MoreContentActivity"/>
         <activity android:name=".books.activity.ReadBookActivity"/>
     </application>
 </manifest>
