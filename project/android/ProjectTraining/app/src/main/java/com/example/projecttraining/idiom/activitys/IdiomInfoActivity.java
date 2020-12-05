@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +25,6 @@ import com.example.projecttraining.idiom.fragment.IdiomMeanFragment;
 import com.example.projecttraining.idiom.fragment.IdiomNearAntonymsFragment;
 import com.example.projecttraining.util.IdiomJsonUtil;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,20 +50,19 @@ import butterknife.OnClick;
 public class IdiomInfoActivity extends AppCompatActivity {
 
     private String idiomName;
+    private Handler myHandler;
+    private IdiomInfoResult idiomInfoResult;
     private String APPKEY = "52836ab53d4cf3e9";
     private String url = "https://api.jisuapi.com/chengyu/detail";
 
-    @BindView(R.id.linear_forward) LinearLayout linearForward;
-    @BindView(R.id.read_idiom) LinearLayout readIdiom;
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
     @BindView(R.id.tv_idiom_pronounce) TextView tvIdiomPronounce;
     @BindView(R.id.idiom_info_tab) TabLayout tabLayout;
     @BindView(R.id.idiom_view_pager) ViewPager viewPager;
-
-    private Handler myHandler;
-    private IdiomInfoResult idiomInfoResult;
-    //定义Gson对象属性
-    private Gson gson;
+    @BindView(R.id.read_idiom) LinearLayout readIdiom;
+    @BindView(R.id.linear_forward) ImageView linearForward;
+    @BindView(R.id.idiom_shoucang) ImageView idiomShouCang;
+    @BindView(R.id.idiom_fenxiang) ImageView idiomFenXiang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +77,6 @@ public class IdiomInfoActivity extends AppCompatActivity {
         getIdiomInfoFromAPI(idiomName);
 
         tvIdiomName.setText(idiomName);
-        //Gson对象实例化
-        initGson();
 
         myHandler = new Handler() {
             @Override
@@ -106,28 +103,30 @@ public class IdiomInfoActivity extends AppCompatActivity {
 
     }
 
+    // 点击播放，则播放该成语读音
+    @OnClick(R.id.read_idiom)
+    public void clickReadIdiom(){
+        Toast.makeText(getBaseContext(),"点击了播放",Toast.LENGTH_SHORT).show();
+    }
+
     // 点击返回
     @OnClick(R.id.linear_forward)
     public void clickToForward(){
         finish();
     }
 
-    // 点击播放，则播放该成语读音
-    @OnClick(R.id.read_idiom)
-    public void clickReadIdiom(){
-
+    // 点击收藏
+    @OnClick(R.id.idiom_shoucang)
+    public void clickShouCang(){
+        Toast.makeText(getBaseContext(),"点击了收藏",Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 实例化Gson对象
-     */
-    private void initGson() {
-        //允许配置参数的Gson对象初始化
-        gson = new GsonBuilder()//创建GsonBuilder对象
-                .setPrettyPrinting()//格式化输出
-                .serializeNulls()//允许输出Null值属性
-                .create();//创建Gson对象
+    // 点击分享
+    @OnClick(R.id.idiom_fenxiang)
+    public void clickFenXiang(){
+        Toast.makeText(getBaseContext(),"点击了分享",Toast.LENGTH_SHORT).show();
     }
+
 
     /**
      * 调用成语API接口，查询某成语的详细信息
