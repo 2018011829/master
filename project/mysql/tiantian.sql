@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50506
+Source Server Version : 50701
 Source Host           : localhost:3306
 Source Database       : tiantian
 
 Target Server Type    : MYSQL
-Target Server Version : 50506
+Target Server Version : 50701
 File Encoding         : 65001
 
-Date: 2020-12-04 19:58:35
+Date: 2020-12-05 10:16:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1008,6 +1008,22 @@ INSERT INTO `classifyidiom` VALUES ('37', '蓝', '5');
 INSERT INTO `classifyidiom` VALUES ('38', '紫', '5');
 INSERT INTO `classifyidiom` VALUES ('39', '黑', '5');
 INSERT INTO `classifyidiom` VALUES ('40', '白', '5');
+
+-- ----------------------------
+-- Table structure for `collections`
+-- ----------------------------
+DROP TABLE IF EXISTS `collections`;
+CREATE TABLE `collections` (
+  `phone_num` varchar(11) NOT NULL,
+  `child_name` varchar(20) NOT NULL,
+  `collection_type` varchar(20) NOT NULL,
+  `collection_content` varchar(100) NOT NULL,
+  PRIMARY KEY (`phone_num`,`child_name`,`collection_type`,`collection_content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of collections
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `idiom`
