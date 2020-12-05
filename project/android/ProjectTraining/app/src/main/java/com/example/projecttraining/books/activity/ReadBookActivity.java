@@ -95,14 +95,7 @@ public class ReadBookActivity extends Activity {
         setContentView(R.layout.activity_read_book);
 
         scrollView = findViewById(R.id.scrollView);
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                //改变后的x 改编后的y
-                changedY = i;
-                Log.e("改变后的y", "" + changedY);
-            }
-        });
+
         pb = findViewById(R.id.progressbar);
         pb.setVisibility(View.VISIBLE);
         textContent = findViewById(R.id.text_content);
@@ -136,11 +129,15 @@ public class ReadBookActivity extends Activity {
 
         //获取要读的当前页的信息
         currentIndex = intent.getIntExtra("currentIndex", 0);
-        currentContent = contentObj.get(currentIndex);
-        if (currentIndex < contentObj.size() - 1) {
-            nextContent = contentObj.get(currentIndex + 1);
-        } else {
-            nextContent = contentObj.get(currentIndex);
+        if (currentIndex!=0){
+            currentContent = contentObj.get(currentIndex);
+            if (currentIndex < contentObj.size() - 1) {
+                nextContent = contentObj.get(currentIndex + 1);
+            } else {
+                nextContent = contentObj.get(currentIndex);
+            }
+        }else {
+            Log.e("ReadBookActivity","开始读取整本书");
         }
 
     }
@@ -233,16 +230,6 @@ public class ReadBookActivity extends Activity {
                     }
                     finish();
                     break;
-                case R.id.iv_search://点击搜索
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击搜索",
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.iv_listen://点击听
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击听",
-                            Toast.LENGTH_SHORT).show();
-                    break;
                 case R.id.before_text://点击上一章
                     if (currentIndex == 0) {
                         Toast.makeText(ReadBookActivity.this,
@@ -275,11 +262,6 @@ public class ReadBookActivity extends Activity {
                     //从服务器获取下一章的内容
                     getBookTextFromServer();
                     break;
-                case R.id.book_contents_list://点击目录
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击目录",
-                            Toast.LENGTH_SHORT).show();
-                    break;
                 case R.id.book_text_size://点击字体大小
                     //获取当前字体大小
                     currentTextSize=20;
@@ -308,22 +290,6 @@ public class ReadBookActivity extends Activity {
                     }
 
                     break;
-                case R.id.book_download://点击下载
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(3000);
-                                Message msg = new Message();
-                                msg.what = 3;
-                                msg.obj = 1;
-                                handler.sendMessage(msg);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
-                    break;
                 case R.id.iv_change_text_small://点击缩小字体
                     if (currentTextSize>10){
                         currentTextSize=currentTextSize-1;
@@ -347,10 +313,41 @@ public class ReadBookActivity extends Activity {
                     }
 
                     break;
+                case R.id.iv_search://点击搜索
+                    Toast.makeText(ReadBookActivity.this,
+                            "点击搜索",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.iv_listen://点击听
+                    Toast.makeText(ReadBookActivity.this,
+                            "点击听",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.book_contents_list://点击目录
+                    Toast.makeText(ReadBookActivity.this,
+                            "点击目录",
+                            Toast.LENGTH_SHORT).show();
+                    break;
                 case R.id.tv_change_text_style://点击改变字体样式
                     Toast.makeText(ReadBookActivity.this,
                             "点击改变字体样式",
                             Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.book_download://点击下载
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+                                Message msg = new Message();
+                                msg.what = 3;
+                                msg.obj = 1;
+                                handler.sendMessage(msg);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                     break;
             }
         }

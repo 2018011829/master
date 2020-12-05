@@ -101,8 +101,8 @@ public class BooksHomePageActivity extends Activity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent=new Intent(BooksHomePageActivity.this, MainActivity.class);
-//                startActivity(intent);
+                Intent intent=new Intent(BooksHomePageActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -226,8 +226,8 @@ public class BooksHomePageActivity extends Activity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //返回主页
-//            Intent intent=new Intent(BooksHomePageActivity.this,MainActivity.class);
-//            startActivity(intent);
+            Intent intent=new Intent(BooksHomePageActivity.this,MainActivity.class);
+            startActivity(intent);
             finish();
             return true;
         }
