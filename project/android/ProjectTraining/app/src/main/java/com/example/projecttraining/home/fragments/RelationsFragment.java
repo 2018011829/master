@@ -2,6 +2,7 @@ package com.example.projecttraining.home.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -14,8 +15,13 @@ import com.example.projecttraining.R;
 import com.example.projecttraining.contact.ContactSectionPagerAdapter;
 import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
 import com.example.projecttraining.ui.NoScrollViewPager;
+import com.example.projecttraining.util.ParentUtil;
 import com.google.android.material.tabs.TabLayout;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.mob.tools.gui.ViewPagerAdapter;
+
+import java.util.List;
 
 /**
  * 联系人的fragment
@@ -23,15 +29,18 @@ import com.mob.tools.gui.ViewPagerAdapter;
  * @date 2020.11.21
  */
 public class RelationsFragment extends Fragment {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     public static final String TAG="RelationsFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_relation,container,false);
         ViewPager viewPager=setViewPagerAdapter(view);
-        Log.e(TAG, "onCreateView: 绑定Adapter" );
         BindViewPagerAndTabLayout(viewPager,view);
-        Log.e(TAG, "onCreateView: 设置Tablayout" );
         return view;
     }
 
@@ -52,7 +61,6 @@ public class RelationsFragment extends Fragment {
         //得到ViewPager和SectionsPagerAdapter，并为ViewPager设置Adapter
         ViewPager viewPager=view.findViewById(R.id.view_pager);
         ContactSectionPagerAdapter contactSectionPagerAdapter=new ContactSectionPagerAdapter(getChildFragmentManager(),1);
-        Log.e(TAG, "setViewPagerAdapter: 设置adapter");
         viewPager.setAdapter(contactSectionPagerAdapter);
         return viewPager;
     }

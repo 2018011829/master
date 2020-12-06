@@ -57,7 +57,6 @@
 
         <!--开屏页-->
         <activity android:name=".SplashActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -69,9 +68,8 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
         <activity android:name=".contact.AddFriendsActivity"/>
-        <activity android:name=".contact.NewFriendsActivity"/>
+        <activity android:name=".contact.NewFriendsActivity" />
         <activity android:name=".contact.ChatActivity" />
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>
 
         <activity android:name=".mine.EditorParentActivity" />
         <activity android:name=".mine.AddChildActivity" />
@@ -86,8 +84,8 @@
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"/>
+
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

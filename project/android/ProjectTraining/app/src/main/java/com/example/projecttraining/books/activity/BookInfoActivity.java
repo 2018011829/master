@@ -48,6 +48,7 @@ import okhttp3.Response;
 
 public class BookInfoActivity extends Activity implements View.OnClickListener {
 
+    private int currentIvShoucang; //当前收藏控件中显示的图片的id
     private ProgressBar progressbar; //进度条
     private TextView tvGetMoreContents;
     private ImageView ivBack;
@@ -90,7 +91,25 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(BookInfoActivity.this,
                             errorInfo, Toast.LENGTH_SHORT).show();
                     break;
+                case 3: //收藏信息
+                    String info= (String) msg.obj;
+                    if (info.equals("收藏成功")){
+                        //收藏成功
+                        ivShouCang.setImageDrawable(getResources().getDrawable(R.mipmap.shoucangchenggong,null));
+                        currentIvShoucang=R.mipmap.shoucangchenggong;
+                        Toast.makeText(BookInfoActivity.this,
+                                "收藏成功！",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        //取消收藏成功
+                        ivShouCang.setImageDrawable(getResources().getDrawable(R.mipmap.shoucang,null));
+                        currentIvShoucang=R.mipmap.shoucang;
+                        Toast.makeText(BookInfoActivity.this,
+                                "取消收藏成功！",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
+                    break;
             }
         }
     };
@@ -235,9 +254,13 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.iv_shou_cang://点击收藏
-//                ivShouCang.setImageDrawable(getResources().getDrawable(R.mipmap.shoucangchenggong,null));
-                //将收藏的数据发送到服务端保存
-//                sendCollectionByBookToServer();
+                if (currentIvShoucang==R.mipmap.shoucangchenggong){
+                    collection("DeleteBookFromCollection");
+                }else {
+                    //将收藏的数据发送到服务端保存
+                    collection("AddBookToCollection");
+                }
+
                 break;
             case R.id.iv_share://点击分享
                 break;
@@ -254,12 +277,46 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
     }
 
     /**
-     * 将收藏的书本数据保存到服务端
+     * 收藏操作：收藏、取消收藏
+     * @param servlet 传递操作数据的servlet：添加收藏、取消收藏
      */
-    private void sendCollectionByBookToServer() {
-        Toast.makeText(BookInfoActivity.this,
-                "收藏成功",
-                Toast.LENGTH_SHORT).show();
+    private void collection(String servlet) {
+
+        //将要收藏的数据转成Gson串
+        String info=new Gson().toJson(book);
+        //创建OkHttpClient对象
+        OkHttpClient okHttpClient=new OkHttpClient();
+        //创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS
+                        +servlet+"?info="+info)
+                .build();
+        //创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //异步方式提交请求并获取响应
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.e("BookInfoActivity", "收藏或取消收藏失败！");
+                Message msg = handler.obtainMessage();
+                msg.what = 2;
+                msg.obj = "收藏或取消收藏失败！";
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                //获取服务端返回的数据（假设是字符串）
+                String result = response.body().string();
+                Log.e("BookInfoActivity收藏", result);
+
+                //通知界面信息改变
+                Message msg = handler.obtainMessage();
+                msg.what = 3;
+                msg.obj = result;
+                handler.sendMessage(msg);
+            }
+        });
     }
 
     //对返回键进行监听
@@ -290,6 +347,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         ivBack=findViewById(R.id.iv_back);
         tvTitleName=findViewById(R.id.tv_title_name);
         ivShouCang=findViewById(R.id.iv_shou_cang);
+        ivShouCang.setImageResource(R.mipmap.shoucang);
         ivShare=findViewById(R.id.iv_share);
         ivBookImg=findViewById(R.id.iv_book_img);
         tvBookName=findViewById(R.id.tv_book_name);
@@ -306,5 +364,8 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         ivShare.setOnClickListener(this);
         btnAddBookshelf.setOnClickListener(this);
         btnStartRead.setOnClickListener(this);
+
+        //当前控件显示未收藏
+        currentIvShoucang=R.mipmap.shoucang;
     }
 }

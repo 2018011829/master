@@ -25,6 +25,7 @@ import com.example.projecttraining.mine.EditorParentActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -94,7 +95,7 @@ public class MyFragment extends Fragment {
         //TODO 获取控件引用
         findViews();
         //TODO 设置控件内容
-//        init();
+        init();
         //TODO 给控件添加监听器
         setClickListener();
 
@@ -128,47 +129,48 @@ public class MyFragment extends Fragment {
         ll_mine_addChild.setOnClickListener(myOnClickListener);
         ll_mine_editorParent.setOnClickListener(myOnClickListener);
     }
-//    private void init(){
-//        tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
-//        tv_mine_useName.setText("");
-//
-//    }
-    private void init() {
-        if(tag<=0) {
-            FormBody.Builder builder = new FormBody.Builder();
-            builder.add("phone", phone);
-            FormBody formBody = builder.build();
-            Request request = new Request.Builder()
-                    .post(formBody)
-                    .url(ConfigUtil.SERVICE_ADDRESS + "ParentMessageServlet")
-                    .build();
-            Call call = new OkHttpClient().newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    Log.e("家长信息", "请求失败");
-                }
+    private void init(){
+        tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
+        tv_mine_useName.setText(EaseParentUtil.currentUserNickname);
+        Glide.with(getContext()).load(EaseParentUtil.currentUserAvatar).into(iv_headPhoto);
 
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    String result = response.body().string();
-                    Log.i("json", result);
-                    Message msg = new Message();
-                    msg.what = 1;
-                    msg.obj = result;
-                    handler.sendMessage(msg);
-                }
-            });
-            tag++;
-        }else {
-            tv_mine_useName.setText(nickName);
-            tv_mine_phone.setText("手机号："+phone);
-            Glide.with(MyFragment.this)
-                    .load(ConfigUtil.SERVICE_ADDRESS+"headportraitimgs/"+headPhoto)
-                    .circleCrop()
-                    .into(iv_headPhoto);
-        }
     }
+//    private void init() {
+//        if(tag<=0) {
+//            FormBody.Builder builder = new FormBody.Builder();
+//            builder.add("phone", phone);
+//            FormBody formBody = builder.build();
+//            Request request = new Request.Builder()
+//                    .post(formBody)
+//                    .url(ConfigUtil.SERVICE_ADDRESS + "ParentMessageServlet")
+//                    .build();
+//            Call call = new OkHttpClient().newCall(request);
+//            call.enqueue(new Callback() {
+//                @Override
+//                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                    Log.e("家长信息", "请求失败");
+//                }
+//
+//                @Override
+//                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                    String result = response.body().string();
+//                    Log.i("json", result);
+//                    Message msg = new Message();
+//                    msg.what = 1;
+//                    msg.obj = result;
+//                    handler.sendMessage(msg);
+//                }
+//            });
+//            tag++;
+//        }else {
+//            tv_mine_useName.setText(nickName);
+//            tv_mine_phone.setText("手机号："+phone);
+//            Glide.with(MyFragment.this)
+//                    .load(ConfigUtil.SERVICE_ADDRESS+"headportraitimgs/"+headPhoto)
+//                    .circleCrop()
+//                    .into(iv_headPhoto);
+//        }
+//    }
 
     private void findViews() {
         iv_headPhoto = view.findViewById(R.id.iv_headPhoto);

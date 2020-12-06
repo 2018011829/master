@@ -1,124 +1,177 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--2020-11-25-->
+<?xml version="1.0" encoding="utf-8"?><!--2020-11-25-->
 <!--2020-11-30-->
 <!--2020-12-2-->
 <!--@author lrf-->
-<LinearLayout
-    android:padding="20dp"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:padding="20dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:paddingTop="25dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline">
+
+            <TextView
+                android:id="@+id/tv_idiom_name"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"/>
+
+            <TextView
+                android:id="@+id/tv_idiom_pronounce"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_idiom_name"
+                android:textColor="@android:color/black" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <!--上方导航栏-->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/idiom_info_tab"
+                app:tabIndicatorHeight="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                app:tabTextColor="@android:color/black"
+                android:paddingBottom="20dp"
+                android:background="@drawable/underline"
+                app:tabIndicatorColor="@android:color/holo_red_dark"
+                app:tabSelectedTextColor="@android:color/holo_red_dark">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/ti_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="成语意思" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/ti_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="近反义词" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/ti_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="典故出处" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/ti_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="遣词造句" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/idiom_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp"
+                android:layout_marginBottom="40dp"
+                android:background="@android:color/white" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/linear_forward"
+        android:id="@+id/read_idiom"
+        android:padding="3dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:orientation="vertical"
         android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/circle_linear_red_background">
+
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@drawable/forward"/>
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/read_idiom" />
+
         <TextView
-            android:text="返回"
-            android:textSize="23sp"
-            android:layout_marginLeft="10dp"
+            android:text="播放"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_idiom_name"
-            android:textSize="28sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_dark"/>
-
-        <TextView
-            android:id="@+id/tv_idiom_pronounce"
-            android:textSize="21sp"
-            android:gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_idiom_name"
-            android:textColor="@android:color/black"/>
+        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
-            android:id="@+id/read_idiom"
-            android:orientation="vertical"
-            android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true">
+            android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/read_idiom"/>
-
-            <TextView
-                android:text="播放"
-                android:textSize="17sp"
+            <LinearLayout
+                android:id="@+id/linear_forward"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/forward" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/idiom_shoucang" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/idiom_fenxiang" />
+            </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <!--上方导航栏-->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/idiom_info_tab"
-            app:tabIndicatorHeight="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            app:tabTextColor="@android:color/black"
-            app:tabIndicatorColor="@android:color/holo_red_dark"
-            app:tabSelectedTextColor="@android:color/holo_red_dark">
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/ti_1"
-                android:text="成语意思"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/ti_2"
-                android:text="近反义词"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/ti_3"
-                android:text="典故出处"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/ti_4"
-                android:text="遣词造句"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/idiom_view_pager"
-            android:layout_marginTop="75dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"/>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -147,11 +147,10 @@ private final static String TAG="LoginByPasswordActivity";
                         ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
                         ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(),new ArrayList<>());
                         startActivity(new Intent(LoginByPasswordActivity.this, MainActivity.class));
+                        finish();
                         Looper.prepare();
                         Toast.makeText(getBaseContext(), "登录成功！", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                        Log.e(TAG, "登录成功");
-                        finish();
                     }
 
                     @Override

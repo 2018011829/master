@@ -5,8 +5,9 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"/>
+        android:layout_width="40dp"
+        android:scaleType="centerCrop"
+        android:layout_height="40dp"/>
     <TextView
         android:text="昵称"
         android:layout_marginLeft="20dp"
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/nickname"/>
     <Button
+        android:visibility="gone"
         android:id="@+id/agree"
         android:layout_width="60dp"
         android:layout_height="30dp"
@@ -26,6 +28,7 @@
         android:textColor="@android:color/white"
         android:background="@color/colorTheme"/>
     <Button
+        android:visibility="gone"
         android:id="@+id/reject"
         android:layout_width="60dp"
         android:layout_height="30dp"
@@ -42,6 +45,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:textSize="20dp"/>
+        android:visibility="gone"/>
 
 </RelativeLayout>

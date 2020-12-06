@@ -4,14 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/sv"
-        app:queryHint="请输入手机号码"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+    <include
+        android:id="@+id/search_bar_view"
+        layout="@layout/search_bar" />
     <ListView
         android:clickable="false"
+        android:layout_marginLeft="20dp"
         android:id="@+id/lv_search_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
