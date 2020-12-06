@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:background="#af000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/idiom_back"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:text="分享"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/idiom_share"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+            <LinearLayout
+                android:id="@+id/idiom_share_jiben"
+                android:paddingTop="25dp"
+                android:paddingBottom="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/underline">
+
+                <TextView
+                    android:id="@+id/idiom_share_name"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:id="@+id/idiom_share_pronounce"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/idiom_share_info"
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/idiom_share_jiben">
+
+                <LinearLayout
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline">
+                    <TextView
+                        android:text="成语意思"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/idiom_share_mean"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline">
+                    <TextView
+                        android:text="近义词"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/idiom_share_thesaurus"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline">
+                    <TextView
+                        android:text="反义词"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/idiom_share_antonym"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline">
+                    <TextView
+                        android:text="典故出处"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/idiom_share_comefrom"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="遣词造句"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/idiom_share_example"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/logo"
+                android:src="@drawable/logo"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/idiom_share_info"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/share_now"
+                android:text="立即分享"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_red_dark"/>
+            <Button
+                android:id="@+id/save_idiom"
+                android:text="保存相册"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:background="@android:color/white"
+                android:textColor="@android:color/holo_red_dark"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -63,6 +63,7 @@ import butterknife.OnClick;
  * 2020-11-30
  * 2020-12-2
  * 2020-12-5
+ * 2020-12-6
  * @author lrf
  */
 public class IdiomInfoActivity extends AppCompatActivity implements IOfflineResourceConst {
@@ -70,7 +71,7 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     private String idiomName;
     private Handler myHandler;
     private IdiomInfoResult idiomInfoResult;
-    private String APPKEY = "52836ab53d4cf3e9";
+    private String APPKEY = "922ee172234b0479";
     private String url = "https://api.jisuapi.com/chengyu/detail";
 
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
@@ -168,11 +169,6 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
 
     }
 
-    // 点击播放，则播放该成语读音
-    @OnClick(R.id.read_idiom)
-    public void clickReadIdiom(){
-        Toast.makeText(getBaseContext(),"点击了播放",Toast.LENGTH_SHORT).show();
-    }
 
     // 点击返回
     @OnClick(R.id.linear_forward)
@@ -184,12 +180,25 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     @OnClick(R.id.idiom_shoucang)
     public void clickShouCang(){
         Toast.makeText(getBaseContext(),"点击了收藏",Toast.LENGTH_SHORT).show();
+        // TODO
     }
 
     // 点击分享
     @OnClick(R.id.idiom_fenxiang)
     public void clickFenXiang(){
         Toast.makeText(getBaseContext(),"点击了分享",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        intent.setClass(this,IdiomShareActivity.class);
+        bundle.putString("name",idiomName);
+        bundle.putString("pronounce",idiomInfoResult.getPronounce());
+        bundle.putString("content", idiomInfoResult.getContent());
+        bundle.putStringArrayList("antonym", (ArrayList<String>) idiomInfoResult.getAntonym());
+        bundle.putStringArrayList("thesaurus", (ArrayList<String>) idiomInfoResult.getThesaurus());
+        bundle.putString("comefrom", idiomInfoResult.getComefrom());
+        bundle.putString("example", idiomInfoResult.getExample());
+        intent.putExtra("bundle",bundle);
+        startActivity(intent);
     }
 
     /**
@@ -422,7 +431,7 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         checkResult(result, "speak");
     }
 
-    //  下面是UI部分
+    // 点击播放，则播放该成语读音
     private void initView() {
         readIdiom.setOnClickListener(new View.OnClickListener() {
             @Override
