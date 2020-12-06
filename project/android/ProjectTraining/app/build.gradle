@@ -12,14 +12,15 @@ MobSDK {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion "30.0.0"
-    //添加环信IM的so目录
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+
+//    //添加环信IM的so目录
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
 
     //环信IM所需要的内容
     //use legacy for android 6.0（3.6.8版本之后移除apache library，请将下面注释掉）
@@ -35,7 +36,7 @@ android {
     defaultConfig {
         applicationId "com.example.projecttraining"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -79,7 +80,7 @@ dependencies {
     //添加BufferKnife依赖
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-    implementation files('libs\\hyphenatechat_3.7.2.jar')
+//    implementation files('libs\\hyphenatechat_3.7.2.jar')
     implementation project(path: ':easeui')
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
