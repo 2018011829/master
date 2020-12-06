@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50701
 File Encoding         : 65001
 
-Date: 2020-12-05 10:16:54
+Date: 2020-12-06 12:40:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,24 @@ INSERT INTO `books` VALUES ('15', '傲慢与偏见', '是英国女小说家简·
 INSERT INTO `books` VALUES ('16', '巴黎圣母院', '《巴黎圣母院》是法国文学家维克多·雨果创作的长篇小说，《巴黎圣母院》以离奇和对比手法写了一个发生在15世纪法国的故事：巴黎圣母院副主教克罗德道貌岸然、蛇蝎心肠，先爱后恨，迫害吉ト赛女郎埃斯梅拉达。面目丑陋、心地善良的敲钟人卡西莫多为救女郎舍身。小说揭露了宗教的虚伪，宣告禁欲主义的破产，歌颂了下层劳动人民的善良、友爱、舍己为人，反映了雨果的人道主义思想。', '文学名著', 'balishengmuyuan.jpg', '巴黎圣母院.txt', '雨果');
 INSERT INTO `books` VALUES ('17', '窗边的小豆豆', '《窗边的小豆豆》是日本作家、主持人黑柳彻子创作的儿童文学作品，这本书讲述了作者上小学时的一段真实的故事：小豆豆（作者）因淘气被原学校退学后，来到巴学园。在小林校长的爱护和引导下，一般人眼里“怪怪”的小豆豆逐渐变成了一个大家都能接受的孩子。巴学园里亲切、随和的教学方式使这里的孩子们度过了人生最美好的时光。', '文学名著', 'chuangbiandexiaodoudou.jpg', '窗边的小豆豆.txt', '黑柳彻子');
 INSERT INTO `books` VALUES ('18', '动物庄园', '《动物庄园》是英国作家乔治·奥威尔创作的中篇小说，该作讲述农场的一群动物成功地进行了一场“革命”，将压榨他们的人类东家赶出农场，建立起一个平等的动物社会。然而，动物领袖，那些聪明的猪们最终却篡夺了革命的果实，成为比人类东家更加独裁和极权的统治者。', '文学名著', 'dongwuzhuangyuan.jpg', '动物庄园.txt', '乔治·奥威尔');
+
+-- ----------------------------
+-- Table structure for `bookshelf`
+-- ----------------------------
+DROP TABLE IF EXISTS `bookshelf`;
+CREATE TABLE `bookshelf` (
+  `phone_num` varchar(11) NOT NULL,
+  `child_name` varchar(20) NOT NULL,
+  `book_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`phone_num`,`child_name`,`book_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bookshelf
+-- ----------------------------
+INSERT INTO `bookshelf` VALUES ('18730094415', '小明', '安娜卡列尼娜');
+INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '安娜卡列尼娜');
+INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '窗边的小豆豆');
 
 -- ----------------------------
 -- Table structure for `books_contents`
