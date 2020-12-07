@@ -162,21 +162,36 @@ public class ParentUtil {
         return parent;
     }
 
-    public static void storeCurrentParent(String currentUser) {
+    public static void storeCurrentParent(String currentUser,Handler handler) {
         FormBody formBody=new FormBody.Builder().add("phone",currentUser).build();
         Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"GetOneParentInfoServlet")
                 .post(formBody)
                 .build();
         Call call=okHttpClient.newCall(request);
-        try {
-            String json=call.execute().body().string();
-            Parent parent=new Gson().fromJson(json,Parent.class);
-            EaseParentUtil.currentUserAvatar=ConfigUtil.SETVER_AVATAR+parent.getAvator();
-            Log.e(TAG, "storeCurrentParent: "+parent.getAvator());
-            EaseParentUtil.currentUserNickname=parent.getNickname();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    String json=response.body().string();
+                    Parent parent=new Gson().fromJson(json,Parent.class);
+                    EaseParentUtil.currentUserAvatar=ConfigUtil.SETVER_AVATAR+parent.getAvator();
+                    Log.e(TAG, "storeCurrentParent: "+parent.getAvator());
+                    EaseParentUtil.currentUserNickname=parent.getNickname();
+                    if(null!=handler){
+                        Message message=handler.obtainMessage();
+                        message.what=1;
+                        handler.sendMessage(message);}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 

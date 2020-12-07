@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     //存储当前用户的昵称和头像
-                    ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                    ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
                     long costTime = System.currentTimeMillis() - start;
                     //wait
                     if (sleepTime - costTime > 0) {

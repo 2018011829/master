@@ -131,7 +131,7 @@ public class ConversationFragment extends Fragment {
                 new Thread(){
                     @Override
                     public void run() {
-                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
                     }
                 }.start();
                 startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,conversations.get(position).conversationId()));

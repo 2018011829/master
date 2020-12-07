@@ -144,7 +144,7 @@ private final static String TAG="LoginByPasswordActivity";
                     @Override
                     public void onSuccess() {
                         //存储当前用户的昵称和头像
-                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser());
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
                         ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(),new ArrayList<>());
                         startActivity(new Intent(LoginByPasswordActivity.this, MainActivity.class));
                         Looper.prepare();
