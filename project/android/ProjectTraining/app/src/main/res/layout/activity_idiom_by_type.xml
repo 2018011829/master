@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -16,12 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@drawable/forward"/>
         <TextView
             android:text="返回"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -29,18 +28,23 @@
 
     <TextView
         android:id="@+id/tv_idiom_type_name"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:gravity="center"
+        android:textColor="#CC3333"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"/>
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:id="@+id/idiom_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"/>
 
     <GridView
         android:id="@+id/grid_idiom_by_type"
         android:numColumns="2"
         android:verticalSpacing="20dp"
-        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
