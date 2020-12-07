@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Content;
@@ -53,7 +52,7 @@ public class MoreContentActivity extends Activity {
                 //获取某一章的内容
                 Content content=contentObj.get(i);
                 //跳转到阅读界面
-                Intent intentRead=new Intent(MoreContentActivity.this,ReadBookActivity.class);
+                Intent intentRead=new Intent(MoreContentActivity.this, ReadBookActivity.class);
                 intentRead.putExtra("currentIndex",i);
                 intentRead.putExtra("book",book);
                 intentRead.putExtra("contentObj", (Serializable) contentObj);
@@ -68,7 +67,7 @@ public class MoreContentActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //返回上一页
-                Intent intent=new Intent(MoreContentActivity.this,BookInfoActivity.class);
+                Intent intent=new Intent(MoreContentActivity.this, BookInfoActivity.class);
                 intent.putExtra("book",book);
                 startActivity(intent);
                 finish();
@@ -82,7 +81,7 @@ public class MoreContentActivity extends Activity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //返回上一页
-            Intent intent=new Intent(MoreContentActivity.this,BookInfoActivity.class);
+            Intent intent=new Intent(MoreContentActivity.this, BookInfoActivity.class);
             intent.putExtra("book",book);
             startActivity(intent);
             finish();

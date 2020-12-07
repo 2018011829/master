@@ -27,7 +27,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -226,7 +225,7 @@ public class BooksHomePageActivity extends Activity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //返回主页
-            Intent intent=new Intent(BooksHomePageActivity.this,MainActivity.class);
+            Intent intent=new Intent(BooksHomePageActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
             return true;

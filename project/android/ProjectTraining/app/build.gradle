@@ -101,6 +101,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //调节亮度依赖
     implementation 'com.blankj:utilcode:1.30.4'
+    //添加侧滑菜单依赖
+    implementation 'br.com.liveo:navigationdrawer-material:2.5.1'
 
     //顶部导航栏依赖
     implementation 'com.gerenvip.ui.tabs:tablayout:4.0.9'

@@ -41,6 +41,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyFragment extends Fragment {
+
+    public static String phoneNum=EMClient.getInstance().getCurrentUser(); //纪录当前登录的手机号，用来在收藏前进行判断
+    public static String childName="小明"; //纪录当前登录的手机号下的孩子姓名，用来在收藏前进行判断、存储收藏信息
     private ImageView iv_headPhoto;
     private LinearLayout ll_mine_addChild;
     private LinearLayout ll_mine_editorParent;
