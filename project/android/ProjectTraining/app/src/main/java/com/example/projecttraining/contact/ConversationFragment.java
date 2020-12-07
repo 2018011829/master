@@ -6,8 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,6 +36,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.easeui.widget.EaseConversationList;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +54,14 @@ public class ConversationFragment extends Fragment {
     private EaseConversationList easeConversationList;
     private List<EMConversation> copyConversations;
     List<EMConversation> conversations;
+    Handler handler=new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if(msg.what==1){
+                easeConversationList.init(conversations);
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -70,8 +83,18 @@ public class ConversationFragment extends Fragment {
         conversations = new ArrayList<EMConversation>();
         copyConversations = new ArrayList<EMConversation>();
         conversations.addAll(loadConversationList());
-        copyConversations.addAll(conversations);
-        easeConversationList.init(conversations);
+        new Thread(){
+            @Override
+            public void run() {
+                //加载所有好友信息
+                    try {
+                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
+                        ParentUtil.storeAllContacts(usernames,getContext(), handler);
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }.start();
         //获取搜索框相关控件
         query = (EditText) view.findViewById(R.id.query);
         clearSearch = (ImageButton) view.findViewById(R.id.search_clear);
@@ -138,7 +161,7 @@ public class ConversationFragment extends Fragment {
             }
         });
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
+        //添加事件监听器，监听受到消息
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> list) {
@@ -175,6 +198,7 @@ public class ConversationFragment extends Fragment {
 
         return view;
     }
+
     /**
      * load conversation list
      * @return

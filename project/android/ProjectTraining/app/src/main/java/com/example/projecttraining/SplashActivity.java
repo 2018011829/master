@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.projecttraining.login.LoginByPasswordActivity;
 import com.example.projecttraining.util.ParentUtil;
+import com.google.gson.Gson;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.exceptions.HyphenateException;
@@ -14,8 +16,8 @@ import com.hyphenate.exceptions.HyphenateException;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
-    private TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper;
-    private static final int sleepTime = 3000;
+    private static String TAG="SplashAvtivity";
+    private static final int sleepTime = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
-        tianTianSQLiteOpenHelper=TianTianSQLiteOpenHelper.getInstance(getApplicationContext());
         new Thread(new Runnable() {
             public void run() {
                 if (EMClient.getInstance().isLoggedInBefore()) {
@@ -36,15 +37,13 @@ public class SplashActivity extends AppCompatActivity {
                     long start = System.currentTimeMillis();
                     EMClient.getInstance().chatManager().loadAllConversations();
                     EMClient.getInstance().groupManager().loadAllGroups();
-                    //加载所有好友信息
-                    try {
-                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
-                        for(String username:usernames){
-                            ParentUtil.storeOneParent(username,tianTianSQLiteOpenHelper);
-                        }
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
+//                    //加载所有好友信息
+//                    try {
+//                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
+//                        ParentUtil.storeAllContacts(usernames,getApplicationContext());
+//                    } catch (HyphenateException e) {
+//                        e.printStackTrace();
+//                    }
                     //存储当前用户的昵称和头像
                     ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
                     long costTime = System.currentTimeMillis() - start;

@@ -153,8 +153,8 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                             btnAddBookshelf.setBackgroundColor(getResources().getColor(android.R.color.darker_gray,null));
                             currentBtnBookshelf=android.R.color.black;
                             Toast.makeText(BookInfoActivity.this,
-                                "书已经加入书架！",
-                                Toast.LENGTH_SHORT).show();
+                                    "书已经加入书架！",
+                                    Toast.LENGTH_SHORT).show();
                             break;
                     }
 

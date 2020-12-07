@@ -1,3 +1,4 @@
+
 package com.group.tiantian.filter;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 /**
- * ×Ö·û¹ıÂËÆ÷ 
+ * ×Ö·û¹ıÂËÆ÷ Servlet Filter implementation class CharacterFilter
  */
 @WebFilter("/*")
 public class CharacterFilter implements Filter {
@@ -19,12 +20,14 @@ public class CharacterFilter implements Filter {
 	 * Default constructor.
 	 */
 	public CharacterFilter() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -32,8 +35,8 @@ public class CharacterFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// ÉèÖÃ±àÂë·½Ê½
-		request.setCharacterEncoding("utf-8");
+		// ÉèÖÃ±àÂë
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		chain.doFilter(request, response);
 	}
@@ -42,6 +45,7 @@ public class CharacterFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
+		// TODO Auto-generated method stub
 	}
 
 }

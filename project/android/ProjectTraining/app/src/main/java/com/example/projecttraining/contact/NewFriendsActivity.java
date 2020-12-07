@@ -1,65 +1,132 @@
 package com.example.projecttraining.contact;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
+import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class NewFriendsActivity extends AppCompatActivity {
+    private static String TAG = "NewFriendsActivity";
     private ImageView ivReturn;
     private TextView tvAddFriedns;
-    private ListView lvNewFriends;
-    private List<Parent> parents;
-    NewFriendAdapter newFriendAdapter;
-    private Handler handler=new Handler(Looper.getMainLooper()){
+    private ListView lvInviteMe;
+    private ListView lvIInvite;
+    private ListView lvHistory;
+    private List<ContactsStatus> contactsStatuses;
+    private List<ContactsStatus> lvInviteMeList = new ArrayList<>();
+    private List<ContactsStatus> lvIInviteList = new ArrayList<>();
+    private List<ContactsStatus> lvHistoryList = new ArrayList<>();
+    private NewFriendAdapter lvInviteMeAdapter;
+    private NewFriendAdapter lvIInviteAdapter;
+    private NewFriendAdapter lvHistoryAdapter;
+    private TextView tv1;//"我发出的邀请TextView，如果我没有发出邀请，不需要显示"
+    private TextView tv2;
+    private TextView tv3;
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
+                case 1:
+                    tv1.setVisibility(View.GONE);
+                    tv2.setVisibility(View.GONE);
+                    tv3.setVisibility(View.GONE);
+                    lvInviteMeList.clear();
+                    lvIInviteList.clear();
+                    lvHistoryList.clear();
+                    contactsStatuses = (List<ContactsStatus>) msg.obj;
+                    for (ContactsStatus contactsStatus : contactsStatuses) {
+                        if (null == contactsStatus.getFrom() && 0 == contactsStatus.getStatus()) {
+                            lvIInviteList.add(contactsStatus);
+                            tv1.setVisibility(View.VISIBLE);
+                            Log.e(TAG, "handleMessage: 将" + contactsStatus.getTo().getNickname() + "加入已发送list");
+                        } else if (null == contactsStatus.getTo() && 0 == contactsStatus.getStatus()) {
+                            lvInviteMeList.add(contactsStatus);
+                            tv2.setVisibility(View.VISIBLE);
+                        } else {
+                            lvHistoryList.add(contactsStatus);
+                            tv3.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    lvInviteMeAdapter = new NewFriendAdapter(getApplicationContext(), lvInviteMeList, R.layout.contact_item_new_friend);
+                    lvInviteMe.setAdapter(lvInviteMeAdapter);
+                    lvIInviteAdapter = new NewFriendAdapter(getApplicationContext(), lvIInviteList, R.layout.contact_item_new_friend);
+                    lvIInvite.setAdapter(lvIInviteAdapter);
+                    lvHistoryAdapter = new NewFriendAdapter(getApplicationContext(), lvHistoryList, R.layout.contact_item_new_friend);
+                    lvHistory.setAdapter(lvHistoryAdapter);
+                    break;
                 case 2:
-                    Parent parent=(Parent) msg.obj;
-                    parents.add(parent);
-                    newFriendAdapter.notifyDataSetChanged();
+                    getContactsStatus(EMClient.getInstance().getCurrentUser());
                     break;
             }
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ParentUtil.isSendInvitaion) {
+            //如果是从添加好友的页面返回，并且发送了邀请
+            //从服务端得到邀请我的，和我邀请的人的数据
+            Log.e(TAG, "onResume: 发送了邀请更新数据");
+            getContactsStatus(EMClient.getInstance().getCurrentUser());
+            ParentUtil.isSendInvitaion = false;
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_friends);
         ivReturn = findViewById(R.id.iv_return);
         tvAddFriedns = findViewById(R.id.tv_add_friends);
-        lvNewFriends = findViewById(R.id.lv_new_friends);
-        parents=new ArrayList<>();
-        newFriendAdapter=new NewFriendAdapter(getApplicationContext(),parents,R.layout.contact_item_new_friend);
-        lvNewFriends.setAdapter(newFriendAdapter);
-        List<String> newFriendsList= ContactManager.newFriends.get(EMClient.getInstance().getCurrentUser());
-        if(newFriendsList!=null){
-            for(String phone:newFriendsList){
-                ParentUtil.getOneParent(phone,handler);
-            }
-        }else{
-            findViewById(R.id.tv_no_friends).setVisibility(View.VISIBLE);
-        }
+        lvIInvite = findViewById(R.id.lv_i_invite);
+        lvInviteMe = findViewById(R.id.lv_invite_me);
+        lvHistory = findViewById(R.id.lv_histroy);
+        tv1 = findViewById(R.id.tv1);
+        tv2 = findViewById(R.id.tv2);
+        tv3 = findViewById(R.id.tv3);
         ivReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +136,254 @@ public class NewFriendsActivity extends AppCompatActivity {
         tvAddFriedns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AddFriendsActivity.class));
+                startActivity(new Intent(NewFriendsActivity.this, AddFriendsActivity.class));
+            }
+        });
+        //从服务端得到邀请我的，和我邀请的人的数据
+        getContactsStatus(EMClient.getInstance().getCurrentUser());
+
+        //添加联系人监听器，监听联系人
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+            @Override
+            public void onContactAdded(String s) {
+
+            }
+
+            @Override
+            public void onContactDeleted(String s) {
+
+            }
+
+            @Override
+            public void onContactInvited(String s, String s1) {
+                //收到好友申请
+                Log.e(TAG, "onContactInvited: 收到好友申请" + s);
+                String currentUser = EMClient.getInstance().getCurrentUser();
+                List<String> newFriendsList = ContactManager.newFriends.get(currentUser);
+                if (newFriendsList == null) {
+                    newFriendsList = new ArrayList<>();
+                }
+                if (!newFriendsList.contains(s)) {
+                    newFriendsList.add(s);
+                }
+                ContactManager.newFriends.put(currentUser, newFriendsList);
+
+                Log.e(TAG, "onContactInvited: " + newFriendsList);
+            }
+
+            @Override
+            public void onFriendRequestAccepted(String s) {
+                ParentUtil.isContactAddedOrDeleted = true;
+            }
+
+            @Override
+            public void onFriendRequestDeclined(String s) {
+
             }
         });
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(TAG, "onNewIntent: ");
+        //从服务端得到邀请我的，和我邀请的人的数据
+        getContactsStatus(EMClient.getInstance().getCurrentUser());
+    }
+
+    private void getContactsStatus(String username) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("username", username).build();
+        Request request = new Request.Builder()
+                .post(formBody)
+                .url(ConfigUtil.SERVICE_ADDRESS + "getContactsStatusServlet").build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Toast.makeText(getApplicationContext(), "当前网络不稳定", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String json = response.body().string();
+                Type type = new TypeToken<List<ContactsStatus>>() {
+                }.getType();
+                List<ContactsStatus> contactsStatuses = new Gson().fromJson(json, type);
+                Log.e(TAG, "onResponse: 收到我的联系人状态信息" + contactsStatuses);
+                Message message = handler.obtainMessage();
+                message.what = 1;
+                message.obj = contactsStatuses;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+    private class NewFriendAdapter extends BaseAdapter {
+        private final String TAG = "NewFriendAdapter";
+        private Context context;
+        private List<ContactsStatus> contactsStatuses;
+        private int itemLayout;
+        private int flag = 0;
+
+        public NewFriendAdapter(Context context, List<ContactsStatus> contactsStatuses, int itemLayout) {
+            this.context = context;
+            this.contactsStatuses = contactsStatuses;
+            this.itemLayout = itemLayout;
+
+        }
+
+        @Override
+        public int getCount() {
+            if (null != contactsStatuses) {
+                return contactsStatuses.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            if (null != contactsStatuses) {
+                return contactsStatuses.get(position);
+            }
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            if (null == convertView) {
+                convertView = LayoutInflater.from(context).inflate(itemLayout, null);
+                holder = new ViewHolder();
+                holder.avatar = convertView.findViewById(R.id.avatar);
+                holder.nickname = convertView.findViewById(R.id.nickname);
+                holder.agree = convertView.findViewById(R.id.agree);
+                holder.reject = convertView.findViewById(R.id.reject);
+                holder.status = convertView.findViewById(R.id.status);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            //设置控件内容,如果from==null,说明是我发出的邀请
+            ContactsStatus contactsStatus = contactsStatuses.get(position);
+            //我发出的，尚未被同意的邀请
+            if (contactsStatus.getFrom() == null) {
+                Glide.with(context)
+                        .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getTo().getAvator())
+                        .into(holder.avatar);
+                holder.nickname.setText(contactsStatus.getTo().getNickname());
+                holder.agree.setVisibility(View.GONE);
+                holder.reject.setVisibility(View.GONE);
+                holder.status.setVisibility(View.VISIBLE);
+                if (contactsStatus.getStatus() == 0) {
+                    holder.status.setText("对方处理中...");
+                } else if (contactsStatus.getStatus() == 1) {
+                    holder.status.setText("对方已同意");
+                } else if (contactsStatus.getStatus() == 2) {
+                    holder.status.setText("对方已拒绝");
+                }
+            } else {
+                Glide.with(context)
+                        .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getFrom().getAvator())
+                        .into(holder.avatar);
+                holder.nickname.setText(contactsStatus.getFrom().getNickname());
+                if (contactsStatus.getStatus() == 0) {
+                    holder.agree.setVisibility(View.VISIBLE);
+                    holder.reject.setVisibility(View.VISIBLE);
+                    holder.status.setVisibility(View.GONE);
+                    holder.agree.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //同意好友请求,环信同意请求为同步方法，会阻塞当前线程，所以新建线程
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        EMClient.getInstance().contactManager().acceptInvitation(contactsStatus.getFrom().getPhone());
+                                    } catch (HyphenateException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.start();
+                            Log.e(TAG, "onClick: 同意请求" + contactsStatus.getFrom().getPhone());
+                            ParentUtil.isContactAddedOrDeleted = true;
+                            //修改本地数据库
+                            agreeInvitation(contactsStatus.getId());
+
+                        }
+                    });
+                    holder.reject.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //拒绝好友请求
+                            try {
+                                EMClient.getInstance().contactManager().declineInvitation(contactsStatus.getFrom().getPhone());
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } else if (contactsStatus.getStatus() == 1) {
+                    holder.agree.setVisibility(View.INVISIBLE);
+                    holder.reject.setVisibility(View.INVISIBLE);
+                    holder.status.setVisibility(View.VISIBLE);
+                    holder.status.setText("您已同意");
+                } else if (contactsStatus.getStatus() == 2) {
+                    holder.agree.setVisibility(View.INVISIBLE);
+                    holder.reject.setVisibility(View.INVISIBLE);
+                    holder.status.setVisibility(View.VISIBLE);
+                    holder.status.setText("您已拒绝");
+                }
+            }
+            return convertView;
+        }
+
+    }
+
+    static class ViewHolder {
+        ImageView avatar;
+        TextView nickname;
+        Button agree;
+        Button reject;
+        TextView status;
+    }
+
+    private void agreeInvitation(int id) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("id", id + "").build();
+        Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "AgreeInvitationServlet").build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Looper.prepare();
+                Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.body().string().equals("成功")) {
+                    Message message = handler.obtainMessage();
+                    message.what = 2;
+                    handler.sendMessage(message);
+                    Looper.prepare();
+                    Toast.makeText(NewFriendsActivity.this, "你们已经成为好友了！", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                } else {
+                    Looper.prepare();
+                    Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+
+            }
+        });
+    }
+
 }
+
