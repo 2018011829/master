@@ -13,10 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
@@ -76,7 +78,11 @@ public class AddFriendAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         //设置控件内容
-        Glide.with(context).load(ConfigUtil.SETVER_AVATAR+parents.get(position).getAvator()).into(holder.avatar);
+        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
+        Glide.with(context)
+                .load(ConfigUtil.SETVER_AVATAR+parents.get(position).getAvator())
+                .apply(requestOptions)
+                .into(holder.avatar);
         holder.nickname.setText(parents.get(position).getNickname());
         if(ParentUtil.allContacts.contains(parents.get(position).getPhone())){
             holder.add.setText("已在通讯录");

@@ -24,10 +24,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMMessageListener;
+import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
@@ -53,25 +56,29 @@ public class ConversationFragment extends Fragment {
     protected InputMethodManager inputMethodManager;
     private EaseConversationList easeConversationList;
     private List<EMConversation> copyConversations;
-    List<EMConversation> conversations;
-    Handler handler=new Handler(Looper.getMainLooper()){
+    private ImageView waitingForInternet;
+    private List<EMConversation> conversations;
+    private Handler handler=new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what==1){
+                Log.e(TAG, "handleMessage: 成功连接网络" );
+                waitingForInternet.setVisibility(View.GONE);
+                Log.e(TAG, "handleMessage: "+conversations.get(0).conversationId() );
                 easeConversationList.init(conversations);
             }
         }
     };
 
+
     @Override
     public void onResume() {
         super.onResume();
-        conversations.clear();
-        conversations.addAll(loadConversationList());
-        easeConversationList.refresh();
-        copyConversations.clear();
-        copyConversations.addAll(conversations);
-
+        Log.e(TAG, "onResume: ");
+//            conversations.addAll(loadConversationList());
+//            easeConversationList.refresh();
+//            copyConversations.clear();
+//            copyConversations.addAll(conversations);
     }
 
     @Override
@@ -82,19 +89,26 @@ public class ConversationFragment extends Fragment {
         easeConversationList=view.findViewById(R.id.ease_conversation_list);
         conversations = new ArrayList<EMConversation>();
         copyConversations = new ArrayList<EMConversation>();
+        waitingForInternet=view.findViewById(R.id.iv_waiting_for_internet);
+        Glide.with(getContext())
+                .asGif()
+                .load(R.drawable.waiting_for_internet)
+                .into(waitingForInternet);
+        Log.e(TAG, "onCreateView: 成功設置加載圖片");
         conversations.addAll(loadConversationList());
-        new Thread(){
+        copyConversations.addAll(conversations);
+        Log.e(TAG, "onCreateView: conversations的长度"+conversations.size());
+        EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
             @Override
-            public void run() {
-                //加载所有好友信息
-                    try {
-                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
-                        ParentUtil.storeAllContacts(usernames,getContext(), handler);
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
+            public void onSuccess(List<String> strings) {
+                ParentUtil.storeAllContacts(strings,getContext(), handler);
+                Log.e(TAG, "onSuccess:conversations的长度1 "+conversations.size() );
             }
-        }.start();
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
         //获取搜索框相关控件
         query = (EditText) view.findViewById(R.id.query);
         clearSearch = (ImageButton) view.findViewById(R.id.search_clear);
@@ -161,6 +175,7 @@ public class ConversationFragment extends Fragment {
             }
         });
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         //添加事件监听器，监听受到消息
         EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
             @Override
@@ -168,6 +183,8 @@ public class ConversationFragment extends Fragment {
                 conversations.clear();
                 conversations.addAll(loadConversationList());
                 easeConversationList.refresh();
+                copyConversations.clear();
+                copyConversations.addAll(conversations);
             }
 
             @Override
@@ -258,5 +275,17 @@ public class ConversationFragment extends Fragment {
                 inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e(TAG, "onDestroyView: ");
     }
 }

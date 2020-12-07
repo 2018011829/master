@@ -8,7 +8,9 @@ import com.example.projecttraining.contact.ContactManager;
 import com.example.projecttraining.contact.Parent;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
 
@@ -27,6 +29,7 @@ public class EMApplication extends Application {
         options.setAcceptInvitationAlways(false);
         EaseUI.getInstance().init(this,options);
         EMClient.getInstance().setDebugMode(true);
+
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
             @Override
             public void onContactAdded(String s) {
@@ -61,6 +64,38 @@ public class EMApplication extends Application {
 
             @Override
             public void onFriendRequestDeclined(String s) {
+
+            }
+        });
+        //注册消息监听
+        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
+            @Override
+            public void onMessageReceived(List<EMMessage> list) {
+                ParentUtil.isMessageReceived=true;
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRecalled(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage emMessage, Object o) {
 
             }
         });

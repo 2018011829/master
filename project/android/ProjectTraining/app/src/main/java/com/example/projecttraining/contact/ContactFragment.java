@@ -24,9 +24,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
@@ -34,6 +36,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
@@ -64,6 +67,7 @@ import okhttp3.Response;
 public class ContactFragment extends Fragment {
     private static final String TAG="ContactFragment";
     private RelativeLayout newFriends;
+    private ImageView iv;
     List<EaseUser> easeUsers;
     List<EaseUser> copyEaseUsers=new ArrayList<>();
     EaseContactList easeContactList;
@@ -72,11 +76,14 @@ public class ContactFragment extends Fragment {
     //设置搜索框的相关控件
     protected ImageButton clearSearch;
     protected EditText query;
+    //当网络不稳定时显示加载图片
+    private ImageView waitingForInternet;
     private Handler handler=new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
             //从服务器得到了所有联系人,初始化联系人界面
             if(msg.what==1){
+                waitingForInternet.setVisibility(View.GONE);
                 easeUsers.clear();
                 List<Parent> parents= (List<Parent>) msg.obj;
                 for(Parent parent:parents){
@@ -86,45 +93,33 @@ public class ContactFragment extends Fragment {
                     easeUsers.add(easeUser);
                 }
                 //如果是从onCreateView方法获取联系人
-                if(!isInited){
-                easeContactList.init(easeUsers);
-                }else{
-                    //如果是从其他activity恢复到MainActivity并且发生了联系人的增加，则刷新
-                    easeContactList.refresh();
-                }
+                    easeContactList.init(easeUsers);
+                    Log.e(TAG, "handleMessage: init" );
+                    isInited=true;
                 //搜索时，需要清空Easeusers,使用copyEaseUser保存所有数据
                 copyEaseUsers.clear();
                 copyEaseUsers.addAll(easeUsers);
             }
         }
     };
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(ParentUtil.isContactAddedOrDeleted) {
-            new Thread(){
-                @Override
-                public void run() {
-                    //初始化联系人列表
-                    try {
-                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
-                        getAllContacts(usernames);
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-            //如果添加了联系人，则需要重新获取所有的练习人列表
-            ParentUtil.isContactAddedOrDeleted=false;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView: ");
         View view=inflater.inflate(R.layout.fragment_contact, container, false);
         easeContactList=view.findViewById(R.id.ease_contact_list);
         newFriends=view.findViewById(R.id.new_friends);
+        iv=view.findViewById(R.id.iv);
+        Glide.with(this)
+                .load(R.drawable.newfriend)
+                .transform(new GlideRoundImage(getContext(),8))
+                .into(iv);
+        waitingForInternet=view.findViewById(R.id.iv_waiting_for_internet);
+        Glide.with(getContext())
+                .asGif()
+                .load(R.drawable.waiting_for_internet)
+                .into(waitingForInternet);
         easeUsers=new ArrayList<EaseUser>();
         new Thread(){
             @Override
@@ -144,6 +139,7 @@ public class ContactFragment extends Fragment {
         easeContactList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(TAG, "onItemClick: " );
                 EaseParentUtil.toChatUserAvator=easeUsers.get(position).getAvatar();
                 EaseParentUtil.toChatUserNickname=easeUsers.get(position).getNickname();
                 startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,easeUsers.get(position).getUsername()));
@@ -152,6 +148,7 @@ public class ContactFragment extends Fragment {
         newFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e(TAG, "onClick: " );
                 startActivity(new Intent(getContext(),NewFriendsActivity.class));
             }
         });
@@ -161,7 +158,9 @@ public class ContactFragment extends Fragment {
         return view;
     }
 
+
     private void setOnSearchListener(View view) {
+        Log.e(TAG, "setOnSearchListener: " );
         //获取搜索框相关控件
         query = (EditText) view.findViewById(R.id.query);
         clearSearch = (ImageButton) view.findViewById(R.id.search_clear);
@@ -242,5 +241,40 @@ public class ContactFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: "+ParentUtil.isContactAddedOrDeleted);
+        //如果添加了联系人，则需要重新获取所有的练习人列表
+        if(ParentUtil.isContactAddedOrDeleted==true) {
+            new Thread(){
+                @Override
+                public void run() {
+                    //初始化联系人列表
+                    Log.e(TAG, "onResumerun: 更新联系人列表");
+                    try {
+                        List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
+                        getAllContacts(usernames);
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            ParentUtil.isContactAddedOrDeleted=false;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e(TAG, "onDestroyView: " );
     }
 }

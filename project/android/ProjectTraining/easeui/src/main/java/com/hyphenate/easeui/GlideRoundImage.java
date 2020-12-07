@@ -1,4 +1,4 @@
-package com.example.projecttraining.contact;
+package com.hyphenate.easeui;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

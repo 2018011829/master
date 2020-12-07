@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
@@ -30,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
@@ -183,13 +185,13 @@ public class NewFriendsActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.e(TAG, "onNewIntent: ");
-        //从服务端得到邀请我的，和我邀请的人的数据
-        getContactsStatus(EMClient.getInstance().getCurrentUser());
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        Log.e(TAG, "onNewIntent: ");
+//        //从服务端得到邀请我的，和我邀请的人的数据
+//        getContactsStatus(EMClient.getInstance().getCurrentUser());
+//    }
 
     private void getContactsStatus(String username) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -219,6 +221,7 @@ public class NewFriendsActivity extends AppCompatActivity {
         });
     }
 
+    //NewFriendAdapter
     private class NewFriendAdapter extends BaseAdapter {
         private final String TAG = "NewFriendAdapter";
         private Context context;
@@ -273,8 +276,10 @@ public class NewFriendsActivity extends AppCompatActivity {
             ContactsStatus contactsStatus = contactsStatuses.get(position);
             //我发出的，尚未被同意的邀请
             if (contactsStatus.getFrom() == null) {
+                RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
                 Glide.with(context)
                         .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getTo().getAvator())
+                        .apply(requestOptions)
                         .into(holder.avatar);
                 holder.nickname.setText(contactsStatus.getTo().getNickname());
                 holder.agree.setVisibility(View.GONE);
@@ -288,8 +293,10 @@ public class NewFriendsActivity extends AppCompatActivity {
                     holder.status.setText("对方已拒绝");
                 }
             } else {
+                RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
                 Glide.with(context)
                         .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getFrom().getAvator())
+                        .apply(requestOptions)
                         .into(holder.avatar);
                 holder.nickname.setText(contactsStatus.getFrom().getNickname());
                 if (contactsStatus.getStatus() == 0) {

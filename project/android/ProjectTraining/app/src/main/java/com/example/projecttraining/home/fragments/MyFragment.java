@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
 import com.example.projecttraining.mine.AddChildActivity;
 import com.example.projecttraining.mine.EditorParentActivity;
@@ -135,45 +136,14 @@ public class MyFragment extends Fragment {
     private void init(){
         tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
         tv_mine_useName.setText(EaseParentUtil.currentUserNickname);
-        Glide.with(getContext()).load(EaseParentUtil.currentUserAvatar).into(iv_headPhoto);
+        //12-07得到一个设置圆角的requestOptions
+        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());
+        Glide.with(getContext())
+                .load(EaseParentUtil.currentUserAvatar)
+                .apply(requestOptions)
+                .into(iv_headPhoto);
 
     }
-//    private void init() {
-//        if(tag<=0) {
-//            FormBody.Builder builder = new FormBody.Builder();
-//            builder.add("phone", phone);
-//            FormBody formBody = builder.build();
-//            Request request = new Request.Builder()
-//                    .post(formBody)
-//                    .url(ConfigUtil.SERVICE_ADDRESS + "ParentMessageServlet")
-//                    .build();
-//            Call call = new OkHttpClient().newCall(request);
-//            call.enqueue(new Callback() {
-//                @Override
-//                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//                    Log.e("家长信息", "请求失败");
-//                }
-//
-//                @Override
-//                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                    String result = response.body().string();
-//                    Log.i("json", result);
-//                    Message msg = new Message();
-//                    msg.what = 1;
-//                    msg.obj = result;
-//                    handler.sendMessage(msg);
-//                }
-//            });
-//            tag++;
-//        }else {
-//            tv_mine_useName.setText(nickName);
-//            tv_mine_phone.setText("手机号："+phone);
-//            Glide.with(MyFragment.this)
-//                    .load(ConfigUtil.SERVICE_ADDRESS+"headportraitimgs/"+headPhoto)
-//                    .circleCrop()
-//                    .into(iv_headPhoto);
-//        }
-//    }
 
     private void findViews() {
         iv_headPhoto = view.findViewById(R.id.iv_headPhoto);

@@ -12,6 +12,5 @@
         android:id="@+id/ease_conversation_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-
+    <include layout="@layout/frame_waitting_for_internet" />
 </LinearLayout>

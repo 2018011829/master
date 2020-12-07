@@ -11,10 +11,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.contact.Parent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.exceptions.HyphenateException;
@@ -49,10 +51,12 @@ public class ParentUtil {
     public static boolean isContactAddedOrDeleted = false;
     //记录是否在应用内进行手动登录
     public static boolean isLoginManually = false;
-    //用于handler发送消息的what
-    public static int GET_ALL_CONTACTS=10;
     //记录是否发送了邀请
     public static boolean isSendInvitaion=false;
+    //记录是否收到新的消息，若收到，需要刷新conversationFragment
+    public static boolean isMessageReceived=false;
+
+
     /**
      * 从服务端获取所有父母的集合并通过handler发送到ui线程
      *
@@ -232,6 +236,9 @@ public class ParentUtil {
                 Looper.prepare();
                 Toast.makeText(context, "当前网络不稳定", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+                Message message=handler.obtainMessage();
+                message.what=9;
+                handler.sendMessage(message);
             }
 
             @Override
@@ -242,6 +249,7 @@ public class ParentUtil {
                     Type type = new TypeToken<List<Parent>>() {
                     }.getType();
                     List<Parent> parents = gson.fromJson(json, type);
+                    Log.e(TAG, "onResponse: "+parents);
                     SQLiteDatabase sqLiteDatabase = TianTianSQLiteOpenHelper.getInstance(context).getWritableDatabase();
                     //存储当前用户的所有好友之前，先清除SQLite的Parent表
                     sqLiteDatabase.delete("parents", null, null);
