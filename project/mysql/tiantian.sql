@@ -2,19 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50701
+Source Server Version : 50506
 Source Host           : localhost:3306
-Source Database       : tiantian
+Source Database       : tian
 
 Target Server Type    : MYSQL
-Target Server Version : 50701
+Target Server Version : 50506
 File Encoding         : 65001
 
-<<<<<<< HEAD
-Date: 2020-12-06 21:03:33
-=======
-Date: 2020-12-06 12:40:18
->>>>>>> 71479b606e3c408f283522e8151ab0000a56d9a4
+Date: 2020-12-07 09:53:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1032,7 +1028,22 @@ INSERT INTO `classifyidiom` VALUES ('39', '黑', '5');
 INSERT INTO `classifyidiom` VALUES ('40', '白', '5');
 
 -- ----------------------------
-<<<<<<< HEAD
+-- Table structure for `collections`
+-- ----------------------------
+DROP TABLE IF EXISTS `collections`;
+CREATE TABLE `collections` (
+  `phone_num` varchar(11) NOT NULL,
+  `child_name` varchar(20) NOT NULL,
+  `collection_type` varchar(20) NOT NULL,
+  `collection_content` varchar(100) NOT NULL,
+  PRIMARY KEY (`phone_num`,`child_name`,`collection_type`,`collection_content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of collections
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `contacts_status`
 -- ----------------------------
 DROP TABLE IF EXISTS `contacts_status`;
@@ -1052,22 +1063,6 @@ INSERT INTO `contacts_status` VALUES ('2', '18730094411', '18730094413', '1');
 INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
 INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
 INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
-=======
--- Table structure for `collections`
--- ----------------------------
-DROP TABLE IF EXISTS `collections`;
-CREATE TABLE `collections` (
-  `phone_num` varchar(11) NOT NULL,
-  `child_name` varchar(20) NOT NULL,
-  `collection_type` varchar(20) NOT NULL,
-  `collection_content` varchar(100) NOT NULL,
-  PRIMARY KEY (`phone_num`,`child_name`,`collection_type`,`collection_content`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of collections
--- ----------------------------
->>>>>>> 71479b606e3c408f283522e8151ab0000a56d9a4
 
 -- ----------------------------
 -- Table structure for `idiom`
