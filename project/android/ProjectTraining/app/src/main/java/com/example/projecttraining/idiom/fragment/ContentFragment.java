@@ -1,20 +1,17 @@
 package com.example.projecttraining.idiom.fragment;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.GridView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.idiom.activitys.IdiomByTypeActivity;
+import com.example.projecttraining.idiom.adapter.IdiomByTypeNameAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,7 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  * 2020-11-26
  * 2020-11-27
  * 2020-11-28
+ * 2020-12-7
  * @author lrf
  */
 public class ContentFragment extends Fragment implements ScreenShotable {
@@ -34,7 +32,8 @@ public class ContentFragment extends Fragment implements ScreenShotable {
     private View containerView;
     private Bitmap bitmap;
 
-    protected LinearLayout mLinearLayout;
+    private GridView gridView;
+    private IdiomByTypeNameAdapter idiomByTypeNameAdapter;
     protected List<String> strList = new ArrayList<>();
 
 
@@ -63,33 +62,9 @@ public class ContentFragment extends Fragment implements ScreenShotable {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.idiom_type_fragment, container, false);
 
-        mLinearLayout = rootView.findViewById(R.id.linear_content);
-        // 使用java代码的方式添加按钮
-        for(int i = 0; i < strList.size(); ++i){
-            final Button btn = new Button(getContext());
-            btn.setId(i);
-            btn.setText(strList.get(i));
-            btn.setTextSize(22);
-            btn.setBackgroundResource(R.drawable.idiom_child_type_btn_style);
-            // 设置按钮的布局参数
-            LinearLayout.LayoutParams buttonParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-            buttonParams.topMargin = 30;
-            mLinearLayout.addView(btn,buttonParams);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String idiomType = btn.getText().toString();
-                    Intent intent = new Intent();
-                    intent.setClass(getContext(), IdiomByTypeActivity.class);
-                    intent.putExtra("idiomType",idiomType);
-                    getContext().startActivity(intent);
-                    Toast.makeText(getContext(),idiomType,Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+        gridView = rootView.findViewById(R.id.grid_idiom_by_type_name);
+        idiomByTypeNameAdapter = new IdiomByTypeNameAdapter(getContext(),strList,R.layout.idiom_gridview_by_type_name);
+        gridView.setAdapter(idiomByTypeNameAdapter);
 
         return rootView;
     }

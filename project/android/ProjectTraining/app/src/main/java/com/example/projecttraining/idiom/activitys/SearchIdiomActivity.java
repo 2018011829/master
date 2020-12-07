@@ -1,5 +1,6 @@
 package com.example.projecttraining.idiom.activitys;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,12 +51,13 @@ public class SearchIdiomActivity extends AppCompatActivity {
     private IdiomResultAdapter resultAdapter;
     private String keyword;
     private Handler myHandler;
-    private String APPKEY = "922ee172234b0479";
+    private String APPKEY = "52836ab53d4cf3e9";
     private String url = "https://api.jisuapi.com/chengyu/search";
 
     @BindView(R.id.tv_search_idiom) EditText etKeyword;
     @BindView(R.id.idiom_delete_edit) ImageView idiomDeleteEdit;
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;
+    @BindView(R.id.tv_result_null) TextView tvResultNull;
     @BindView(R.id.lv_idiom_search_result) ListView lvResult;
 
     @Override
@@ -83,6 +86,7 @@ public class SearchIdiomActivity extends AppCompatActivity {
                         }
                     });
                 }else {
+                    tvResultNull.setText(null);
                     resultList = null;
                     initView();
                     idiomDeleteEdit.setImageResource(R.drawable.idiom_yincang);
@@ -100,8 +104,17 @@ public class SearchIdiomActivity extends AppCompatActivity {
                                 Log.e("lrf",json);
                                 IdiomResult idiomResult = IdiomJsonUtil.convertToIdiomResult(json);
                                 Log.e("lrf_search反序列化",idiomResult.toString());
-                                resultList = idiomResult.getResult();
-                                initView();
+                                if(idiomResult.getStatus() == 0){
+                                    tvResultNull.setTextSize(18);
+                                    tvResultNull.setText("搜索结果：");
+                                    resultList = idiomResult.getResult();
+                                    initView();
+                                }else{
+                                    tvResultNull.setTextSize(18);
+                                    tvResultNull.setText("暂无相关成语");
+                                    resultList = null;
+                                    initView();
+                                }
                                 break;
                         }
                     }

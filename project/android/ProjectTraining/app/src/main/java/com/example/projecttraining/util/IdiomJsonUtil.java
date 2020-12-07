@@ -20,6 +20,7 @@ import java.util.List;
  * 2020-11-25
  * 2020-11-30
  * 2020-12-2
+ * 2020-12-7
  * @author lrf
  */
 public class IdiomJsonUtil {
@@ -31,11 +32,11 @@ public class IdiomJsonUtil {
             .create();//创建Gson对象
 
     /**
-     * 将json串解析为IdiomInfoJiSu
+     * 将json串解析为IdiomInfo
      * @param json
      * @return
      */
-    public static IdiomInfo convertToIdiomInfoJiSu(String json) {
+    public static IdiomInfo convertToIdiomInfo(String json) {
         IdiomInfo idiomInfo = new IdiomInfo();
         IdiomInfoResult idiomInfoResult = new IdiomInfoResult();
         try {
@@ -48,32 +49,36 @@ public class IdiomJsonUtil {
             idiomInfo.setStatus(status);
             idiomInfo.setMsg(msg);
 
-            // 创建内层JSONObject对象
-            JSONObject result = jObj.getJSONObject("result");
+            if(status == 0){
+                // 创建内层JSONObject对象
+                JSONObject result = jObj.getJSONObject("result");
 
-            // 获取内层JSONObject中的元素
-            String name = result.getString("name");
-            String pronounce = result.getString("pronounce");
-            String content = result.getString("content");
-            String comefrom = result.getString("comefrom");
-            String tongyiJson = result.getString("antonym");
-            String fanyiJson = result.getString("thesaurus");
-            String example = result.getString("example");
+                // 获取内层JSONObject中的元素
+                String name = result.getString("name");
+                String pronounce = result.getString("pronounce");
+                String content = result.getString("content");
+                String comefrom = result.getString("comefrom");
+                String tongyiJson = result.getString("antonym");
+                String fanyiJson = result.getString("thesaurus");
+                String example = result.getString("example");
 
-            // 借助Gson，对List<String>解析
-            Type type = new TypeToken<List<String>>(){}.getType();
-            List<String> antonym = gson.fromJson(tongyiJson,type);
-            List<String> thesaurus = gson.fromJson(fanyiJson,type);
+                // 借助Gson，对List<String>解析
+                Type type = new TypeToken<List<String>>(){}.getType();
+                List<String> antonym = gson.fromJson(tongyiJson,type);
+                List<String> thesaurus = gson.fromJson(fanyiJson,type);
 
-            idiomInfoResult.setName(name);
-            idiomInfoResult.setPronounce(pronounce);
-            idiomInfoResult.setContent(content);
-            idiomInfoResult.setComefrom(comefrom);
-            idiomInfoResult.setAntonym(antonym);
-            idiomInfoResult.setThesaurus(thesaurus);
-            idiomInfoResult.setExample(example);
+                idiomInfoResult.setName(name);
+                idiomInfoResult.setPronounce(pronounce);
+                idiomInfoResult.setContent(content);
+                idiomInfoResult.setComefrom(comefrom);
+                idiomInfoResult.setAntonym(antonym);
+                idiomInfoResult.setThesaurus(thesaurus);
+                idiomInfoResult.setExample(example);
 
-            idiomInfo.setIdiomInfoResult(idiomInfoResult);
+                idiomInfo.setIdiomInfoResult(idiomInfoResult);
+            }else{
+                idiomInfo.setIdiomInfoResult(null);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,19 +102,23 @@ public class IdiomJsonUtil {
             // 将获取到的status和msg赋值给IdiomResult对象
             idiomResult.setStatus(status);
             idiomResult.setMsg(msg);
-            // 创建内层数组JSONArray对象
-            JSONArray jsonArray = jObj.getJSONArray("result");
-            // 创建Result集合
-            List<Result> results = new ArrayList<>();
-            // 获取JSONArray中的数据
-            for (int i = 0; i < jsonArray.length(); ++i) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                // 获取当前JSONObject中的元素
-                Result result = new Result();
-                result.setName(jsonObject.getString("name"));
-                results.add(result);
+            if(status == 0){
+                // 创建内层数组JSONArray对象
+                JSONArray jsonArray = jObj.getJSONArray("result");
+                // 创建Result集合
+                List<Result> results = new ArrayList<>();
+                // 获取JSONArray中的数据
+                for (int i = 0; i < jsonArray.length(); ++i) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    // 获取当前JSONObject中的元素
+                    Result result = new Result();
+                    result.setName(jsonObject.getString("name"));
+                    results.add(result);
+                }
+                idiomResult.setResult(results);
+            }else{
+                idiomResult.setResult(null);
             }
-            idiomResult.setResult(results);
         } catch (JSONException e) {
             e.printStackTrace();
         }

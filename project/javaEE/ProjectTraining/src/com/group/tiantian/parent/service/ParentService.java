@@ -106,9 +106,9 @@ public class ParentService {
 	 *根据手机号更新指定家长信息
 	 * @return 更新是否成功
 	 */
-	public Boolean updateParentMessage(String phone,String sex,String nickName,String headName) {
+	public Boolean updateParentMessage(String phone,String nickName,String headName) {
 		
-		return parentDao.updateParentMessage(phone, sex, nickName, headName);
+		return parentDao.updateParentMessage(phone,nickName, headName);
 		
 	}
 	//得到所有联系人的信息
@@ -133,5 +133,6 @@ public class ParentService {
 	public void storeInvitation(String fromPhone, String toPhone) {
 		parentDao.insertInvitaion(fromPhone,toPhone);
 	}
+	
 	
 }

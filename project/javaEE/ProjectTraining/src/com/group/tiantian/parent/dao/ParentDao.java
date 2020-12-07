@@ -192,18 +192,16 @@ public class ParentDao {
 	 * 
 	 * @return 更新是否成功
 	 */
-	public Boolean updateParentMessage(String phone, String sex, String nickName, String headName) {
-		boolean b = false;
+	public Boolean updateParentMessage(String phone,String nickName,String headName) {
+		boolean b=false;
 		try {
-			preparedStatement = connection
-					.prepareStatement("update parentmessage set headportrait=?,nickname=?,sex=?where phone=?");
+			preparedStatement=connection.prepareStatement("update parents set avatar=?,nickname=? where phone=?");
 			preparedStatement.setString(1, headName);
 			preparedStatement.setString(2, nickName);
-			preparedStatement.setString(3, sex);
-			preparedStatement.setString(4, phone);
-			int rows = preparedStatement.executeUpdate();
-			if (rows > 0) {
-				b = true;
+			preparedStatement.setString(3, phone);
+			int rows=preparedStatement.executeUpdate();
+			if(rows>0) {
+				b=true;
 				System.out.println("更新成功");
 			}
 		} catch (SQLException e) {

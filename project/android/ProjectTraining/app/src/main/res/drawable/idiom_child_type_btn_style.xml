@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--2020-11-27-->
+<!--2020-12-7-->
 <!--@author lrf-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <stroke android:width="3dp" android:color="#3DDC84"/>
-    <corners android:radius="20dp"/>
+    <stroke android:width="3dp" android:color="#8a8a8a"/>
+    <corners android:radius="35dp"/>
+    <solid android:color="@android:color/white" />
 </shape>
