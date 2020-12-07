@@ -60,6 +60,7 @@
 
         <LinearLayout
             android:id="@+id/idiom_antonym"
+            android:paddingBottom="30dp"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"

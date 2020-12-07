@@ -96,7 +96,7 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
 //        } catch (Settings.SettingNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        currentLight=BrightnessUtils.getBrightness();
+        currentLight= BrightnessUtils.getBrightness();
         changeLight.setProgress(currentLight);
         //设置进度条改变的监听器
         changeLight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -106,7 +106,7 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //非系统签名应用，引导用户手动授权修改Settings权限
                     if (!Settings.System.canWrite(context)) {
-                        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                         intent.setData(Uri.parse("package:" + context.getPackageName()));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);

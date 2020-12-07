@@ -80,7 +80,7 @@ public class MoreBooksActivity extends Activity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MoreBooksActivity.this,BooksHomePageActivity.class);
+                Intent intent=new Intent(MoreBooksActivity.this, BooksHomePageActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -160,7 +160,7 @@ public class MoreBooksActivity extends Activity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //返回分类页
-            Intent intent=new Intent(MoreBooksActivity.this,BooksHomePageActivity.class);
+            Intent intent=new Intent(MoreBooksActivity.this, BooksHomePageActivity.class);
             startActivity(intent);
             finish();
             return true;

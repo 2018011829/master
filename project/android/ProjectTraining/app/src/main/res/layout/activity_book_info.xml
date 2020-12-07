@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linear_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         android:gravity="center">
 
         <ImageView
@@ -14,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_weight="1"
-            android:src="@mipmap/back"/>
+            android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/tv_title_name"
@@ -22,35 +24,37 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/iv_shou_cang"
             android:layout_width="0dp"
             android:layout_height="25dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@mipmap/shoucang"/>
+            android:layout_weight="1"
+            android:src="@mipmap/shoucang" />
 
         <ImageView
             android:id="@+id/iv_share"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_weight="1.5"
-            android:src="@mipmap/share"/>
+            android:src="@mipmap/share" />
     </LinearLayout>
 
     <com.example.projecttraining.books.tools.MyScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_title">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,17 +64,17 @@
                     android:id="@+id/iv_book_img"
                     android:layout_width="150dp"
                     android:layout_height="200dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:layout_width="16dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:padding="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_book_name"
@@ -79,104 +83,124 @@
                         android:layout_weight="2"
                         android:text="1"
                         android:textColor="@android:color/black"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_book_author"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="1"/>
+                        android:text="1" />
 
                     <TextView
                         android:id="@+id/tv_book_type"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_marginTop="8dp"
-                        android:text="1"/>
+                        android:layout_weight="1"
+                        android:text="1" />
                 </LinearLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="图书简介："
-                    android:textColor="@android:color/black"/>
-
-                <TextView
-                    android:id="@+id/tv_book_introduce"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="目录："
-                    android:textColor="@android:color/black"/>
-
-                <ProgressBar
-                    android:id="@+id/progressbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center"/>
-
-                <com.example.projecttraining.books.tools.UnScrollListView
-                    android:id="@+id/book_contents_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="30dp"/>
-
-                <TextView
-                    android:id="@+id/tv_get_more_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="全部目录···"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
-
-                <Button
-                    android:id="@+id/add_bookshelf"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="加入书架"/>
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="图书简介："
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/start_read"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="开始阅读"/>
+                <TextView
+                    android:id="@+id/tv_book_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="目录："
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center" />
+
+                <com.example.projecttraining.books.tools.UnScrollListView
+                    android:id="@+id/book_contents_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="30dp" />
+
+                <com.example.projecttraining.books.tools.UnScrollListView
+                    android:id="@+id/book_contents_list_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="30dp" />
+
+                <TextView
+                    android:id="@+id/tv_get_more_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="全部目录···" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
         </LinearLayout>
+
     </com.example.projecttraining.books.tools.MyScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scrollView"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/add_bookshelf"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="加入书架"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/start_read"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="开始阅读"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
+</RelativeLayout>

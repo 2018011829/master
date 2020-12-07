@@ -6,8 +6,10 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ import butterknife.OnClick;
 /**
  * 2020-11-25
  * 2020-12-2
+ * 2020-12-6
  * @author lrf
  */
 public class SearchIdiomActivity extends AppCompatActivity {
@@ -46,10 +49,11 @@ public class SearchIdiomActivity extends AppCompatActivity {
     private IdiomResultAdapter resultAdapter;
     private String keyword;
     private Handler myHandler;
-    private String APPKEY = "52836ab53d4cf3e9";
+    private String APPKEY = "922ee172234b0479";
     private String url = "https://api.jisuapi.com/chengyu/search";
 
     @BindView(R.id.tv_search_idiom) EditText etKeyword;
+    @BindView(R.id.idiom_delete_edit) ImageView idiomDeleteEdit;
     @BindView(R.id.cancel_searchIdiom) Button btnCancelSearchIdiom;
     @BindView(R.id.lv_idiom_search_result) ListView lvResult;
 
@@ -71,9 +75,17 @@ public class SearchIdiomActivity extends AppCompatActivity {
                 if(!charSequence.toString().trim().equals("") && charSequence.toString().trim().length() != 0){
                     keyword = charSequence.toString().trim();
                     getIdiomSearchResult(keyword);
+                    idiomDeleteEdit.setImageResource(R.drawable.idiom_delete_edit);
+                    idiomDeleteEdit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            etKeyword.setText("");
+                        }
+                    });
                 }else {
                     resultList = null;
                     initView();
+                    idiomDeleteEdit.setImageResource(R.drawable.idiom_yincang);
                 }
             }
 
@@ -99,6 +111,10 @@ public class SearchIdiomActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 根据用户输入的内容，搜索包含它的成语
+     * @param keyword
+     */
     private void getIdiomSearchResult(String keyword) {
         new Thread(){
             @Override

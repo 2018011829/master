@@ -231,6 +231,8 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
         @Override
         public void onTick(long l) {//获取验证码按钮被点击
             btnGetCheckNum.setClickable(false);
+            btnGetCheckNum.setTextColor(getResources().getColor(android.R.color.black,null));
+            btnGetCheckNum.setBackgroundColor(getResources().getColor(android.R.color.darker_gray,null));
             btnGetCheckNum.setText(l/1000 + "秒后重新获取");
         }
 
@@ -238,6 +240,8 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
         public void onFinish() {//验证码失效
             btnGetCheckNum.setClickable(true);
             btnGetCheckNum.setText("获取验证码");
+            btnGetCheckNum.setTextColor(getResources().getColor(android.R.color.white,null));
+            btnGetCheckNum.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
         }
     }
     //对返回键进行监听

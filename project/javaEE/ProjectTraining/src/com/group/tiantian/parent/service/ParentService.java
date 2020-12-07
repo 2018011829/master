@@ -1,7 +1,6 @@
 package com.group.tiantian.parent.service;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
