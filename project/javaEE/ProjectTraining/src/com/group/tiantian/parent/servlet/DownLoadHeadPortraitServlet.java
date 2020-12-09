@@ -1,5 +1,7 @@
 package com.group.tiantian.parent.servlet;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,29 +33,36 @@ public class DownLoadHeadPortraitServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				// 设置编码方式
-				request.setCharacterEncoding("utf-8");
-				response.setContentType("text/html;charset=utf-8");
-				
-				//获取全局变量
-				ServletContext application = this.getServletContext();
-				// 下载客户端发来的图片
-				InputStream is = request.getInputStream();
-				// 获取本地输出流
-				String path = getServletContext().getRealPath("/");
-				System.out.println(path);
-				String picture = "android" + System.currentTimeMillis() + ".jpg";//图片命名
-				application.setAttribute("headImgName",picture);
-				System.out.println(picture);
-				OutputStream os = new FileOutputStream(path + "avatar/" + picture);
-				// 循环读写
-				int b = -1;
-				while ((b = is.read()) != -1) {
-					os.write(b);
-				}
-				is.close();
-				os.close();
-				System.out.println("下载完成！");
+		// 设置编码方式
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		
+		//获取全局变量
+		ServletContext application = this.getServletContext();
+		// 下载客户端发来的图片
+		InputStream is = request.getInputStream();
+		// 获取本地输出流
+		String path = getServletContext().getRealPath("/");
+		System.out.println(path);
+		String picture = "android" + System.currentTimeMillis() + ".png";//图片命名
+		application.setAttribute("headImgName",picture);
+		System.out.println(picture);
+		
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(is);
+
+		OutputStream outputStream = new FileOutputStream(path + "avatar/" + picture);
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream( outputStream );
+
+		byte[] b=new byte[1024*1024];//代表一次最多读取1KB的内容
+
+		int length = 0 ; //代表实际读取的字节数
+		while( (length = bufferedInputStream.read( b ) )!= -1 ){
+			//length 代表实际读取的字节数
+			bufferedOutputStream.write(b, 0, length );
+		}
+        //缓冲区的内容写入到文件
+		bufferedOutputStream.flush();
+		System.out.println("下载完成！");
 	}
 
 	/**
