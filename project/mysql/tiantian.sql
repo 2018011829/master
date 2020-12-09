@@ -10,11 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-<<<<<<< HEAD
-Date: 2020-12-09 16:00:09
-=======
-Date: 2020-12-09 11:18:28
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
+Date: 2020-12-09 16:19:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,6 +51,24 @@ INSERT INTO `books` VALUES ('15', '傲慢与偏见', '是英国女小说家简·
 INSERT INTO `books` VALUES ('16', '巴黎圣母院', '《巴黎圣母院》是法国文学家维克多·雨果创作的长篇小说，《巴黎圣母院》以离奇和对比手法写了一个发生在15世纪法国的故事：巴黎圣母院副主教克罗德道貌岸然、蛇蝎心肠，先爱后恨，迫害吉ト赛女郎埃斯梅拉达。面目丑陋、心地善良的敲钟人卡西莫多为救女郎舍身。小说揭露了宗教的虚伪，宣告禁欲主义的破产，歌颂了下层劳动人民的善良、友爱、舍己为人，反映了雨果的人道主义思想。', '文学名著', 'balishengmuyuan.jpg', '巴黎圣母院.txt', '雨果');
 INSERT INTO `books` VALUES ('17', '窗边的小豆豆', '《窗边的小豆豆》是日本作家、主持人黑柳彻子创作的儿童文学作品，这本书讲述了作者上小学时的一段真实的故事：小豆豆（作者）因淘气被原学校退学后，来到巴学园。在小林校长的爱护和引导下，一般人眼里“怪怪”的小豆豆逐渐变成了一个大家都能接受的孩子。巴学园里亲切、随和的教学方式使这里的孩子们度过了人生最美好的时光。', '文学名著', 'chuangbiandexiaodoudou.jpg', '窗边的小豆豆.txt', '黑柳彻子');
 INSERT INTO `books` VALUES ('18', '动物庄园', '《动物庄园》是英国作家乔治·奥威尔创作的中篇小说，该作讲述农场的一群动物成功地进行了一场“革命”，将压榨他们的人类东家赶出农场，建立起一个平等的动物社会。然而，动物领袖，那些聪明的猪们最终却篡夺了革命的果实，成为比人类东家更加独裁和极权的统治者。', '文学名著', 'dongwuzhuangyuan.jpg', '动物庄园.txt', '乔治·奥威尔');
+
+-- ----------------------------
+-- Table structure for `bookshelf`
+-- ----------------------------
+DROP TABLE IF EXISTS `bookshelf`;
+CREATE TABLE `bookshelf` (
+  `phone_num` varchar(11) NOT NULL,
+  `child_name` varchar(20) NOT NULL,
+  `book_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`phone_num`,`child_name`,`book_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bookshelf
+-- ----------------------------
+INSERT INTO `bookshelf` VALUES ('18730094415', '小明', '安娜卡列尼娜');
+INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '安娜卡列尼娜');
+INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '窗边的小豆豆');
 
 -- ----------------------------
 -- Table structure for `books_contents`
@@ -1014,6 +1028,43 @@ INSERT INTO `classifyidiom` VALUES ('39', '黑', '5');
 INSERT INTO `classifyidiom` VALUES ('40', '白', '5');
 
 -- ----------------------------
+-- Table structure for `collections`
+-- ----------------------------
+DROP TABLE IF EXISTS `collections`;
+CREATE TABLE `collections` (
+  `phone_num` varchar(11) NOT NULL,
+  `child_name` varchar(20) NOT NULL,
+  `collection_type` varchar(20) NOT NULL,
+  `collection_content` varchar(100) NOT NULL,
+  PRIMARY KEY (`phone_num`,`child_name`,`collection_type`,`collection_content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of collections
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `contacts_status`
+-- ----------------------------
+DROP TABLE IF EXISTS `contacts_status`;
+CREATE TABLE `contacts_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_phone` char(11) NOT NULL,
+  `to_phone` char(11) NOT NULL,
+  `contacts_status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of contacts_status
+-- ----------------------------
+INSERT INTO `contacts_status` VALUES ('1', '18730094411', '18730094412', '0');
+INSERT INTO `contacts_status` VALUES ('2', '18730094411', '18730094413', '1');
+INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
+INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
+INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
+
+-- ----------------------------
 -- Table structure for `idiom`
 -- ----------------------------
 DROP TABLE IF EXISTS `idiom`;
@@ -1625,34 +1676,21 @@ INSERT INTO `idiom_save` VALUES ('5', '18730094411', '小明', '麟凤龟龙');
 DROP TABLE IF EXISTS `moments`;
 CREATE TABLE `moments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `phoneNumber` char(255) CHARACTER SET utf8 DEFAULT NULL,
-  `comments` char(255) CHARACTER SET utf8 DEFAULT NULL,
-  `moments_time` char(255) CHARACTER SET utf8 DEFAULT NULL,
-  `remark` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `phoneNumber` char(255) DEFAULT NULL,
+  `headPortraitUrl` char(255) DEFAULT NULL,
+  `name` char(255) DEFAULT NULL,
+  `remark` char(255) DEFAULT NULL,
+  `praiseNumber` int(11) DEFAULT NULL,
+  `friendName` char(255) DEFAULT NULL,
+  `comments` char(255) DEFAULT NULL,
+  `moments_time` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Records of moments
 -- ----------------------------
-<<<<<<< HEAD
 INSERT INTO `moments` VALUES ('36', '18730094418', null, null, null, null, null, null, '2020-12-09 at 14:50:33 GMT+08:00');
-=======
-INSERT INTO `moments` VALUES ('39', '18730094418', null, '2020-12-07 at 08:35:54 GMT', null);
-INSERT INTO `moments` VALUES ('40', '18831158249', null, '2020-12-09 at 08:35:54 GMT', null);
-INSERT INTO `moments` VALUES ('50', '18730094411', null, '2020-12-09 at 10:05:38 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('52', '18730094411', null, '2020-12-09 at 10:10:48 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('53', '18730094411', null, '2020-12-09 at 10:11:27 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('54', '18730094411', null, '2020-12-09 at 10:11:51 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('55', '18730094411', null, '2020-12-09 at 10:12:10 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('56', '18730094411', null, '2020-12-09 at 10:14:05 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('57', '18730094411', null, '2020-12-09 at 10:14:19 GMT+08:00', null);
-INSERT INTO `moments` VALUES ('58', '18730094411', null, '2020-12-09 at 10:35:42 GMT+08:00', null);
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -1680,31 +1718,12 @@ CREATE TABLE `moments_content` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Records of moments_content
 -- ----------------------------
-<<<<<<< HEAD
 INSERT INTO `moments_content` VALUES ('15', '阿玉', '36', '2020-12-09 at 14:50:33 GMT+08:00', '18730094418');
-=======
-INSERT INTO `moments_content` VALUES ('18', '小么小二郎啊', '39', '2020-12-07 at 08:35:54 GMT', '18730094418');
-INSERT INTO `moments_content` VALUES ('19', '是心动啊', '40', '2020-12-09 at 08:35:54 GMT', '18831158249');
-INSERT INTO `moments_content` VALUES ('29', null, '49', null, null);
-INSERT INTO `moments_content` VALUES ('30', '大古', '50', '2020-12-09 at 10:05:38 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('31', '神奇', '50', '2020-12-09 at 10:05:38 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('32', '漂亮', '52', '2020-12-09 at 10:10:48 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('33', 'nice', '53', '2020-12-09 at 10:11:27 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('34', '失败了', '54', '2020-12-09 at 10:11:51 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('35', '光', '55', '2020-12-09 at 10:12:10 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('36', '集合', '56', '2020-12-09 at 10:14:05 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('37', '集合', '57', '2020-12-09 at 10:14:19 GMT+08:00', '18730094411');
-INSERT INTO `moments_content` VALUES ('38', '迪迦', '58', '2020-12-09 at 10:35:42 GMT+08:00', '18730094411');
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Table structure for `moments_friendname`
@@ -1732,11 +1751,7 @@ CREATE TABLE `moments_likegiveperson` (
   `likegivePersonPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `likegiveNumber` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Records of moments_likegiveperson
@@ -1747,13 +1762,10 @@ INSERT INTO `moments_likegiveperson` VALUES ('3', '39', '小吴', '18730094411',
 INSERT INTO `moments_likegiveperson` VALUES ('4', '39', '小吴', '18730094411', null);
 INSERT INTO `moments_likegiveperson` VALUES ('5', '39', '小吴', '18730094411', null);
 INSERT INTO `moments_likegiveperson` VALUES ('6', '39', '小吴', '18730094411', null);
-<<<<<<< HEAD
 INSERT INTO `moments_likegiveperson` VALUES ('7', '36', '小吴', '18730094418', null);
 INSERT INTO `moments_likegiveperson` VALUES ('8', '36', '小吴', '18730094418', null);
 INSERT INTO `moments_likegiveperson` VALUES ('9', '36', '小吴', '18730094418', null);
 INSERT INTO `moments_likegiveperson` VALUES ('10', '36', '小吴', '18730094418', null);
-=======
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Table structure for `moments_pictureurl`
@@ -1766,41 +1778,12 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Records of moments_pictureurl
 -- ----------------------------
-<<<<<<< HEAD
 INSERT INTO `moments_pictureurl` VALUES ('45', 'android1607496635173.jpg', '36', '2020-12-09 at 14:50:33 GMT+08:00', '18730094418');
-=======
-INSERT INTO `moments_pictureurl` VALUES ('51', 'wangerdetonghua.jpg', '39', '2020-12-07 at 08:35:54 GMT', '18730094418');
-INSERT INTO `moments_pictureurl` VALUES ('53', 'xiaoxiongweini.jpg', '39', '2020-12-07 at 08:35:54 GMT', '18730094418');
-INSERT INTO `moments_pictureurl` VALUES ('54', 'yangcongtoulixianji.jpg', '39', '2020-12-07 at 08:35:54 GMT', '18730094418');
-INSERT INTO `moments_pictureurl` VALUES ('55', 'yidalitonghua.jpg', '39', '2020-12-07 at 08:35:54 GMT', '18730094418');
-INSERT INTO `moments_pictureurl` VALUES ('56', 'gelintonghua.png', '40', '2020-12-09 at 08:35:54 GMT', '18831158249');
-INSERT INTO `moments_pictureurl` VALUES ('57', 'guochuhaitonghua.jpg', '40', '2020-12-09 at 08:35:54 GMT', '18831158249');
-INSERT INTO `moments_pictureurl` VALUES ('58', 'shiershengxiaodegushi.jpg', '40', '2020-12-09 at 08:35:54 GMT', '18831158249');
-INSERT INTO `moments_pictureurl` VALUES ('68', 'android1607479113861.jpg', '49', '2020-12-09 at 09:58:33 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('69', 'android1607479539953.jpg', '50', '2020-12-09 at 10:05:38 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('71', 'android1607479849192.jpg', '52', '2020-12-09 at 10:10:48 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('72', 'android1607479887469.jpg', '53', '2020-12-09 at 10:11:27 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('73', 'android1607479911505.jpg', '54', '2020-12-09 at 10:11:51 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('74', 'android1607479931948.jpg', '55', '2020-12-09 at 10:12:10 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('75', 'android1607480046200.jpg', '56', '2020-12-09 at 10:14:05 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('76', 'android1607480046636.jpg', '56', '2020-12-09 at 10:14:05 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('77', 'android1607480047163.jpg', '56', '2020-12-09 at 10:14:05 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('78', 'android1607480049808.jpg', '56', '2020-12-09 at 10:14:05 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('79', 'android1607480061089.jpg', '57', '2020-12-09 at 10:14:19 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('80', 'android1607480061301.jpg', '57', '2020-12-09 at 10:14:19 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('81', 'android1607480061942.jpg', '57', '2020-12-09 at 10:14:19 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('82', 'android1607480063082.jpg', '57', '2020-12-09 at 10:14:19 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('83', 'android1607481343564.jpg', '58', '2020-12-09 at 10:35:42 GMT+08:00', '18730094411');
->>>>>>> e6972f907ac6330946378c7c641c4d32bb7a239c
 
 -- ----------------------------
 -- Table structure for `parentmessage`
