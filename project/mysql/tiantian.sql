@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-09 16:19:46
+Date: 2020-12-09 19:20:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1685,12 +1685,13 @@ CREATE TABLE `moments` (
   `comments` char(255) DEFAULT NULL,
   `moments_time` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments
 -- ----------------------------
 INSERT INTO `moments` VALUES ('36', '18730094418', null, null, null, null, null, null, '2020-12-09 at 14:50:33 GMT+08:00');
+INSERT INTO `moments` VALUES ('37', '18730094411', null, null, null, null, null, null, '2020-12-09 at 16:48:37 GMT+08:00');
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -1751,7 +1752,7 @@ CREATE TABLE `moments_likegiveperson` (
   `likegivePersonPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `likegiveNumber` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_likegiveperson
@@ -1766,6 +1767,8 @@ INSERT INTO `moments_likegiveperson` VALUES ('7', '36', '小吴', '18730094418',
 INSERT INTO `moments_likegiveperson` VALUES ('8', '36', '小吴', '18730094418', null);
 INSERT INTO `moments_likegiveperson` VALUES ('9', '36', '小吴', '18730094418', null);
 INSERT INTO `moments_likegiveperson` VALUES ('10', '36', '小吴', '18730094418', null);
+INSERT INTO `moments_likegiveperson` VALUES ('11', '37', '小吴', '18730094411', null);
+INSERT INTO `moments_likegiveperson` VALUES ('12', '37', '小吴', '18730094411', null);
 
 -- ----------------------------
 -- Table structure for `moments_pictureurl`
@@ -1778,12 +1781,21 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_pictureurl
 -- ----------------------------
 INSERT INTO `moments_pictureurl` VALUES ('45', 'android1607496635173.jpg', '36', '2020-12-09 at 14:50:33 GMT+08:00', '18730094418');
+INSERT INTO `moments_pictureurl` VALUES ('46', 'android1607503720644.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('47', 'android1607503721095.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('48', 'android1607503721425.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('49', 'android1607503721502.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('50', 'android1607503722271.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('51', 'android1607503723008.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('52', 'android1607503722260.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('53', 'android1607503723030.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
+INSERT INTO `moments_pictureurl` VALUES ('54', 'android1607503723557.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
 
 -- ----------------------------
 -- Table structure for `parentmessage`
@@ -1814,7 +1826,7 @@ CREATE TABLE `parents` (
   `phone` char(11) NOT NULL,
   `password` varchar(15) NOT NULL,
   `nickname` varchar(20) NOT NULL DEFAULT 'tiantian8808',
-  `avatar` varchar(20) NOT NULL DEFAULT 'default_avatar.png',
+  `avatar` varchar(50) NOT NULL DEFAULT 'default_avatar.png',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
