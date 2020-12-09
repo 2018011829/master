@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
     android:background="#F5F5F5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:padding="20dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="@android:color/white"
+            android:padding="10dp"
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:background="@android:color/white">
+            <ImageView
+                android:id="@+id/iv_headPhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:gravity="center"
-                android:layout_weight="4">
-                <ImageView
-                    android:id="@+id/iv_headPhoto"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
+                android:padding="10dp"
                 android:orientation="vertical"
-                android:layout_height="150dp"
-                android:layout_weight="7">
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:layout_marginTop="25dp"
                     android:id="@+id/tv_mine_userName"
                     android:textColor="@android:color/background_dark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"/>
+                    android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/tv_mine_phone"
                     android:layout_marginTop="10dp"
@@ -49,8 +48,8 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:src="@mipmap/mine_editor"/>
                     <TextView
                         android:id="@+id/tv_mine_edit"
@@ -72,25 +71,25 @@
                 android:id="@+id/rl_mine_addChild"
                 android:padding="10dp"
                 android:layout_marginTop="15dp"
-                android:background="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
                 <ImageView
-                    android:layout_alignParentLeft="true"
+                    android:id="@+id/image_add"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/mine_add_child"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"/>
-
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/mine_add_child"/>
                 <TextView
+                    android:text="添加孩子"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="70dp"
-                    android:text="添加孩子"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="22sp" />
+                    android:layout_toRightOf="@id/image_add"
+                    android:textColor="@android:color/background_dark" />
                 <ImageView
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -107,31 +106,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
+                    android:padding="5dp"
+                    android:text="学习足迹"
+                    android:textSize="16sp"
                     android:gravity="center"
-                    android:textColor="@android:color/background_dark"
+                    android:drawablePadding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:drawableTop="@drawable/mine_foot"
-                    android:text="学习足迹"/>
+                    android:textColor="@android:color/background_dark"/>
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
+                    android:padding="5dp"
+                    android:text="我的孩子"
+                    android:textSize="16sp"
                     android:gravity="center"
-                    android:textColor="@android:color/background_dark"
+                    android:drawablePadding="8dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:drawableTop="@drawable/mine_child"
-                    android:text="我的孩子"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:textColor="@android:color/background_dark"/>
             </LinearLayout>
 
             <LinearLayout
@@ -143,132 +137,138 @@
 
                 <RelativeLayout
                     android:padding="10dp"
-                    android:background="@android:color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
                     <ImageView
-                        android:layout_alignParentLeft="true"
+                        android:id="@+id/image_save"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/mine_my_collection"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"/>
-                    <TextView
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="70dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:src="@drawable/mine_my_collection"/>
+                    <TextView
                         android:text="我的收藏"
-                        android:textColor="@android:color/background_dark"
-                        android:textSize="22sp"/>
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/mine_return"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"/>
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="75dp"
-                    android:background="@android:color/darker_gray"/>
-
-                <RelativeLayout
-                    android:padding="10dp"
-                    android:background="@android:color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/mine_custom_service"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"/>
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="70dp"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="在线客服"
-                        android:textColor="@android:color/background_dark"
-                        android:textSize="22sp"/>
-                    <ImageView
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/image_save"
+                        android:textColor="@android:color/background_dark"/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mine_return"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"/>
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
                 </RelativeLayout>
+
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_marginLeft="75dp"
                     android:background="@android:color/darker_gray"/>
 
                 <RelativeLayout
                     android:padding="10dp"
-                    android:background="@android:color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
                     <ImageView
+                        android:id="@+id/image_online"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
+                        android:src="@drawable/mine_custom_service"/>
+                    <TextView
+                        android:text="在线客服"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/image_online"
+                        android:textColor="@android:color/background_dark"/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/mine_return"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="75dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <RelativeLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+                    <ImageView
+                        android:id="@+id/image_about_us"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/mine_about"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"/>
+                        android:layout_alignParentLeft="true"/>
                     <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="70dp"
+                        android:text="关于我们"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="关于我们"
-                        android:textColor="@android:color/background_dark"
-                        android:textSize="22sp"/>
-                    <ImageView
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/image_about_us"
+                        android:textColor="@android:color/background_dark"/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mine_return"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"/>
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
                 </RelativeLayout>
             </LinearLayout>
+
             <RelativeLayout
                 android:padding="10dp"
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="15dp"
-                android:background="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
                 <ImageView
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
+                    android:id="@+id/image_setting"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@drawable/setting"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentLeft="true"/>
                 <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="70dp"
+                    android:text="设置中心"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设置中心"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="22sp"/>
-                <ImageView
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/image_setting"
+                    android:textColor="@android:color/background_dark"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/mine_return"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
             </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
 

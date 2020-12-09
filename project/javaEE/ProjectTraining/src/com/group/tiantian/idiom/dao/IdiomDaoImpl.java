@@ -47,6 +47,33 @@ public class IdiomDaoImpl {
 	}
 	
 	/**
+	 * 根据登录的家长手机号以及对应的孩子姓名查询收藏的所有成语
+	 * @param phone
+	 * @param childName
+	 * @return
+	 */
+	public List<String> findSaveIdiomByInfo(String phone, String childName){
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<String> list = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnection();
+			pstm = conn.prepareStatement("select * from idiom_save where phone='"+phone+"' and childName='"+childName+"'");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				String idiomName = rs.getString("idiomName");
+				list.add(idiomName);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs, pstm, conn);
+		}
+		return list;
+	}
+	
+	/**
 	 * 收藏成语
 	 * @param idiomSave
 	 * @return
