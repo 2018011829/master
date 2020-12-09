@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -127,7 +129,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     
     protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
     protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
+            R.drawable.ease_chat_location_selector};
     protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
@@ -994,33 +996,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }else {
             sendImageMessage(selectedImage);
         }
-//        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//            cursor = null;
 //
-//            if (picturePath == null || picturePath.equals("null")) {
-//                Toast toast = Toast.makeText(getActivity(), R.string.cant_find_pictures, Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-//                return;
-//            }
-//            sendImageMessage(picturePath);
-//        } else {
-//            File file = new File(selectedImage.getPath());
-//            if (!file.exists()) {
-//                Toast toast = Toast.makeText(getActivity(), R.string.cant_find_pictures, Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-//                return;
-//
-//            }
-//            sendImageMessage(file.getAbsolutePath());
-//        }
 
     }
     

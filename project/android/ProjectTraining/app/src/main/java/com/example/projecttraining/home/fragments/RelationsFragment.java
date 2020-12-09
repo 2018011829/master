@@ -6,22 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.contact.ContactSectionPagerAdapter;
-import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
-import com.example.projecttraining.ui.NoScrollViewPager;
-import com.example.projecttraining.util.ParentUtil;
+import com.example.projecttraining.contact.adapter.ContactSectionPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
-import com.mob.tools.gui.ViewPagerAdapter;
-
-import java.util.List;
 
 /**
  * 联系人的fragment

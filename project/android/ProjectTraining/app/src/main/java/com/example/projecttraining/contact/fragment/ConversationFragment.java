@@ -1,4 +1,4 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.activity.ChatActivity;
+import com.example.projecttraining.contact.dao.Parent;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMValueCallBack;
@@ -35,11 +37,9 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.easeui.widget.EaseConversationList;
-import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,16 +95,13 @@ public class ConversationFragment extends Fragment {
         Glide.with(getContext())
                 .asGif()
                 .load(R.drawable.waiting_for_internet)
-                .into(waitingForInternet);
-        Log.e(TAG, "onCreateView: 成功設置加載圖片");
+                .into(waitingForInternet);;
         conversations.addAll(loadConversationList());
         copyConversations.addAll(conversations);
-        Log.e(TAG, "onCreateView: conversations的长度"+conversations.size());
         EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
             @Override
             public void onSuccess(List<String> strings) {
                 ParentUtil.storeAllContacts(strings,getContext(), handler);
-                Log.e(TAG, "onSuccess:conversations的长度1 "+conversations.size() );
             }
             @Override
             public void onError(int i, String s) {
@@ -173,7 +170,7 @@ public class ConversationFragment extends Fragment {
                         ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
                     }
                 }.start();
-                startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,conversations.get(position).conversationId()));
+                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,conversations.get(position).conversationId()));
             }
         });
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

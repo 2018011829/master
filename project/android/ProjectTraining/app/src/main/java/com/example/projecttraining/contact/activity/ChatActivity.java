@@ -1,11 +1,10 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.projecttraining.R;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 

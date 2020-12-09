@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMClient;
@@ -26,6 +27,7 @@ public class EaseChatTextPresenter extends EaseChatRowPresenter {
 
     @Override
     public void onBubbleClick(EMMessage message) {
+        Log.e(TAG, "onBubbleClick: 点击了文字气泡" );
         super.onBubbleClick(message);
 
         if (!EaseDingMessageHelper.get().isDingMessage(message)) {

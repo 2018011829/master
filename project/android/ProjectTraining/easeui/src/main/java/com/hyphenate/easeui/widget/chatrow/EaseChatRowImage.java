@@ -187,8 +187,8 @@ public class EaseChatRowImage extends EaseChatRowFile{
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
             Log.e("TAG", "width = "+width+ " height = "+height);
-            if(width > 160 || height > 160) {
-                return Bitmap.createScaledBitmap(bitmap, 160, 160, true);
+            if(width > 320 || height > 320) {
+                return Bitmap.createScaledBitmap(bitmap, 320, 320, true);
             }
         }
         return bitmap;

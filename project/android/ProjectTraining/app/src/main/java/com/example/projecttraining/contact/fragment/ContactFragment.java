@@ -1,10 +1,7 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.fragment;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +27,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.activity.ChatActivity;
+import com.example.projecttraining.contact.activity.NewFriendsActivity;
+import com.example.projecttraining.contact.dao.Parent;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;
@@ -38,24 +38,16 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.domain.EaseUser;
-import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
-import com.hyphenate.easeui.ui.EaseContactListFragment;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.easeui.widget.EaseContactList;
-import com.hyphenate.easeui.widget.EaseConversationList;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -142,14 +134,14 @@ public class ContactFragment extends Fragment {
                 Log.e(TAG, "onItemClick: " );
                 EaseParentUtil.toChatUserAvator=easeUsers.get(position).getAvatar();
                 EaseParentUtil.toChatUserNickname=easeUsers.get(position).getNickname();
-                startActivity(new Intent(getContext(),ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,easeUsers.get(position).getUsername()));
+                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,easeUsers.get(position).getUsername()));
             }
         });
         newFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "onClick: " );
-                startActivity(new Intent(getContext(),NewFriendsActivity.class));
+                startActivity(new Intent(getContext(), NewFriendsActivity.class));
             }
         });
         //为搜索框设置点击搜索事件监听器

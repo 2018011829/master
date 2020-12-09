@@ -1,4 +1,4 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.dao;
 
 public class Parent {
     private int id;

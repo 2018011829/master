@@ -11,21 +11,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.bumptech.glide.request.RequestOptions;
-import com.example.projecttraining.contact.Parent;
+import com.example.projecttraining.contact.dao.Parent;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
-import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.Normalizer;
 import java.util.List;
 
 import okhttp3.Call;
@@ -52,11 +48,11 @@ public class ParentUtil {
     //记录是否在应用内进行手动登录
     public static boolean isLoginManually = false;
     //记录是否发送了邀请
-    public static boolean isSendInvitaion=false;
+    public static boolean isSendInvitaion = false;
     //记录是否收到新的消息，若收到，需要刷新conversationFragment
-    public static boolean isMessageReceived=false;
+    public static boolean isMessageReceived = false;
     //记录当前联系人标签的状态，用于在受到消息时显示未读消息小红点
-    public static boolean isSelectedRelationTab=false;
+    public static boolean isSelectedRelationTab = false;
 
     /**
      * 从服务端获取所有父母的集合并通过handler发送到ui线程
@@ -168,12 +164,12 @@ public class ParentUtil {
         return parent;
     }
 
-    public static void storeCurrentParent(String currentUser,Handler handler) {
-        FormBody formBody=new FormBody.Builder().add("phone",currentUser).build();
-        Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"GetOneParentInfoServlet")
+    public static void storeCurrentParent(String currentUser, Handler handler) {
+        FormBody formBody = new FormBody.Builder().add("phone", currentUser).build();
+        Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
                 .post(formBody)
                 .build();
-        Call call=okHttpClient.newCall(request);
+        Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -183,15 +179,16 @@ public class ParentUtil {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try {
-                    String json=response.body().string();
-                    Parent parent=new Gson().fromJson(json,Parent.class);
-                    EaseParentUtil.currentUserAvatar=ConfigUtil.SETVER_AVATAR+parent.getAvator();
-                    Log.e(TAG, "storeCurrentParent: "+parent.getAvator());
-                    EaseParentUtil.currentUserNickname=parent.getNickname();
-                    if(null!=handler){
-                        Message message=handler.obtainMessage();
-                        message.what=1;
-                        handler.sendMessage(message);}
+                    String json = response.body().string();
+                    Parent parent = new Gson().fromJson(json, Parent.class);
+                    EaseParentUtil.currentUserAvatar = ConfigUtil.SETVER_AVATAR + parent.getAvator();
+                    Log.e(TAG, "storeCurrentParent: " + parent.getAvator());
+                    EaseParentUtil.currentUserNickname = parent.getNickname();
+                    if (null != handler) {
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -237,7 +234,7 @@ public class ParentUtil {
     }
 
     //获取当前登录用户的饿所有好友列表，并保存到sqlite数据库
-    public static void storeAllContacts(List<String> usernames, Context context,Handler handler) {
+    public static void storeAllContacts(List<String> usernames, Context context, Handler handler) {
         Gson gson = new Gson();
         String json = gson.toJson(usernames);
         FormBody formBody = new FormBody.Builder().add("usernames", json).build();
@@ -248,12 +245,12 @@ public class ParentUtil {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e(TAG, "onFailure: 获取好友信息失败" );
+                Log.e(TAG, "onFailure: 获取好友信息失败");
                 Looper.prepare();
                 Toast.makeText(context, "当前网络不稳定", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-                Message message=handler.obtainMessage();
-                message.what=9;
+                Message message = handler.obtainMessage();
+                message.what = 9;
                 handler.sendMessage(message);
             }
 
@@ -264,25 +261,31 @@ public class ParentUtil {
                 if ("" != json && null != json) {
                     Type type = new TypeToken<List<Parent>>() {
                     }.getType();
-                    List<Parent> parents = gson.fromJson(json, type);
-                    Log.e(TAG, "onResponse: "+parents);
-                    SQLiteDatabase sqLiteDatabase = TianTianSQLiteOpenHelper.getInstance(context).getWritableDatabase();
-                    //存储当前用户的所有好友之前，先清除SQLite的Parent表
-                    sqLiteDatabase.delete("parents", null, null);
-                    for (Parent parent : parents) {
-                        ContentValues contentValues = new ContentValues();
-                        contentValues.put("id", parent.getId());
-                        contentValues.put("phone", parent.getPhone());
-                        contentValues.put("nickname", parent.getNickname());
-                        contentValues.put("avatar", ConfigUtil.SETVER_AVATAR + parent.getAvator());
-                        contentValues.put("password", parent.getPassword());
-                        sqLiteDatabase.insert("parents", null, contentValues);
+//                    List<Parent> parents = gson.fromJson(json, type);
+                    //解决json串不合法问题，如果服务器报404错误，则返回的不是合法错误
+                    try {
+                        List<Parent> parents = gson.fromJson(json, type);
+                        Log.e(TAG, "onResponse: " + parents);
+                        SQLiteDatabase sqLiteDatabase = TianTianSQLiteOpenHelper.getInstance(context).getWritableDatabase();
+                        //存储当前用户的所有好友之前，先清除SQLite的Parent表
+                        sqLiteDatabase.delete("parents", null, null);
+                        for (Parent parent : parents) {
+                            ContentValues contentValues = new ContentValues();
+                            contentValues.put("id", parent.getId());
+                            contentValues.put("phone", parent.getPhone());
+                            contentValues.put("nickname", parent.getNickname());
+                            contentValues.put("avatar", ConfigUtil.SETVER_AVATAR + parent.getAvator());
+                            contentValues.put("password", parent.getPassword());
+                            sqLiteDatabase.insert("parents", null, contentValues);
+                        }
+                        Log.e(TAG, "onResponse:已将当前用户的好友保存到sqlite ");
+                        sqLiteDatabase.close();
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
                     }
-                    Log.e(TAG, "onResponse:已将当前用户的好友保存到sqlite ");
-                    sqLiteDatabase.close();
-                    Message message=handler.obtainMessage();
-                    message.what=1;
-                    handler.sendMessage(message);
                 }
             }
         });

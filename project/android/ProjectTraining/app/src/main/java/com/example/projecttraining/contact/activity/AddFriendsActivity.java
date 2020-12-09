@@ -1,18 +1,16 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -24,8 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.dao.Parent;
+import com.example.projecttraining.contact.adapter.AddFriendAdapter;
 import com.example.projecttraining.util.ParentUtil;
-import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 

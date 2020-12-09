@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".contact.ConversationFragment">
+    tools:context=".contact.fragment.ConversationFragment">
     <include
         android:id="@+id/search_bar_view"
         layout="@layout/ease_search_bar_with_padding" />

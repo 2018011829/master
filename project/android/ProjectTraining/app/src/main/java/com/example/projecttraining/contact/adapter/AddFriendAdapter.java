@@ -1,4 +1,4 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.adapter;
 
 import android.content.Context;
 import android.os.Looper;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.dao.Parent;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
@@ -22,7 +23,6 @@ import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,8 +33,6 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.example.projecttraining.R2.id.add;
 
 public class AddFriendAdapter extends BaseAdapter {
     private static final String TAG="AddFriendAdapter";

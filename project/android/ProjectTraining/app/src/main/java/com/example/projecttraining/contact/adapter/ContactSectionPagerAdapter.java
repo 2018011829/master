@@ -1,19 +1,14 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.adapter;
 
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.projecttraining.MainActivity;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
+import com.example.projecttraining.contact.fragment.ConversationFragment;
+import com.example.projecttraining.contact.fragment.ContactFragment;
 
 public class ContactSectionPagerAdapter extends FragmentPagerAdapter {
     private final static  String TAG="ContactSectionPagerAdapter";
@@ -26,14 +21,10 @@ public class ContactSectionPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
        switch (position){
-           case 1:
-               Log.e(TAG, "getItem: 0");
-               return new ContactFragment();
            case 0:
                return new ConversationFragment();
-           case 2:
-               Log.e(TAG, "getItem: 2");
-               return new AddFragment();
+           case 1:
+               return new ContactFragment();
            default:
                Log.e(TAG, "getItem: default");
                return null;
@@ -42,6 +33,6 @@ public class ContactSectionPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

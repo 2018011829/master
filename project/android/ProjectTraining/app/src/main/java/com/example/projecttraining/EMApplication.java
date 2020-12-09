@@ -1,11 +1,9 @@
 package com.example.projecttraining;
 
 import android.app.Application;
-import android.os.Looper;
 import android.util.Log;
 
 import com.example.projecttraining.contact.ContactManager;
-import com.example.projecttraining.contact.Parent;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
@@ -16,7 +14,6 @@ import com.hyphenate.easeui.EaseUI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class EMApplication extends Application {
     private final String TAG="EMApplication";

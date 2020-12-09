@@ -1,4 +1,7 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.dao;
+
+import com.example.projecttraining.contact.dao.Parent;
+
 public class ContactsStatus {
     private int id;
     private Parent from;

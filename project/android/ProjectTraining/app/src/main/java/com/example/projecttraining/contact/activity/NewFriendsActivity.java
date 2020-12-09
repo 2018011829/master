@@ -1,9 +1,7 @@
-package com.example.projecttraining.contact;
+package com.example.projecttraining.contact.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.ContactManager;
+import com.example.projecttraining.contact.dao.ContactsStatus;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;

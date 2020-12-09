@@ -66,10 +66,11 @@
         <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
-        <activity android:name=".contact.AddFriendsActivity"/>
-        <activity android:name=".contact.NewFriendsActivity" />
-        <activity android:name=".contact.ChatActivity" />
-
+        <activity android:name=".contact.activity.AddFriendsActivity"/>
+        <activity android:name=".contact.activity.NewFriendsActivity" />
+        <activity android:name=".contact.activity.ChatActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
         <activity android:name=".mine.EditorParentActivity" />
         <activity android:name=".mine.AddChildActivity" />
         <activity android:name=".IntroAppActivity" />
@@ -116,6 +117,18 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <!--定义provider-->
+        <!-- 适配Android 7.0, 需要将下方的com.hyphenate.chatuidemo替换为你的app包名 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.projecttraining.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <!-- start book -->
         <activity android:name=".books.activity.BooksHomePageActivity"/>
         <activity android:name=".books.activity.BookInfoActivity"/>

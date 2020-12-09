@@ -12,10 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
@@ -137,7 +139,7 @@ public abstract class EaseChatRow extends LinearLayout {
             } else {
             	// show time stamp if interval with last message is > 30 seconds
                 EMMessage prevMessage = (EMMessage) adapter.getItem(position - 1);
-                if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime()+8*60*60)) {
+                if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
                     timestamp.setVisibility(View.GONE);
                 } else {
                     timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
@@ -148,14 +150,18 @@ public abstract class EaseChatRow extends LinearLayout {
         if(userAvatarView != null) {
             //set nickname and avatar
             //修改
+            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
             if (message.direct() == Direct.SEND) {
 //                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
 //                Log.e(TAG, "setUpBaseView: 头像地址"+EaseParentUtil.currentUserAvatar );
-                Glide.with(context).load(EaseParentUtil.currentUserAvatar).into(userAvatarView);
+                Glide.with(context)
+                        .load(EaseParentUtil.currentUserAvatar)
+                        .apply(requestOptions)
+                        .into(userAvatarView);
 
             } else {
 //                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
-                Glide.with(context).load(EaseParentUtil.toChatUserAvator).into(userAvatarView);
+                Glide.with(context).load(EaseParentUtil.toChatUserAvator).apply(requestOptions).into(userAvatarView);
                 EaseUserUtils.setUserNick(message.getFrom(), usernickView);
             }
         }

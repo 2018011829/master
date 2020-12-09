@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.BaseAdapter;
 
+import com.bumptech.glide.gifdecoder.StandardGifDecoder;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
@@ -24,6 +26,7 @@ import java.io.File;
  */
 
 public class EaseChatFilePresenter extends EaseChatRowPresenter {
+    private final String TAG="EaseChatFilePresenter";
 
     @Override
     protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
@@ -32,6 +35,7 @@ public class EaseChatFilePresenter extends EaseChatRowPresenter {
 
     @Override
     public void onBubbleClick(EMMessage message) {
+        Log.e(TAG, "onBubbleClick: 点击了文件气泡" );
         EMNormalFileMessageBody fileMessageBody = (EMNormalFileMessageBody) message.getBody();
         Uri filePath = fileMessageBody.getLocalUri();
         String fileLocalPath = UriUtils.getFilePath(getContext(), filePath);
