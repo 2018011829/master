@@ -191,8 +191,9 @@ public class ParentUtil {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }catch (JsonSyntaxException e){
+                    e.printStackTrace();
                 }
-
             }
         });
     }
