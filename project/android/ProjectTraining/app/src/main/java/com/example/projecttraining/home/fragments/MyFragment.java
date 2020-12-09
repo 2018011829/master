@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,25 +30,13 @@ import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MyFragment extends Fragment {
 
     public static String phoneNum=EMClient.getInstance().getCurrentUser(); //纪录当前登录的手机号，用来在收藏前进行判断
     public static String childName="小明"; //纪录当前登录的手机号下的孩子姓名，用来在收藏前进行判断、存储收藏信息
     private ImageView iv_headPhoto;
-    private LinearLayout ll_mine_addChild;
+    private RelativeLayout rl_mine_addChild;
     private LinearLayout ll_mine_editorParent;
     private TextView tv_mine_useName;
     private TextView tv_mine_phone;
@@ -55,6 +45,7 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what==1){
+                Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
                 init();
             }
         }
@@ -88,7 +79,7 @@ public class MyFragment extends Fragment {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.ll_mine_addChild:
+                case R.id.rl_mine_addChild:
                     Intent addChild = new Intent();
                     addChild.setClass(getContext(), AddChildActivity.class);
                     startActivity(addChild);
@@ -96,7 +87,7 @@ public class MyFragment extends Fragment {
                 case R.id.ll_mine_editorParent:
                     Intent editor = new Intent();
                     editor.setClass(getContext(), EditorParentActivity.class);
-                    startActivityForResult(editor,100);
+                    startActivity(editor);
                     break;
             }
         }
@@ -104,7 +95,7 @@ public class MyFragment extends Fragment {
 
     private void setClickListener() {
         MyOnClickListener myOnClickListener = new MyOnClickListener();
-        ll_mine_addChild.setOnClickListener(myOnClickListener);
+        rl_mine_addChild.setOnClickListener(myOnClickListener);
         ll_mine_editorParent.setOnClickListener(myOnClickListener);
     }
     private void init(){
@@ -121,17 +112,9 @@ public class MyFragment extends Fragment {
 
     private void findViews() {
         iv_headPhoto = view.findViewById(R.id.iv_headPhoto);
-        ll_mine_addChild  = view.findViewById(R.id.ll_mine_addChild);
+        rl_mine_addChild  = view.findViewById(R.id.rl_mine_addChild);
         ll_mine_editorParent = view.findViewById(R.id.ll_mine_editorParent);
         tv_mine_useName = view.findViewById(R.id.tv_mine_userName);
         tv_mine_phone = view.findViewById(R.id.tv_mine_phone);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==100&&resultCode==200) {
-            init();
-        }
     }
 }
