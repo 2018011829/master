@@ -25,6 +25,7 @@ import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hyphenate.chat.EMClient;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -218,11 +219,9 @@ public class UploadDynamic extends AppCompatActivity {
 
     //加载个人信息的布局文件
     private String getPersonalPhone(){
-        LayoutInflater mInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        View contentView  = mInflater.inflate(R.layout.fragment_my,null);
-        TextView text = (TextView)contentView.findViewById(R.id.tv_mine_phone);
-        Log.e("lzz",text.getText().toString());
-        return text.getText().toString();
+        String phone = EMClient.getInstance().getCurrentUser();
+        Log.e("lzz",phone);
+        return phone;
     }
 
     /**
