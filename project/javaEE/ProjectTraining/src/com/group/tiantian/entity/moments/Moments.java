@@ -2,6 +2,8 @@ package com.group.tiantian.entity.moments;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+
 public class Moments {
 	private int id;//id
 	private String phoneNumber;//发表人手机号
@@ -9,7 +11,7 @@ public class Moments {
     private String name;//用户昵称
     private String remark;//用户备注
     private String content;//用户发表的文字内容
-    private List<String> pictureUrl;//用户发表的图片路径(多张图片)
+    private String pictureUrl;//用户发表的图片路径(多张图片)
     private int praiseNumber;//点赞数
     private List<String> friendName;//点赞人的昵称
     private List<Comment> comments;//用户评论
@@ -18,11 +20,12 @@ public class Moments {
     }
     
 
-    public Moments(int id) {
+    public Moments(int id,String phoneNumber) {
 		this.id = id;
+		this.phoneNumber = phoneNumber;
 	}
 
-	public Moments(String headPortraitUrl, String name, String content, List<String> pictureUrl) {
+	public Moments(String headPortraitUrl, String name, String content, String pictureUrl) {
         this.headPortraitUrl = headPortraitUrl;
         this.name = name;
         this.content = content;
@@ -78,15 +81,18 @@ public class Moments {
         this.content = content;
     }
 
-    public List<String> getPictureUrl() {
-        return pictureUrl;
-    }
 
-    public void setPictureUrl(List<String> pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
 
-    public int getPraiseNumber() {
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}
+
+
+	public int getPraiseNumber() {
         return praiseNumber;
     }
 

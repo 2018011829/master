@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group.tiantian.books.dao.BookDao;
-import com.group.tiantian.entity.Book;
 import com.group.tiantian.entity.moments.Moments;
 import com.group.tiantian.entity.moments.MomentsPicture;
+import com.group.tiantian.entity.moments.PersonalInfo;
 import com.group.tiantian.util.DBUtil;
 
 public class AddMomentsDao {
@@ -131,8 +131,10 @@ public class AddMomentsDao {
 			preparedStatement.setString(1, personalPhone);
 			preparedStatement.setString(2, time);
 			ResultSet rs=preparedStatement.executeQuery();
-			if(rs.next()) {
-				momentsId = rs.getInt("id");
+			if(rs!=null) {
+				if(rs.next()) {
+					momentsId = rs.getInt("id");
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +142,7 @@ public class AddMomentsDao {
 		return momentsId;
 	}
 	/**
-	 * 查询说说列表获取所有说说id
+	 * 查询说说列表获取所有说说信息
 	 * @param start
 	 * @param end
 	 * @param articleName
@@ -154,10 +156,9 @@ public class AddMomentsDao {
 			preparedStatement=connection.prepareStatement(sql);
 			ResultSet rs=preparedStatement.executeQuery();
 			if(rs!=null) {
-//				System.out.println(rs.getString("article_name"));
 				moments=new ArrayList<>();
 				while(rs.next()) {
-					Moments moment=new Moments(rs.getInt("id"));
+					Moments moment=new Moments(rs.getInt("id"),rs.getString("phoneNumber"));
 					moments.add(moment);
 				}
 			}
@@ -196,9 +197,63 @@ public class AddMomentsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return momentsPictures;
 	}
+	/**
+	 * 根据说说id查询所有说说文案
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public String getMomentsContent(int momentsId){
+		String momentsContent=null;
+		String sql="select momentsContent from moments_content where momentsId=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1, momentsId);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs!=null) {
+				if(rs.next()) {
+					momentsContent=rs.getString("momentsContent");	
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return momentsContent;
+	}
+	
+	/**
+	 * 通过手机号查询昵称和头像
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回个人信息对象
+	 */
+	public PersonalInfo getPersonalInfo(String phoneNum){
+		PersonalInfo personalInfo=null;
+		String sql="select nickname,avatar from parents where phone=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,phoneNum);
+			
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs!=null) {
+				if(rs.next()) {
+					personalInfo= new PersonalInfo(rs.getString("nickname"),rs.getString("avatar"));	
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return personalInfo;
+	}
+	
+	
+
 	
 	/**
 	 * 通过时间和手机号查询说说id

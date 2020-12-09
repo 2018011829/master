@@ -1,5 +1,6 @@
 package com.example.projecttraining.home.fragments.MomentsFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,13 +15,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
-import com.example.projecttraining.home.fragments.HomeFragment;
 import com.example.projecttraining.home.fragments.MomentsFragment.Adapter.MomentsFragmentAdapter;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag01;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag02;
@@ -88,7 +85,6 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UploadDynamic.class);
-                intent.putExtra("item",2);
                 startActivity(intent);//fragment跳转到activity附带值是1的请求码
             }
         });
@@ -102,17 +98,7 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
             }
         });
     }
-    //重写onActivityResult，判断响应吗和请求码，如果一致，用事物开启FragmentB
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if (requestCode==1&&resultCode==10){//判断响应码和请求码
-            MainActivity mainActivity = (MainActivity)getActivity();
-            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.floating_action_button,new HomeFragment());
-            fragmentTransaction.commit();
-        }
-    }
+
     //初始化
     private void initView() {
         //加载viewPager
@@ -138,17 +124,18 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
 
     }
     //设置滚动事件
+    @SuppressLint("ResourceAsColor")
     public void onPageSelected(int i) {
         initBtnListener();//初始化背景颜色
         switch (i){
             case 0:
-                button01.setBackgroundColor(Color.parseColor("#ff735c"));//设置滚动时背景颜色
+                button01.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 break;
             case 1:
-                button02.setBackgroundColor(Color.parseColor("#ff735c"));//设置滚动时背景颜色
+                button02.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 break;
             case 2:
-                button03.setBackgroundColor(Color.parseColor("#ff735c"));//设置滚动时背景颜色
+                button03.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 break;
         }
     }
@@ -156,27 +143,31 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
     public void onPageScrollStateChanged(int i) {
     }
     //设置点击事件
+    @SuppressLint("ResourceAsColor")
     public void onClick(View v) {
         initBtnListener();//初始化背景颜色
         switch (v.getId()){
             case R.id.frag01:
-                button01.setBackgroundColor(Color.parseColor("#ff735c"));//设置点击时背景颜色
+                button01.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.frag02:
-                button02.setBackgroundColor(Color.parseColor("#ff735c"));//设置点击时背景颜色
+                button02.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.frag03:
-                button03.setBackgroundColor(Color.parseColor("#ff735c"));//设置点击时背景颜色
+                button03.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(2);
                 break;
         }
     }
     //初始化背景颜色
     private void initBtnListener(){
-        button01.setBackgroundResource(R.color.colorAccent);
-        button02.setBackgroundResource(R.color.colorAccent);
-        button03.setBackgroundResource(R.color.colorAccent);
+        button01.setBackgroundResource(R.color.white0);
+        button02.setBackgroundResource(R.color.white0);
+        button03.setBackgroundResource(R.color.white0);
+        button01.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
+        button02.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
+        button03.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
     }
 }

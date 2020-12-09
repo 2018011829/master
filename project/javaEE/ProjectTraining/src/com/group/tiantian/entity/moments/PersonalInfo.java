@@ -7,6 +7,10 @@ public class PersonalInfo {
 
     public PersonalInfo() {
     }
+    public PersonalInfo(String name, String photoUrl) {
+        this.name = name;
+        this.photoUrl = photoUrl;
+    }
 
     public PersonalInfo(String name, String photoUrl, String personalPhone) {
         this.name = name;

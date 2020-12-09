@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Comment;
 
