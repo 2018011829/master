@@ -26,6 +26,7 @@ import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
 import com.example.projecttraining.R;
+import com.example.projecttraining.home.fragments.MyFragment;
 import com.example.projecttraining.idiom.entity.IdiomInfo;
 import com.example.projecttraining.idiom.entity.IdiomInfoResult;
 import com.example.projecttraining.idiom.fragment.IdiomAllusionFragment;
@@ -37,6 +38,7 @@ import com.example.projecttraining.idiom.read.listener.UiMessageListener;
 import com.example.projecttraining.idiom.read.util.Auth;
 import com.example.projecttraining.idiom.read.util.AutoCheck;
 import com.example.projecttraining.idiom.read.util.IOfflineResourceConst;
+import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.IdiomJsonUtil;
 import com.google.android.material.tabs.TabLayout;
 
@@ -45,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -72,6 +75,8 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     private String idiomName;
     private Handler myHandler;
     private IdiomInfoResult idiomInfoResult;
+    private String phoneNum = MyFragment.phoneNum;
+    private String childName = MyFragment.childName;
     private String APPKEY = "52836ab53d4cf3e9";
     private String url = "https://api.jisuapi.com/chengyu/detail";
 
@@ -83,6 +88,46 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     @BindView(R.id.linear_forward) ImageView linearForward;
     @BindView(R.id.idiom_shoucang) ImageView idiomShouCang;
     @BindView(R.id.idiom_fenxiang) ImageView idiomFenXiang;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    String string = (String) msg.obj;
+                    switch (string){
+                        case "该成语已被收藏":
+                            //初始化成语收藏图片保存器
+                            src = R.drawable.idiom_yishoucang;
+                            idiomShouCang.setImageResource(src);
+                            Toast.makeText(getBaseContext(),string,Toast.LENGTH_SHORT).show();
+                            break;
+                        case "该成语未被收藏":
+                            //初始化成语收藏图片保存器
+                            src = R.drawable.idiom_shoucang;
+                            idiomShouCang.setImageResource(src);
+                            break;
+                        case "成语收藏失败！":
+                            Toast.makeText(getBaseContext(),string,Toast.LENGTH_SHORT).show();
+                            break;
+                        case "成语收藏成功！":
+                            src = R.drawable.idiom_yishoucang;
+                            idiomShouCang.setImageResource(src);
+                            Toast.makeText(getBaseContext(),string,Toast.LENGTH_SHORT).show();
+                            break;
+                        case "成语取消收藏失败！":
+                            Toast.makeText(getBaseContext(),string,Toast.LENGTH_SHORT).show();
+                            break;
+                        case "成语取消收藏成功！":
+                            src = R.drawable.idiom_shoucang;
+                            idiomShouCang.setImageResource(src);
+                            Toast.makeText(getBaseContext(),string,Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    break;
+            }
+        }
+    };
 
 
     // ================== 百度语音合成部分,精简版初始化参数设置开始 ==========================
@@ -136,6 +181,8 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         Intent intent = getIntent();
         idiomName = intent.getStringExtra("name");
 
+        idiomIsSave(ConfigUtil.SERVICE_ADDRESS + "SendIdiomIsSaveServlet");
+
         getIdiomInfoFromAPI(idiomName);
 
         tvIdiomName.setText(idiomName);
@@ -172,11 +219,7 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         initView();
         initPermission();
         initTTs();
-
-        //初始化成语收藏图片保存器
-        src = R.drawable.idiom_shoucang;
     }
-
 
     // 点击返回
     @OnClick(R.id.linear_forward)
@@ -187,18 +230,149 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     // 点击收藏
     @OnClick(R.id.idiom_shoucang)
     public void clickShouCang(){
-        Toast.makeText(getBaseContext(),"点击了收藏",Toast.LENGTH_SHORT).show();
         if(src == R.drawable.idiom_shoucang){ //收藏
-
-            idiomShouCang.setImageResource(R.drawable.idiom_yishoucang);
-            src = R.drawable.idiom_yishoucang;
-            Toast.makeText(getBaseContext(),"成语收藏成功！",Toast.LENGTH_SHORT).show();
+            saveIdiom(ConfigUtil.SERVICE_ADDRESS + "SaveIdiomServlet");
         }else{ //取消收藏
-
-            idiomShouCang.setImageResource(R.drawable.idiom_shoucang);
-            src = R.drawable.idiom_shoucang;
-            Toast.makeText(getBaseContext(),"成语取消收藏成功！",Toast.LENGTH_SHORT).show();
+            cancelSaveIdiom(ConfigUtil.SERVICE_ADDRESS + "CancelSaveIdiomServlet");
         }
+    }
+
+    /**
+     * 向服务端请求数据，查看当前成语是否已被收藏
+     * @param url
+     */
+    private void idiomIsSave(String url){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //创建URL对象
+                    URL urlPath = new URL(url);
+                    HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
+                    //设置网络请求方式为POST
+                    conn.setRequestMethod("POST");
+                    //获取网络输出流
+                    OutputStream out = conn.getOutputStream();
+                    String str = idiomName + "&" + phoneNum + "&" + childName;
+                    out.write(str.getBytes());
+                    //获取网络输入流
+                    InputStream in = conn.getInputStream();
+                    //使用字符流读取
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    //读取字符信息
+                    String result = reader.readLine();
+                    Log.e("lrf_该成语是否已经被收藏的返回信息",result);
+                    //关闭流
+                    reader.close();
+                    in.close();
+                    out.close();
+                    //通过发送message对象将数据发布出去
+                    //获取Message对象
+                    Message msg = mHandler.obtainMessage();
+                    //设置Message对象的属性(what、obj)
+                    msg.what = 0;
+                    msg.obj = result;
+                    //发送Message对象
+                    mHandler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 收藏成语
+     * @param url
+     */
+    private void saveIdiom(String url) {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //创建URL对象
+                    URL urlPath = new URL(url);
+                    HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
+                    //设置网络请求方式为POST
+                    conn.setRequestMethod("POST");
+                    //获取网络输出流
+                    OutputStream out = conn.getOutputStream();
+                    String str = idiomName + "&" + phoneNum + "&" + childName;
+                    out.write(str.getBytes());
+                    //获取网络输入流
+                    InputStream in = conn.getInputStream();
+                    //使用字符流读取
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    //读取字符信息
+                    String result = reader.readLine();
+                    Log.e("lrf_该成语是否收藏成功的返回信息",result);
+                    //关闭流
+                    reader.close();
+                    in.close();
+                    out.close();
+                    //通过发送message对象将数据发布出去
+                    //获取Message对象
+                    Message msg = mHandler.obtainMessage();
+                    //设置Message对象的属性(what、obj)
+                    msg.what = 0;
+                    msg.obj = result;
+                    //发送Message对象
+                    mHandler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 取消收藏成语
+     * @param url
+     */
+    private void cancelSaveIdiom(String url) {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //创建URL对象
+                    URL urlPath = new URL(url);
+                    HttpURLConnection conn = (HttpURLConnection) urlPath.openConnection();
+                    //设置网络请求方式为POST
+                    conn.setRequestMethod("POST");
+                    //获取网络输出流
+                    OutputStream out = conn.getOutputStream();
+                    String str = idiomName + "&" + phoneNum + "&" + childName;
+                    out.write(str.getBytes());
+                    //获取网络输入流
+                    InputStream in = conn.getInputStream();
+                    //使用字符流读取
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    //读取字符信息
+                    String result = reader.readLine();
+                    Log.e("lrf_该成语取消收藏成功与否的返回信息",result);
+                    //关闭流
+                    reader.close();
+                    in.close();
+                    out.close();
+                    //通过发送message对象将数据发布出去
+                    //获取Message对象
+                    Message msg = mHandler.obtainMessage();
+                    //设置Message对象的属性(what、obj)
+                    msg.what = 0;
+                    msg.obj = result;
+                    //发送Message对象
+                    mHandler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     // 点击分享
@@ -262,7 +436,6 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         }.start();
     }
 
-
     /**
      * 得到ViewPager引用，并设置Adapter
      *
@@ -308,7 +481,6 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         });
         return viewPager;
     }
-
 
     // 百度语音合成部分
     /**

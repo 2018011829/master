@@ -25,6 +25,7 @@ import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
 import com.example.projecttraining.home.fragments.MomentsFragment.DynamicDetails;
 import com.example.projecttraining.home.fragments.MomentsFragment.PictureGridView.PictureGridView;
 import com.example.projecttraining.util.ConfigUtil;
+import com.hyphenate.chat.EMClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -241,11 +242,9 @@ public class Frag01Adapter extends BaseAdapter {
     }
     //加载个人信息的布局文件
     private String getPersonalPhone(){
-        LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-        View contentView  = mInflater.inflate(R.layout.fragment_my,null);
-        TextView text = (TextView)contentView.findViewById(R.id.tv_mine_phone);
-        Log.e("lzz",text.getText().toString());
-        return text.getText().toString();
+        String phone = EMClient.getInstance().getCurrentUser();
+        Log.e("lzz",phone);
+        return phone;
     }
     //初始化OKHTTPClient对象
     private void initOkHttpClient() {

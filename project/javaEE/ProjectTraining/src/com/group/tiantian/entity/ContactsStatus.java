@@ -1,7 +1,5 @@
 package com.group.tiantian.entity;
 
-import java.util.*;
-
 public class ContactsStatus {
 	private int id;
 	private Parent from;
