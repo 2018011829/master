@@ -13,8 +13,9 @@ public class LikeGiveInfo {
 	}
 	
 	
-	public LikeGiveInfo(String likegivePersonName, int likegiveNumber) {
+	public LikeGiveInfo(int momentsId,String likegivePersonName, int likegiveNumber) {
 		super();
+		this.momentsId = momentsId;
 		this.likegivePersonName = likegivePersonName;
 		this.likegiveNumber = likegiveNumber;
 	}

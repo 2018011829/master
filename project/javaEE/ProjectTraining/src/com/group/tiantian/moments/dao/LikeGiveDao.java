@@ -108,6 +108,31 @@ public class LikeGiveDao {
 		}	
 		return likeGiveNames;
 	}
+	/**
+	 * 通过说说id,点赞人手机号删除该条记录
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteLikeGiveInfo(int momentsId,String likegivePersonPhone) {
+		boolean b = false;
+		String sql = "delete from moments_likegiveperson where momentsId = ? and likegivePersonPhone = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			preparedStatement.setString(2,likegivePersonPhone);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
 	
 	
 
