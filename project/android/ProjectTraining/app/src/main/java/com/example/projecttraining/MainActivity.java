@@ -116,11 +116,16 @@ public class MainActivity extends AppCompatActivity {
     private void BindViewPagerAndTabLayout(final ViewPager viewPager) {
        tabLayout=findViewById(R.id.tl);
        TabLayout.Tab tab1 =tabLayout.getTabAt(1);
-       if(EMClient.getInstance().chatManager().getUnreadMessageCount()==0){
-          tab1.setIcon(R.mipmap.relations_black);
-       }else{
-           tab1.setIcon(R.mipmap.relations_black_noreaded_message);
-       }
+       new Thread(){
+           @Override
+           public void run() {
+               if(EMClient.getInstance().chatManager().getUnreadMessageCount()==0){
+                   tab1.setIcon(R.mipmap.relations_black);
+               }else{
+                   tab1.setIcon(R.mipmap.relations_black_noreaded_message);
+               }
+           }
+       }.start();
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager){
             //设置tab选中的监听器
