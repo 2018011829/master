@@ -64,7 +64,6 @@ public class ConversationFragment extends Fragment {
             if(msg.what==1){
                 Log.e(TAG, "handleMessage: 成功连接网络" );
                 waitingForInternet.setVisibility(View.GONE);
-                Log.e(TAG, "handleMessage: "+conversations.get(0).conversationId() );
                 easeConversationList.init(conversations);
             }
         }

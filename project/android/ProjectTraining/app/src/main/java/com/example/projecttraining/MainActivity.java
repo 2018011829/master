@@ -10,8 +10,6 @@ import android.view.View;
 
 import com.example.projecttraining.home.adapters.SectionsPagerAdapter;
 
-import com.example.projecttraining.home.fragments.MomentsFragment.MomentsFragment;
-
 import com.example.projecttraining.util.AppConstantsUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.example.projecttraining.util.SpUtils;

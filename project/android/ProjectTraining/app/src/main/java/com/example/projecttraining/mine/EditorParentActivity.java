@@ -77,7 +77,6 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                     upLoadParentMessage();
                     break;
                 case 2:
-                    Toast.makeText(EditorParentActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
                     finish();
                     break;
             }
@@ -138,15 +137,14 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                 startActivityForResult(intent, 2);
                 break;
             case R.id.btn_mine_editorCommit:
-                Intent result = new Intent();
                 if(edt_name.getText().toString()!=null && !edt_name.getText().toString().equals("")) {
                     if (bitmap != null) {
+                        Toast.makeText(this,"修改中,请稍等",Toast.LENGTH_SHORT).show();
                         upBitmap(bitmap);
                         bitmap = null;
                     } else {
                         upLoadParentMessage();
                     }
-                    setResult(200, result);
                 }else {
                     Toast.makeText(this,"用户昵称不能为空！",Toast.LENGTH_SHORT).show();
                 }

@@ -51,6 +51,8 @@
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
+        <!--圈子-->
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>
 
         <!--开屏页-->
         <activity android:name=".SplashActivity">
@@ -80,10 +82,11 @@
         <activity android:name=".idiom.activitys.IdiomActivity"/>
         <activity android:name=".idiom.activitys.IdiomShareActivity"/>
 
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity">
+
+        </activity>
 
         <!-- 设置环信应用的AppKey -->
         <meta-data

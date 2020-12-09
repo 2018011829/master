@@ -9,6 +9,7 @@ import com.group.tiantian.books.dao.BookContentsDao;
 import com.group.tiantian.books.service.BookContentsService;
 import com.group.tiantian.entity.moments.Moments;
 import com.group.tiantian.entity.moments.MomentsPicture;
+import com.group.tiantian.entity.moments.PersonalInfo;
 import com.group.tiantian.moments.dao.AddMomentsDao;
 
 public class AddMomentsService {
@@ -80,7 +81,7 @@ public class AddMomentsService {
 	}
 
 	/**
-	 * 查询说说列表获取所有说说id
+	 * 查询说说列表获取所有说说信息
 	 * @param start
 	 * @param end
 	 * @param articleName
@@ -102,5 +103,29 @@ public class AddMomentsService {
 	public List<MomentsPicture> getMomentsPicture(int momentsId){
 		List<MomentsPicture> momentsPictures=addMomentsDao.getMomentsPicture(momentsId);
 		return momentsPictures;
+	}
+	/**
+	 * 根据说说id查询所有说说文案
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public String getMomentsContent(int momentsId){
+		String momentsContent=addMomentsDao.getMomentsContent(momentsId);
+		return momentsContent;
+	}
+	/**
+	 * 通过手机号查询昵称和头像
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回个人信息对象
+	 */
+	public PersonalInfo getPersonalInfo(String phoneNum){
+		PersonalInfo personalInfo=addMomentsDao.getPersonalInfo(phoneNum);
+		return personalInfo;
 	}
 }

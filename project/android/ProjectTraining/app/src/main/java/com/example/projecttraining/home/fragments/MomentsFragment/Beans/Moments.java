@@ -9,19 +9,18 @@ public class Moments {//动态类（每个说说）
     private String name;//用户昵称
     private String remark;//用户备注
     private String content;//用户发表的文字内容
-    private List<String> pictureUrl;//用户发表的图片路径(多张图片)
+    private String pictureUrl;//用户发表的图片路径(多张图片)
     private int praiseNumber;//点赞数
     private List<String> friendName;//点赞人的昵称
     private List<Comment> comments;//用户评论
 
     public Moments() {
     }
-    public Moments(String content,List<String> pictureUrl) {
+    public Moments(String content) {
         this.content = content;
-        this.pictureUrl = pictureUrl;
     }
 
-    public Moments(String headPortraitUrl, String name, String content, List<String> pictureUrl) {
+    public Moments(String headPortraitUrl, String name, String content, String pictureUrl) {
         this.headPortraitUrl = headPortraitUrl;
         this.name = name;
         this.content = content;
@@ -76,11 +75,11 @@ public class Moments {//动态类（每个说说）
         this.content = content;
     }
 
-    public List<String> getPictureUrl() {
+    public String getPictureUrl() {
         return pictureUrl;
     }
 
-    public void setPictureUrl(List<String> pictureUrl) {
+    public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
 

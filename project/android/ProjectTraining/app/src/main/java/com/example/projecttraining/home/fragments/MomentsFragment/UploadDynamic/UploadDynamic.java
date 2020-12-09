@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
 import com.example.projecttraining.util.ConfigUtil;
@@ -33,7 +31,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -55,7 +52,6 @@ import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UploadDynamic extends AppCompatActivity {
@@ -90,19 +86,6 @@ public class UploadDynamic extends AppCompatActivity {
         initOkHttpClient();//初始化OKHTTPClient对象
         initHandler();//初始化Handler对象
         initGson();//初始化Gson
-
-//        //设置点击事件返回到moments
-//        ivReturnMoments = findViewById(R.id.iv_return_moments);
-//        ivReturnMoments.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i=new Intent();
-//                i.setClass(UploadDynamic.this, MainActivity.class);
-//                //一定要指定是第几个pager，因为要跳到ThreeFragment，这里填写2
-//                i.putExtra("id",2);
-//                startActivity(i);
-//            }
-//        });
     }
     /**
      * 初始化Gson对象
@@ -148,6 +131,8 @@ public class UploadDynamic extends AppCompatActivity {
                 //可添加的最大张数=9-当前已选的张数
                 int size = 9 - allSelectList.size();
                 Tools.galleryPictures(UploadDynamic.this, size);
+                //Tools.openGallery(UploadDynamic.this,size);
+                //Tools.takingPictures(UploadDynamic.this);
             }
 
             @Override
@@ -236,9 +221,8 @@ public class UploadDynamic extends AppCompatActivity {
         LayoutInflater mInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
         View contentView  = mInflater.inflate(R.layout.fragment_my,null);
         TextView text = (TextView)contentView.findViewById(R.id.tv_mine_phone);
-        String arr = "18730094411";
         Log.e("lzz",text.getText().toString());
-        return arr;
+        return text.getText().toString();
     }
 
     /**
@@ -250,7 +234,7 @@ public class UploadDynamic extends AppCompatActivity {
         //获取待传输数据对应的MIME类型
         MediaType type = MediaType.parse("text/plain");
         //创建FormBody对象
-        Moments moments = new Moments(content,allSelectList);
+        Moments moments = new Moments(content);
         //序列化
         String json = gson.toJson(allSelectList);
         FormBody formBody =
