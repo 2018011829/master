@@ -68,10 +68,11 @@ import butterknife.OnClick;
  */
 public class IdiomInfoActivity extends AppCompatActivity implements IOfflineResourceConst {
 
+    private int src;// 成语收藏图片保存器
     private String idiomName;
     private Handler myHandler;
     private IdiomInfoResult idiomInfoResult;
-    private String APPKEY = "922ee172234b0479";
+    private String APPKEY = "52836ab53d4cf3e9";
     private String url = "https://api.jisuapi.com/chengyu/detail";
 
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
@@ -146,9 +147,15 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
                     case 1:
                         String json = (String) msg.obj;
                         Log.e("lrf_json", json);
-                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfoJiSu(json);
+                        IdiomInfo idiomInfo = IdiomJsonUtil.convertToIdiomInfo(json);
                         Log.e("lrf_反序列化", idiomInfo.toString());
-                        idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        if(idiomInfo.getStatus() == 0){
+                            idiomInfoResult = idiomInfo.getIdiomInfoResult();
+                        }else{
+                            String string = idiomInfo.getMsg();
+                            Log.e("lrf_成语查询出错",string);
+                            idiomInfoResult = new IdiomInfoResult(idiomName,"暂无该成语读音","null","null",null,null,"");
+                        }
                         tvIdiomPronounce.setText(idiomInfoResult.getPronounce());
 
                         //为ViewPager设置Adapter
@@ -156,7 +163,6 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
                         //将ViewPager和TabLayout互相绑定,并设置TabLayout的选择改变事件
                         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
                         break;
                 }
             }
@@ -167,6 +173,8 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         initPermission();
         initTTs();
 
+        //初始化成语收藏图片保存器
+        src = R.drawable.idiom_shoucang;
     }
 
 
@@ -180,7 +188,17 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     @OnClick(R.id.idiom_shoucang)
     public void clickShouCang(){
         Toast.makeText(getBaseContext(),"点击了收藏",Toast.LENGTH_SHORT).show();
-        // TODO
+        if(src == R.drawable.idiom_shoucang){ //收藏
+
+            idiomShouCang.setImageResource(R.drawable.idiom_yishoucang);
+            src = R.drawable.idiom_yishoucang;
+            Toast.makeText(getBaseContext(),"成语收藏成功！",Toast.LENGTH_SHORT).show();
+        }else{ //取消收藏
+
+            idiomShouCang.setImageResource(R.drawable.idiom_shoucang);
+            src = R.drawable.idiom_shoucang;
+            Toast.makeText(getBaseContext(),"成语取消收藏成功！",Toast.LENGTH_SHORT).show();
+        }
     }
 
     // 点击分享

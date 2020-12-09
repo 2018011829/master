@@ -37,6 +37,8 @@ import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -62,20 +64,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class EditorParentActivity extends AppCompatActivity implements View.OnClickListener {
-    private LinearLayout ll_sex;
     private ImageView iv_head;
-    private List<String> sexs = new ArrayList<>();
-    private PopupWindow popupWindow;
-    private WheelView wheelView;
     private Button btn_commit;
-    private TextView tv_ok;
-    private TextView tv_cancle;
-    private TextView tv_mine_sex;
     private EditText edt_name;
-    private String sex;
-    private String nickName;
-    private String head;
-    private String phone;
+    private String headName;
     private Bitmap bitmap;
     private Handler handler = new Handler(Looper.getMainLooper()){
         @Override
@@ -103,13 +95,6 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        Intent intent = getIntent();
-
-        sex = intent.getStringExtra("sex");
-        head = intent.getStringExtra("head");
-        nickName = intent.getStringExtra("nickName");
-        phone = intent.getStringExtra("phone");
-
         findViews();
         initData();
     }
@@ -127,26 +112,19 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
 
     private void initData() {
 
-        sexs.add("男");
-        sexs.add("女");
-
-        tv_mine_sex.setText(sex);
-        edt_name.setText(nickName);
-
+        headName = EMClient.getInstance().getCurrentUser();
+        edt_name.setText(EaseParentUtil.currentUserNickname);
         Glide.with(this)
-                .load(ConfigUtil.SERVICE_ADDRESS+"headportraitimgs/"+head)
+                .load(EaseParentUtil.currentUserAvatar)
                 .circleCrop()
                 .into(iv_head);
     }
 
     private void findViews() {
-        ll_sex = findViewById(R.id.ll_mine_editorParent_sex);
         iv_head = findViewById(R.id.iv_mine_editorParent_head);
-        tv_mine_sex = findViewById(R.id.tv_mine_edit_sex);
         edt_name = findViewById(R.id.edt_mine_editorName);
         btn_commit = findViewById(R.id.btn_mine_editorCommit);
 
-        ll_sex.setOnClickListener(this);
         iv_head.setOnClickListener(this);
         btn_commit.setOnClickListener(this);
     }
@@ -154,9 +132,6 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.ll_mine_editorParent_sex:
-                showPopupwindow();
-                break;
             case R.id.iv_mine_editorParent_head:
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
@@ -164,14 +139,17 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.btn_mine_editorCommit:
                 Intent result = new Intent();
-                sex = tv_mine_sex.getText().toString();
-                nickName = edt_name.getText().toString();
-                if(bitmap!=null){
-                    upBitmap(bitmap);
+                if(edt_name.getText().toString()!=null && !edt_name.getText().toString().equals("")) {
+                    if (bitmap != null) {
+                        upBitmap(bitmap);
+                        bitmap = null;
+                    } else {
+                        upLoadParentMessage();
+                    }
+                    setResult(200, result);
                 }else {
-                    upLoadParentMessage();
+                    Toast.makeText(this,"用户昵称不能为空！",Toast.LENGTH_SHORT).show();
                 }
-                setResult(200,result);
                 break;
         }
     }
@@ -213,10 +191,9 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
 
     private void upLoadParentMessage() {
         FormBody.Builder builder = new FormBody.Builder();
-        builder.add("phone", phone);
-        builder.add("sex",sex);
-        builder.add("nickName",nickName);
-        builder.add("headName",head);
+        builder.add("phone",EMClient.getInstance().getCurrentUser());
+        builder.add("nickName",edt_name.getText().toString());
+        builder.add("headName",EaseParentUtil.currentUserAvatar);
         FormBody formBody = builder.build();
         Request request = new Request.Builder()
                 .post(formBody)
@@ -260,9 +237,9 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                     bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 
                     Glide.with(this)
-                        .load(bitmap)
-                        .circleCrop()
-                        .into(iv_head);
+                            .load(bitmap)
+                            .circleCrop()
+                            .into(iv_head);
                 } catch (FileNotFoundException e) {
                     Log.e("Exception", e.getMessage(), e);
                 }
@@ -271,84 +248,5 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                 Log.e("myFragmetn", "operation error");
             }
         }
-    }
-
-
-    /*
-     * 利用pupopwindow实现wheelview(滚轮选择器)的点击弹出效果
-     * */
-    private void showPopupwindow() {
-        //创建popupwindow
-        popupWindow = new PopupWindow(this);
-        //设置popupwindow显示的宽度（默认不占满屏幕）
-        popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        //加载popupwindow布局
-        View view = getLayoutInflater().inflate(R.layout.activity_mine_child_popupwindow, null);
-
-        /*
-         * 加载popupwindow布局文件
-         * 给布局文件设置相应监听器
-         * */
-        wheelView = view.findViewById(R.id.wheelview);
-        wheelView.setCyclic(false); //设置不可循环滚动
-        setWheelView(wheelView);//设置wheelview参数
-
-        tv_ok = view.findViewById(R.id.tv_relation_ok);
-        tv_cancle = view.findViewById(R.id.tv_relation_cancle);
-
-        tv_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tv_mine_sex.setText(sex);
-                popupWindow.dismiss();
-            }
-        });
-
-        tv_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-            }
-        });
-
-        //加载根布局（popupwindow要显示在其上面）
-        LinearLayout root = findViewById(R.id.editor_root);
-        //为popupwindow绑定布局
-        popupWindow.setContentView(view);
-        //设置popupwindow显示的位置
-        popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);//指定显示的位置
-    }
-
-    /*
-     * 给wheelview设置相关参数
-     * */
-    private void setWheelView(WheelView wheelView){
-        //设置数据源
-        wheelView.setAdapter(new WheelAdapter() {
-                @Override
-                public int getItemsCount() {
-                    return sexs.size();
-                }
-
-                @Override
-                public Object getItem(int index) {
-                    return sexs.get(index);
-                }
-
-                @Override
-                public int indexOf(Object o) {
-                    return 0;
-                }
-        });
-
-
-        //添加数据源的每一个item被选中时的监听器
-        wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                sex = sexs.get(index);
-            }
-        });
-
     }
 }

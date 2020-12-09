@@ -647,16 +647,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     public void onBackPressed() {
-        if (inputMenu.onBackPressed()) {
-            getActivity().finish();
-            if(chatType == EaseConstant.CHATTYPE_GROUP){
-                EaseAtMessageHelper.get().removeAtMeGroup(toChatUsername);
-                EaseAtMessageHelper.get().cleanToAtUserList();
-            }
-            if (chatType == EaseConstant.CHATTYPE_CHATROOM) {
-            	EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
-            }
-        }
+//        if (inputMenu.onBackPressed()) {
+////            getActivity().finish();
+////            if(chatType == EaseConstant.CHATTYPE_GROUP){
+////                EaseAtMessageHelper.get().removeAtMeGroup(toChatUsername);
+////                EaseAtMessageHelper.get().cleanToAtUserList();
+////            }
+////            if (chatType == EaseConstant.CHATTYPE_CHATROOM) {
+////            	EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+////            }
+////        }
+        //修改后
+        getActivity().finish();
     }
 
     protected void onChatRoomViewCreation() {

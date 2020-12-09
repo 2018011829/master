@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
@@ -26,6 +25,7 @@ import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -138,12 +138,17 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if(cursor.getCount()>0){
                 String avatar=cursor.getString(0);
                 String nickname=cursor.getString(1);
+                RequestOptions requestOptions=new RequestOptions().optionalTransform(new GlideRoundImage(getContext(),8));
                 Glide.with(getContext())
                         .load(avatar)
+                        .apply(requestOptions)
+                        .placeholder(R.drawable.ease_contact_place_holder)
                         .into(holder.avatar);
                 holder.name.setText(nickname);
                 holder.motioned.setVisibility(View.GONE);
             }
+            sqLiteDatabase.close();
+            Log.e(TAG, "getView: 设置了头像" );
 
         }
 

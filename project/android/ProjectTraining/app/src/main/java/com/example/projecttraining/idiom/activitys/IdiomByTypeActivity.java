@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,15 +44,32 @@ import butterknife.OnClick;
 public class IdiomByTypeActivity extends AppCompatActivity {
 
     @BindView(R.id.linear_forward) LinearLayout linearForward;
+    @BindView(R.id.idiom_progressbar) ProgressBar progressBar;
     @BindView(R.id.tv_idiom_type_name) TextView tvIdiomTypeName;
     @BindView(R.id.grid_idiom_by_type) GridView gVIdiomByType;
 
+    //定义Gson对象属性
+    private Gson gson;
     private String idiomType;
     private List<String> idiomList;
     private IdiomByTypeAdapter idiomByTypeAdapter;
-    private Handler myHandler;
-    //定义Gson对象属性
-    private Gson gson;
+    private Handler myHandler= new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    String json = (String) msg.obj;
+                    // 得到集合类型
+                    Type type = new TypeToken<List<String>>(){}.getType();
+                    // 反序列化
+                    idiomList = gson.fromJson(json,type);
+                    Log.e("lrf",idiomList.toString());
+                    initView();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,27 +81,12 @@ public class IdiomByTypeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idiomType = intent.getStringExtra("idiomType");
 
+        progressBar.setVisibility(View.VISIBLE);
+
         //Gson对象实例化
         initGson();
 
         getIdiomByType(ConfigUtil.SERVICE_ADDRESS + "SendIdiomByTypeServlet",idiomType);
-
-        myHandler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
-                    case 1:
-                        String json = (String) msg.obj;
-                        // 得到集合类型
-                        Type type = new TypeToken<List<String>>(){}.getType();
-                        // 反序列化
-                        idiomList = gson.fromJson(json,type);
-                        Log.e("lrf",idiomList.toString());
-                        initView();
-                        break;
-                }
-            }
-        };
 
     }
 

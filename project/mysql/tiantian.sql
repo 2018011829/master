@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50701
+Source Server Version : 50506
 Source Host           : localhost:3306
-Source Database       : tiantian
+Source Database       : tian
 
 Target Server Type    : MYSQL
-Target Server Version : 50701
+Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-06 12:40:18
+Date: 2020-12-07 09:53:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1042,6 +1042,27 @@ CREATE TABLE `collections` (
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `contacts_status`
+-- ----------------------------
+DROP TABLE IF EXISTS `contacts_status`;
+CREATE TABLE `contacts_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_phone` char(11) NOT NULL,
+  `to_phone` char(11) NOT NULL,
+  `contacts_status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of contacts_status
+-- ----------------------------
+INSERT INTO `contacts_status` VALUES ('1', '18730094411', '18730094412', '0');
+INSERT INTO `contacts_status` VALUES ('2', '18730094411', '18730094413', '1');
+INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
+INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
+INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
 
 -- ----------------------------
 -- Table structure for `idiom`

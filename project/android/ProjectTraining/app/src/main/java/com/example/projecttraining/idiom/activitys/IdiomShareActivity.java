@@ -3,12 +3,16 @@ package com.example.projecttraining.idiom.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -190,9 +194,9 @@ public class IdiomShareActivity extends AppCompatActivity {
     // 将截图分享
     @OnClick(R.id.share_now)
     public void clickShare(){
-        // TODO
         Bitmap bitmap = cutScreenImg(idiomShare);
-        Toast.makeText(this,"立即分享",Toast.LENGTH_SHORT).show();
+        //TODO
+        Toast.makeText(this,"点击了立即分享",Toast.LENGTH_SHORT).show();
     }
 
     // 将截图保存到本地相册

@@ -16,7 +16,9 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -104,7 +106,12 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
 //        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
         //修改
         holder.nameView.setText(copyUserList.get(position).getNickname());
-        Glide.with(getContext()).load(copyUserList.get(position).getAvatar()).into(holder.avatar);
+        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(getContext(),8));
+        Glide.with(getContext())
+                .load(copyUserList.get(position).getAvatar())
+                .apply(requestOptions)
+                .placeholder(R.drawable.ease_contact_place_holder)
+                .into(holder.avatar);
         
        
         if(primaryColor != 0)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--2020-11-25-->
+<!--2020-11-28-->
+<!--2020-12-7-->
+<!--@author lrf-->
+<LinearLayout
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tv_idiom_by_type"
+        android:textSize="23sp"
+        android:paddingTop="20dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/idiom_child_type_btn_style"/>
+
+</LinearLayout>

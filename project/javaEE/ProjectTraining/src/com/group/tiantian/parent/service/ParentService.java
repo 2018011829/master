@@ -1,12 +1,18 @@
 package com.group.tiantian.parent.service;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.group.tiantian.entity.ContactsStatus;
 import com.group.tiantian.entity.ParentMessage;
 import com.group.tiantian.parent.dao.ParentDao;
 
 public class ParentService {
 	private static ParentService parentService;
 	private static ParentDao parentDao;
+	private static Gson gson;
 
 	/**
 	 * 得到一个parentService实例
@@ -19,6 +25,9 @@ public class ParentService {
 		}
 		if (null == parentDao) {
 			parentDao = ParentDao.getInstance();
+		}
+		if(null==gson) {
+			gson=new Gson();
 		}
 		return parentService;
 	}
@@ -89,7 +98,6 @@ public class ParentService {
 	 * @return
 	 */
 	public ParentMessage selectParentByPhone(String phone) {
-		
 		return parentDao.selectParentByPhone(phone);
 		
 	}
@@ -98,10 +106,33 @@ public class ParentService {
 	 *根据手机号更新指定家长信息
 	 * @return 更新是否成功
 	 */
-	public Boolean updateParentMessage(String phone,String sex,String nickName,String headName) {
+	public Boolean updateParentMessage(String phone,String nickName,String headName) {
 		
-		return parentDao.updateParentMessage(phone, sex, nickName, headName);
+		return parentDao.updateParentMessage(phone,nickName, headName);
 		
 	}
+	//得到所有联系人的信息
+	public String getAllContacts(String usernames) {
+		Gson gson=new Gson();
+		Type type=new TypeToken<List<String>>(){}.getType();
+		List<String> usernamesList=gson.fromJson(usernames, type);
+		return gson.toJson(parentDao.selectAllContact(usernamesList));
+	}
+	//得到邀请我的人，我邀请的人，以及邀请历史
+	public String getContactsStatus(String username) {
+		List<ContactsStatus> contactsStatusList=parentDao.selectContactsStatus(username);
+		return gson.toJson(contactsStatusList);
+	}
+	//同意邀请
+	public int agreeInvitation(String idStr) {
+		int id=Integer.parseInt(idStr);
+		return parentDao.agreeUpdate(id);
+		
+	}
+
+	public void storeInvitation(String fromPhone, String toPhone) {
+		parentDao.insertInvitaion(fromPhone,toPhone);
+	}
+	
 	
 }

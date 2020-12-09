@@ -30,32 +30,35 @@ public class DownLoadMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			// 设置编码方式
-			request.setCharacterEncoding("utf-8");
-			response.setContentType("text/html;charset=utf-8");
-			
-			String headName = null;
-			//判断头像是否做过修改
-			ServletContext application = this.getServletContext();
-			if(application.getAttribute("headImgName")!=null&&!application.getAttribute("headImgName").equals("")) {
-				headName = application.getAttribute("headImgName").toString();
-			}
-			//得到手机号码
-			String phone = request.getParameter("phone");
-			String sex = request.getParameter("sex");
-			String nickName = request.getParameter("nickName");
-			if(headName == null) {
-				headName = request.getParameter("headName");
-			}
-			System.out.println("手机号" + phone);
-			System.out.println("性别" + sex);
-			System.out.println("昵称" + nickName);
-			System.out.println("头像" + headName);
-			
-			ParentService parentService = ParentService.getInstance();
-			parentService.updateParentMessage(phone, sex, nickName, headName);
-			
-			response.getWriter().write("success");
+					// 设置编码方式
+					request.setCharacterEncoding("utf-8");
+					response.setContentType("text/html;charset=utf-8");
+					
+					String headName = null;
+					//判断头像是否做过修改
+					ServletContext application = this.getServletContext();
+					if(application.getAttribute("headImgName")!=null&&!application.getAttribute("headImgName").equals("")) {
+						headName = application.getAttribute("headImgName").toString();
+						application.removeAttribute("headImgName");
+						System.out.println("缓存" + application.getAttribute("headImaName"));
+					}
+					//得到手机号码
+					String phone = request.getParameter("phone");
+					String nickName = request.getParameter("nickName");
+					if(headName == null) {
+						headName = request.getParameter("headName");
+						String [] nameStrings = headName.split("/");
+						headName = nameStrings[nameStrings.length-1];
+					}
+				
+					System.out.println("手机号" + phone);
+					System.out.println("昵称" + nickName);
+					System.out.println("头像" + headName);
+					
+					ParentService parentService = ParentService.getInstance();
+					parentService.updateParentMessage(phone,nickName, headName);
+					
+					response.getWriter().write("success");
 	}
 
 	/**
