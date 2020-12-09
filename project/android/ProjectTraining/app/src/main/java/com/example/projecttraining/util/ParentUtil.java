@@ -55,7 +55,8 @@ public class ParentUtil {
     public static boolean isSendInvitaion=false;
     //记录是否收到新的消息，若收到，需要刷新conversationFragment
     public static boolean isMessageReceived=false;
-
+    //记录当前联系人标签的状态，用于在受到消息时显示未读消息小红点
+    public static boolean isSelectedRelationTab=false;
 
     /**
      * 从服务端获取所有父母的集合并通过handler发送到ui线程

@@ -368,6 +368,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected void onConversationInit(){
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
         conversation.markAllMessagesAsRead();
+        Log.e(TAG, "onConversationInit: 所有消息设置为已读" );
         // the number of messages loaded into conversation is getChatOptions().getNumberOfMessagesLoaded
         // you can change this number
 
@@ -647,18 +648,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     public void onBackPressed() {
-//        if (inputMenu.onBackPressed()) {
-////            getActivity().finish();
-////            if(chatType == EaseConstant.CHATTYPE_GROUP){
-////                EaseAtMessageHelper.get().removeAtMeGroup(toChatUsername);
-////                EaseAtMessageHelper.get().cleanToAtUserList();
-////            }
-////            if (chatType == EaseConstant.CHATTYPE_CHATROOM) {
-////            	EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
-////            }
-////        }
-        //修改后
-        getActivity().finish();
+        if (inputMenu.onBackPressed()) {
+            getActivity().finish();
+            if(chatType == EaseConstant.CHATTYPE_GROUP){
+                EaseAtMessageHelper.get().removeAtMeGroup(toChatUsername);
+                EaseAtMessageHelper.get().cleanToAtUserList();
+            }
+            if (chatType == EaseConstant.CHATTYPE_CHATROOM) {
+            	EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+            }
+        }
     }
 
     protected void onChatRoomViewCreation() {

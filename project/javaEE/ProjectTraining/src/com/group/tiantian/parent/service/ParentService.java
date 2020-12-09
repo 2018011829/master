@@ -123,15 +123,35 @@ public class ParentService {
 		List<ContactsStatus> contactsStatusList=parentDao.selectContactsStatus(username);
 		return gson.toJson(contactsStatusList);
 	}
-	//同意邀请
+	
+	/**
+	 * 同意邀请
+	 * @param idStr
+	 * @return
+	 */
 	public int agreeInvitation(String idStr) {
 		int id=Integer.parseInt(idStr);
 		return parentDao.agreeUpdate(id);
 		
 	}
 
+	/**
+	 * 在数据库保存这个邀请，等待被邀请人同意
+	 * @param fromPhone
+	 * @param toPhone
+	 */
 	public void storeInvitation(String fromPhone, String toPhone) {
 		parentDao.insertInvitaion(fromPhone,toPhone);
+	}
+
+	/**
+	 * 拒绝邀请
+	 * @param id
+	 * @return
+	 */
+	public int rejectInvitation(String idStr) {
+		int id=Integer.parseInt(idStr);
+		return parentDao.rejectUpdate(id);
 	}
 	
 	

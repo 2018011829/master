@@ -49,9 +49,7 @@ public class ChatActivity extends EaseBaseActivity{
     }
     @Override
     public void onBackPressed() {
-//        chatFragment.onBackPressed();
-        //修改后
-        finish();
+        chatFragment.onBackPressed();
     }
 
     

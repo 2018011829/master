@@ -2,6 +2,7 @@ package com.example.projecttraining.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -99,6 +100,7 @@ public class NewFriendsActivity extends AppCompatActivity {
                     lvHistory.setAdapter(lvHistoryAdapter);
                     break;
                 case 2:
+                    //同意邀请或拒绝邀请，需要刷新页面
                     getContactsStatus(EMClient.getInstance().getCurrentUser());
                     break;
             }
@@ -327,12 +329,21 @@ public class NewFriendsActivity extends AppCompatActivity {
                     holder.reject.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //拒绝好友请求
-                            try {
-                                EMClient.getInstance().contactManager().declineInvitation(contactsStatus.getFrom().getPhone());
-                            } catch (HyphenateException e) {
-                                e.printStackTrace();
-                            }
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    //拒绝好友请求
+                                    try {
+                                        EMClient.getInstance().contactManager().declineInvitation(contactsStatus.getFrom().getPhone());
+                                    } catch (HyphenateException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.start();
+                            Log.e(TAG, "onClick:拒绝请求" + contactsStatus.getFrom().getPhone());
+                            //修改本地数据库
+                            rejectInvitation(contactsStatus.getId());
+
                         }
                     });
                 } else if (contactsStatus.getStatus() == 1) {
@@ -350,6 +361,38 @@ public class NewFriendsActivity extends AppCompatActivity {
             return convertView;
         }
 
+    }
+
+    private void rejectInvitation(int id) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("id", id + "").build();
+        Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "RejectInvitationServlet").build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Looper.prepare();
+                Toast.makeText(NewFriendsActivity.this, "拒绝失败，请重试", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.body().string().equals("成功")) {
+                    Message message = handler.obtainMessage();
+                    message.what = 2;
+                    handler.sendMessage(message);
+                    Looper.prepare();
+                    Toast.makeText(NewFriendsActivity.this, "拒绝成功", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                } else {
+                    Looper.prepare();
+                    Toast.makeText(NewFriendsActivity.this, "拒绝失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+
+            }
+        });
     }
 
     static class ViewHolder {

@@ -308,6 +308,11 @@ public class ParentDao {
 		return contactsStatusList;
 	}
 
+	/**
+	 * 同意邀请，将该id的邀请元组的contacts_status字段设置为1
+	 * @param id
+	 * @return
+	 */
 	public int agreeUpdate(int id) {
 		int isSuccess=0;
 		String sql="update contacts_status set contacts_status=1 where id=?";
@@ -334,5 +339,24 @@ public class ParentDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 拒绝邀请
+	 * @param id
+	 * @return
+	 */
+	public int rejectUpdate(int id) {
+		int isSuccess=0;
+		String sql="update contacts_status set contacts_status=2 where id=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			isSuccess=preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 }

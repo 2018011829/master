@@ -73,12 +73,15 @@ public class ConversationFragment extends Fragment {
 
     @Override
     public void onResume() {
+        //因为有未读消息，进入了解后所有消息设置为已读，官方的demo只有在点击了输入框后，消息界面才会刷新，如果有未读消息变为已读，即使
+        //没有点击输入框，也需要刷新
         super.onResume();
         Log.e(TAG, "onResume: ");
-//            conversations.addAll(loadConversationList());
-//            easeConversationList.refresh();
-//            copyConversations.clear();
-//            copyConversations.addAll(conversations);
+            conversations.clear();
+            conversations.addAll(loadConversationList());
+            easeConversationList.refresh();
+            copyConversations.clear();
+            copyConversations.addAll(conversations);
     }
 
     @Override
