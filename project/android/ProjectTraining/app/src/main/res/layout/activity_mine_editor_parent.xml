@@ -52,7 +52,6 @@
                 android:textColorHint="@android:color/white"
                 android:textColor="@android:color/white"
                 android:gravity="center"
-                android:cursorVisible="false"
                 android:background="@null"/>
         </LinearLayout>
 

@@ -3,8 +3,12 @@ package com.example.projecttraining.mine;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +28,21 @@ import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 import com.example.projecttraining.R;
+import com.example.projecttraining.util.ConfigUtil;
+import com.hyphenate.chat.EMClient;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class AddChildActivity extends AppCompatActivity {
     private List<String> name = new ArrayList<>();
@@ -44,6 +60,17 @@ public class AddChildActivity extends AppCompatActivity {
     private Button btn_child_ok;
     private RadioGroup radioGroup;
     private PopupWindow popupWindow;
+    private Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    Toast.makeText(AddChildActivity.this,"成功添加孩子！",Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,9 +174,38 @@ public class AddChildActivity extends AppCompatActivity {
                         ||edt_name.getText().toString().trim().equals("")||edt_name.getText().toString().trim().length()==0){
                     Toast.makeText(AddChildActivity.this,"请补全孩子信息",Toast.LENGTH_LONG).show();
                 }else {
-                    Toast.makeText(AddChildActivity.this,"成功添加孩子信息",Toast.LENGTH_SHORT);
+                    addChildMessage();
                     finish();
                 }
+            }
+        });
+    }
+
+    private void addChildMessage() {
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("parentPhone", EMClient.getInstance().getCurrentUser());
+        builder.add("name",edt_name.getText().toString());
+        builder.add("grade", tv_class.getText().toString());
+        builder.add("sex",sex);
+        FormBody formBody = builder.build();
+        Request request = new Request.Builder()
+                .post(formBody)
+                .url(ConfigUtil.SERVICE_ADDRESS + "AddChildServlet")
+                .build();
+        Call call = new OkHttpClient().newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.e("孩子信息更新", "请求失败");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String result = response.body().string();
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+                Log.i("result", result);
             }
         });
     }

@@ -91,12 +91,12 @@
                     android:layout_toRightOf="@id/image_add"
                     android:textColor="@android:color/background_dark" />
                 <ImageView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/mine_return"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -105,27 +105,44 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
+                <LinearLayout
                     android:padding="5dp"
-                    android:text="学习足迹"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    android:drawablePadding="8dp"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/mine_foot"
-                    android:textColor="@android:color/background_dark"/>
-                <TextView
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/mine_foot"/>
+                    <TextView
+                        android:text="学习足迹"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/background_dark"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:padding="5dp"
-                    android:text="我的孩子"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    android:drawablePadding="8dp"
-                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/mine_child"
-                    android:textColor="@android:color/background_dark"/>
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/mine_child"/>
+                    <TextView
+                        android:text="我的孩子"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/background_dark"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -157,8 +174,8 @@
                         android:layout_toRightOf="@id/image_save"
                         android:textColor="@android:color/background_dark"/>
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mine_return"
                         android:layout_centerVertical="true"
@@ -193,8 +210,8 @@
                         android:layout_toRightOf="@id/image_online"
                         android:textColor="@android:color/background_dark"/>
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mine_return"
                         android:layout_centerVertical="true"
@@ -229,8 +246,8 @@
                         android:layout_toRightOf="@id/image_about_us"
                         android:textColor="@android:color/background_dark"/>
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mine_return"
                         android:layout_centerVertical="true"
@@ -239,6 +256,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_mine_setting"
                 android:padding="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
@@ -261,8 +279,8 @@
                     android:layout_toRightOf="@id/image_setting"
                     android:textColor="@android:color/background_dark"/>
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/mine_return"
                     android:layout_centerVertical="true"

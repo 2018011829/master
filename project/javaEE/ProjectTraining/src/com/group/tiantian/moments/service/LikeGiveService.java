@@ -63,5 +63,17 @@ public class LikeGiveService {
 		List<String> likeGiveNames = likeGiveDao.likeGiveNames(momentsId);
 		return likeGiveNames;
 	}
+	/**
+	 * 通过说说id,点赞人手机号删除该条记录
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteLikeGiveInfo(int momentsId,String likegivePersonPhone) {
+		boolean b = likeGiveDao.deleteLikeGiveInfo(momentsId,likegivePersonPhone);
+		return b;
+	}
 
 }
