@@ -41,6 +41,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.adapter.EMAChatRoomManagerListener;
+import com.hyphenate.easeui.ContactInfoActivity;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
@@ -142,12 +143,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView: " );
+        //修改
+        setChatFragmentHelper(new MyEaseChatFragmentHelper());
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean roaming) {
         isRoaming = roaming;
-        setChatFragmentHelper(chatFragmentHelper);
+        //修改
+        setChatFragmentHelper(new MyEaseChatFragmentHelper());
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 
@@ -432,7 +437,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             
             @Override
             public void onUserAvatarClick(String username) {
+                Log.e(TAG, "onUserAvatarClick: 点击了用户头像" );
                 if(chatFragmentHelper != null){
+                    Log.e(TAG, "onUserAvatarClick: chatFragmentHelper不为null" );
                     chatFragmentHelper.onAvatarClick(username);
                 }
             }
@@ -599,6 +606,11 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 EMMessage dingMsg = EaseDingMessageHelper.get().createDingMessage(toChatUsername, msgContent);
                 sendMessage(dingMsg);
             }
+        }
+        //如果删除了联系人
+        if(resultCode==99){
+            //关闭当前聊天界面
+            getActivity().finish();
         }
     }
 
@@ -1250,12 +1262,58 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     }
 
-    protected EaseChatFragmentHelper chatFragmentHelper;
+    protected MyEaseChatFragmentHelper chatFragmentHelper;
 
-    public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper){
+
+    public void setChatFragmentHelper(MyEaseChatFragmentHelper chatFragmentHelper){
         this.chatFragmentHelper = chatFragmentHelper;
     }
-    
+    //修改，增加自定义的类，实现下面得EaseChatFragment接口
+    public class MyEaseChatFragmentHelper implements EaseChatFragmentHelper{
+
+        @Override
+        public void onSetMessageAttributes(EMMessage message) {
+
+        }
+
+        @Override
+        public void onEnterToChatDetails() {
+
+        }
+
+        @Override
+        public void onAvatarClick(String username) {
+            Log.e(TAG, "onAvatarClick: " );
+            if(!username.equals(EMClient.getInstance().getCurrentUser())) {
+                startActivityForResult(new Intent(getContext(), ContactInfoActivity.class).putExtra("username", username), 98);
+            }
+        }
+
+        @Override
+        public void onAvatarLongClick(String username) {
+
+        }
+
+        @Override
+        public boolean onMessageBubbleClick(EMMessage message) {
+            return false;
+        }
+
+        @Override
+        public void onMessageBubbleLongClick(EMMessage message) {
+
+        }
+
+        @Override
+        public boolean onExtendMenuItemClick(int itemId, View view) {
+            return false;
+        }
+
+        @Override
+        public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
+            return null;
+        }
+    }
     public interface EaseChatFragmentHelper{
         /**
          * set message attribute

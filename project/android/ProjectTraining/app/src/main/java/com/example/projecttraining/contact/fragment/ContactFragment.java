@@ -35,6 +35,7 @@ import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.GlideRoundImage;
@@ -148,6 +149,48 @@ public class ContactFragment extends Fragment {
         //为搜索框设置点击搜索事件监听器
         setOnSearchListener(view);
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+
+        //设置联系人状态改变监听器
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+            @Override
+            public void onContactAdded(String s) {
+
+            }
+
+            @Override
+            public void onContactDeleted(String s) {
+
+            }
+
+            @Override
+            public void onContactInvited(String s, String s1) {
+
+            }
+
+            @Override
+            public void onFriendRequestAccepted(String s) {
+                //好友请求被同意，刷新联系人列表
+                new Thread(){
+                    @Override
+                    public void run() {
+                        //初始化联系人列表
+                        Log.e(TAG, "onResumerun: 更新联系人列表");
+                        try {
+                            List<String> usernames=EMClient.getInstance().contactManager().getAllContactsFromServer();
+                            getAllContacts(usernames);
+                        } catch (HyphenateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
+
+            @Override
+            public void onFriendRequestDeclined(String s) {
+                //好友请求被拒绝
+            }
+        });
         return view;
     }
 
@@ -244,9 +287,9 @@ public class ContactFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: "+ParentUtil.isContactAddedOrDeleted);
+        Log.e(TAG, "onResume: "+EaseParentUtil.isContactAddedOrDeleted);
         //如果添加了联系人，则需要重新获取所有的练习人列表
-        if(ParentUtil.isContactAddedOrDeleted==true) {
+        if(EaseParentUtil.isContactAddedOrDeleted==true) {
             new Thread(){
                 @Override
                 public void run() {
@@ -260,7 +303,7 @@ public class ContactFragment extends Fragment {
                     }
                 }
             }.start();
-            ParentUtil.isContactAddedOrDeleted=false;
+            EaseParentUtil.isContactAddedOrDeleted=false;
         }
     }
 

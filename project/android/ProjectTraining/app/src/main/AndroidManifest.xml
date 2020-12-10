@@ -13,8 +13,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Ease ui所需权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Ease ui所需权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -26,76 +25,66 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- 调节亮度权限 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions"/>
-    <!-- 申请手机存储权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 调节亮度权限 -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" /> <!-- 申请手机存储权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".EMApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".contact.activity.ContactInfoActivity"></activity>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-        <!--圈子-->
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic"/>
-
-        <!--开屏页-->
+            android:value="true" /> <!-- 圈子 -->
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.UploadDynamic" /> <!-- 开屏页 -->
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--联系人相关Activity-->
+        </activity> <!-- 联系人相关Activity -->
         <activity android:name=".login.LoginByPhoneActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginByPasswordActivity" />
-        <activity android:name=".contact.activity.AddFriendsActivity"/>
+        <activity android:name=".contact.activity.AddFriendsActivity" />
         <activity android:name=".contact.activity.NewFriendsActivity" />
         <activity android:name=".contact.activity.ChatActivity" />
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
-
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
         <activity android:name=".mine.EditorParentActivity" />
         <activity android:name=".mine.SettingActivity" />
         <activity android:name=".mine.AddChildActivity" />
         <activity android:name=".IntroAppActivity" />
         <activity android:name=".idiom.activitys.IdiomInfoActivity" />
-        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PictureActivity"></activity>
+        <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PictureActivity" />
         <activity android:name=".idiom.activitys.IdiomByTypeActivity" />
         <activity android:name=".idiom.activitys.SearchIdiomActivity" />
-        <activity android:name=".idiom.activitys.IdiomInfoActivity"
+        <activity
+            android:name=".idiom.activitys.IdiomInfoActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".idiom.activitys.IdiomActivity"/>
-        <activity android:name=".idiom.activitys.IdiomShareActivity"/>
-
+        <activity android:name=".idiom.activitys.IdiomActivity" />
+        <activity android:name=".idiom.activitys.IdiomShareActivity" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".home.fragments.MomentsFragment.DynamicDetails" />
-        <activity android:name=".MainActivity">
-
-        </activity>
-
-        <!-- 设置环信应用的AppKey -->
+        <activity android:name=".MainActivity"></activity> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1157201101107092#demo" />
-        <!-- 声明sdk所需的service SDK核心功能 -->
+            android:value="1157201101107092#demo" /> <!-- 声明sdk所需的service SDK核心功能 -->
         <service
             android:name="com.easemob.chat.EMChatService"
             android:exported="true"
@@ -104,13 +93,13 @@
             android:name="com.easemob.chat.EMJobService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            tools:ignore="WrongManifestParent" />
-        <!-- 声明sdk所需的receiver -->
+            tools:ignore="WrongManifestParent" /> <!-- 声明sdk所需的receiver -->
         <receiver
             android:name="com.easemob.chat.EMMonitorReceiver"
             tools:ignore="WrongManifestParent">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
@@ -118,24 +107,22 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-
-        <!--定义provider-->
+        </receiver> <!-- 定义provider -->
         <!-- 适配Android 7.0, 需要将下方的com.hyphenate.chatuidemo替换为你的app包名 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.projecttraining.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-        <!-- start book -->
-        <activity android:name=".books.activity.BooksHomePageActivity"/>
-        <activity android:name=".books.activity.BookInfoActivity"/>
-        <activity android:name=".books.activity.MoreBooksActivity"/>
-        <activity android:name=".books.activity.MoreContentActivity"/>
-        <activity android:name=".books.activity.ReadBookActivity"/>
+        </provider> <!-- start book -->
+        <activity android:name=".books.activity.BooksHomePageActivity" />
+        <activity android:name=".books.activity.BookInfoActivity" />
+        <activity android:name=".books.activity.MoreBooksActivity" />
+        <activity android:name=".books.activity.MoreContentActivity" />
+        <activity android:name=".books.activity.ReadBookActivity" />
     </application>
+
 </manifest>

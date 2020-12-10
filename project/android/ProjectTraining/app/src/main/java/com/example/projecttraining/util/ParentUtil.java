@@ -43,10 +43,7 @@ public class ParentUtil {
     public static String toChatUserAvator = "";
     //当前用户的所有联系人
     public static List<String> allContacts;
-    //联系人个数是否有变动
-    public static boolean isContactAddedOrDeleted = false;
-    //记录是否在应用内进行手动登录
-    public static boolean isLoginManually = false;
+
     //记录是否发送了邀请
     public static boolean isSendInvitaion = false;
     //记录是否收到新的消息，若收到，需要刷新conversationFragment

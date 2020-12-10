@@ -17,6 +17,8 @@ public class EaseParentUtil {
     //聊天好友的头像地址
     public static String toChatUserAvator="";
     public static String toChatUserNickname="";
+    public static boolean isContactAddedOrDeleted=false;
+
     //得到一个Glide的RequestOptions，用来加载圆角8dp的图像
     public static RequestOptions getRoundImageTransform(Context context) {
         RequestOptions roundImageTransform=new RequestOptions().transform((new GlideRoundImage(context,8)));

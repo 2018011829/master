@@ -8,6 +8,7 @@
         android:id="@+id/search_bar_view"
         layout="@layout/search_bar" />
     <ListView
+        android:layout_marginTop="10dp"
         android:clickable="false"
         android:layout_marginLeft="20dp"
         android:id="@+id/lv_search_result"

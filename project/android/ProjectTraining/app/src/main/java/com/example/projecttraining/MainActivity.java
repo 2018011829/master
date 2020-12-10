@@ -72,8 +72,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TabLayout.Tab tab1=tabLayout.getTabAt(1);
-                        if(EMClient.getInstance().chatManager().getUnreadMessageCount() >= 0){
-                            tab1.setIcon(R.mipmap.relations_black_noreaded_message);
+                        int current=tabLayout.getSelectedTabPosition();
+                        if(current!=1&&EMClient.getInstance().chatManager().getUnreadMessageCount() >= 0){
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   tab1.setIcon(R.mipmap.relations_black_noreaded_message);
+                               }
+                           });
+
                         }
                     }
                 }.start();

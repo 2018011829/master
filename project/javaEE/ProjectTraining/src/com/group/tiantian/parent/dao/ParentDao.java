@@ -300,8 +300,6 @@ public class ParentDao {
             @Override  
             public int compare(ContactsStatus o1, ContactsStatus o2) {
 				return o2.getId()-o1.getId();  
-        
-
             }  
         }); 
 		System.out.println("我邀请的人，邀请我的人"+contactsStatusList);

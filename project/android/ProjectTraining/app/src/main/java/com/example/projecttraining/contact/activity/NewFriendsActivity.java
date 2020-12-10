@@ -33,6 +33,7 @@ import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.GlideRoundImage;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.jetbrains.annotations.NotNull;
@@ -121,6 +122,7 @@ public class NewFriendsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_friends);
         ivReturn = findViewById(R.id.iv_return);
@@ -150,50 +152,38 @@ public class NewFriendsActivity extends AppCompatActivity {
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
             @Override
             public void onContactAdded(String s) {
-
+                //增加联系人后调用
+                EaseParentUtil.isContactAddedOrDeleted = true;
             }
 
             @Override
             public void onContactDeleted(String s) {
-
+                //被好友删除时调用
             }
 
             @Override
             public void onContactInvited(String s, String s1) {
-                //收到好友申请
-                Log.e(TAG, "onContactInvited: 收到好友申请" + s);
-                String currentUser = EMClient.getInstance().getCurrentUser();
-                List<String> newFriendsList = ContactManager.newFriends.get(currentUser);
-                if (newFriendsList == null) {
-                    newFriendsList = new ArrayList<>();
-                }
-                if (!newFriendsList.contains(s)) {
-                    newFriendsList.add(s);
-                }
-                ContactManager.newFriends.put(currentUser, newFriendsList);
-
-                Log.e(TAG, "onContactInvited: " + newFriendsList);
+                //收到好友邀请回调
+                //刷新页面
+                getContactsStatus(EMClient.getInstance().getCurrentUser());
             }
 
             @Override
             public void onFriendRequestAccepted(String s) {
-                ParentUtil.isContactAddedOrDeleted = true;
+                //好友请求被同意后调用
+                //刷新页面
+                getContactsStatus(EMClient.getInstance().getCurrentUser());
             }
 
             @Override
             public void onFriendRequestDeclined(String s) {
-
+                //拒绝好友请求后调用
+                //刷新页面
+                getContactsStatus(EMClient.getInstance().getCurrentUser());
             }
         });
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        Log.e(TAG, "onNewIntent: ");
-//        //从服务端得到邀请我的，和我邀请的人的数据
-//        getContactsStatus(EMClient.getInstance().getCurrentUser());
-//    }
 
     private void getContactsStatus(String username) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -320,7 +310,7 @@ public class NewFriendsActivity extends AppCompatActivity {
                                 }
                             }.start();
                             Log.e(TAG, "onClick: 同意请求" + contactsStatus.getFrom().getPhone());
-                            ParentUtil.isContactAddedOrDeleted = true;
+                            EaseParentUtil.isContactAddedOrDeleted = true;
                             //修改本地数据库
                             agreeInvitation(contactsStatus.getId());
 

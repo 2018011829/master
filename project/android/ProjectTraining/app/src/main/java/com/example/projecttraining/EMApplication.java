@@ -11,6 +11,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,23 +41,23 @@ public class EMApplication extends Application {
 
             @Override
             public void onContactInvited(String s, String s1) {
-                //收到好友申请
-                Log.e(TAG, "onContactInvited: 收到好友申请"+s);
-                String currentUser=EMClient.getInstance().getCurrentUser();
-                List<String> newFriendsList=ContactManager.newFriends.get(currentUser);
-                if(newFriendsList==null){
-                    newFriendsList=new ArrayList<>();
-                }
-                if(!newFriendsList.contains(s)){
-                    newFriendsList.add(s);
-                }
-                ContactManager.newFriends.put(currentUser,newFriendsList);
-                Log.e(TAG, "onContactInvited: "+newFriendsList );
+//                //收到好友申请
+//                Log.e(TAG, "onContactInvited: 收到好友申请"+s);
+//                String currentUser=EMClient.getInstance().getCurrentUser();
+//                List<String> newFriendsList=ContactManager.newFriends.get(currentUser);
+//                if(newFriendsList==null){
+//                    newFriendsList=new ArrayList<>();
+//                }
+//                if(!newFriendsList.contains(s)){
+//                    newFriendsList.add(s);
+//                }
+//                ContactManager.newFriends.put(currentUser,newFriendsList);
+//                Log.e(TAG, "onContactInvited: "+newFriendsList );
             }
 
             @Override
             public void onFriendRequestAccepted(String s) {
-                ParentUtil.isContactAddedOrDeleted=true;
+                EaseParentUtil.isContactAddedOrDeleted=true;
             }
 
             @Override
