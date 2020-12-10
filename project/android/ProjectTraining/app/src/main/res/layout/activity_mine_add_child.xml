@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColorHint="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@null"
             android:hint="请输入孩子的姓名"/>
     </LinearLayout>
     <RadioGroup

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-09 19:20:46
+Date: 2020-12-09 21:57:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -963,14 +963,17 @@ INSERT INTO `books_contents` VALUES ('10', '活着.txt', '章节：第10节', '3
 DROP TABLE IF EXISTS `child`;
 CREATE TABLE `child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` smallint(6) NOT NULL DEFAULT '1',
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of child
 -- ----------------------------
+INSERT INTO `child` VALUES ('2', '李哲', '四年级', '男', '19831127142');
 
 -- ----------------------------
 -- Table structure for `classifyidiom`
@@ -1848,7 +1851,7 @@ INSERT INTO `parents` VALUES ('14', '15230048998', 'yayu12152', '妈咪', 'defau
 INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('16', '13730024416', 'aaaaaa', '大家都', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('17', '17831194418', 'kjdssks', 'kdjdj', 'default_avatar.png');
-INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian8808', 'default_avatar.png');
+INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian', 'android1607522113300.png');
 
 -- ----------------------------
 -- Table structure for `pcrelation`

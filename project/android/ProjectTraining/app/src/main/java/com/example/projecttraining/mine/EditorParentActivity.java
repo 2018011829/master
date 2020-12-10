@@ -77,6 +77,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                     upLoadParentMessage();
                     break;
                 case 2:
+                    setResult(200,new Intent());
                     finish();
                     break;
             }

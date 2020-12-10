@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
 import com.example.projecttraining.mine.AddChildActivity;
 import com.example.projecttraining.mine.EditorParentActivity;
+import com.example.projecttraining.mine.SettingActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.chat.EMClient;
@@ -38,6 +39,7 @@ public class MyFragment extends Fragment {
     private ImageView iv_headPhoto;
     private RelativeLayout rl_mine_addChild;
     private LinearLayout ll_mine_editorParent;
+    private RelativeLayout rl_mine_setting;
     private TextView tv_mine_useName;
     private TextView tv_mine_phone;
     private View view;
@@ -45,7 +47,6 @@ public class MyFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if(msg.what==1){
-                Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
                 init();
             }
         }
@@ -87,8 +88,12 @@ public class MyFragment extends Fragment {
                 case R.id.ll_mine_editorParent:
                     Intent editor = new Intent();
                     editor.setClass(getContext(), EditorParentActivity.class);
-                    startActivity(editor);
+                    startActivityForResult(editor,100);
                     break;
+                case R.id.rl_mine_setting:
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), SettingActivity.class);
+                    startActivity(intent);
             }
         }
     }
@@ -97,6 +102,7 @@ public class MyFragment extends Fragment {
         MyOnClickListener myOnClickListener = new MyOnClickListener();
         rl_mine_addChild.setOnClickListener(myOnClickListener);
         ll_mine_editorParent.setOnClickListener(myOnClickListener);
+        rl_mine_setting.setOnClickListener(myOnClickListener);
     }
     private void init(){
         tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
@@ -116,5 +122,14 @@ public class MyFragment extends Fragment {
         ll_mine_editorParent = view.findViewById(R.id.ll_mine_editorParent);
         tv_mine_useName = view.findViewById(R.id.tv_mine_userName);
         tv_mine_phone = view.findViewById(R.id.tv_mine_phone);
+        rl_mine_setting = view.findViewById(R.id.rl_mine_setting);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100&&resultCode==200){
+            Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
+        }
     }
 }
