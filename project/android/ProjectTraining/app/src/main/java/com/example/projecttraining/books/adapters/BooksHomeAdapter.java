@@ -15,6 +15,7 @@ import com.example.projecttraining.R;
 import com.example.projecttraining.books.activity.BookInfoActivity;
 import com.example.projecttraining.books.activity.MoreBooksActivity;
 import com.example.projecttraining.books.entitys.Book;
+import com.example.projecttraining.books.tools.GlideRoundImage;
 import com.example.projecttraining.util.ConfigUtil;
 
 import java.util.ArrayList;
@@ -110,6 +111,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg1);
             }
             if (j==1){
@@ -119,6 +121,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg2);
             }
             if (j==2){
@@ -128,6 +131,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg3);
             }
             if (j==3){
@@ -137,6 +141,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg4);
             }
             if (j==4){
@@ -146,6 +151,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg5);
             }
             if (j==5){
@@ -156,6 +162,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                         .placeholder(R.mipmap.loading)
                         .error(R.drawable.faliure)
                         .fallback(R.drawable.faliure)
+                        .transform(new GlideRoundImage(mContext,10))
                         .into(holder.ivImg6);
             }
         }
@@ -168,6 +175,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                 Intent intent=new Intent(mContext, MoreBooksActivity.class);
                 //传递类型参数
                 intent.putExtra("type",type);
+                intent.putExtra("grades", GradesPagerAdapter.grades);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
@@ -178,6 +186,7 @@ public class BooksHomeAdapter extends BaseAdapter {
                 Intent intent=new Intent(mContext, MoreBooksActivity.class);
                 //传递类型参数
                 intent.putExtra("type",type);
+                intent.putExtra("grades", GradesPagerAdapter.grades);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }

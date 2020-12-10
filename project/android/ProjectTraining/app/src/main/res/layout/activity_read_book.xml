@@ -23,12 +23,12 @@
             android:layout_gravity="start"
             />
 
-        <!--右侧滑菜单栏
-        <include
-            layout="@layout/menu_layout"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end" />-->
+        <!--右侧滑菜单栏-->
+<!--        <include-->
+<!--            layout="@layout/read_menu_layout"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end" />-->
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

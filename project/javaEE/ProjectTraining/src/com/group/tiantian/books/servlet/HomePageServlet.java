@@ -36,9 +36,9 @@ public class HomePageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String strConn=request.getParameter("info");
+		String grades=request.getParameter("info");
 		HomePageService homePageService=HomePageService.getInstance();
-		TreeMap<String,List<Book>> treeMap=homePageService.getHomePageInfo();
+		TreeMap<String,List<Book>> treeMap=homePageService.getHomePageInfo(grades);
 		if(treeMap!=null) {
 			Gson gson=new Gson();
 			String gsonStr=gson.toJson(treeMap);

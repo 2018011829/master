@@ -137,5 +137,6 @@
         <activity android:name=".books.activity.MoreBooksActivity"/>
         <activity android:name=".books.activity.MoreContentActivity"/>
         <activity android:name=".books.activity.ReadBookActivity"/>
+        <activity android:name=".books.activity.SearchBookActivity"/>
     </application>
 </manifest>

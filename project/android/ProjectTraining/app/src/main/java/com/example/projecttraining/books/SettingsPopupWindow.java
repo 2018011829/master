@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.projecttraining.R;
+import com.example.projecttraining.books.activity.ReadBookActivity;
 
 public class SettingsPopupWindow extends PopupWindow {
 
@@ -30,9 +31,16 @@ public class SettingsPopupWindow extends PopupWindow {
     private TextView tvNightModel;
     private LinearLayout linearDownload;
 
-    public void setModel(int imgRes,String text){
-        ivNightModel.setImageResource(imgRes);
-        tvNightModel.setText(text);
+
+    public void setCurrentRead(){
+        ivListen.setImageResource(ReadBookActivity.currentReadStatus);
+        this.setContentView(mMenuView);
+    }
+
+    public void setModel(){
+        ivNightModel.setImageResource(ReadBookActivity.currentModelImg);
+        tvNightModel.setText(ReadBookActivity.currentModelText);
+        this.setContentView(mMenuView);
     }
 
     public SettingsPopupWindow(Context context, View.OnClickListener itemsOnclick) {
@@ -92,7 +100,10 @@ public class SettingsPopupWindow extends PopupWindow {
         linearNightModel.setOnClickListener(itemsOnclick);
         this.ivNightModel=mMenuView.findViewById(R.id.iv_night_model);
         this.tvNightModel=mMenuView.findViewById(R.id.tv_night_model);
+        this.ivNightModel.setImageResource(ReadBookActivity.currentModelImg);
+        this.tvNightModel.setText(ReadBookActivity.currentModelText);
         this.linearDownload=mMenuView.findViewById(R.id.book_download);
         linearDownload.setOnClickListener(itemsOnclick);
+        ivListen.setImageResource(ReadBookActivity.currentReadStatus);
     }
 }
