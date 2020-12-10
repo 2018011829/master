@@ -8,7 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,16 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-
-    private Button btnToIdiom;//成语专区
-    private Button btnToRead;//阅读专区
+    private LinearLayout linearToIdiom;//成语专区
+    private LinearLayout linearToRead;//阅读专区
     private Handler myHandler;
     private Banner mBanner;
-    private Banner mBanner2;
     private List<Integer> imgPath = new ArrayList<>();
-    private List<Integer> imgPath2 = new ArrayList<>();
     private MyImageLoader myImageLoader = new MyImageLoader();
-    private MyImageLoader myImageLoader2 = new MyImageLoader();
     private View view;
     private int tag = 0;
     @Nullable
@@ -58,8 +55,8 @@ public class HomeFragment extends Fragment {
          * 2020-11-28
          * @author lrf
          */
-        btnToIdiom = view.findViewById(R.id.btn_toIdiom);
-        btnToIdiom.setOnClickListener(new View.OnClickListener() {
+        linearToIdiom = view.findViewById(R.id.linear_to_idiom);
+        linearToIdiom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getIdiomTypes(ConfigUtil.SERVICE_ADDRESS+"SendClassifyIdiomServlet");
@@ -82,8 +79,8 @@ public class HomeFragment extends Fragment {
         });
 
         //阅读
-        btnToRead=view.findViewById(R.id.btn_toRead);
-        btnToRead.setOnClickListener(new View.OnClickListener() {
+        linearToRead=view.findViewById(R.id.linear_to_read);
+        linearToRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -96,6 +93,7 @@ public class HomeFragment extends Fragment {
 
     private void initData() {
         if(tag<=0) {
+            imgPath.add(R.drawable.banner0);
             imgPath.add(R.drawable.banner1);
             imgPath.add(R.drawable.banner2);
             imgPath.add(R.drawable.banner3);
@@ -111,19 +109,10 @@ public class HomeFragment extends Fragment {
                 .setDelayTime(2000)
                 .start();
 
-        mBanner2.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                .setImages(imgPath)
-                .setBannerAnimation(Transformer.Default)
-                .setImageLoader(myImageLoader2)
-                .setIndicatorGravity(BannerConfig.CENTER)
-                .isAutoPlay(true)
-                .setDelayTime(2000)
-                .start();
     }
 
     private void initViews() {
         mBanner = view.findViewById(R.id.home_banner);
-        mBanner2 = view.findViewById(R.id.home_banner2);
     }
 
     /**

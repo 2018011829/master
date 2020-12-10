@@ -1,126 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <include layout="@layout/title_bar"/>
 
         <com.youth.banner.Banner
             android:id="@+id/home_banner"
+            android:layout_height="200dp"
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:background="@android:color/white"/>
         
         <LinearLayout
+            android:padding="15dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_toRead"
-                    android:gravity="center"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:text="阅读专区"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:background="@android:color/holo_orange_light"/>
+            android:layout_height="wrap_content">
 
-                <Button
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:text="练字专区"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:background="@android:color/holo_green_light"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_toIdiom"
-                    android:gravity="center"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:text="成语专区"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:background="@android:color/holo_blue_bright"/>
-
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:text="更多专区"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:background="@android:color/holo_purple"/>
-            </RelativeLayout>
-            
-            <com.youth.banner.Banner
-                android:layout_marginTop="30dp"
-                android:id="@+id/home_banner2"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"/>
-
-            <TextView
-                android:layout_marginTop="20dp"
+            <LinearLayout
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <LinearLayout
+                    android:id="@+id/linear_to_read"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/book"/>
+                    <TextView
+                        android:text="阅读专区"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_to_idiom"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/idiom"/>
+                    <TextView
+                        android:text="成语专区"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_to_write"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/write"/>
+                    <TextView
+                        android:text="练字专区"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_to_more"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:src="@drawable/more"/>
+                    <TextView
+                        android:text="更多专区"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:text=" 猜你喜欢"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#2B333E"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <HorizontalScrollView
+                android:padding="8dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:background="@android:color/white">
+                <LinearLayout
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:src="@drawable/horimg0"
+                        android:layout_height="match_parent"/>
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:src="@drawable/horimg1"
+                        android:layout_height="match_parent"/>
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:src="@drawable/horimg2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_height="match_parent"/>
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:src="@drawable/horimg3"
+                        android:layout_marginLeft="5dp"
+                        android:layout_height="match_parent"/>
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:src="@drawable/horimg4"
+                        android:layout_marginLeft="5dp"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
                 android:text="每日推荐"
-                android:textSize="25sp"
-                android:textColor="@android:color/black"/>
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#2B333E"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="10dp"
-                android:gravity="center">
-                
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="100dp"
+                    android:layout_width="60dp"
+                    android:layout_height="70dp"
                     android:src="@mipmap/mine_head_photo"/>
                 <TextView
-                    android:text="程序员暂时不想设置这个推荐"
                     android:textSize="17sp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="90dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"/>
+                    android:text="程序员暂时不想设置这个推荐"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
 
             <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="10dp"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="100dp"
+                    android:layout_width="60dp"
+                    android:layout_height="70dp"
                     android:src="@mipmap/mine_head_photo"/>
                 <TextView
-                    android:text="程序员暂时不想设置这个推荐"
                     android:textSize="17sp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="90dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"/>
+                    android:text="程序员暂时不想设置这个推荐"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

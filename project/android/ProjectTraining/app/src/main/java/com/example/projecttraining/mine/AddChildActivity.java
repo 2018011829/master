@@ -74,7 +74,7 @@ public class AddChildActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mine_add_child);
+        setContentView(R.layout.activity_add_child);
 
         //给界面添加返回按钮相关代码
         ActionBar actionBar = getSupportActionBar();
