@@ -28,6 +28,7 @@ import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Bookshelf;
 import com.example.projecttraining.books.entitys.Content;
+import com.example.projecttraining.books.tools.GlideRoundImage;
 import com.example.projecttraining.home.fragments.MyFragment;
 import com.example.projecttraining.mine.entity.Collection;
 import com.example.projecttraining.util.ConfigUtil;
@@ -51,6 +52,7 @@ import okhttp3.Response;
 public class BookInfoActivity extends Activity implements View.OnClickListener {
 
 
+    private String grades;
     private static int currentBtnBookshelf; //当前加入书架控件中显示的字体颜色
     private static int currentIvShoucang; //当前收藏控件中显示的图片的id
     private ProgressBar progressbar; //进度条
@@ -180,6 +182,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
         BooksHomePageActivity.activity.finish();
         book = (Book) intent.getSerializableExtra("book");
+        grades=intent.getStringExtra("grades");
         flag = intent.getStringExtra("flag");
         Log.e("book", book.toString());
         showInfoToWidget();
@@ -275,6 +278,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.faliure)
                 .fallback(R.drawable.faliure)
+                .transform(new GlideRoundImage(BookInfoActivity.this,10))
                 .into(ivBookImg);
         tvBookName.setText(book.getName());
         tvAuthor.setText("作者：" + book.getAuthor());
@@ -297,6 +301,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 if (flag != null) {
                     Intent intent = new Intent(BookInfoActivity.this, MoreBooksActivity.class);
                     intent.putExtra("type", type);
+                    intent.putExtra("grades",grades);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);
@@ -315,15 +320,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
             case R.id.iv_shou_cang://点击收藏
                 //判断当前是否登录
                 if (MyFragment.phoneNum != null) {
-//                    Toast.makeText(BookInfoActivity.this,
-//                            MyFragment.phoneNum,
-//                            Toast.LENGTH_SHORT).show();
                     Log.e("BookInfoActivity已登录", "手机号：" + MyFragment.phoneNum);
                     if (MyFragment.childName != null) {
                         //判断当前是否添加了孩子
-//                        Toast.makeText(BookInfoActivity.this,
-//                                MyFragment.childName,
-//                                Toast.LENGTH_SHORT).show();
                         Log.e("BookInfoActivity已添加孩子", "孩子姓名：" + MyFragment.childName);
                         if (currentIvShoucang == R.mipmap.shoucangchenggong) {
                             collection("DeleteBookFromCollection");
@@ -346,15 +345,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
             case R.id.add_bookshelf://点击加入书架
                 //判断当前是否登录
                 if (MyFragment.phoneNum != null) {
-//                    Toast.makeText(BookInfoActivity.this,
-//                            MyFragment.phoneNum,
-//                            Toast.LENGTH_SHORT).show();
                     Log.e("BookInfoActivity已登录", "手机号：" + MyFragment.phoneNum);
                     if (MyFragment.childName != null) {
                         //判断当前是否添加了孩子
-//                        Toast.makeText(BookInfoActivity.this,
-//                                MyFragment.childName,
-//                                Toast.LENGTH_SHORT).show();
                         Log.e("BookInfoActivity已添加孩子", "孩子姓名：" + MyFragment.childName);
                         if (currentBtnBookshelf == android.R.color.black) {
                             bookshelf("DeleteBookFromBookshelf");
@@ -494,6 +487,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
             if (flag != null) {
                 Intent intent = new Intent(BookInfoActivity.this, MoreBooksActivity.class);
                 intent.putExtra("type", type);
+                intent.putExtra("grades",grades);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);

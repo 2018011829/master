@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group.tiantian.books.service.BookContentsService;
+
 
 /**
  * Servlet implementation class ReadBookAndExpressList
@@ -35,7 +37,7 @@ public class ReadBookAndExpressList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		//书的名称
-		String bookName="活着.txt";
+		String bookName="金拇指.txt";
 		//拼接读取路径
 		String path=getServletContext().getRealPath("/books/")+bookName;
 		System.out.println(path);
@@ -48,15 +50,15 @@ public class ReadBookAndExpressList extends HttpServlet {
 		String part="";
 		while((testString=br.readLine())!=null) {
 //			System.out.println(testString);
-			if(testString.trim().matches("([第].{1,5}[节])")) {
-//			if(testString.trim().matches("([第].{1,5}[章])(\\s{0,})(.{1,})")) {
+//			if(testString.trim().matches("([第].{1,5}[节])")) {
+			if(testString.trim().matches("([第].{1,5}[章])(\\s{0,})(.{1,})")) {
 //			if(testString.trim().matches("^[0123456789]{1,2}(.{1,})")) {
 //			if(testString.trim().matches("([第].{1,5}[卷].{1})(\\s{1,})(.{1,})")) {
 //			if(testString.trim().matches("([第](\\s{1}).{1,5}(\\s{1})[章])")) {
 //			if(testString.trim().matches("^[1234567890]{1,5}")) {
 //			if(testString.trim().matches("^[@].{2,}")) {
-				part="章节："+testString;
-				System.out.println("章节："+part);
+				part=testString;
+				System.out.println(part);
 //				boolean b=BookContentsService.getInstance().insertContentData(j, i, bookName, part);
 //				System.out.println(part+":"+b);
 //				if(b) {
