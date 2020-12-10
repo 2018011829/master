@@ -64,6 +64,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class EditorParentActivity extends AppCompatActivity implements View.OnClickListener {
+    private final static String TAG="EditorParentActivity";
     private ImageView iv_head;
     private Button btn_commit;
     private EditText edt_name;
@@ -141,6 +142,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                 if(edt_name.getText().toString()!=null && !edt_name.getText().toString().equals("")) {
                     if (bitmap != null) {
                         Toast.makeText(this,"修改中,请稍等",Toast.LENGTH_SHORT).show();
+
                         upBitmap(bitmap);
                         bitmap = null;
                     } else {
@@ -155,7 +157,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
 
     private void upBitmap(final Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         final byte[] bytes = baos.toByteArray();
         new Thread() {
             @Override
@@ -231,16 +233,17 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
                 cursor.moveToFirst();
                 String imgName = cursor.getString(3); //图片文件名
                 Log.e("图片的文件名：", "onActivityResult: " + imgName);
+                //获取图片
                 try {
-                    //获取图片
-                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+//                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                   bitmap= getSmallBitmap(cr.openInputStream(uri));
 
-                    Glide.with(this)
-                            .load(bitmap)
-                            .circleCrop()
-                            .into(iv_head);
+                Glide.with(this)
+                        .load(bitmap)
+                        .circleCrop()
+                        .into(iv_head);
                 } catch (FileNotFoundException e) {
-                    Log.e("Exception", e.getMessage(), e);
+                    e.printStackTrace();
                 }
             } else {
                 //操作错误或没有选择图片
@@ -248,4 +251,30 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
+
+
+    //压缩图片方法，对图片进行尺寸压缩
+    // 根据路径获得图片并压缩，返回bitmap用于显示
+    public  Bitmap getSmallBitmap(InputStream inputStream) {//图片所在SD卡的路径
+        Log.e(TAG, "getSmallBitmap: " );
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inSampleSize = calculateInSampleSize(options, 100, 100);//自定义一个宽和高
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(inputStream, null,options);
+    }
+
+    //计算图片的缩放值
+    public  int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+        final int height = options.outHeight;//获取图片的高
+        final int width = options.outWidth;//获取图片的框
+        int inSampleSize = 4;
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSampleSize;//求出缩放值
+    }
+
 }
