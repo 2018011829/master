@@ -37,12 +37,13 @@ public class BookDao {
 	 * @param type 书的类型
 	 * @return 返回6本该类型书籍的集合
 	 */
-	public List<Book> getSixBooksByType(String type) {
+	public List<Book> getSixBooksByType(String type,String grades) {
 		List<Book> list = null;
-		String sql = "select * from books where type=? limit 6";
+		String sql = "select * from books where type=? and grades=? limit 6";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, type);
+			preparedStatement.setString(2, grades);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs != null) {
 				list=new ArrayList<Book>();
@@ -55,6 +56,7 @@ public class BookDao {
 					book.setImg(rs.getString("img"));
 					book.setContent(rs.getString("content"));
 					book.setAuthor(rs.getString("author"));
+					book.setGrades(rs.getString("grades"));
 					list.add(book);
 				}
 			}
@@ -70,12 +72,15 @@ public class BookDao {
 	 * @param type 书的类型
 	 * @return 返回该类型所有书籍的集合
 	 */
-	public List<Book> getBooksByType(String type) {
+	public List<Book> getBooksByType(String type,String grades,int bookIndex,int size) {
 		List<Book> list = null;
-		String sql = "select * from books where type=?";
+		String sql = "select * from books where type=? and grades=? limit ?,?";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, type);
+			preparedStatement.setString(2, grades);
+			preparedStatement.setInt(3, bookIndex);
+			preparedStatement.setInt(4, size);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs != null) {
 				list=new ArrayList<Book>();
@@ -88,6 +93,7 @@ public class BookDao {
 					book.setImg(rs.getString("img"));
 					book.setContent(rs.getString("content"));
 					book.setAuthor(rs.getString("author"));
+					book.setGrades(rs.getString("grades"));
 					list.add(book);
 				}
 			}

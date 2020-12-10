@@ -90,7 +90,7 @@ public class ReadBookServlet extends HttpServlet {
 			int row = 1;
 			while ((temp = br.readLine()) != null) {
 				if (start <= row && row < end) {
-					buffer.append(temp);
+					buffer.append(temp+"\n");
 				}
 				row++;
 			}

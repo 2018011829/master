@@ -10,6 +10,16 @@ public class Book implements Serializable {
 	private String img;
 	private String content;
 	private String author;
+	private String grades;
+
+	public String getGrades() {
+		return grades;
+	}
+
+	public void setGrades(String grades) {
+		this.grades = grades;
+	}
+
 	public int getId() {
 		return id;
 	}

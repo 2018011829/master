@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.BrightnessUtils;
 import com.example.projecttraining.R;
+import com.example.projecttraining.books.activity.ReadBookActivity;
 
 public class TextSizeSettingPopupWindow extends PopupWindow {
 
@@ -30,15 +31,15 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
     private int currentLight; //当前亮度
 
 
-    public void setTvShowSize(int size) {
+    public void setTvShowSize() {
 
-        this.tvShowSize.setText(size+"");
+        this.tvShowSize.setText(ReadBookActivity.currentTextSize+"");
         this.setContentView(mMenuView);
     }
 
-    public TextSizeSettingPopupWindow(Context context, View.OnClickListener itemsOnclick, int textSize) {
+    public TextSizeSettingPopupWindow(Context context, View.OnClickListener itemsOnclick) {
         //加载布局 获取控件
-        findViews(context,itemsOnclick,textSize);
+        findViews(context,itemsOnclick);
         //设置弹出框的宽
         this.setWidth(ActionBar.LayoutParams.MATCH_PARENT);
         //设置弹出框的高
@@ -74,19 +75,18 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
      * @param context
      * @param itemsOnclick
      */
-    private void findViews(final Context context, View.OnClickListener itemsOnclick, int textSize) {
+    private void findViews(Context context, View.OnClickListener itemsOnclick) {
         this.mMenuView= LayoutInflater.from(context).inflate(R.layout.textsize_settings_popup_window,null);
         this.setContentView(mMenuView);
         //获取控件
         this.ivChangeBig=mMenuView.findViewById(R.id.iv_change_text_big);
         this.ivChangeSmall=mMenuView.findViewById(R.id.iv_change_text_small);
         this.tvShowSize=mMenuView.findViewById(R.id.tv_show_text_size);
-        tvShowSize.setText(textSize+"");
+        this.tvShowSize.setText(ReadBookActivity.currentTextSize+"");
         this.tvChangeTextStyle=mMenuView.findViewById(R.id.tv_change_text_style);
         ivChangeSmall.setOnClickListener(itemsOnclick);
         ivChangeBig.setOnClickListener(itemsOnclick);
         tvChangeTextStyle.setOnClickListener(itemsOnclick);
-
         //进度条
         changeLight=mMenuView.findViewById(R.id.seekbar_change_light);
         //获取系统当前亮度

@@ -31,8 +31,8 @@ public class MoreBooksService {
 	 * @param type 书籍类型
 	 * @return 返回该类型的所有书籍的集合
 	 */
-	public List<Book> getAllBookByType(String type){
-		List<Book> list=bookDao.getBooksByType(type);
+	public List<Book> getAllBookByType(String type,String grades,int bookIndex,int size){
+		List<Book> list=bookDao.getBooksByType(type,grades,bookIndex,size);
 		
 		return list;
 	}

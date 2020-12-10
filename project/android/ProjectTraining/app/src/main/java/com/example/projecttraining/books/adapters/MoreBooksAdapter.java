@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
+import com.example.projecttraining.books.tools.GlideRoundImage;
 import com.example.projecttraining.util.ConfigUtil;
-
 
 import java.util.List;
 
@@ -56,8 +56,11 @@ public class MoreBooksAdapter extends BaseAdapter {
         if (view==null){
             holder=new ViewHolder();
             view= LayoutInflater.from(mContext).inflate(layoutResource,null);
-            holder.iv=view.findViewById(R.id.grid_item_iv);
-            holder.tv=view.findViewById(R.id.grid_item_tv);
+            holder.ivBookImg=view.findViewById(R.id.iv_book_img);
+            holder.tvBookName=view.findViewById(R.id.tv_book_name);
+            holder.tvAuthor=view.findViewById(R.id.tv_book_author);
+            holder.tvBookType=view.findViewById(R.id.tv_book_type);
+            holder.tvBookIntroduce=view.findViewById(R.id.tv_book_introduce);
             view.setTag(holder);
         }else {
             holder= (ViewHolder) view.getTag();
@@ -68,14 +71,21 @@ public class MoreBooksAdapter extends BaseAdapter {
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.faliure)
                 .fallback(R.drawable.faliure)
-                .into(holder.iv);
-        holder.tv.setText(book.getName());
+                .transform(new GlideRoundImage(mContext,10))
+                .into(holder.ivBookImg);
+        holder.tvBookName.setText(book.getName());
+        holder.tvBookType.setText("作者：" + book.getAuthor());
+        holder.tvAuthor.setText("类型：" + book.getType());
+        holder.tvBookIntroduce.setText("简介："+book.getIntroduce().substring(0,50)+"......");
 
         return view;
     }
 
     static class ViewHolder{
-        ImageView iv;
-        TextView tv;
+        ImageView ivBookImg;
+        TextView tvBookName;
+        TextView tvAuthor;
+        TextView tvBookType;
+        TextView tvBookIntroduce;
     }
 }
