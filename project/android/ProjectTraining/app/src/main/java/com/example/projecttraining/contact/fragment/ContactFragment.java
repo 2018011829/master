@@ -33,6 +33,7 @@ import com.example.projecttraining.contact.dao.Parent;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
@@ -225,11 +226,16 @@ public class ContactFragment extends Fragment {
                 if ("" != json && null != json) {
                     Type type = new TypeToken<List<Parent>>() {}.getType();
                     Log.e(TAG, "onResponse: "+json);
-                    List<Parent> parents = gson.fromJson(json, type);
-                    Message message=handler.obtainMessage();
-                    message.what=1;
-                    message.obj=parents;
-                    handler.sendMessage(message);
+                    try{
+                        List<Parent> parents = gson.fromJson(json, type);
+                        Message message=handler.obtainMessage();
+                        message.what=1;
+                        message.obj=parents;
+                        handler.sendMessage(message);
+                    }catch (JsonSyntaxException e){
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
