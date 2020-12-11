@@ -125,6 +125,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_mine_mychildren"
                     android:padding="5dp"
                     android:gravity="center"
                     android:orientation="vertical"

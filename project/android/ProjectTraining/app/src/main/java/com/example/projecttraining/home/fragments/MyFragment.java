@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.projecttraining.R;
 import com.example.projecttraining.mine.AddChildActivity;
 import com.example.projecttraining.mine.EditorParentActivity;
+import com.example.projecttraining.mine.MyChildren;
 import com.example.projecttraining.mine.SettingActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
@@ -36,10 +37,12 @@ public class MyFragment extends Fragment {
 
     public static String phoneNum=EMClient.getInstance().getCurrentUser(); //纪录当前登录的手机号，用来在收藏前进行判断
     public static String childName="小明"; //纪录当前登录的手机号下的孩子姓名，用来在收藏前进行判断、存储收藏信息
+    public static int childNumber; //记录当前从孩子数据源中选择的孩子下标
     private ImageView iv_headPhoto;
     private RelativeLayout rl_mine_addChild;
     private LinearLayout ll_mine_editorParent;
     private RelativeLayout rl_mine_setting;
+    private LinearLayout ll_mine_mychildren;
     private TextView tv_mine_useName;
     private TextView tv_mine_phone;
     private View view;
@@ -94,6 +97,12 @@ public class MyFragment extends Fragment {
                     Intent intent = new Intent();
                     intent.setClass(getContext(), SettingActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.ll_mine_mychildren:
+                    Intent children = new Intent();
+                    children.setClass(getContext(), MyChildren.class);
+                    startActivity(children);
+                    break;
             }
         }
     }
@@ -103,6 +112,7 @@ public class MyFragment extends Fragment {
         rl_mine_addChild.setOnClickListener(myOnClickListener);
         ll_mine_editorParent.setOnClickListener(myOnClickListener);
         rl_mine_setting.setOnClickListener(myOnClickListener);
+        ll_mine_mychildren.setOnClickListener(myOnClickListener);
     }
     private void init(){
         tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
@@ -123,6 +133,7 @@ public class MyFragment extends Fragment {
         tv_mine_useName = view.findViewById(R.id.tv_mine_userName);
         tv_mine_phone = view.findViewById(R.id.tv_mine_phone);
         rl_mine_setting = view.findViewById(R.id.rl_mine_setting);
+        ll_mine_mychildren = view.findViewById(R.id.ll_mine_mychildren);
     }
 
     @Override

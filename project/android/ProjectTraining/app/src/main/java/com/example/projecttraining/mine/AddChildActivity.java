@@ -119,7 +119,7 @@ public class AddChildActivity extends AppCompatActivity {
                     btn_child_ok.setBackgroundColor(Color.GRAY);
                     btn_child_ok.setTextColor(Color.WHITE);
                 }else {
-                    btn_child_ok.setBackgroundColor(Color.GREEN);
+                    btn_child_ok.setBackgroundColor(Color.parseColor("#90EE90"));
                     btn_child_ok.setTextColor(Color.BLACK);
                 }
             }
@@ -272,7 +272,7 @@ public class AddChildActivity extends AppCompatActivity {
                         btn_child_ok.setBackgroundColor(Color.GRAY);
                         btn_child_ok.setTextColor(Color.WHITE);
                     }else {
-                        btn_child_ok.setBackgroundColor(Color.GREEN);
+                        btn_child_ok.setBackgroundColor(Color.parseColor("#90EE90"));
                         btn_child_ok.setTextColor(Color.BLACK);
                     }
                     popupWindow.dismiss();
@@ -295,7 +295,7 @@ public class AddChildActivity extends AppCompatActivity {
                         btn_child_ok.setBackgroundColor(Color.GRAY);
                         btn_child_ok.setTextColor(Color.WHITE);
                     }else {
-                        btn_child_ok.setBackgroundColor(Color.GREEN);
+                        btn_child_ok.setBackgroundColor(Color.parseColor("#90EE90"));
                         btn_child_ok.setTextColor(Color.BLACK);
                     }
                     popupWindow.dismiss();

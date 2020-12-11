@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="确定"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="#90EE90"
                 android:textSize="20sp" />
             <TextView
                 android:id="@+id/tv_relation_cancle"

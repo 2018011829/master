@@ -68,6 +68,7 @@
         <activity android:name=".mine.EditorParentActivity" />
         <activity android:name=".mine.SettingActivity" />
         <activity android:name=".mine.AddChildActivity" />
+        <activity android:name=".mine.MyChildren" />
         <activity android:name=".IntroAppActivity" />
         <activity android:name=".idiom.activitys.IdiomInfoActivity" />
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PictureActivity" />

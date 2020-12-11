@@ -2,8 +2,12 @@ package com.group.tiantian.children.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.group.tiantian.entity.Child;
 import com.group.tiantian.util.DBUtil;
 
 public class ChildrenDao {
@@ -50,5 +54,31 @@ public class ChildrenDao {
 			e.printStackTrace();
 		}
 		return b;
+	}
+	
+	/**
+	 * 根据家长电话查询孩子信息
+	 * */
+	public List<Child> queryChildrenByPhone(String query) {
+		String sql="select * from child where parentPhone=?";
+		List<Child> children=new ArrayList<Child>();
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, query);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Child child=new Child();
+				child.setId(resultSet.getInt(1));
+				child.setName(resultSet.getString(2));
+				child.setGrade(resultSet.getString(3));
+				child.setSex(resultSet.getString(4));
+				child.setParentPhone(resultSet.getString(5));
+				children.add(child);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return children;
 	}
 }
