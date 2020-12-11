@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.login.LoginByPasswordActivity;
 import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;
@@ -15,7 +17,12 @@ import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SplashActivity extends AppCompatActivity {
+
+    @BindView(R.id.iv_logo) ImageView ivLogo;
     private static String TAG="SplashAvtivity";
     private static final int sleepTime = 2000;
 
@@ -23,7 +30,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        ButterKnife.bind(this);
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.our_logo)
+                .into(ivLogo);
     }
 
     @Override

@@ -27,7 +27,6 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  * @author lrf
  */
 public class ContentFragment extends Fragment implements ScreenShotable {
-    public static final String CLOSE = "Close";
 
     private View containerView;
     private Bitmap bitmap;

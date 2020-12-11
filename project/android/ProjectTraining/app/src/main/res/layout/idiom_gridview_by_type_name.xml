@@ -13,12 +13,9 @@
     <TextView
         android:id="@+id/tv_idiom_by_type"
         android:textSize="23sp"
-        android:paddingTop="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:paddingBottom="20dp"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/idiom_child_type_btn_style"/>
+        android:background="@drawable/idipm_type_back03"/>
 
 </LinearLayout>

@@ -149,8 +149,6 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
      * @param strings 菜单名称集合
      */
     private void createMenuList(List<String> strings) {
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
-        list.add(menuItem0);
         for (int i = 0; i < strings.size(); ++i) {
             SlideMenuItem menuItem = new SlideMenuItem(typeList.get(i), drawableList.get(i));
             list.add(menuItem);
@@ -254,12 +252,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
         System.out.println(slideMenuItem.getName());
-        switch (slideMenuItem.getName()) {
-            case ContentFragment.CLOSE:
-                return screenShotable;
-            default:
-                return replaceFragment(screenShotable, position, slideMenuItem.getName());
-        }
+        return replaceFragment(screenShotable, position, slideMenuItem.getName());
     }
 
     @Override
