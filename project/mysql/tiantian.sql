@@ -2,18 +2,35 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50506
+Source Server Version : 50701
 Source Host           : localhost:3306
 Source Database       : tiantian
 
 Target Server Type    : MYSQL
-Target Server Version : 50506
+Target Server Version : 50701
 File Encoding         : 65001
 
-Date: 2020-12-09 21:57:44
+Date: 2020-12-11 17:04:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `admins`
+-- ----------------------------
+DROP TABLE IF EXISTS `admins`;
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `head_picture` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admins
+-- ----------------------------
+INSERT INTO `admins` VALUES ('1', 'lg', 'lg0816', null);
 
 -- ----------------------------
 -- Table structure for `books`
@@ -27,30 +44,36 @@ CREATE TABLE `books` (
   `img` varchar(50) NOT NULL,
   `content` varchar(50) NOT NULL,
   `author` varchar(50) NOT NULL,
+  `grades` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES ('1', '格林童话', '《格林童话》是由德国语言学家雅可布·格林和威廉·格林兄弟收集、整理、加工完成的德国民间文学。《格林童话》里面约有200多个故事，大部分源自民间的口头传说，其中的《灰姑娘》、《白雪公主》、《小红帽》、《青蛙王子》等童话故事较为闻名。它是世界童话的经典之作，自问世以来，在世界各地影响十分广泛。格林兄弟以其丰富的想象、优美的语言给孩子们讲述了一个个神奇而又浪漫的童话故事。', '童话', 'gelintonghua.png', '《格林童话》.TXT', '雅可布·格林和威廉·格林兄弟');
-INSERT INTO `books` VALUES ('2', '安徒生童话', '《安徒生童话》是丹麦作家安徒生创作的童话集，共由166篇故事组成。该bai作爱憎分明，热情歌颂劳动人民、赞美他们的善良和纯洁的优秀品德；无情地揭露和批判王公贵族们的愚蠢、无能、贪婪和残暴。其中较为闻名的故事有：《小人鱼》、《丑小鸭》、《卖火柴的小女孩》、《拇指姑娘》等。《安徒生童话》已经被译为150多种语言出版发行。他的童话故事还激发了大量电影、芭蕾舞剧、舞台剧以及电影动画的制作。', '童话', 'antushengtonghua.png', '《安徒生童话集》.TXT', '安徒生');
-INSERT INTO `books` VALUES ('3', '意大利童话', '意大利是文艺复兴的发源地，也是欧洲童话的故乡，童话在意大利的产生远比其他欧洲国家要早得多。也许同意大利民族热烈奔放的性格有关，意大利童话中对于真理、正义、善良、慷慨、真诚、勤劳、勇敢等优秀品质的拥护和赞颂更加热情，同时对于虚伪、邪恶、凶残、贪婪、狡猾、懒惰、怯懦等丑陋品质的憎恶和谴责也更加严厉。', '童话', 'yidalitonghua.jpg', '意大利童话.txt', '伊塔洛·卡尔维诺');
-INSERT INTO `books` VALUES ('4', '十二生肖的故事', '中国传统文化中有很多独特、有趣的内容，十二生肖文化就是其中之一。子鼠、丑牛、寅虎、卯兔、辰龙、巳蛇、午马、未羊、申猴、酉鸡、戌狗、亥猪，十二种动物与十二地支相配，形成有意思的组合，而在这种组合背后还有着丰富的内涵和深厚的文化积淀。《十二生肖的故事》通过故事的形式，讲述十二生肖背后的文化内涵，使学生了解生肖不同的象征意义，体悟其中蕴含的智慧、勤劳、质朴、亲情等中华民族传统美德，体验中华祖先文化遗泽的博大。', '童话', 'shiershengxiaodegushi.jpg', '十二生肖的故事.txt', '成坊，姚勤 ');
-INSERT INTO `books` VALUES ('5', '洋葱头历险记', '该作讲述主人公洋葱头，是一个有主张、有正义感的男孩。洋葱头的正义感和智慧可以在各个方面表现出来。老洋葱不小心踩了柠檬王一脚而被关进了监狱。洋葱头来探监时老洋葱告诉他，关押在这个监狱里的都是可怜的人，他们都没有犯罪，可是做坏事的那些人却被养在皇宫里。洋葱头决定救出监狱里善良的人们，却不幸也被投入黑牢。在鼹鼠太太、小樱桃和小草莓的帮助下，洋葱头和朋友们最后终于逃出了监狱，然后又和村民们一起占领了城堡，最后柠檬兵们也纷纷放下武器投降了。大家团结起来，一起推翻了柠檬王的统治，获得了自由。', '童话', 'yangcongtoulixianji.jpg', '洋葱头历险记.txt', '贾尼·罗大里');
-INSERT INTO `books` VALUES ('6', '阿拉伯童话', '《阿拉伯童话》是《世界儿童文学名著插图本》丛书系列之一，由人民文学出版社出版，译著者是王瑞琴。阿拉伯民间童话语言浅显直白，但想象离奇夸张，情节特别富于传奇色彩。阿拉伯民间童话的风格迥异，它们通常语言浅显直白，但想象离奇夸张，情节特别富于传奇色彩，同时充满东方式的哲理和隐喻。', '童话', 'alabotonghua.jpg', '阿拉伯童话.txt', '加瑞，译著:王瑞琴');
-INSERT INTO `books` VALUES ('7', '俄罗斯童话', '《俄罗斯童话》精选自俄罗斯民间文学家阿法纳西耶夫精心收集编撰的俄罗斯童话集，书中收录了《青蛙公主》《严塞老人》《渔夫和金鱼的故事》《伊万王子、火鸟和大灰狼的故事》《青铜国、白银国和黄金国》《漂亮的瓦希丽莎》《白野鸭》《魔戒指》等肤灸人口的名篇。', '童话', 'eluositonghua.jpg', '俄罗斯童话.txt', '阿法纳西耶夫亚历山大·尼古拉耶维奇·阿法纳西耶夫，译者:沈志宏');
-INSERT INTO `books` VALUES ('8', '英国童话', '本书收集了87篇童话，除了各种童话版本中收集的英国童话名篇，大部分均是尚未翻译出版的新童话；有的是故事情节引人入胜的散文体，有的是朗朗上口的诗歌和歌谣体，是本书的一大特色。书中内容惩恶扬善，强调理性、韧性、耐性和机会，和欧洲大陆其他各国的童话形成鲜明差别，成为英国童话的特色，自然也是本书在世界各国常版常销的原因。', '童话', 'yingguotonghua.jpg', '英国童话.txt', '约瑟夫·雅各布斯');
-INSERT INTO `books` VALUES ('9', '王尔德童话', '王尔德是19世纪英国最伟大的艺术家之一，以其剧作、诗歌、童话和小说名世。在风流才子那颓废唯美、狷狂放浪的表面姿态下，是一颗纯美纯善，永难泯灭的童心。而这可贵童心一经与卓绝才智结合，便诞生了《王尔德童话》。它不仅为作者奠定了文学声名的基石，更成为世界文学宝库中的传世佳作。其语言纯正优美堪称典范，其意境高洁悠远益人心智，值得向每一个童稚未凿的孩子、每一位葆有赤子之心的成人郑重推荐。本书收录了王尔德《快乐王子》等全部九篇童话。', '童话', 'wangerdetonghua.jpg', '王尔德童话.txt', '奥斯卡·王尔德');
-INSERT INTO `books` VALUES ('10', '小熊维尼', '英国儿童文学家米恩为自己儿子所写的这个系列故事，取材自儿童身边的布偶和以小熊维尼为主的周围各种动物，他们彼此间的友情、爱、勇气，以及充满乐趣的生活，而且含有丰富的符合老庄思想的人生哲理，不仅小孩子喜欢，成年人、老年人也是不可多得好书哦。', '童话', 'xiaoxiongweini.jpg', '小熊维尼.TXT', '斯蒂文·J·安德森');
-INSERT INTO `books` VALUES ('11', '郭楚海童话', '故事屋收集了郭楚海先生的童话类：《小飞行员》《长尾、短尾和黑妮》《当世界上没有动物以后》《豆芽失踪记》《虎皮儿》 《虎王画像》《灰耳朵的故事》《冒牌米老鼠》《小白鼠过生日》《小力克奇遇记》《隐身药》《奇怪的耳机》《音乐家的故事》《龙的故事》《西克和橡皮狗》《吹牛》《睡觉》《吹牛大王旅行记》《西克的故事》《活书包》《积木城堡》《金鱼的故事》《杜杜先生的喷嚏》《灰灰和白白》《兔子狼》《大黑、小黑和细尾巴》等好看的郭楚海童话', '童话', 'guochuhaitonghua.jpg', '郭楚海童话.txt', '郭楚海');
-INSERT INTO `books` VALUES ('12', '一千零一夜', '本书有着浓郁的阿拉伯风格，读者可以随着一个个主人公经历着不同旅程，感受着故事中人物的生活，体会着他们的勤劳、善良。并在这些奇妙而美丽的故事中发掘人生的真谛，领悟人性中最真、最美的瞬间。', '童话', 'yiqianlingyiye.jpg', '一千零一夜故事集.6寸版.pdf', '佚名');
-INSERT INTO `books` VALUES ('13', '阿甘正传', '阿甘的智商只有两位数，但他天性善良单纯，加上天赋异秉，使他先后成为大学美式足球明星、越战英雄、世界级乒乓球运动员、摔跤选手和商业大亨。阿甘“轰轰烈烈”的传奇一生，其实正是五十年代到七十年代美国历史与社会的缩影，透过阿甘的眼睛，也让我们看到了外在世界的险恶复杂与庸俗市侩，而更觉人性真诚的可贵。', '文学名著', 'aganzhengzhuan.jpg', '阿甘正传.txt', '[美]温斯顿·葛鲁姆');
-INSERT INTO `books` VALUES ('14', '安娜卡列尼娜', '作品讲述了贵族妇女安娜追求爱情幸福，却在卡列宁的虚伪、渥伦斯基的冷漠和自私面前碰得头破血流，最终落得卧轨自杀、陈尸车站的下场。庄园主列文反对土地私有制，抵制资本主义制度，同情贫苦农民，却又无法摆脱贵族习气而陷入无法解脱的矛盾之中。矛盾的时期、矛盾的制度、矛盾的人物、矛盾的心理，使全书在矛盾的漩涡中颠簸。这部小说是新旧交替时期紧张惶恐的俄国社会的写照。', '文学名著', 'annakalienina.jpg', '安娜卡列尼娜.txt', '托尔斯泰');
-INSERT INTO `books` VALUES ('15', '傲慢与偏见', '是英国女小说家简·奥斯汀创作的长篇小说。小说描写了小乡绅班纳特五个待字闺中的千金，主角是二女儿伊丽莎白。她在舞会上认识了达西，但是耳闻他为人傲慢，一直对他心生排斥，经历一番周折，伊丽莎白解除了对达西的偏见，达西也放下傲慢，有情人终成眷属。', '文学名著', 'aomanyupianjian.jpg', '傲慢与偏见.txt', '简·奥斯汀');
-INSERT INTO `books` VALUES ('16', '巴黎圣母院', '《巴黎圣母院》是法国文学家维克多·雨果创作的长篇小说，《巴黎圣母院》以离奇和对比手法写了一个发生在15世纪法国的故事：巴黎圣母院副主教克罗德道貌岸然、蛇蝎心肠，先爱后恨，迫害吉ト赛女郎埃斯梅拉达。面目丑陋、心地善良的敲钟人卡西莫多为救女郎舍身。小说揭露了宗教的虚伪，宣告禁欲主义的破产，歌颂了下层劳动人民的善良、友爱、舍己为人，反映了雨果的人道主义思想。', '文学名著', 'balishengmuyuan.jpg', '巴黎圣母院.txt', '雨果');
-INSERT INTO `books` VALUES ('17', '窗边的小豆豆', '《窗边的小豆豆》是日本作家、主持人黑柳彻子创作的儿童文学作品，这本书讲述了作者上小学时的一段真实的故事：小豆豆（作者）因淘气被原学校退学后，来到巴学园。在小林校长的爱护和引导下，一般人眼里“怪怪”的小豆豆逐渐变成了一个大家都能接受的孩子。巴学园里亲切、随和的教学方式使这里的孩子们度过了人生最美好的时光。', '文学名著', 'chuangbiandexiaodoudou.jpg', '窗边的小豆豆.txt', '黑柳彻子');
-INSERT INTO `books` VALUES ('18', '动物庄园', '《动物庄园》是英国作家乔治·奥威尔创作的中篇小说，该作讲述农场的一群动物成功地进行了一场“革命”，将压榨他们的人类东家赶出农场，建立起一个平等的动物社会。然而，动物领袖，那些聪明的猪们最终却篡夺了革命的果实，成为比人类东家更加独裁和极权的统治者。', '文学名著', 'dongwuzhuangyuan.jpg', '动物庄园.txt', '乔治·奥威尔');
+INSERT INTO `books` VALUES ('1', '格林童话', '《格林童话》是由德国语言学家雅可布·格林和威廉·格林兄弟收集、整理、加工完成的德国民间文学。《格林童话》里面约有200多个故事，大部分源自民间的口头传说，其中的《灰姑娘》、《白雪公主》、《小红帽》、《青蛙王子》等童话故事较为闻名。它是世界童话的经典之作，自问世以来，在世界各地影响十分广泛。格林兄弟以其丰富的想象、优美的语言给孩子们讲述了一个个神奇而又浪漫的童话故事。', '童话', 'gelintonghua.png', '《格林童话》.TXT', '雅可布·格林和威廉·格林兄弟', 'big');
+INSERT INTO `books` VALUES ('2', '安徒生童话', '《安徒生童话》是丹麦作家安徒生创作的童话集，共由166篇故事组成。该bai作爱憎分明，热情歌颂劳动人民、赞美他们的善良和纯洁的优秀品德；无情地揭露和批判王公贵族们的愚蠢、无能、贪婪和残暴。其中较为闻名的故事有：《小人鱼》、《丑小鸭》、《卖火柴的小女孩》、《拇指姑娘》等。《安徒生童话》已经被译为150多种语言出版发行。他的童话故事还激发了大量电影、芭蕾舞剧、舞台剧以及电影动画的制作。', '童话', 'antushengtonghua.png', '《安徒生童话集》.TXT', '安徒生', 'small');
+INSERT INTO `books` VALUES ('3', '意大利童话', '意大利是文艺复兴的发源地，也是欧洲童话的故乡，童话在意大利的产生远比其他欧洲国家要早得多。也许同意大利民族热烈奔放的性格有关，意大利童话中对于真理、正义、善良、慷慨、真诚、勤劳、勇敢等优秀品质的拥护和赞颂更加热情，同时对于虚伪、邪恶、凶残、贪婪、狡猾、懒惰、怯懦等丑陋品质的憎恶和谴责也更加严厉。', '童话', 'yidalitonghua.jpg', '意大利童话.txt', '伊塔洛·卡尔维诺', 'big');
+INSERT INTO `books` VALUES ('4', '十二生肖的故事', '中国传统文化中有很多独特、有趣的内容，十二生肖文化就是其中之一。子鼠、丑牛、寅虎、卯兔、辰龙、巳蛇、午马、未羊、申猴、酉鸡、戌狗、亥猪，十二种动物与十二地支相配，形成有意思的组合，而在这种组合背后还有着丰富的内涵和深厚的文化积淀。《十二生肖的故事》通过故事的形式，讲述十二生肖背后的文化内涵，使学生了解生肖不同的象征意义，体悟其中蕴含的智慧、勤劳、质朴、亲情等中华民族传统美德，体验中华祖先文化遗泽的博大。', '童话', 'shiershengxiaodegushi.jpg', '十二生肖的故事.txt', '成坊，姚勤 ', 'small');
+INSERT INTO `books` VALUES ('5', '洋葱头历险记', '该作讲述主人公洋葱头，是一个有主张、有正义感的男孩。洋葱头的正义感和智慧可以在各个方面表现出来。老洋葱不小心踩了柠檬王一脚而被关进了监狱。洋葱头来探监时老洋葱告诉他，关押在这个监狱里的都是可怜的人，他们都没有犯罪，可是做坏事的那些人却被养在皇宫里。洋葱头决定救出监狱里善良的人们，却不幸也被投入黑牢。在鼹鼠太太、小樱桃和小草莓的帮助下，洋葱头和朋友们最后终于逃出了监狱，然后又和村民们一起占领了城堡，最后柠檬兵们也纷纷放下武器投降了。大家团结起来，一起推翻了柠檬王的统治，获得了自由。', '童话', 'yangcongtoulixianji.jpg', '洋葱头历险记.txt', '贾尼·罗大里', 'small');
+INSERT INTO `books` VALUES ('6', '阿拉伯童话', '《阿拉伯童话》是《世界儿童文学名著插图本》丛书系列之一，由人民文学出版社出版，译著者是王瑞琴。阿拉伯民间童话语言浅显直白，但想象离奇夸张，情节特别富于传奇色彩。阿拉伯民间童话的风格迥异，它们通常语言浅显直白，但想象离奇夸张，情节特别富于传奇色彩，同时充满东方式的哲理和隐喻。', '童话', 'alabotonghua.jpg', '阿拉伯童话.txt', '加瑞，译著:王瑞琴', 'big');
+INSERT INTO `books` VALUES ('7', '俄罗斯童话', '《俄罗斯童话》精选自俄罗斯民间文学家阿法纳西耶夫精心收集编撰的俄罗斯童话集，书中收录了《青蛙公主》《严塞老人》《渔夫和金鱼的故事》《伊万王子、火鸟和大灰狼的故事》《青铜国、白银国和黄金国》《漂亮的瓦希丽莎》《白野鸭》《魔戒指》等肤灸人口的名篇。', '童话', 'eluositonghua.jpg', '俄罗斯童话.txt', '阿法纳西耶夫亚历山大·尼古拉耶维奇·阿法纳西耶夫，译者:沈志宏', 'small');
+INSERT INTO `books` VALUES ('8', '英国童话', '本书收集了87篇童话，除了各种童话版本中收集的英国童话名篇，大部分均是尚未翻译出版的新童话；有的是故事情节引人入胜的散文体，有的是朗朗上口的诗歌和歌谣体，是本书的一大特色。书中内容惩恶扬善，强调理性、韧性、耐性和机会，和欧洲大陆其他各国的童话形成鲜明差别，成为英国童话的特色，自然也是本书在世界各国常版常销的原因。', '童话', 'yingguotonghua.jpg', '英国童话.txt', '约瑟夫·雅各布斯', 'big');
+INSERT INTO `books` VALUES ('9', '王尔德童话', '王尔德是19世纪英国最伟大的艺术家之一，以其剧作、诗歌、童话和小说名世。在风流才子那颓废唯美、狷狂放浪的表面姿态下，是一颗纯美纯善，永难泯灭的童心。而这可贵童心一经与卓绝才智结合，便诞生了《王尔德童话》。它不仅为作者奠定了文学声名的基石，更成为世界文学宝库中的传世佳作。其语言纯正优美堪称典范，其意境高洁悠远益人心智，值得向每一个童稚未凿的孩子、每一位葆有赤子之心的成人郑重推荐。本书收录了王尔德《快乐王子》等全部九篇童话。', '童话', 'wangerdetonghua.jpg', '王尔德童话.txt', '奥斯卡·王尔德', 'big');
+INSERT INTO `books` VALUES ('10', '小熊维尼', '英国儿童文学家米恩为自己儿子所写的这个系列故事，取材自儿童身边的布偶和以小熊维尼为主的周围各种动物，他们彼此间的友情、爱、勇气，以及充满乐趣的生活，而且含有丰富的符合老庄思想的人生哲理，不仅小孩子喜欢，成年人、老年人也是不可多得好书哦。', '童话', 'xiaoxiongweini.jpg', '小熊维尼.TXT', '斯蒂文·J·安德森', 'small');
+INSERT INTO `books` VALUES ('11', '郭楚海童话', '故事屋收集了郭楚海先生的童话类：《小飞行员》《长尾、短尾和黑妮》《当世界上没有动物以后》《豆芽失踪记》《虎皮儿》 《虎王画像》《灰耳朵的故事》《冒牌米老鼠》《小白鼠过生日》《小力克奇遇记》《隐身药》《奇怪的耳机》《音乐家的故事》《龙的故事》《西克和橡皮狗》《吹牛》《睡觉》《吹牛大王旅行记》《西克的故事》《活书包》《积木城堡》《金鱼的故事》《杜杜先生的喷嚏》《灰灰和白白》《兔子狼》《大黑、小黑和细尾巴》等好看的郭楚海童话', '童话', 'guochuhaitonghua.jpg', '郭楚海童话.txt', '郭楚海', 'big');
+INSERT INTO `books` VALUES ('12', '大提琴手高修', '《大提琴手高修》并非一个简单的童话故事，而是一篇充满宗教意味的寓言。高修从一个在乐闭中表现最差的乐手，一跃成为被人称颂的好乐手，这除了自身的刻苦努力之外，也是他在小动物们的帮助下，找到症结所在，从而快速提升琴技的结果。提高自身能力，是获得自信的首要条件。', '童话', 'datiqinshougaoxiu.png', '大提琴手高修.txt', '[日本]宫泽贤治', 'small');
+INSERT INTO `books` VALUES ('13', '阿甘正传', '阿甘的智商只有两位数，但他天性善良单纯，加上天赋异秉，使他先后成为大学美式足球明星、越战英雄、世界级乒乓球运动员、摔跤选手和商业大亨。阿甘“轰轰烈烈”的传奇一生，其实正是五十年代到七十年代美国历史与社会的缩影，透过阿甘的眼睛，也让我们看到了外在世界的险恶复杂与庸俗市侩，而更觉人性真诚的可贵。', '文学名著', 'aganzhengzhuan.jpg', '阿甘正传.txt', '[美]温斯顿·葛鲁姆', 'small');
+INSERT INTO `books` VALUES ('14', '安娜卡列尼娜', '作品讲述了贵族妇女安娜追求爱情幸福，却在卡列宁的虚伪、渥伦斯基的冷漠和自私面前碰得头破血流，最终落得卧轨自杀、陈尸车站的下场。庄园主列文反对土地私有制，抵制资本主义制度，同情贫苦农民，却又无法摆脱贵族习气而陷入无法解脱的矛盾之中。矛盾的时期、矛盾的制度、矛盾的人物、矛盾的心理，使全书在矛盾的漩涡中颠簸。这部小说是新旧交替时期紧张惶恐的俄国社会的写照。', '文学名著', 'annakalienina.jpg', '安娜卡列尼娜.txt', '托尔斯泰', 'big');
+INSERT INTO `books` VALUES ('15', '傲慢与偏见', '是英国女小说家简·奥斯汀创作的长篇小说。小说描写了小乡绅班纳特五个待字闺中的千金，主角是二女儿伊丽莎白。她在舞会上认识了达西，但是耳闻他为人傲慢，一直对他心生排斥，经历一番周折，伊丽莎白解除了对达西的偏见，达西也放下傲慢，有情人终成眷属。', '文学名著', 'aomanyupianjian.jpg', '傲慢与偏见.txt', '简·奥斯汀', 'big');
+INSERT INTO `books` VALUES ('16', '巴黎圣母院', '《巴黎圣母院》是法国文学家维克多·雨果创作的长篇小说，《巴黎圣母院》以离奇和对比手法写了一个发生在15世纪法国的故事：巴黎圣母院副主教克罗德道貌岸然、蛇蝎心肠，先爱后恨，迫害吉ト赛女郎埃斯梅拉达。面目丑陋、心地善良的敲钟人卡西莫多为救女郎舍身。小说揭露了宗教的虚伪，宣告禁欲主义的破产，歌颂了下层劳动人民的善良、友爱、舍己为人，反映了雨果的人道主义思想。', '文学名著', 'balishengmuyuan.jpg', '巴黎圣母院.txt', '雨果', 'big');
+INSERT INTO `books` VALUES ('17', '窗边的小豆豆', '《窗边的小豆豆》是日本作家、主持人黑柳彻子创作的儿童文学作品，这本书讲述了作者上小学时的一段真实的故事：小豆豆（作者）因淘气被原学校退学后，来到巴学园。在小林校长的爱护和引导下，一般人眼里“怪怪”的小豆豆逐渐变成了一个大家都能接受的孩子。巴学园里亲切、随和的教学方式使这里的孩子们度过了人生最美好的时光。', '文学名著', 'chuangbiandexiaodoudou.jpg', '窗边的小豆豆.txt', '黑柳彻子', 'small');
+INSERT INTO `books` VALUES ('18', '动物庄园', '《动物庄园》是英国作家乔治·奥威尔创作的中篇小说，该作讲述农场的一群动物成功地进行了一场“革命”，将压榨他们的人类东家赶出农场，建立起一个平等的动物社会。然而，动物领袖，那些聪明的猪们最终却篡夺了革命的果实，成为比人类东家更加独裁和极权的统治者。', '文学名著', 'dongwuzhuangyuan.jpg', '动物庄园.txt', '乔治·奥威尔', 'small');
+INSERT INTO `books` VALUES ('19', '风又三郎', '传说每年立春后的第二百零十天左右，也就是九月一日前后，一个名叫风又三郎的风之精灵会降临人间。九月一日那天，学校里真的来了一个名叫又三郎的转校生，这个长着一头诡异红发的男孩，哪怕是开口一笑，也会山风四起，孩子们怀疑他就是风又三郎。后来有一天，他们真的看见他身披玻璃斗篷，脚穿玻璃鞋，一纵身飞上了天空……', '童话', 'fengyousanlang.png', '风又三郎.txt', '[日本]宫泽贤治', 'big');
+INSERT INTO `books` VALUES ('20', '古斯柯布多力传记', '在伊哈特卜北部某座大森林中，古斯柯布多力（小栗旬 配音）和父亲（林隆三 配音）、母亲（草刈民代 配音）以及妹妹妮莉（忽那汐里 配音）过着幸福宁静的生活。某一年，严寒席卷森林，饥饿让此地的生灵们倍受煎熬。布多力的父母相继消失在森林深处，只剩下他和年幼的妹妹相依为命...', '童话', 'gusikebuduolizhuan.png', '古斯柯布多力传记.txt', '[日本]宫泽贤治', 'small');
+INSERT INTO `books` VALUES ('21', '银河铁道之夜', '长篇童话《银河铁道之夜》是宫泽贤治的代表作，亦是一部广受喜爱的永恒杰作。它凝聚了作者思想、信仰、教养的全部精髓，被视为宫泽贤治作品的集大成者。作品借焦班尼和柯贝内拉之口，探讨了什么是死亡，什么是真正的幸福这一深重的话题。虽为童话，却是随着阅历和年龄的增长，才能真正领悟其真谛的、贯穿读者一生的重量级文学作品。', '童话', 'yinhetiedaozhiye.png', '银河铁道之夜.txt', '[日本]宫泽贤治', 'big');
+INSERT INTO `books` VALUES ('22', '白客', '这个故事发生在一个再婚的家庭里。孔若君的父母在他高考之前离婚了。这个打击对孔若君来说实在太大了，尽管被认为是心理素质一惯很好，在高考中还是名落孙山。继父带来一个女儿，殷静，长得如花似玉，可就是对孔若君从不正眼相看，一副居高临下的公主架子，编偏考上了电影学院......', '悬疑推理', 'baike.png', '白客.txt', '郑渊洁', 'big');
+INSERT INTO `books` VALUES ('23', '金拇指', '《金拇指》是郑渊洁2001年创作的19万字长篇小说。女一号欧阳宁秀是下岗工人，家境贫寒。一次同学聚会改变了她的命运。偶然的发现使她得知自己的某个大拇指是能洞悉股市未来行情的金拇指。金拇指给她的家庭、友谊、生命制造的悲欢离合可谓登峰造极。', '小说', 'jinmuzhi.png', '金拇指.txt', '郑渊洁', 'big');
 
 -- ----------------------------
 -- Table structure for `bookshelf`
@@ -323,32 +346,32 @@ INSERT INTO `books_contents` VALUES ('235', '安娜卡列尼娜.txt', '第五部
 INSERT INTO `books_contents` VALUES ('236', '安娜卡列尼娜.txt', '第五部分  第十七章', '17229');
 INSERT INTO `books_contents` VALUES ('237', '安娜卡列尼娜.txt', '第五部分  第十八章', '17275');
 INSERT INTO `books_contents` VALUES ('238', '安娜卡列尼娜.txt', '第五部分  第十九章', '17327');
-INSERT INTO `books_contents` VALUES ('1', '阿甘正传.txt', '第一章', '6');
-INSERT INTO `books_contents` VALUES ('2', '阿甘正传.txt', '第二章', '92');
-INSERT INTO `books_contents` VALUES ('3', '阿甘正传.txt', '第三章', '172');
-INSERT INTO `books_contents` VALUES ('4', '阿甘正传.txt', '第四章', '252');
-INSERT INTO `books_contents` VALUES ('5', '阿甘正传.txt', '第五章', '346');
-INSERT INTO `books_contents` VALUES ('6', '阿甘正传.txt', '第六章', '532');
-INSERT INTO `books_contents` VALUES ('7', '阿甘正传.txt', '第七章', '614');
-INSERT INTO `books_contents` VALUES ('8', '阿甘正传.txt', '第八章', '692');
-INSERT INTO `books_contents` VALUES ('9', '阿甘正传.txt', '第九章', '790');
-INSERT INTO `books_contents` VALUES ('10', '阿甘正传.txt', '第十章', '870');
-INSERT INTO `books_contents` VALUES ('11', '阿甘正传.txt', '第十一章', '970');
-INSERT INTO `books_contents` VALUES ('12', '阿甘正传.txt', '第十二章', '1118');
-INSERT INTO `books_contents` VALUES ('13', '阿甘正传.txt', '第十三章', '1232');
-INSERT INTO `books_contents` VALUES ('14', '阿甘正传.txt', '第十四章', '1324');
-INSERT INTO `books_contents` VALUES ('15', '阿甘正传.txt', '第十五章', '1482');
-INSERT INTO `books_contents` VALUES ('16', '阿甘正传.txt', '第十六章', '1606');
-INSERT INTO `books_contents` VALUES ('17', '阿甘正传.txt', '第十七章', '1780');
-INSERT INTO `books_contents` VALUES ('18', '阿甘正传.txt', '第十八章', '1926');
-INSERT INTO `books_contents` VALUES ('19', '阿甘正传.txt', '第十九章', '2072');
-INSERT INTO `books_contents` VALUES ('20', '阿甘正传.txt', '第二十章', '2200');
-INSERT INTO `books_contents` VALUES ('21', '阿甘正传.txt', '第廿一章', '2404');
-INSERT INTO `books_contents` VALUES ('22', '阿甘正传.txt', '第廿二章', '2542');
-INSERT INTO `books_contents` VALUES ('23', '阿甘正传.txt', '第廿三章', '2714');
-INSERT INTO `books_contents` VALUES ('24', '阿甘正传.txt', '第廿四章', '2844');
-INSERT INTO `books_contents` VALUES ('25', '阿甘正传.txt', '第廿五章', '2966');
-INSERT INTO `books_contents` VALUES ('26', '阿甘正传.txt', '第廿六章', '3140');
+INSERT INTO `books_contents` VALUES ('1', '阿甘正传.txt', '第一章  妈妈送我上学', '6');
+INSERT INTO `books_contents` VALUES ('2', '阿甘正传.txt', '第二章  参加足球明星盛会', '92');
+INSERT INTO `books_contents` VALUES ('3', '阿甘正传.txt', '第三章  布莱恩教练来了体育馆', '172');
+INSERT INTO `books_contents` VALUES ('4', '阿甘正传.txt', '第四章  布莱恩教练的秘招', '252');
+INSERT INTO `books_contents` VALUES ('5', '阿甘正传.txt', '第五章  我的体育成绩', '346');
+INSERT INTO `books_contents` VALUES ('6', '阿甘正传.txt', '第六章  战场上的我', '532');
+INSERT INTO `books_contents` VALUES ('7', '阿甘正传.txt', '第七章  岘港的医院', '614');
+INSERT INTO `books_contents` VALUES ('8', '阿甘正传.txt', '第八章  回美国', '692');
+INSERT INTO `books_contents` VALUES ('9', '阿甘正传.txt', '第九章  来到中国', '790');
+INSERT INTO `books_contents` VALUES ('10', '阿甘正传.txt', '第十章  寻找珍妮', '870');
+INSERT INTO `books_contents` VALUES ('11', '阿甘正传.txt', '第十一章  在哈佛奎肯布希教授课堂上演戏', '970');
+INSERT INTO `books_contents` VALUES ('12', '阿甘正传.txt', '第十二章  真正的疯人院', '1118');
+INSERT INTO `books_contents` VALUES ('13', '阿甘正传.txt', '第十三章  我的第一印象', '1232');
+INSERT INTO `books_contents` VALUES ('14', '阿甘正传.txt', '第十四章  降落的情况', '1324');
+INSERT INTO `books_contents` VALUES ('15', '阿甘正传.txt', '第十五章  种棉花', '1482');
+INSERT INTO `books_contents` VALUES ('16', '阿甘正传.txt', '第十六章  大山姆的全族人', '1606');
+INSERT INTO `books_contents` VALUES ('17', '阿甘正传.txt', '第十七章  我的暖气栅', '1780');
+INSERT INTO `books_contents` VALUES ('18', '阿甘正传.txt', '第十八章  我毕生最快乐的重逢', '1926');
+INSERT INTO `books_contents` VALUES ('19', '阿甘正传.txt', '第十九章  蒙夕的比赛预定结果', '2072');
+INSERT INTO `books_contents` VALUES ('20', '阿甘正传.txt', '第二十章  麦克把丹和我叫到他的办公室', '2200');
+INSERT INTO `books_contents` VALUES ('21', '阿甘正传.txt', '第廿一章  我成了一个可怜的混球', '2404');
+INSERT INTO `books_contents` VALUES ('22', '阿甘正传.txt', '第廿二章  棋赛', '2542');
+INSERT INTO `books_contents` VALUES ('23', '阿甘正传.txt', '第廿三章  我又进了牢房', '2714');
+INSERT INTO `books_contents` VALUES ('24', '阿甘正传.txt', '第廿四章  我重返家乡了', '2844');
+INSERT INTO `books_contents` VALUES ('25', '阿甘正传.txt', '第廿五章  六月的一个非常舒爽的日子', '2966');
+INSERT INTO `books_contents` VALUES ('26', '阿甘正传.txt', '第廿六章  沙凡纳车站', '3140');
 INSERT INTO `books_contents` VALUES ('1', '阿拉伯童话.txt', '章节：1獴的故事', '25');
 INSERT INTO `books_contents` VALUES ('2', '阿拉伯童话.txt', '章节：2老鼠和黄鼠狼的故事', '70');
 INSERT INTO `books_contents` VALUES ('3', '阿拉伯童话.txt', '章节：3穷人的幸福', '112');
@@ -537,67 +560,67 @@ INSERT INTO `books_contents` VALUES ('155', '安徒生童话集.txt', '第一百
 INSERT INTO `books_contents` VALUES ('156', '安徒生童话集.txt', '第一百六十七章 海的女儿', '18409');
 INSERT INTO `books_contents` VALUES ('157', '安徒生童话集.txt', '第一百六十八章 邻居们', '18631');
 INSERT INTO `books_contents` VALUES ('158', '安徒生童话集.txt', '第一百六十九章 夜莺', '18793');
-INSERT INTO `books_contents` VALUES ('1', '傲慢与偏见.txt', '第一章', '61');
-INSERT INTO `books_contents` VALUES ('2', '傲慢与偏见.txt', '第二章', '139');
-INSERT INTO `books_contents` VALUES ('3', '傲慢与偏见.txt', '第三章', '209');
-INSERT INTO `books_contents` VALUES ('4', '傲慢与偏见.txt', '第四章', '261');
-INSERT INTO `books_contents` VALUES ('5', '傲慢与偏见.txt', '第五章', '301');
-INSERT INTO `books_contents` VALUES ('6', '傲慢与偏见.txt', '第六章', '351');
-INSERT INTO `books_contents` VALUES ('7', '傲慢与偏见.txt', '第七章', '471');
-INSERT INTO `books_contents` VALUES ('8', '傲慢与偏见.txt', '第八章', '567');
-INSERT INTO `books_contents` VALUES ('9', '傲慢与偏见.txt', '第九章', '689');
-INSERT INTO `books_contents` VALUES ('10', '傲慢与偏见.txt', '第十章', '777');
-INSERT INTO `books_contents` VALUES ('11', '傲慢与偏见.txt', '第十一章', '932');
-INSERT INTO `books_contents` VALUES ('12', '傲慢与偏见.txt', '第十二章', '1014');
-INSERT INTO `books_contents` VALUES ('13', '傲慢与偏见.txt', '第十三章', '1040');
-INSERT INTO `books_contents` VALUES ('14', '傲慢与偏见.txt', '第十四章', '1112');
-INSERT INTO `books_contents` VALUES ('15', '傲慢与偏见.txt', '第十五章', '1160');
-INSERT INTO `books_contents` VALUES ('16', '傲慢与偏见.txt', '第十六章', '1198');
-INSERT INTO `books_contents` VALUES ('17', '傲慢与偏见.txt', '第十七章', '1330');
-INSERT INTO `books_contents` VALUES ('18', '傲慢与偏见.txt', '第十八章', '1374');
-INSERT INTO `books_contents` VALUES ('19', '傲慢与偏见.txt', '第十九章', '1543');
-INSERT INTO `books_contents` VALUES ('20', '傲慢与偏见.txt', '第二十章', '1599');
-INSERT INTO `books_contents` VALUES ('21', '傲慢与偏见.txt', '第二十一章', '1675');
-INSERT INTO `books_contents` VALUES ('22', '傲慢与偏见.txt', '第二十二章', '1745');
-INSERT INTO `books_contents` VALUES ('23', '傲慢与偏见.txt', '第二十三章', '1795');
-INSERT INTO `books_contents` VALUES ('24', '傲慢与偏见.txt', '第二十四章', '1857');
-INSERT INTO `books_contents` VALUES ('25', '傲慢与偏见.txt', '第二十五章', '1931');
-INSERT INTO `books_contents` VALUES ('26', '傲慢与偏见.txt', '第二十六章', '1985');
-INSERT INTO `books_contents` VALUES ('27', '傲慢与偏见.txt', '第二十七章', '2062');
-INSERT INTO `books_contents` VALUES ('28', '傲慢与偏见.txt', '第二十八章', '2122');
-INSERT INTO `books_contents` VALUES ('29', '傲慢与偏见.txt', '第二十九章', '2176');
-INSERT INTO `books_contents` VALUES ('30', '傲慢与偏见.txt', '第三十章', '2272');
-INSERT INTO `books_contents` VALUES ('31', '傲慢与偏见.txt', '第三十一章', '2310');
-INSERT INTO `books_contents` VALUES ('32', '傲慢与偏见.txt', '第三十二章', '2384');
-INSERT INTO `books_contents` VALUES ('33', '傲慢与偏见.txt', '第三十三章', '2460');
-INSERT INTO `books_contents` VALUES ('34', '傲慢与偏见.txt', '第三十四章', '2552');
-INSERT INTO `books_contents` VALUES ('35', '傲慢与偏见.txt', '第三十五章', '2626');
-INSERT INTO `books_contents` VALUES ('36', '傲慢与偏见.txt', '第三十六章', '2663');
-INSERT INTO `books_contents` VALUES ('37', '傲慢与偏见.txt', '第三十七章', '2703');
-INSERT INTO `books_contents` VALUES ('38', '傲慢与偏见.txt', '第三十八章', '2757');
-INSERT INTO `books_contents` VALUES ('39', '傲慢与偏见.txt', '第三十九章', '2799');
-INSERT INTO `books_contents` VALUES ('40', '傲慢与偏见.txt', '第四十章', '2865');
-INSERT INTO `books_contents` VALUES ('41', '傲慢与偏见.txt', '第四十一章', '2949');
-INSERT INTO `books_contents` VALUES ('42', '傲慢与偏见.txt', '第四十二章', '3039');
-INSERT INTO `books_contents` VALUES ('43', '傲慢与偏见.txt', '第四十三章', '3085');
-INSERT INTO `books_contents` VALUES ('44', '傲慢与偏见.txt', '第四十四章', '3260');
-INSERT INTO `books_contents` VALUES ('45', '傲慢与偏见.txt', '第四十五章', '3306');
-INSERT INTO `books_contents` VALUES ('46', '傲慢与偏见.txt', '第四十六章', '3358');
-INSERT INTO `books_contents` VALUES ('47', '傲慢与偏见.txt', '第四十七章', '3432');
-INSERT INTO `books_contents` VALUES ('48', '傲慢与偏见.txt', '第四十八章', '3588');
-INSERT INTO `books_contents` VALUES ('49', '傲慢与偏见.txt', '第四十九章', '3666');
-INSERT INTO `books_contents` VALUES ('50', '傲慢与偏见.txt', '第五十章', '3799');
-INSERT INTO `books_contents` VALUES ('51', '傲慢与偏见.txt', '第五十一章', '3859');
-INSERT INTO `books_contents` VALUES ('52', '傲慢与偏见.txt', '第五十二章', '3943');
-INSERT INTO `books_contents` VALUES ('53', '傲慢与偏见.txt', '第五十三章', '4033');
-INSERT INTO `books_contents` VALUES ('54', '傲慢与偏见.txt', '第五十四章', '4167');
-INSERT INTO `books_contents` VALUES ('55', '傲慢与偏见.txt', '第五十五章', '4247');
-INSERT INTO `books_contents` VALUES ('56', '傲慢与偏见.txt', '第五十六章', '4369');
-INSERT INTO `books_contents` VALUES ('57', '傲慢与偏见.txt', '第五十七章', '4542');
-INSERT INTO `books_contents` VALUES ('58', '傲慢与偏见.txt', '第五十八章', '4606');
-INSERT INTO `books_contents` VALUES ('59', '傲慢与偏见.txt', '第五十九章', '4712');
-INSERT INTO `books_contents` VALUES ('60', '傲慢与偏见.txt', '第六十章', '4824');
-INSERT INTO `books_contents` VALUES ('61', '傲慢与偏见.txt', '第六十一章', '4894');
+INSERT INTO `books_contents` VALUES ('1', '傲慢与偏见.txt', '第一章  举世公认的真理', '61');
+INSERT INTO `books_contents` VALUES ('2', '傲慢与偏见.txt', '第二章  拜访彬格莱先生', '139');
+INSERT INTO `books_contents` VALUES ('3', '傲慢与偏见.txt', '第三章  五个女儿', '209');
+INSERT INTO `books_contents` VALUES ('4', '傲慢与偏见.txt', '第四章  赞扬彬格莱先生', '261');
+INSERT INTO `books_contents` VALUES ('5', '傲慢与偏见.txt', '第五章  距离浪博恩不远的地方', '301');
+INSERT INTO `books_contents` VALUES ('6', '傲慢与偏见.txt', '第六章  拜访尼是斐花园的小姐们', '351');
+INSERT INTO `books_contents` VALUES ('7', '傲慢与偏见.txt', '第七章  班纳特先生的全部家当', '471');
+INSERT INTO `books_contents` VALUES ('8', '傲慢与偏见.txt', '第八章  五点钟', '567');
+INSERT INTO `books_contents` VALUES ('9', '傲慢与偏见.txt', '第九章  伊丽莎白那一晚上', '689');
+INSERT INTO `books_contents` VALUES ('10', '傲慢与偏见.txt', '第十章  陪病人几个钟头', '777');
+INSERT INTO `books_contents` VALUES ('11', '傲慢与偏见.txt', '第十一章  吃过晚饭以后', '932');
+INSERT INTO `books_contents` VALUES ('12', '傲慢与偏见.txt', '第十二章  班纳特姐妹俩的商量', '1014');
+INSERT INTO `books_contents` VALUES ('13', '傲慢与偏见.txt', '第十三章  男宾', '1040');
+INSERT INTO `books_contents` VALUES ('14', '傲慢与偏见.txt', '第十四章  柯林斯先生1', '1112');
+INSERT INTO `books_contents` VALUES ('15', '傲慢与偏见.txt', '第十五章  柯林斯先生2', '1160');
+INSERT INTO `books_contents` VALUES ('16', '傲慢与偏见.txt', '第十六章  年轻的小姐们', '1198');
+INSERT INTO `books_contents` VALUES ('17', '傲慢与偏见.txt', '第十七章  韦翰先生', '1330');
+INSERT INTO `books_contents` VALUES ('18', '傲慢与偏见.txt', '第十八章  尼日斐花园的会客室', '1374');
+INSERT INTO `books_contents` VALUES ('19', '傲慢与偏见.txt', '第十九章  柯林斯先生提出求婚', '1543');
+INSERT INTO `books_contents` VALUES ('20', '傲慢与偏见.txt', '第二十章  幻想着美满的姻缘', '1599');
+INSERT INTO `books_contents` VALUES ('21', '傲慢与偏见.txt', '第二十一章  关于柯林斯先生求婚问题', '1675');
+INSERT INTO `books_contents` VALUES ('22', '傲慢与偏见.txt', '第二十二章  卢卡斯府上请去吃饭', '1745');
+INSERT INTO `books_contents` VALUES ('23', '傲慢与偏见.txt', '第二十三章  伊丽莎白正跟母亲和姐妹', '1795');
+INSERT INTO `books_contents` VALUES ('24', '傲慢与偏见.txt', '第二十四章  彬格莱小姐的信来了', '1857');
+INSERT INTO `books_contents` VALUES ('25', '傲慢与偏见.txt', '第二十五章  终于到了星期六', '1931');
+INSERT INTO `books_contents` VALUES ('26', '傲慢与偏见.txt', '第二十六章  嘉丁纳太太', '1985');
+INSERT INTO `books_contents` VALUES ('27', '傲慢与偏见.txt', '第二十七章  浪搏恩这家人', '2062');
+INSERT INTO `books_contents` VALUES ('28', '傲慢与偏见.txt', '第二十八章  旅途上的每一样事物', '2122');
+INSERT INTO `books_contents` VALUES ('29', '傲慢与偏见.txt', '第二十九章  罗新斯请客', '2176');
+INSERT INTO `books_contents` VALUES ('30', '傲慢与偏见.txt', '第三十章  威廉爵士在汉斯福', '2272');
+INSERT INTO `books_contents` VALUES ('31', '傲慢与偏见.txt', '第三十一章  费茨廉的风度', '2310');
+INSERT INTO `books_contents` VALUES ('32', '傲慢与偏见.txt', '第三十二章  柯林斯太太和玛丽亚', '2384');
+INSERT INTO `books_contents` VALUES ('33', '傲慢与偏见.txt', '第三十三章  伊丽莎白在花园里散步', '2460');
+INSERT INTO `books_contents` VALUES ('34', '傲慢与偏见.txt', '第三十四章  柯林斯夫妇走了', '2552');
+INSERT INTO `books_contents` VALUES ('35', '傲慢与偏见.txt', '第三十五章  深思默想', '2626');
+INSERT INTO `books_contents` VALUES ('36', '傲慢与偏见.txt', '第三十六章  达西先生', '2663');
+INSERT INTO `books_contents` VALUES ('37', '傲慢与偏见.txt', '第三十七章  两位先生离开了罗新斯', '2703');
+INSERT INTO `books_contents` VALUES ('38', '傲慢与偏见.txt', '第三十八章  和柯林斯先生在饭厅里相遇', '2757');
+INSERT INTO `books_contents` VALUES ('39', '傲慢与偏见.txt', '第三十九章  五月的第二个星期', '2799');
+INSERT INTO `books_contents` VALUES ('40', '傲慢与偏见.txt', '第四十章  把那桩事告诉吉英', '2865');
+INSERT INTO `books_contents` VALUES ('41', '傲慢与偏见.txt', '第四十一章  过了一个星期', '2949');
+INSERT INTO `books_contents` VALUES ('42', '傲慢与偏见.txt', '第四十二章  婚姻的幸福', '3039');
+INSERT INTO `books_contents` VALUES ('43', '傲慢与偏见.txt', '第四十三章  彭伯里的树林', '3085');
+INSERT INTO `books_contents` VALUES ('44', '傲慢与偏见.txt', '第四十四章  达西先生的妹妹', '3260');
+INSERT INTO `books_contents` VALUES ('45', '傲慢与偏见.txt', '第四十五章  彬格莱小姐', '3306');
+INSERT INTO `books_contents` VALUES ('46', '傲慢与偏见.txt', '第四十六章  蓝白屯', '3358');
+INSERT INTO `books_contents` VALUES ('47', '傲慢与偏见.txt', '第四十七章  离开城镇', '3432');
+INSERT INTO `books_contents` VALUES ('48', '傲慢与偏见.txt', '第四十八章  等班纳特先生寄信', '3588');
+INSERT INTO `books_contents` VALUES ('49', '傲慢与偏见.txt', '第四十九章  矮树林里散步', '3666');
+INSERT INTO `books_contents` VALUES ('50', '傲慢与偏见.txt', '第五十章  班纳特先生', '3799');
+INSERT INTO `books_contents` VALUES ('51', '傲慢与偏见.txt', '第五十一章  妹妹的婚期到了', '3859');
+INSERT INTO `books_contents` VALUES ('52', '傲慢与偏见.txt', '第五十二章  接到了回信', '3943');
+INSERT INTO `books_contents` VALUES ('53', '傲慢与偏见.txt', '第五十三章  韦翰先生', '4033');
+INSERT INTO `books_contents` VALUES ('54', '傲慢与偏见.txt', '第五十四章  到屋外去溜达', '4167');
+INSERT INTO `books_contents` VALUES ('55', '傲慢与偏见.txt', '第五十五章  彬格莱先生又来了', '4247');
+INSERT INTO `books_contents` VALUES ('56', '傲慢与偏见.txt', '第五十六章  订婚之后的一个星期', '4369');
+INSERT INTO `books_contents` VALUES ('57', '傲慢与偏见.txt', '第五十七章  不速之客', '4542');
+INSERT INTO `books_contents` VALUES ('58', '傲慢与偏见.txt', '第五十八章  道歉信', '4606');
+INSERT INTO `books_contents` VALUES ('59', '傲慢与偏见.txt', '第五十九章  走进家门', '4712');
+INSERT INTO `books_contents` VALUES ('60', '傲慢与偏见.txt', '第六十章  达西先生讲一讲爱上她的经过', '4824');
+INSERT INTO `books_contents` VALUES ('61', '傲慢与偏见.txt', '第六十一章  女儿出嫁', '4894');
 INSERT INTO `books_contents` VALUES ('1', '巴黎圣母院.txt', '第一卷一     大厅', '17');
 INSERT INTO `books_contents` VALUES ('2', '巴黎圣母院.txt', '第一卷二    皮埃尔.格兰古瓦', '288');
 INSERT INTO `books_contents` VALUES ('3', '巴黎圣母院.txt', '第一卷三    红衣主教大人', '503');
@@ -655,52 +678,52 @@ INSERT INTO `books_contents` VALUES ('54', '巴黎圣母院.txt', '第十一卷�
 INSERT INTO `books_contents` VALUES ('55', '巴黎圣母院.txt', '第十一卷二    美丽的白衣少女', '7579');
 INSERT INTO `books_contents` VALUES ('56', '巴黎圣母院.txt', '第十一卷三    福比斯成亲', '7657');
 INSERT INTO `books_contents` VALUES ('57', '巴黎圣母院.txt', '第十一卷四     卡齐莫多成亲（完）', '7675');
-INSERT INTO `books_contents` VALUES ('1', '百年孤独.txt', '第 一 章', '93');
-INSERT INTO `books_contents` VALUES ('2', '百年孤独.txt', '第 二 章', '775');
-INSERT INTO `books_contents` VALUES ('3', '百年孤独.txt', '第 三 章', '1459');
-INSERT INTO `books_contents` VALUES ('4', '百年孤独.txt', '第 四 章', '2335');
-INSERT INTO `books_contents` VALUES ('5', '百年孤独.txt', '第 五 章', '3179');
-INSERT INTO `books_contents` VALUES ('6', '百年孤独.txt', '第 六 章', '4041');
-INSERT INTO `books_contents` VALUES ('7', '百年孤独.txt', '第 七 章', '4757');
-INSERT INTO `books_contents` VALUES ('8', '百年孤独.txt', '第 八 章', '5625');
-INSERT INTO `books_contents` VALUES ('9', '百年孤独.txt', '第 九 章', '6201');
-INSERT INTO `books_contents` VALUES ('10', '百年孤独.txt', '第 十 章', '7095');
-INSERT INTO `books_contents` VALUES ('11', '百年孤独.txt', '第 十 一 章', '7947');
-INSERT INTO `books_contents` VALUES ('12', '百年孤独.txt', '第 十 二 章', '8751');
-INSERT INTO `books_contents` VALUES ('13', '百年孤独.txt', '第 十 三 章', '9545');
-INSERT INTO `books_contents` VALUES ('14', '百年孤独.txt', '第 十 四 章', '10423');
-INSERT INTO `books_contents` VALUES ('15', '百年孤独.txt', '第 十 五 章', '11289');
-INSERT INTO `books_contents` VALUES ('16', '百年孤独.txt', '第 十 六 章', '12135');
-INSERT INTO `books_contents` VALUES ('17', '百年孤独.txt', '第 十 七 章', '12761');
-INSERT INTO `books_contents` VALUES ('18', '百年孤独.txt', '第 十 八 章', '13721');
-INSERT INTO `books_contents` VALUES ('19', '百年孤独.txt', '第 十 九 章', '14597');
-INSERT INTO `books_contents` VALUES ('20', '百年孤独.txt', '第 二 十 章', '15377');
-INSERT INTO `books_contents` VALUES ('1', '窗边的小豆豆.txt', '第 1 章', '28');
-INSERT INTO `books_contents` VALUES ('2', '窗边的小豆豆.txt', '第 2 章', '251');
-INSERT INTO `books_contents` VALUES ('3', '窗边的小豆豆.txt', '第 3 章', '501');
-INSERT INTO `books_contents` VALUES ('4', '窗边的小豆豆.txt', '第 4 章', '699');
-INSERT INTO `books_contents` VALUES ('5', '窗边的小豆豆.txt', '第 5 章', '819');
-INSERT INTO `books_contents` VALUES ('6', '窗边的小豆豆.txt', '第 6 章', '1003');
-INSERT INTO `books_contents` VALUES ('7', '窗边的小豆豆.txt', '第 7 章', '1171');
-INSERT INTO `books_contents` VALUES ('8', '窗边的小豆豆.txt', '第 8 章', '1335');
-INSERT INTO `books_contents` VALUES ('9', '窗边的小豆豆.txt', '第 9 章', '1505');
-INSERT INTO `books_contents` VALUES ('10', '窗边的小豆豆.txt', '第 10 章', '1685');
-INSERT INTO `books_contents` VALUES ('11', '窗边的小豆豆.txt', '第 11 章', '1855');
-INSERT INTO `books_contents` VALUES ('12', '窗边的小豆豆.txt', '第 12 章', '2017');
-INSERT INTO `books_contents` VALUES ('13', '窗边的小豆豆.txt', '第 13 章', '2179');
-INSERT INTO `books_contents` VALUES ('14', '窗边的小豆豆.txt', '第 14  章', '2367');
-INSERT INTO `books_contents` VALUES ('15', '窗边的小豆豆.txt', '第 15 章', '2426');
-INSERT INTO `books_contents` VALUES ('16', '窗边的小豆豆.txt', '第 16  章', '2482');
-INSERT INTO `books_contents` VALUES ('1', '动物庄园.txt', '第一章', '23');
-INSERT INTO `books_contents` VALUES ('2', '动物庄园.txt', '第二章', '339');
-INSERT INTO `books_contents` VALUES ('3', '动物庄园.txt', '第三章', '619');
-INSERT INTO `books_contents` VALUES ('4', '动物庄园.txt', '第四章', '849');
-INSERT INTO `books_contents` VALUES ('5', '动物庄园.txt', '第五章', '1031');
-INSERT INTO `books_contents` VALUES ('6', '动物庄园.txt', '第六章', '1347');
-INSERT INTO `books_contents` VALUES ('7', '动物庄园.txt', '第七章', '1637');
-INSERT INTO `books_contents` VALUES ('8', '动物庄园.txt', '第八章', '2019');
-INSERT INTO `books_contents` VALUES ('9', '动物庄园.txt', '第九章', '2477');
-INSERT INTO `books_contents` VALUES ('10', '动物庄园.txt', '第十章', '2841');
+INSERT INTO `books_contents` VALUES ('1', '百年孤独.txt', '第 一 章  想起父亲带他去参观冰块', '93');
+INSERT INTO `books_contents` VALUES ('2', '百年孤独.txt', '第 二 章  曾祖母受了严重的的伤', '775');
+INSERT INTO `books_contents` VALUES ('3', '百年孤独.txt', '第 三 章  皮拉·苔列娜的儿子出世以后', '1459');
+INSERT INTO `books_contents` VALUES ('4', '百年孤独.txt', '第 四 章  新宅落成', '2335');
+INSERT INTO `books_contents` VALUES ('5', '百年孤独.txt', '第 五 章  尼康诺·莱茵纳神父的指示', '3179');
+INSERT INTO `books_contents` VALUES ('6', '百年孤独.txt', '第 六 章  奥雷连诺上校', '4041');
+INSERT INTO `books_contents` VALUES ('7', '百年孤独.txt', '第 七 章  战争结束了', '4757');
+INSERT INTO `books_contents` VALUES ('8', '百年孤独.txt', '第 八 章  阿玛兰塔', '5625');
+INSERT INTO `books_contents` VALUES ('9', '百年孤独.txt', '第 九 章  格林列尔多.马克斯上校', '6201');
+INSERT INTO `books_contents` VALUES ('10', '百年孤独.txt', '第 十 章  在临终的床上', '7095');
+INSERT INTO `books_contents` VALUES ('11', '百年孤独.txt', '第 十 一 章  安慰佩特娜·\r\n\r\n柯特', '7947');
+INSERT INTO `books_contents` VALUES ('12', '百年孤独.txt', '第 十 二 章  马孔多居民', '8751');
+INSERT INTO `books_contents` VALUES ('13', '百年孤独.txt', '第 十 三 章  教育霍·\r\n\r\n阿卡蒂奥', '9545');
+INSERT INTO `books_contents` VALUES ('14', '百年孤独.txt', '第 十 四 章  奥雷连诺上校的丧期', '10423');
+INSERT INTO `books_contents` VALUES ('15', '百年孤独.txt', '第 十 五 章  马孔多将', '11289');
+INSERT INTO `books_contents` VALUES ('16', '百年孤独.txt', '第 十 六 章  雨，下了四年十一个月零两天', '12135');
+INSERT INTO `books_contents` VALUES ('17', '百年孤独.txt', '第 十 七 章  八月里', '12761');
+INSERT INTO `books_contents` VALUES ('18', '百年孤独.txt', '第 十 八 章  在梅尔加德斯房间里', '13721');
+INSERT INTO `books_contents` VALUES ('19', '百年孤独.txt', '第 十 九 章  阿玛兰塔. 乌苏娜', '14597');
+INSERT INTO `books_contents` VALUES ('20', '百年孤独.txt', '第 二 十 章  一个节日的晚上', '15377');
+INSERT INTO `books_contents` VALUES ('1', '窗边的小豆豆.txt', '第 1 章  检票口', '28');
+INSERT INTO `books_contents` VALUES ('2', '窗边的小豆豆.txt', '第 2 章  电车的玻璃窗', '251');
+INSERT INTO `books_contents` VALUES ('3', '窗边的小豆豆.txt', '第 3 章  教室里的座位', '501');
+INSERT INTO `books_contents` VALUES ('4', '窗边的小豆豆.txt', '第 4 章  校歌', '699');
+INSERT INTO `books_contents` VALUES ('5', '窗边的小豆豆.txt', '第 5 章  单口相声', '819');
+INSERT INTO `books_contents` VALUES ('6', '窗边的小豆豆.txt', '第 6 章  脖子上的月票', '1003');
+INSERT INTO `books_contents` VALUES ('7', '窗边的小豆豆.txt', '第 7 章  校长小林宗作先生', '1171');
+INSERT INTO `books_contents` VALUES ('8', '窗边的小豆豆.txt', '第 8 章  吃饭时不要讲话', '1335');
+INSERT INTO `books_contents` VALUES ('9', '窗边的小豆豆.txt', '第 9 章  五分钱', '1505');
+INSERT INTO `books_contents` VALUES ('10', '窗边的小豆豆.txt', '第 10 章  边唱边画', '1685');
+INSERT INTO `books_contents` VALUES ('11', '窗边的小豆豆.txt', '第 11 章  吃饭歌', '1855');
+INSERT INTO `books_contents` VALUES ('12', '窗边的小豆豆.txt', '第 12 章  士兵的眼里涌出了泪花', '2017');
+INSERT INTO `books_contents` VALUES ('13', '窗边的小豆豆.txt', '第 13 章  宫崎同学', '2179');
+INSERT INTO `books_contents` VALUES ('14', '窗边的小豆豆.txt', '第 14  章  罗基没有了', '2367');
+INSERT INTO `books_contents` VALUES ('15', '窗边的小豆豆.txt', '第 15 章  茶话会', '2426');
+INSERT INTO `books_contents` VALUES ('16', '窗边的小豆豆.txt', '第 16  章  再见吧，巴学园', '2482');
+INSERT INTO `books_contents` VALUES ('1', '动物庄园.txt', '第一章  故事的发生', '23');
+INSERT INTO `books_contents` VALUES ('2', '动物庄园.txt', '第二章  老麦哲', '339');
+INSERT INTO `books_contents` VALUES ('3', '动物庄园.txt', '第三章  收割牧草', '619');
+INSERT INTO `books_contents` VALUES ('4', '动物庄园.txt', '第四章  夏末', '849');
+INSERT INTO `books_contents` VALUES ('5', '动物庄园.txt', '第五章  冬天快要到了', '1031');
+INSERT INTO `books_contents` VALUES ('6', '动物庄园.txt', '第六章  动物们干活', '1347');
+INSERT INTO `books_contents` VALUES ('7', '动物庄园.txt', '第七章  一个寒冷的冬天', '1637');
+INSERT INTO `books_contents` VALUES ('8', '动物庄园.txt', '第八章  行刑引起的恐慌', '2019');
+INSERT INTO `books_contents` VALUES ('9', '动物庄园.txt', '第九章  鲍克瑟蹄掌上的裂口', '2477');
+INSERT INTO `books_contents` VALUES ('10', '动物庄园.txt', '第十章  动物都已相继死去', '2841');
 INSERT INTO `books_contents` VALUES ('1', '格林童话.txt', '@青蛙王子', '6');
 INSERT INTO `books_contents` VALUES ('2', '格林童话.txt', '@猫和老鼠合伙', '40');
 INSERT INTO `books_contents` VALUES ('3', '格林童话.txt', '@圣母的孩子', '46');
@@ -956,6 +979,81 @@ INSERT INTO `books_contents` VALUES ('7', '活着.txt', '章节：第7节', '260
 INSERT INTO `books_contents` VALUES ('8', '活着.txt', '章节：第8节', '3092');
 INSERT INTO `books_contents` VALUES ('9', '活着.txt', '章节：第9节', '3605');
 INSERT INTO `books_contents` VALUES ('10', '活着.txt', '章节：第10节', '3890');
+INSERT INTO `books_contents` VALUES ('1', '大提琴手高修.txt', '第一章    故事的开始', '4');
+INSERT INTO `books_contents` VALUES ('2', '大提琴手高修.txt', '第二章    高修来到了森林', '71');
+INSERT INTO `books_contents` VALUES ('3', '大提琴手高修.txt', '第三章    高修与小狸子', '137');
+INSERT INTO `books_contents` VALUES ('4', '大提琴手高修.txt', '第四章    高修与田鼠', '173');
+INSERT INTO `books_contents` VALUES ('5', '大提琴手高修.txt', '第五章    演出开始', '220');
+INSERT INTO `books_contents` VALUES ('1', '风又三郎.txt', '第一章    九月一日', '5');
+INSERT INTO `books_contents` VALUES ('2', '风又三郎.txt', '第二章    九月二日', '147');
+INSERT INTO `books_contents` VALUES ('3', '风又三郎.txt', '第三章    九月四日 星期日', '216');
+INSERT INTO `books_contents` VALUES ('4', '风又三郎.txt', '第四章    九月五日', '388');
+INSERT INTO `books_contents` VALUES ('5', '风又三郎.txt', '第五章    九月七日', '492');
+INSERT INTO `books_contents` VALUES ('6', '风又三郎.txt', '第六章    九月八日', '583');
+INSERT INTO `books_contents` VALUES ('7', '风又三郎.txt', '第七章    九月十二日 第十二天', '642');
+INSERT INTO `books_contents` VALUES ('1', '古斯柯布多力传记.txt', '第一章    森林', '5');
+INSERT INTO `books_contents` VALUES ('2', '古斯柯布多力传记.txt', '第二章    天蚕丝工厂', '50');
+INSERT INTO `books_contents` VALUES ('3', '古斯柯布多力传记.txt', '第三章    稻田', '118');
+INSERT INTO `books_contents` VALUES ('4', '古斯柯布多力传记.txt', '第四章    古伯大博士', '212');
+INSERT INTO `books_contents` VALUES ('5', '古斯柯布多力传记.txt', '第五章    伊哈特卜火山局', '269');
+INSERT INTO `books_contents` VALUES ('6', '古斯柯布多力传记.txt', '第六章    桑姆特利火山', '292');
+INSERT INTO `books_contents` VALUES ('7', '古斯柯布多力传记.txt', '第七章    云海', '356');
+INSERT INTO `books_contents` VALUES ('8', '古斯柯布多力传记.txt', '第八章    秋', '387');
+INSERT INTO `books_contents` VALUES ('9', '古斯柯布多力传记.txt', '第九章     卡尔保纳多火山', '418');
+INSERT INTO `books_contents` VALUES ('1', '银河铁道之夜.txt', '第一章    午后的课', '15');
+INSERT INTO `books_contents` VALUES ('2', '银河铁道之夜.txt', '第二章    印刷厂', '39');
+INSERT INTO `books_contents` VALUES ('3', '银河铁道之夜.txt', '第三章    家', '56');
+INSERT INTO `books_contents` VALUES ('4', '银河铁道之夜.txt', '第四章    半人马星节之夜', '97');
+INSERT INTO `books_contents` VALUES ('5', '银河铁道之夜.txt', '第五章    气象标', '136');
+INSERT INTO `books_contents` VALUES ('6', '银河铁道之夜.txt', '第六章    银河火车站', '147');
+INSERT INTO `books_contents` VALUES ('7', '银河铁道之夜.txt', '第七章    北十字星与普利茅斯海岸', '186');
+INSERT INTO `books_contents` VALUES ('8', '银河铁道之夜.txt', '第八章    捕鸟人', '242');
+INSERT INTO `books_contents` VALUES ('9', '银河铁道之夜.txt', '第九章    焦班尼的车票', '305');
+INSERT INTO `books_contents` VALUES ('1', '白客.txt', '第一章    孔若君功亏一篑', '1');
+INSERT INTO `books_contents` VALUES ('2', '白客.txt', '第二章    求职碰壁 ', '163');
+INSERT INTO `books_contents` VALUES ('3', '白客.txt', '第三章    18岁生日礼物', '300');
+INSERT INTO `books_contents` VALUES ('4', '白客.txt', '第四章    不可思议的一幕', '462');
+INSERT INTO `books_contents` VALUES ('5', '白客.txt', '第五章    头号疑案', '649');
+INSERT INTO `books_contents` VALUES ('6', '白客.txt', '第六章    雪上加霜', '858');
+INSERT INTO `books_contents` VALUES ('7', '白客.txt', '第七章    众志成城突围', '1021');
+INSERT INTO `books_contents` VALUES ('8', '白客.txt', '第八章    倒霉的居委会主任', '1231');
+INSERT INTO `books_contents` VALUES ('9', '白客.txt', '第九章    白客诞生 ', '1419');
+INSERT INTO `books_contents` VALUES ('10', '白客.txt', '第十章    屡试不爽', '1606');
+INSERT INTO `books_contents` VALUES ('11', '白客.txt', '第十一章    出人意料的殷静 ', '1744');
+INSERT INTO `books_contents` VALUES ('12', '白客.txt', '第十二章    亿万观众目睹异变', '2021');
+INSERT INTO `books_contents` VALUES ('13', '白客.txt', '第十三章    转移视线', '2250');
+INSERT INTO `books_contents` VALUES ('14', '白客.txt', '第十四章    崔琳披挂上阵 ', '2404');
+INSERT INTO `books_contents` VALUES ('15', '白客.txt', '第十五章    取证 ', '2554');
+INSERT INTO `books_contents` VALUES ('16', '白客.txt', '第十六章    世纪诉讼之一 ', '2806');
+INSERT INTO `books_contents` VALUES ('17', '白客.txt', '第十七章    网恋 ', '3052');
+INSERT INTO `books_contents` VALUES ('18', '白客.txt', '第十八章    逼上梁山', '3482');
+INSERT INTO `books_contents` VALUES ('19', '白客.txt', '第十九章    杨倪浮出水面', '3668');
+INSERT INTO `books_contents` VALUES ('20', '白客.txt', '第二十章    殷静中计', '3853');
+INSERT INTO `books_contents` VALUES ('21', '白客.txt', '第二十一章    如梦初醒', '4033');
+INSERT INTO `books_contents` VALUES ('22', '白客.txt', '第二十二章    赴约', '4212');
+INSERT INTO `books_contents` VALUES ('23', '白客.txt', '第二十三章    殷雪涛的意外发现', '4345');
+INSERT INTO `books_contents` VALUES ('24', '白客.txt', '第二十四章    孤注一掷', '4589');
+INSERT INTO `books_contents` VALUES ('25', '白客.txt', '第二十五章    不翼而飞', '4790');
+INSERT INTO `books_contents` VALUES ('26', '白客.txt', '第二十六章    杨倪被判死刑', '4918');
+INSERT INTO `books_contents` VALUES ('27', '白客.txt', '第二十七章    疯狂白客', '5074');
+INSERT INTO `books_contents` VALUES ('28', '白客.txt', '第二十八章    结识沈国庆', '5285');
+INSERT INTO `books_contents` VALUES ('29', '白客.txt', '第二十九章    夜闯信访办', '5479');
+INSERT INTO `books_contents` VALUES ('30', '白客.txt', '第三十章    阿里巴巴悔恨', '5728');
+INSERT INTO `books_contents` VALUES ('31', '白客.txt', '第三十一章    走穴淘金', '5902');
+INSERT INTO `books_contents` VALUES ('32', '白客.txt', '第三十二章    贾宝玉功绩卓著', '6175');
+INSERT INTO `books_contents` VALUES ('33', '白客.txt', '第三十三章    生死搏斗', '6366');
+INSERT INTO `books_contents` VALUES ('34', '白客.txt', '第三十四章    结局', '6429');
+INSERT INTO `books_contents` VALUES ('1', '金拇指.txt', '第一章    儿子吃狗粮', '1');
+INSERT INTO `books_contents` VALUES ('2', '金拇指.txt', '第二章    米小旭的电话', '175');
+INSERT INTO `books_contents` VALUES ('3', '金拇指.txt', '第四章   下注赌博', '452');
+INSERT INTO `books_contents` VALUES ('4', '金拇指.txt', '第三章    同学聚会', '630');
+INSERT INTO `books_contents` VALUES ('5', '金拇指.txt', '第四章    下注赌博', '940');
+INSERT INTO `books_contents` VALUES ('6', '金拇指.txt', '第五章    开门红', '1140');
+INSERT INTO `books_contents` VALUES ('7', '金拇指.txt', '第六章    一败涂地', '1438');
+INSERT INTO `books_contents` VALUES ('8', '金拇指.txt', '第七章    向胡敬求救', '1860');
+INSERT INTO `books_contents` VALUES ('9', '金拇指.txt', '第八章    泥沙俱下', '2267');
+INSERT INTO `books_contents` VALUES ('10', '金拇指.txt', '第九章    意外发现', '2415');
+INSERT INTO `books_contents` VALUES ('11', '金拇指.txt', '第十章    难以置信', '2585');
 
 -- ----------------------------
 -- Table structure for `child`
@@ -963,17 +1061,14 @@ INSERT INTO `books_contents` VALUES ('10', '活着.txt', '章节：第10节', '3
 DROP TABLE IF EXISTS `child`;
 CREATE TABLE `child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cname` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` varchar(20) NOT NULL DEFAULT '1',
-  `sex` varchar(10) NOT NULL,
-  `parentPhone` varchar(11) NOT NULL,
+  `name` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of child
 -- ----------------------------
-INSERT INTO `child` VALUES ('2', '李哲', '四年级', '男', '19831127142');
 
 -- ----------------------------
 -- Table structure for `classifyidiom`
@@ -1045,6 +1140,8 @@ CREATE TABLE `collections` (
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
+INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '动物庄园');
+INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '安娜卡列尼娜');
 
 -- ----------------------------
 -- Table structure for `contacts_status`
@@ -1688,13 +1785,11 @@ CREATE TABLE `moments` (
   `comments` char(255) DEFAULT NULL,
   `moments_time` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments
 -- ----------------------------
-INSERT INTO `moments` VALUES ('36', '18730094418', null, null, null, null, null, null, '2020-12-09 at 14:50:33 GMT+08:00');
-INSERT INTO `moments` VALUES ('37', '18730094411', null, null, null, null, null, null, '2020-12-09 at 16:48:37 GMT+08:00');
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -1727,7 +1822,6 @@ CREATE TABLE `moments_content` (
 -- ----------------------------
 -- Records of moments_content
 -- ----------------------------
-INSERT INTO `moments_content` VALUES ('15', '阿玉', '36', '2020-12-09 at 14:50:33 GMT+08:00', '18730094418');
 
 -- ----------------------------
 -- Table structure for `moments_friendname`
@@ -1760,18 +1854,6 @@ CREATE TABLE `moments_likegiveperson` (
 -- ----------------------------
 -- Records of moments_likegiveperson
 -- ----------------------------
-INSERT INTO `moments_likegiveperson` VALUES ('1', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('2', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('3', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('4', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('5', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('6', '39', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('7', '36', '小吴', '18730094418', null);
-INSERT INTO `moments_likegiveperson` VALUES ('8', '36', '小吴', '18730094418', null);
-INSERT INTO `moments_likegiveperson` VALUES ('9', '36', '小吴', '18730094418', null);
-INSERT INTO `moments_likegiveperson` VALUES ('10', '36', '小吴', '18730094418', null);
-INSERT INTO `moments_likegiveperson` VALUES ('11', '37', '小吴', '18730094411', null);
-INSERT INTO `moments_likegiveperson` VALUES ('12', '37', '小吴', '18730094411', null);
 
 -- ----------------------------
 -- Table structure for `moments_pictureurl`
@@ -1784,21 +1866,11 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_pictureurl
 -- ----------------------------
-INSERT INTO `moments_pictureurl` VALUES ('45', 'android1607496635173.jpg', '36', '2020-12-09 at 14:50:33 GMT+08:00', '18730094418');
-INSERT INTO `moments_pictureurl` VALUES ('46', 'android1607503720644.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('47', 'android1607503721095.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('48', 'android1607503721425.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('49', 'android1607503721502.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('50', 'android1607503722271.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('51', 'android1607503723008.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('52', 'android1607503722260.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('53', 'android1607503723030.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
-INSERT INTO `moments_pictureurl` VALUES ('54', 'android1607503723557.jpg', '37', '2020-12-09 at 16:48:37 GMT+08:00', '18730094411');
 
 -- ----------------------------
 -- Table structure for `parentmessage`
@@ -1829,7 +1901,7 @@ CREATE TABLE `parents` (
   `phone` char(11) NOT NULL,
   `password` varchar(15) NOT NULL,
   `nickname` varchar(20) NOT NULL DEFAULT 'tiantian8808',
-  `avatar` varchar(50) NOT NULL DEFAULT 'default_avatar.png',
+  `avatar` varchar(20) NOT NULL DEFAULT 'default_avatar.png',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
@@ -1851,7 +1923,7 @@ INSERT INTO `parents` VALUES ('14', '15230048998', 'yayu12152', '妈咪', 'defau
 INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('16', '13730024416', 'aaaaaa', '大家都', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('17', '17831194418', 'kjdssks', 'kdjdj', 'default_avatar.png');
-INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian', 'android1607522113300.png');
+INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian8808', 'default_avatar.png');
 
 -- ----------------------------
 -- Table structure for `pcrelation`
@@ -1891,10 +1963,12 @@ CREATE TABLE `types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of types
 -- ----------------------------
 INSERT INTO `types` VALUES ('1', '童话');
 INSERT INTO `types` VALUES ('2', '文学名著');
+INSERT INTO `types` VALUES ('3', '悬疑推理');
+INSERT INTO `types` VALUES ('4', '小说');
