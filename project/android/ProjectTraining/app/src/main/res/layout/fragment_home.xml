@@ -7,8 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="match_parent">
 
         <include layout="@layout/title_bar"/>
 
@@ -131,39 +130,192 @@
                 android:layout_height="wrap_content"/>
 
             <HorizontalScrollView
-                android:padding="8dp"
-                android:layout_height="140dp"
+                android:padding="6dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:background="@android:color/white">
+
                 <LinearLayout
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:src="@drawable/horimg0"
-                        android:layout_height="match_parent"/>
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:src="@drawable/horimg1"
-                        android:layout_height="match_parent"/>
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:src="@drawable/horimg2"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="match_parent"/>
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:src="@drawable/horimg3"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="match_parent"/>
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:src="@drawable/horimg4"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:id="@+id/linear_guess1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="140dp"
+                                android:src="@drawable/guess1"
+                                android:layout_centerInParent="true"/>
+                            <View
+                                android:layout_width="125dp"
+                                android:layout_height="146dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/imageview_circle_border"/>
+                        </RelativeLayout>
+                        <TextView
+                            android:textSize="14sp"
+                            android:text="安徒生童话"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:text="安徒生笔下的梦幻王国"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_guess2"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="140dp"
+                                android:src="@drawable/guess2"
+                                android:layout_centerInParent="true"/>
+                            <View
+                                android:layout_width="125dp"
+                                android:layout_height="146dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/imageview_circle_border"/>
+                        </RelativeLayout>
+                        <TextView
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:text="窗边的小豆豆"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:text="生态式教育温暖孩子"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_guess3"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="140dp"
+                                android:src="@drawable/guess3"
+                                android:layout_centerInParent="true"/>
+                            <View
+                                android:layout_width="125dp"
+                                android:layout_height="146dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/imageview_circle_border"/>
+                        </RelativeLayout>
+                        <TextView
+                            android:textSize="14sp"
+                            android:text="动物庄园"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:text="猪篡取动物革命果实"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_guess4"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="140dp"
+                                android:src="@drawable/guess4"
+                                android:layout_centerInParent="true"/>
+                            <View
+                                android:layout_width="125dp"
+                                android:layout_height="146dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/imageview_circle_border"/>
+                        </RelativeLayout>
+                        <TextView
+                            android:textSize="14sp"
+                            android:text="王尔德童话"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:text="意境高洁悠远益人心智"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_guess5"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="140dp"
+                                android:src="@drawable/guess5"
+                                android:layout_centerInParent="true"/>
+                            <View
+                                android:layout_width="125dp"
+                                android:layout_height="146dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/imageview_circle_border"/>
+                        </RelativeLayout>
+                        <TextView
+                            android:textSize="14sp"
+                            android:text="一千零一夜"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:text="朴素现实和浪漫幻想"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </HorizontalScrollView>

@@ -378,7 +378,6 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     // 点击分享
     @OnClick(R.id.idiom_fenxiang)
     public void clickFenXiang(){
-        Toast.makeText(getBaseContext(),"点击了分享",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         intent.setClass(this,IdiomShareActivity.class);

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,8 +60,8 @@ public class HomeFragment extends Fragment {
         linearToIdiom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(),"正在获取相关数据...",Toast.LENGTH_SHORT).show();
                 getIdiomTypes(ConfigUtil.SERVICE_ADDRESS+"SendClassifyIdiomServlet");
-                Log.e("lrf","点击了跳转按钮");
                 myHandler = new Handler(){
                     @Override
                     public void handleMessage(@NonNull Message msg) {

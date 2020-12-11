@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -48,7 +49,7 @@ import yalantis.com.sidemenu.util.ViewAnimator;
  */
 public class IdiomActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
 
-    @BindView(R.id.search_idiom) LinearLayout searchIdiom;
+    @BindView(R.id.search_idiom) ImageView searchIdiom;
 
     // 用于保存获取的成语父类型名称
     private List<String> typeList = new ArrayList<>();
