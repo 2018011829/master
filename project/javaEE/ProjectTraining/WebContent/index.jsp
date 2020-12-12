@@ -1,12 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>天天学堂</title>
+	<link rel="stylesheet" type="text/css" href="css/login.css" />
+	<style type="text/css">
+		body {
+		    background-image: url("imgs-server/login/bg.png");
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		}
+	</style>
 </head>
 <body>
-
+    <div id="login_frame">
+        <p id="image_logo"><img src="imgs-server/login/logo.png" height="100px" width="260px"></p>
+     
+        <form method="post" action="home">
+     
+            <p><label class="label_input">用户名</label><input type="text" id="username" name="userName" value="${userName }" class="text_field"/></p>
+            <p><label class="label_input">密码</label><input type="password" id="password" name="userPwd" value="${userPwd }" class="text_field"/></p>
+     
+            <div id="login_control">
+                <input type="submit" id="btn_login" value="登录"/><br>
+                <a id="forget_pwd" href="forgetPwd.jsp">忘记密码？</a>&nbsp&nbsp&nbsp
+                <a id="forget_pwd" href="register.jsp">注册</a><br>
+                <div style="color:#990033;font-size: 14px;margin-top:10px">${errorInfo }</div>
+            </div>
+        </form>
+    </div>
+ 
 </body>
 </html>
