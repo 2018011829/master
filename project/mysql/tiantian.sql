@@ -2,19 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50701
+Source Server Version : 50506
 Source Host           : localhost:3306
-Source Database       : tiantain
+Source Database       : tiantian
 
 Target Server Type    : MYSQL
-Target Server Version : 50701
+Target Server Version : 50506
 File Encoding         : 65001
 
-<<<<<<< HEAD
-Date: 2020-12-13 18:37:15
-=======
-Date: 2020-12-11 17:04:22
->>>>>>> branch 'main' of https://github.com/2018011829/master.git
+Date: 2020-12-13 23:15:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1065,14 +1061,19 @@ INSERT INTO `books_contents` VALUES ('11', '金拇指.txt', '第十章    难以
 DROP TABLE IF EXISTS `child`;
 CREATE TABLE `child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` smallint(6) NOT NULL DEFAULT '1',
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of child
 -- ----------------------------
+INSERT INTO `child` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
+INSERT INTO `child` VALUES ('2', '赵义', '二年级', '女', '19831127142');
+INSERT INTO `child` VALUES ('3', '让人', '一年级', '男', '19831127142');
 
 -- ----------------------------
 -- Table structure for `classifyidiom`
