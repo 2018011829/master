@@ -86,7 +86,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
         //初始化数据
         initData();
 
-        ContentFragment contentFragment = ContentFragment.newInstance(listList.get(0));
+        ContentFragment contentFragment = ContentFragment.newInstance(listList.get(0),typeList.get(0));
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, contentFragment)
                 .commit();
@@ -237,7 +237,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
         findViewById(R.id.content_overlay).setBackground(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
         //在动画执行中更换真正的新的fragment
-        ContentFragment contentFragment = ContentFragment.newInstance(this.strList);
+        ContentFragment contentFragment = ContentFragment.newInstance(this.strList,name);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
         return contentFragment;
     }

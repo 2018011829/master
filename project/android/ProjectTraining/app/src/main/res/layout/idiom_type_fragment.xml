@@ -20,6 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/idiom_type_name"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"/>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
@@ -28,7 +37,7 @@
                 <GridView
                     android:id="@+id/grid_idiom_by_type_name"
                     android:numColumns="1"
-                    android:verticalSpacing="30dp"
+                    android:verticalSpacing="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
