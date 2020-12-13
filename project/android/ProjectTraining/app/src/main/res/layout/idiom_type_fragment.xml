@@ -6,6 +6,7 @@
 <io.codetail.widget.RevealFrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
@@ -20,15 +21,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/idiom_type_name"
+                android:textSize="33sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"/>
+
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <GridView
                     android:id="@+id/grid_idiom_by_type_name"
-                    android:numColumns="2"
-                    android:verticalSpacing="30dp"
+                    android:numColumns="1"
+                    android:verticalSpacing="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>

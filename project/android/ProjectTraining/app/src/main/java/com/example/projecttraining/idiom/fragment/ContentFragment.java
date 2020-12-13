@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,19 +28,19 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  * @author lrf
  */
 public class ContentFragment extends Fragment implements ScreenShotable {
-    public static final String CLOSE = "Close";
 
     private View containerView;
     private Bitmap bitmap;
-
+    private String typeName;
     private GridView gridView;
     private IdiomByTypeNameAdapter idiomByTypeNameAdapter;
     protected List<String> strList = new ArrayList<>();
+    private TextView idiomTypeName;
 
-
-    public static ContentFragment newInstance(List<String> strings) {
+    public static ContentFragment newInstance(List<String> strings,String typeName) {
         ContentFragment contentFragment = new ContentFragment();
         Bundle bundle = new Bundle();
+        bundle.putString("typeName",typeName);
         bundle.putStringArrayList(Integer.class.getName(), (ArrayList<String>) strings);
         contentFragment.setArguments(bundle);
         return contentFragment;
@@ -54,6 +55,7 @@ public class ContentFragment extends Fragment implements ScreenShotable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        typeName = getArguments().getString("typeName");
         strList = getArguments().getStringArrayList(Integer.class.getName());
     }
 
@@ -61,6 +63,9 @@ public class ContentFragment extends Fragment implements ScreenShotable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.idiom_type_fragment, container, false);
+
+        idiomTypeName = rootView.findViewById(R.id.idiom_type_name);
+        idiomTypeName.setText(typeName);
 
         gridView = rootView.findViewById(R.id.grid_idiom_by_type_name);
         idiomByTypeNameAdapter = new IdiomByTypeNameAdapter(getContext(),strList,R.layout.idiom_gridview_by_type_name);

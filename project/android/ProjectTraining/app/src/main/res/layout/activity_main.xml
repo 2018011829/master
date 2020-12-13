@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_marginBottom="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_marginBottom="5dp"
-    tools:context=".MainActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--底部导航栏-->
     <com.example.projecttraining.ui.NoScrollViewPager
@@ -20,32 +19,32 @@
         android:id="@+id/tl"
         android:elevation="0dp"
         app:tabIndicatorHeight="0dp"
-        app:tabSelectedTextColor="@color/colorGreen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="@color/colorPrimary">
         <com.google.android.material.tabs.TabItem
             android:id="@+id/ti_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/home_green"
+            android:icon="@mipmap/home_img1"
             android:text="主页"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/ti_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/relations_black"
+            android:icon="@mipmap/relations_img0"
             android:text="联系人"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/ti_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/moments_black"
+            android:icon="@mipmap/moments_img0"
             android:text="圈子"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/ti_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/my_black"
+            android:icon="@mipmap/my_img0"
             android:text="我的"/>
     </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

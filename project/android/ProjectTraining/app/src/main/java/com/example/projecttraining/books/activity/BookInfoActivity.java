@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
     private static int currentIvShoucang; //当前收藏控件中显示的图片的id
     private ProgressBar progressbar; //进度条
     private TextView tvGetMoreContents;
-    private ImageView ivBack;
+    private LinearLayout ivBack;
     private TextView tvTitleName;
     private ImageView ivShouCang;
     private ImageView ivShare;

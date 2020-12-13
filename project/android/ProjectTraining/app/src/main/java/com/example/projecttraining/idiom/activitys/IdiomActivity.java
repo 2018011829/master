@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -48,7 +49,7 @@ import yalantis.com.sidemenu.util.ViewAnimator;
  */
 public class IdiomActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
 
-    @BindView(R.id.search_idiom) LinearLayout searchIdiom;
+    @BindView(R.id.search_idiom) ImageView searchIdiom;
 
     // 用于保存获取的成语父类型名称
     private List<String> typeList = new ArrayList<>();
@@ -85,7 +86,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
         //初始化数据
         initData();
 
-        ContentFragment contentFragment = ContentFragment.newInstance(listList.get(0));
+        ContentFragment contentFragment = ContentFragment.newInstance(listList.get(0),typeList.get(0));
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, contentFragment)
                 .commit();
@@ -148,8 +149,6 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
      * @param strings 菜单名称集合
      */
     private void createMenuList(List<String> strings) {
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
-        list.add(menuItem0);
         for (int i = 0; i < strings.size(); ++i) {
             SlideMenuItem menuItem = new SlideMenuItem(typeList.get(i), drawableList.get(i));
             list.add(menuItem);
@@ -238,7 +237,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
         findViewById(R.id.content_overlay).setBackground(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
         //在动画执行中更换真正的新的fragment
-        ContentFragment contentFragment = ContentFragment.newInstance(this.strList);
+        ContentFragment contentFragment = ContentFragment.newInstance(this.strList,name);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
         return contentFragment;
     }
@@ -253,12 +252,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
         System.out.println(slideMenuItem.getName());
-        switch (slideMenuItem.getName()) {
-            case ContentFragment.CLOSE:
-                return screenShotable;
-            default:
-                return replaceFragment(screenShotable, position, slideMenuItem.getName());
-        }
+        return replaceFragment(screenShotable, position, slideMenuItem.getName());
     }
 
     @Override

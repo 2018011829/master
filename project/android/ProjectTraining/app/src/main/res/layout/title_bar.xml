@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="#50556B"
+    android:background="#2B333E"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,24 +15,24 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/title_more"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/title_scan"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"/>
         
         <TextView
             android:text="主  页"
-            android:textSize="33sp"
+            android:textSize="28sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"/>
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/title_search"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/title_inform"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
 
