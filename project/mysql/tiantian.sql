@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost_3306
 Source Server Version : 50506
 Source Host           : localhost:3306
-Source Database       : tiantian
+Source Database       : tiantain
 
 Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-09 21:57:44
+Date: 2020-12-13 18:37:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1056,16 +1056,13 @@ CREATE TABLE `contacts_status` (
   `to_phone` char(11) NOT NULL,
   `contacts_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of contacts_status
 -- ----------------------------
-INSERT INTO `contacts_status` VALUES ('1', '18730094411', '18730094412', '0');
-INSERT INTO `contacts_status` VALUES ('2', '18730094411', '18730094413', '1');
-INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
-INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
-INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
+INSERT INTO `contacts_status` VALUES ('35', '13730024418', '18730094411', '1');
+INSERT INTO `contacts_status` VALUES ('36', '18730094411', '13730024418', '1');
 
 -- ----------------------------
 -- Table structure for `idiom`
@@ -1882,6 +1879,36 @@ CREATE TABLE `relation` (
 -- ----------------------------
 -- Records of relation
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `remark`
+-- ----------------------------
+DROP TABLE IF EXISTS `remark`;
+CREATE TABLE `remark` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_phone` char(11) NOT NULL,
+  `to_phone` char(11) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of remark
+-- ----------------------------
+INSERT INTO `remark` VALUES ('14', '18730094411', '15230048998', '妈咪');
+INSERT INTO `remark` VALUES ('15', '15230048998', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('18', '18730094412', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('19', '18730094411', '18730094412', '老二');
+INSERT INTO `remark` VALUES ('20', '18730094413', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('21', '18730094411', '18730094413', '老三');
+INSERT INTO `remark` VALUES ('22', '18730094414', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('23', '18730094411', '18730094414', '四儿');
+INSERT INTO `remark` VALUES ('24', '18730094415', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('25', '18730094411', '18730094415', '五儿童');
+INSERT INTO `remark` VALUES ('28', '19831127375', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('29', '18730094411', '19831127375', '小吴');
+INSERT INTO `remark` VALUES ('61', '13730024418', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('62', '18730094411', '13730024418', '巴巴');
 
 -- ----------------------------
 -- Table structure for `types`
