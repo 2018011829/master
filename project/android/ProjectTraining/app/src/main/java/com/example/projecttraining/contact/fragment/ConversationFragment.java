@@ -16,7 +16,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -30,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.activity.ChatActivity;
 import com.example.projecttraining.contact.dao.Parent;
+import com.example.projecttraining.contact.dao.ParentInfo;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMValueCallBack;
@@ -75,7 +78,7 @@ public class ConversationFragment extends Fragment {
         //因为有未读消息，进入了解后所有消息设置为已读，官方的demo只有在点击了输入框后，消息界面才会刷新，如果有未读消息变为已读，即使
         //没有点击输入框，也需要刷新
         super.onResume();
-        Log.e(TAG, "onResume: ");
+            Log.e(TAG, "onResume: ");
             conversations.clear();
             conversations.addAll(loadConversationList());
             easeConversationList.refresh();
@@ -101,11 +104,17 @@ public class ConversationFragment extends Fragment {
         EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
             @Override
             public void onSuccess(List<String> strings) {
-                ParentUtil.storeAllContacts(strings,getContext(), handler);
+                ParentUtil.storeAllContacts(EMClient.getInstance().getCurrentUser(),strings,getContext(), handler);
             }
             @Override
             public void onError(int i, String s) {
 
+            }
+        });
+        easeConversationList.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(0,3,0,"删除消息");
             }
         });
         //获取搜索框相关控件
@@ -129,7 +138,7 @@ public class ConversationFragment extends Fragment {
                         String username = emConversation.conversationId();
                         TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper = TianTianSQLiteOpenHelper.getInstance(getContext());
                         SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getReadableDatabase();
-                        Cursor cursor = sqLiteDatabase.query("parents", new String[]{"nickname"}, "phone=?", new String[]{username}, null, null, null);
+                        Cursor cursor = sqLiteDatabase.query("parentInfos", new String[]{"remark"}, "phone=?", new String[]{username}, null, null, null);
                         if (cursor.getCount() > 0) {
                             cursor.moveToNext();
                             String nickname = cursor.getString(0);
@@ -160,9 +169,10 @@ public class ConversationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //根据conversationId从SQLite中查询昵称和头像
-                Parent chatToParent=ParentUtil.queryAvatarAndNicknameByPhone(getContext(),conversations.get(position).conversationId());
-                EaseParentUtil.toChatUserNickname=chatToParent.getNickname();
-                EaseParentUtil.toChatUserAvator=chatToParent.getAvator();
+                ParentInfo chatToParent=ParentUtil.queryAvatarAndNicknameByPhone(getContext(),conversations.get(position).conversationId());
+                EaseParentUtil.toChatUserRemark=chatToParent.getRemark();
+                EaseParentUtil.toChatUserAvator=chatToParent.getAvatar();
+                EaseParentUtil.tochatUserNickname=chatToParent.getNickname();
                 //存储当前用户的昵称和头像
                 new Thread(){
                     @Override
@@ -286,5 +296,24 @@ public class ConversationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.e(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = menuInfo.position;
+        switch (item.getItemId()){
+            case 3:
+                //删除该联系人的所有消息
+                String username=conversations.get(position).conversationId();
+                EMClient.getInstance().chatManager().deleteConversation(username,true);
+                conversations.clear();
+                conversations.addAll(loadConversationList());
+                easeConversationList.refresh();
+                copyConversations.clear();
+                copyConversations.addAll(conversations);
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }

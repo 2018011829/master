@@ -1,4 +1,4 @@
-package com.group.tiantian.parent.servlet;
+package com.group.tiantian.parent.servlet.remark;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,18 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.group.tiantian.parent.service.ParentService;
 
-
 /**
- * Servlet implementation class GetOneParentInfoServlet
+ * Servlet implementation class ChangeRemarkServlet
  */
-@WebServlet("/GetOneParentInfoServlet")
-public class GetOneParentInfoServlet extends HttpServlet {
+@WebServlet("/ChangeRemarkServlet")
+public class ChangeRemarkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetOneParentInfoServlet() {
+    public ChangeRemarkServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +28,14 @@ public class GetOneParentInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String phone=request.getParameter("phone");
-		System.out.println("µÃµ½phone"+phone);
-		ParentService parentService=ParentService.getInstance();
-		response.getWriter().write(parentService.getOneParentInfo(phone));
-
+		String fromPhone=request.getParameter("fromPhone");
+		String toPhone=request.getParameter("toPhone");
+		String remark=request.getParameter("remark");
+		int isSuccess=ParentService.getInstance().changeRemark(fromPhone,toPhone,remark);
+		if(isSuccess>0) {
+			response.getWriter().write("success");
+		}
+		
 	}
 	
 

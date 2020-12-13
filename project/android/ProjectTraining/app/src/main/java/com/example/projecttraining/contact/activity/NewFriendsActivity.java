@@ -31,6 +31,7 @@ import com.example.projecttraining.util.ParentUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.GlideRoundImage;
 import com.hyphenate.easeui.utils.EaseParentUtil;
@@ -40,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class NewFriendsActivity extends AppCompatActivity {
     private ListView lvInviteMe;
     private ListView lvIInvite;
     private ListView lvHistory;
-    private List<ContactsStatus> contactsStatuses;
+    private List<ContactsStatus> contactsStatuses=new ArrayList<>();
     private List<ContactsStatus> lvInviteMeList = new ArrayList<>();
     private List<ContactsStatus> lvIInviteList = new ArrayList<>();
     private List<ContactsStatus> lvHistoryList = new ArrayList<>();
@@ -148,12 +150,24 @@ public class NewFriendsActivity extends AppCompatActivity {
         //从服务端得到邀请我的，和我邀请的人的数据
         getContactsStatus(EMClient.getInstance().getCurrentUser());
 
+
+
         //添加联系人监听器，监听联系人
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
             @Override
             public void onContactAdded(String s) {
-                //增加联系人后调用
+                //增加联系人后调用，存储当前的联系人
                 EaseParentUtil.isContactAddedOrDeleted = true;
+                EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
+                    @Override
+                    public void onSuccess(List<String> strings) {
+                        ParentUtil.storeAllContacts(EMClient.getInstance().getCurrentUser(),strings,getApplicationContext(), null);
+                    }
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+                });
             }
 
             @Override
@@ -173,6 +187,7 @@ public class NewFriendsActivity extends AppCompatActivity {
                 //好友请求被同意后调用
                 //刷新页面
                 getContactsStatus(EMClient.getInstance().getCurrentUser());
+
             }
 
             @Override
@@ -186,31 +201,38 @@ public class NewFriendsActivity extends AppCompatActivity {
 
 
     private void getContactsStatus(String username) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder().add("username", username).build();
-        Request request = new Request.Builder()
-                .post(formBody)
-                .url(ConfigUtil.SERVICE_ADDRESS + "getContactsStatusServlet").build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+        Log.e(TAG, "getContactsStatus: 获取我的联系人状态信息");
+        new Thread(){
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(getApplicationContext(), "当前网络不稳定", Toast.LENGTH_LONG).show();
-            }
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody formBody = new FormBody.Builder().add("username", username).build();
+                Request request = new Request.Builder()
+                        .post(formBody)
+                        .url(ConfigUtil.SERVICE_ADDRESS + "getContactsStatusServlet").build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Toast.makeText(getApplicationContext(), "当前网络不稳定", Toast.LENGTH_LONG).show();
+                    }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String json = response.body().string();
-                Type type = new TypeToken<List<ContactsStatus>>() {
-                }.getType();
-                List<ContactsStatus> contactsStatuses = new Gson().fromJson(json, type);
-                Log.e(TAG, "onResponse: 收到我的联系人状态信息" + contactsStatuses);
-                Message message = handler.obtainMessage();
-                message.what = 1;
-                message.obj = contactsStatuses;
-                handler.sendMessage(message);
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        String json = response.body().string();
+                        Type type = new TypeToken<List<ContactsStatus>>() {
+                        }.getType();
+                        List<ContactsStatus> contactsStatuses = new Gson().fromJson(json, type);
+                        Log.e(TAG, "onResponse: 收到我的联系人状态信息" + contactsStatuses);
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = contactsStatuses;
+                        handler.sendMessage(message);
+                    }
+                });
             }
-        });
+        }.start();
+
     }
 
     //NewFriendAdapter
@@ -295,6 +317,7 @@ public class NewFriendsActivity extends AppCompatActivity {
                     holder.agree.setVisibility(View.VISIBLE);
                     holder.reject.setVisibility(View.VISIBLE);
                     holder.status.setVisibility(View.GONE);
+
                     holder.agree.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -309,10 +332,11 @@ public class NewFriendsActivity extends AppCompatActivity {
                                     }
                                 }
                             }.start();
-                            Log.e(TAG, "onClick: 同意请求" + contactsStatus.getFrom().getPhone());
                             EaseParentUtil.isContactAddedOrDeleted = true;
                             //修改本地数据库
                             agreeInvitation(contactsStatus.getId());
+                            //添加备注
+                            addRemark(EMClient.getInstance().getCurrentUser(),contactsStatus.getFrom().getPhone(),EaseParentUtil.currentUserNickname,contactsStatus.getFrom().getNickname());
 
                         }
                     });
@@ -353,36 +377,63 @@ public class NewFriendsActivity extends AppCompatActivity {
 
     }
 
-    private void rejectInvitation(int id) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder().add("id", id + "").build();
-        Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "RejectInvitationServlet").build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+    private void addRemark(String currentUser, String phone, String currentUserNickname, String nickname) {
+        new Thread(){
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Looper.prepare();
-                Toast.makeText(NewFriendsActivity.this, "拒绝失败，请重试", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.body().string().equals("成功")) {
-                    Message message = handler.obtainMessage();
-                    message.what = 2;
-                    handler.sendMessage(message);
-                    Looper.prepare();
-                    Toast.makeText(NewFriendsActivity.this, "拒绝成功", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
-                } else {
-                    Looper.prepare();
-                    Toast.makeText(NewFriendsActivity.this, "拒绝失败", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
+            public void run() {
+                OkHttpClient okHttpClient=new OkHttpClient();
+                FormBody formBody=new FormBody.Builder().add("fromPhone",currentUser)
+                        .add("toPhone",phone)
+                        .add("fromPhoneNickname",currentUserNickname)
+                        .add("toPhoneNickname",nickname).build();
+                Request request=new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS+"addRemarkServlet").build();
+                Call call=okHttpClient.newCall(request);
+                try {
+                    Response response=call.execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
             }
-        });
+        }.start();
+
+    }
+
+    private void rejectInvitation(int id) {
+        new Thread(){
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody formBody = new FormBody.Builder().add("id", id + "").build();
+                Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "RejectInvitationServlet").build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(NewFriendsActivity.this, "拒绝失败，请重试", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        if (response.body().string().equals("成功")) {
+                            Message message = handler.obtainMessage();
+                            message.what = 2;
+                            handler.sendMessage(message);
+                            Looper.prepare();
+                            Toast.makeText(NewFriendsActivity.this, "拒绝成功", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        } else {
+                            Looper.prepare();
+                            Toast.makeText(NewFriendsActivity.this, "拒绝失败", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+
+                    }
+                });
+            }
+        }.start();
+
     }
 
     static class ViewHolder {
@@ -394,35 +445,42 @@ public class NewFriendsActivity extends AppCompatActivity {
     }
 
     private void agreeInvitation(int id) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder().add("id", id + "").build();
-        Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "AgreeInvitationServlet").build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+        new Thread(){
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Looper.prepare();
-                Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody formBody = new FormBody.Builder().add("id", id + "").build();
+                Request request = new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS + "AgreeInvitationServlet").build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.body().string().equals("成功")) {
-                    Message message = handler.obtainMessage();
-                    message.what = 2;
-                    handler.sendMessage(message);
-                    Looper.prepare();
-                    Toast.makeText(NewFriendsActivity.this, "你们已经成为好友了！", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
-                } else {
-                    Looper.prepare();
-                    Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
-                }
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        if (response.body().string().equals("成功")) {
+                            Message message = handler.obtainMessage();
+                            message.what = 2;
+                            handler.sendMessage(message);
+                            Looper.prepare();
+                            Toast.makeText(NewFriendsActivity.this, "你们已经成为好友了！", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
 
+                        } else {
+                            Looper.prepare();
+                            Toast.makeText(NewFriendsActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+
+                    }
+                });
             }
-        });
+        }.start();
+
     }
 
 }

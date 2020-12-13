@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 
 import com.example.projecttraining.contact.dao.Parent;
+import com.example.projecttraining.contact.dao.ParentInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.tiantiansqlite.TianTianSQLiteOpenHelper;
 import com.hyphenate.easeui.utils.EaseParentUtil;
 
@@ -51,148 +53,155 @@ public class ParentUtil {
     //记录当前联系人标签的状态，用于在受到消息时显示未读消息小红点
     public static boolean isSelectedRelationTab = false;
 
-    /**
-     * 从服务端获取所有父母的集合并通过handler发送到ui线程
-     *
-     * @param handler
-     * @return
-     */
-    public static void getAllparents(Handler handler) {
-        Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS + "GetAllParentsServlet")
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.i(TAG, "onFailure: 请求所有父母信息失败");
-            }
+//    /**
+//     * 从服务端获取所有父母的集合并通过handler发送到ui线程
+//     *
+//     * @param handler
+//     * @return
+//     */
+//    public static void getAllparents(Handler handler) {
+//        Request request = new Request.Builder()
+//                .url(ConfigUtil.SERVICE_ADDRESS + "GetAllParentsServlet")
+//                .build();
+//        Call call = okHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                Log.i(TAG, "onFailure: 请求所有父母信息失败");
+//            }
+//
+//            @Override
+//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                String json = response.body().string();
+//                Gson gson = new Gson();
+//                //得到集合的类型
+//                Type type = new TypeToken<List<Parent>>() {
+//                }.getType();
+//                List<Parent> parents = gson.fromJson(json, type);
+//                //通过message通知主线程
+//                Message message = handler.obtainMessage();
+//                message.what = 1;
+//                message.obj = parents;
+//            }
+//        });
+//    }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String json = response.body().string();
-                Gson gson = new Gson();
-                //得到集合的类型
-                Type type = new TypeToken<List<Parent>>() {
-                }.getType();
-                List<Parent> parents = gson.fromJson(json, type);
-                //通过message通知主线程
-                Message message = handler.obtainMessage();
-                message.what = 1;
-                message.obj = parents;
-            }
-        });
-    }
+//    public static void getOneParent(String phone, Handler handler) {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                FormBody formBody = new FormBody.Builder().add("phone", phone).build();
+//                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
+//                        .post(formBody)
+//                        .build();
+//                Call call = okHttpClient.newCall(request);
+//                try {
+//                    Response response = call.execute();
+//                    String json = response.body().string();
+//                    Parent parent = new Gson().fromJson(json, Parent.class);
+//                    //发送消息
+//                    Message message = handler.obtainMessage();
+//                    message.what = 2;
+//                    message.obj = parent;
+//                    handler.sendMessage(message);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//
+//
+//    }
 
-    public static void getOneParent(String phone, Handler handler) {
-        new Thread() {
-            @Override
-            public void run() {
-                FormBody formBody = new FormBody.Builder().add("phone", phone).build();
-                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
-                        .post(formBody)
-                        .build();
-                Call call = okHttpClient.newCall(request);
-                try {
-                    Response response = call.execute();
-                    String json = response.body().string();
-                    Parent parent = new Gson().fromJson(json, Parent.class);
-                    //发送消息
-                    Message message = handler.obtainMessage();
-                    message.what = 2;
-                    message.obj = parent;
-                    handler.sendMessage(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+//    public static void storeOneParent(String phone, TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper) {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                FormBody formBody = new FormBody.Builder().add("phone", phone).build();
+//                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
+//                        .post(formBody)
+//                        .build();
+//                Call call = okHttpClient.newCall(request);
+//                try {
+//                    Response response = call.execute();
+//                    String json = response.body().string();
+//                    Log.e(TAG, "run: " + json);
+//                    Parent parent = new Gson().fromJson(json, Parent.class);
+//                    //存入SQLite
+//                    SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getWritableDatabase();
+//                    Cursor cursor = sqLiteDatabase.query("parents",
+//                            new String[]{"id", "phone", "password", "nickname", "avatar"},
+//                            "id=?",
+//                            new String[]{parent.getId() + ""},
+//                            null, null, null);
+//                    cursor.moveToNext();
+//                    ContentValues contentValues = new ContentValues();
+//                    contentValues.put("id", parent.getId());
+//                    contentValues.put("phone", parent.getPhone());
+//                    contentValues.put("nickname", parent.getNickname());
+//                    contentValues.put("avatar", ConfigUtil.SETVER_AVATAR + parent.getAvator());
+//                    contentValues.put("password", parent.getPassword());
+//                    sqLiteDatabase.insert("parents", null, contentValues);
+//                    Log.e(TAG, "run: 插入SQLite成功");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//    }
 
-
-    }
-
-    public static void storeOneParent(String phone, TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper) {
-        new Thread() {
-            @Override
-            public void run() {
-                FormBody formBody = new FormBody.Builder().add("phone", phone).build();
-                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
-                        .post(formBody)
-                        .build();
-                Call call = okHttpClient.newCall(request);
-                try {
-                    Response response = call.execute();
-                    String json = response.body().string();
-                    Log.e(TAG, "run: " + json);
-                    Parent parent = new Gson().fromJson(json, Parent.class);
-                    //存入SQLite
-                    SQLiteDatabase sqLiteDatabase = tianTianSQLiteOpenHelper.getWritableDatabase();
-                    Cursor cursor = sqLiteDatabase.query("parents",
-                            new String[]{"id", "phone", "password", "nickname", "avatar"},
-                            "id=?",
-                            new String[]{parent.getId() + ""},
-                            null, null, null);
-                    cursor.moveToNext();
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put("id", parent.getId());
-                    contentValues.put("phone", parent.getPhone());
-                    contentValues.put("nickname", parent.getNickname());
-                    contentValues.put("avatar", ConfigUtil.SETVER_AVATAR + parent.getAvator());
-                    contentValues.put("password", parent.getPassword());
-                    sqLiteDatabase.insert("parents", null, contentValues);
-                    Log.e(TAG, "run: 插入SQLite成功");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    public static Parent queryAvatarAndNicknameByPhone(Context context, String phone) {
+    public static ParentInfo queryAvatarAndNicknameByPhone(Context context, String phone) {
         SQLiteDatabase sqLiteDatabase = TianTianSQLiteOpenHelper.getInstance(context).getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query("parents", new String[]{"avatar", "nickname"}, "phone=?", new String[]{phone}, null, null, null);
-        Parent parent = new Parent();
-        parent.setPhone(phone);
+        Cursor cursor = sqLiteDatabase.query("parentInfos", new String[]{"avatar", "remark","nickname"}, "phone=?", new String[]{phone}, null, null, null);
+        ParentInfo parentInfo = new ParentInfo();
+        parentInfo.setPhone(phone);
         if (0 != cursor.getCount()) {
             cursor.moveToNext();
-            parent.setAvator(cursor.getString(0));
-            parent.setNickname(cursor.getString(1));
+            parentInfo.setAvatar(cursor.getString(0));
+            parentInfo.setRemark(cursor.getString(1));
+            parentInfo.setNickname(cursor.getString(2));
         }
-        return parent;
+        return parentInfo;
     }
 
     public static void storeCurrentParent(String currentUser, Handler handler) {
-        FormBody formBody = new FormBody.Builder().add("phone", currentUser).build();
-        Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
-                .post(formBody)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+        new Thread(){
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            public void run() {
+                FormBody formBody = new FormBody.Builder().add("phone", currentUser).build();
+                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetOneParentInfoServlet")
+                        .post(formBody)
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    String json = response.body().string();
-                    Parent parent = new Gson().fromJson(json, Parent.class);
-                    EaseParentUtil.currentUserAvatar = ConfigUtil.SETVER_AVATAR + parent.getAvator();
-                    Log.e(TAG, "storeCurrentParent: " + parent.getAvator());
-                    EaseParentUtil.currentUserNickname = parent.getNickname();
-                    if (null != handler) {
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        handler.sendMessage(message);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }catch (JsonSyntaxException e){
-                    e.printStackTrace();
-                }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        try {
+                            String json = response.body().string();
+                            Parent parent = new Gson().fromJson(json, Parent.class);
+                            EaseParentUtil.currentUserAvatar = ConfigUtil.SETVER_AVATAR + parent.getAvator();
+                            Log.e(TAG, "storeCurrentParent: " + parent.getAvator());
+                            EaseParentUtil.currentUserNickname = parent.getNickname();
+                            if (null != handler) {
+                                Message message = handler.obtainMessage();
+                                message.what = 1;
+                                handler.sendMessage(message);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }catch (JsonSyntaxException e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }.start();
+
     }
 
     public static void searchParentsByPhone(String query, Handler handler) {
@@ -232,10 +241,10 @@ public class ParentUtil {
     }
 
     //获取当前登录用户的饿所有好友列表，并保存到sqlite数据库
-    public static void storeAllContacts(List<String> usernames, Context context, Handler handler) {
+    public static void storeAllContacts(String currentUsername,List<String> usernames, Context context, Handler handler) {
         Gson gson = new Gson();
         String json = gson.toJson(usernames);
-        FormBody formBody = new FormBody.Builder().add("usernames", json).build();
+        FormBody formBody = new FormBody.Builder().add("usernames", json).add("currentUsername",currentUsername).build();
         Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetAllContactsServlet")
                 .post(formBody)
                 .build();
@@ -257,30 +266,31 @@ public class ParentUtil {
                 String json = response.body().string();
                 //得到集合的类型
                 if ("" != json && null != json) {
-                    Type type = new TypeToken<List<Parent>>() {
+                    Type type = new TypeToken<List<ParentInfo>>() {
                     }.getType();
 //                    List<Parent> parents = gson.fromJson(json, type);
                     //解决json串不合法问题，如果服务器报404错误，则返回的不是合法错误
                     try {
-                        List<Parent> parents = gson.fromJson(json, type);
-                        Log.e(TAG, "onResponse: " + parents);
+                        List<ParentInfo> parentInfos = gson.fromJson(json, type);
+                        Log.e(TAG, "onResponse: " + parentInfos);
                         SQLiteDatabase sqLiteDatabase = TianTianSQLiteOpenHelper.getInstance(context).getWritableDatabase();
                         //存储当前用户的所有好友之前，先清除SQLite的Parent表
-                        sqLiteDatabase.delete("parents", null, null);
-                        for (Parent parent : parents) {
+                        sqLiteDatabase.delete("parentInfos", null, null);
+                        for (ParentInfo parentInfo : parentInfos) {
                             ContentValues contentValues = new ContentValues();
-                            contentValues.put("id", parent.getId());
-                            contentValues.put("phone", parent.getPhone());
-                            contentValues.put("nickname", parent.getNickname());
-                            contentValues.put("avatar", ConfigUtil.SETVER_AVATAR + parent.getAvator());
-                            contentValues.put("password", parent.getPassword());
-                            sqLiteDatabase.insert("parents", null, contentValues);
+                            contentValues.put("phone",parentInfo.getPhone());
+                            contentValues.put("nickname",parentInfo.getNickname());
+                            contentValues.put("avatar",ConfigUtil.SETVER_AVATAR+parentInfo.getAvatar());
+                            contentValues.put("remark",parentInfo.getRemark());
+                            sqLiteDatabase.insert("parentInfos", null, contentValues);
                         }
                         Log.e(TAG, "onResponse:已将当前用户的好友保存到sqlite ");
                         sqLiteDatabase.close();
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        handler.sendMessage(message);
+                        if(null!=handler) {
+                            Message message = handler.obtainMessage();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
                     } catch (JsonSyntaxException e) {
                         e.printStackTrace();
                     }
@@ -289,4 +299,46 @@ public class ParentUtil {
         });
     }
 
+
+    public static void getAllContacts(List<String> usernames, Handler handler, Context context) {
+        Gson gson = new Gson();
+        String json = gson.toJson(usernames);
+        Log.e(TAG, "storeAllContacts: " + json);
+        //创建OkHttpClient对象
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("usernames", json).add("currentUsername", EMClient.getInstance().getCurrentUser()).build();
+        Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "GetAllContactsServlet")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Looper.prepare();
+                Toast.makeText(context, "当前网络不稳定", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String json = response.body().string();
+                //得到集合的类型
+                if ("" != json && null != json) {
+                    Type type = new TypeToken<List<ParentInfo>>() {
+                    }.getType();
+                    Log.e(TAG, "onResponse: " + json);
+                    try {
+                        List<ParentInfo> parentInfos = gson.fromJson(json, type);
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = parentInfos;
+                        handler.sendMessage(message);
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+    }
 }

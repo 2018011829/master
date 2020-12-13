@@ -31,8 +31,8 @@ public class GetAllContactsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String usernames=request.getParameter("usernames");
-		System.out.println("得到所有的好友usernames"+usernames);
-		String json=ParentService.getInstance().getAllContacts(usernames);
+		String currentUsername=request.getParameter("currentUsername");
+		String json=ParentService.getInstance().getAllContacts(currentUsername,usernames);
 		response.getWriter().write(json);
 		
 	}

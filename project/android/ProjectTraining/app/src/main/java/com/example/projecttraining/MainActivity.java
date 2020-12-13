@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /*
          * 引导页代码
          * 哪个页面是默认显示页面就把这段代码添加到哪里

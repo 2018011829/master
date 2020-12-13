@@ -11,12 +11,19 @@ import com.hyphenate.easeui.GlideRoundImage;
  */
 
 public class EaseParentUtil {
+    //服务器地址;
+    public static final String SERVICE_ADDRESS="http://192.168.137.1:8080/tiantian/";
+    //服务器端用户头像地址
+    public static final String SETVER_AVATAR = "http://192.168.137.1:8080/tiantian/avatar/";
     //当前登录用户的头像地址
     public static String currentUserAvatar="";
     public static String currentUserNickname="";
     //聊天好友的头像地址
     public static String toChatUserAvator="";
-    public static String toChatUserNickname="";
+    //聊天好友的备注
+    public static String toChatUserRemark="";
+    //聊天好友的昵称，供展示个人信息时使用，平时不用
+    public static String tochatUserNickname="";
     public static boolean isContactAddedOrDeleted=false;
 
     //得到一个Glide的RequestOptions，用来加载圆角8dp的图像

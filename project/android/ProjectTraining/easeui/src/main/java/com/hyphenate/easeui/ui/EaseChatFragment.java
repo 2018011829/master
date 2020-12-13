@@ -302,7 +302,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
-        titleBar.setTitle(EaseParentUtil.toChatUserNickname);
+        titleBar.setTitle(EaseParentUtil.toChatUserRemark);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
@@ -618,6 +618,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     @Override
     public void onResume() {
         super.onResume();
+        //如果点击头像修改了昵称，重新设置昵称
+        titleBar.setTitle(EaseParentUtil.toChatUserRemark);
         if(isMessageListInited)
             messageList.refresh();
         EaseUI.getInstance().pushActivity(getActivity());
