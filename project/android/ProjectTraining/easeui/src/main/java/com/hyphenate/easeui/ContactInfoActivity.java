@@ -93,7 +93,7 @@ public class ContactInfoActivity extends AppCompatActivity {
         tvUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 显示是否拨打改电话号码的对话框，跳转到拨号页面
+                //TODO 显示是否拨打改电话号码的对话框，拨打电话
             }
         });
     }
