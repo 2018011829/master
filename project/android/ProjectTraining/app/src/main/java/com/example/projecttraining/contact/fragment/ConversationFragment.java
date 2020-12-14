@@ -52,7 +52,7 @@ import java.util.Map;
 
 public class ConversationFragment extends Fragment {
 
-    private static final String TAG="ConversationFragment";
+    private static final String TAG = "ConversationFragment";
     //设置搜索框的相关控件
     protected ImageButton clearSearch;
     protected EditText query;
@@ -61,14 +61,20 @@ public class ConversationFragment extends Fragment {
     private List<EMConversation> copyConversations;
     private ImageView waitingForInternet;
     private List<EMConversation> conversations;
-    private Handler handler=new Handler(Looper.getMainLooper()){
+    private boolean isInited;
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            if(msg.what==1){
-                Log.e(TAG, "handleMessage: 成功连接网络" );
+            if (msg.what == 1) {
                 waitingForInternet.setVisibility(View.GONE);
-                easeConversationList.init(conversations);
+                if (isInited) {
+                    easeConversationList.refresh();
+                } else {
+                    easeConversationList.init(conversations);
+                    isInited = true;
+                }
             }
+
         }
     };
 
@@ -78,43 +84,49 @@ public class ConversationFragment extends Fragment {
         //因为有未读消息，进入了解后所有消息设置为已读，官方的demo只有在点击了输入框后，消息界面才会刷新，如果有未读消息变为已读，即使
         //没有点击输入框，也需要刷新
         super.onResume();
-            Log.e(TAG, "onResume: ");
-            conversations.clear();
-            conversations.addAll(loadConversationList());
-            easeConversationList.refresh();
-            copyConversations.clear();
-            copyConversations.addAll(conversations);
+        Log.e(TAG, "onResume: ");
+        conversations.clear();
+        conversations.addAll(loadConversationList());
+        easeConversationList.refresh();
+        copyConversations.clear();
+        copyConversations.addAll(conversations);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e(TAG, "onCreateView: ");
-        View view=inflater.inflate(R.layout.fragment_conversation, container, false);
-        easeConversationList=view.findViewById(R.id.ease_conversation_list);
+        Log.e(TAG, "onCreateView:");
+        View view = inflater.inflate(R.layout.fragment_conversation, container, false);
+
+        isInited = false;
+        easeConversationList = view.findViewById(R.id.ease_conversation_list);
         conversations = new ArrayList<EMConversation>();
         copyConversations = new ArrayList<EMConversation>();
-        waitingForInternet=view.findViewById(R.id.iv_waiting_for_internet);
+        waitingForInternet = view.findViewById(R.id.iv_waiting_for_internet);
         Glide.with(getContext())
                 .asGif()
                 .load(R.drawable.waiting_for_internet)
-                .into(waitingForInternet);;
+                .into(waitingForInternet);
+        ;
         conversations.addAll(loadConversationList());
         copyConversations.addAll(conversations);
+
         EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
             @Override
             public void onSuccess(List<String> strings) {
-                ParentUtil.storeAllContacts(EMClient.getInstance().getCurrentUser(),strings,getContext(), handler);
+                ParentUtil.storeAllContacts(EMClient.getInstance().getCurrentUser(), strings, getContext(), handler);
             }
+
             @Override
             public void onError(int i, String s) {
 
             }
         });
+
         easeConversationList.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add(0,3,0,"删除消息");
+                menu.add(0, 3, 0, "删除消息");
             }
         });
         //获取搜索框相关控件
@@ -130,7 +142,6 @@ public class ConversationFragment extends Fragment {
         //设置搜索框的搜索事件
         query.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                easeConversationList.filter(s);
                 synchronized (conversations) {
                     conversations.clear();
                     conversations.addAll(copyConversations);
@@ -156,6 +167,7 @@ public class ConversationFragment extends Fragment {
 
                 }
             }
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -168,19 +180,16 @@ public class ConversationFragment extends Fragment {
         easeConversationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //根据conversationId从SQLite中查询昵称和头像
-                ParentInfo chatToParent=ParentUtil.queryAvatarAndNicknameByPhone(getContext(),conversations.get(position).conversationId());
-                EaseParentUtil.toChatUserRemark=chatToParent.getRemark();
-                EaseParentUtil.toChatUserAvator=chatToParent.getAvatar();
-                EaseParentUtil.tochatUserNickname=chatToParent.getNickname();
+                //根据conversationId从SQLite中设置聊天对象昵称，备注和头像
+                ParentUtil.setToChatParentInfo(getContext(), conversations.get(position).conversationId());
                 //存储当前用户的昵称和头像
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(), null);
                     }
                 }.start();
-                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,conversations.get(position).conversationId()));
+                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, conversations.get(position).conversationId()));
             }
         });
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -227,9 +236,10 @@ public class ConversationFragment extends Fragment {
 
     /**
      * load conversation list
-     * @return
-    +    */
-    protected List<EMConversation> loadConversationList(){
+     *
+     * @return +
+     */
+    protected List<EMConversation> loadConversationList() {
         // get all conversations
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
         List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
@@ -256,6 +266,7 @@ public class ConversationFragment extends Fragment {
         }
         return list;
     }
+
     /**
      * sort conversations according time stamp of last message
      *
@@ -277,6 +288,7 @@ public class ConversationFragment extends Fragment {
 
         });
     }
+
     protected void hideSoftKeyboard() {
         if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
             if (getActivity().getCurrentFocus() != null)
@@ -289,7 +301,7 @@ public class ConversationFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.e(TAG, "onStop: " );
+        Log.e(TAG, "onStop: ");
     }
 
     @Override
@@ -302,11 +314,11 @@ public class ConversationFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = menuInfo.position;
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case 3:
                 //删除该联系人的所有消息
-                String username=conversations.get(position).conversationId();
-                EMClient.getInstance().chatManager().deleteConversation(username,true);
+                String username = conversations.get(position).conversationId();
+                EMClient.getInstance().chatManager().deleteConversation(username, true);
                 conversations.clear();
                 conversations.addAll(loadConversationList());
                 easeConversationList.refresh();

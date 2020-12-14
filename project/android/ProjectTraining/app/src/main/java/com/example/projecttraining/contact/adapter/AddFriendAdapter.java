@@ -36,9 +36,11 @@ import okhttp3.Response;
 
 public class AddFriendAdapter extends BaseAdapter {
     private static final String TAG="AddFriendAdapter";
+
     private Context context;
     private List<Parent> parents;
     private int itemLayout;
+
     public AddFriendAdapter(Context context,List<Parent> parents,int itemLayout){
         this.context=context;
         this.parents=parents;

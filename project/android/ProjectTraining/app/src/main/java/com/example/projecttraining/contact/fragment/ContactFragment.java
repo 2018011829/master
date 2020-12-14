@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.activity.ChatActivity;
+import com.hyphenate.easeui.ContactInfoActivity;
 import com.hyphenate.easeui.EditRemarkActivity;
 import com.example.projecttraining.contact.activity.NewFriendsActivity;
 import com.example.projecttraining.contact.dao.ParentInfo;
@@ -64,7 +65,6 @@ public class ContactFragment extends Fragment {
     List<EaseUser> copyEaseUsers = new ArrayList<>();
     EaseContactList easeContactList;
     protected InputMethodManager inputMethodManager;
-    private boolean isInited = false;
     //设置搜索框的相关控件
     protected ImageButton clearSearch;
     protected EditText query;
@@ -85,10 +85,8 @@ public class ContactFragment extends Fragment {
                     easeUser.setNickname(parentInfo.getRemark());
                     easeUsers.add(easeUser);
                 }
-                //如果是从onCreateView方法获取联系人
-                easeContactList.init(easeUsers);
-                Log.e(TAG, "handleMessage: init");
-                isInited = true;
+                //刷新控件
+                easeContactList.refresh();
                 //搜索时，需要清空Easeusers,使用copyEaseUser保存所有数据
                 copyEaseUsers.clear();
                 copyEaseUsers.addAll(easeUsers);
@@ -101,39 +99,14 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.e(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        easeContactList = view.findViewById(R.id.ease_contact_list);
-        newFriends = view.findViewById(R.id.new_friends);
-        iv = view.findViewById(R.id.iv);
-        Glide.with(this)
-                .load(R.drawable.newfriend)
-                .transform(new GlideRoundImage(getContext(), 8))
-                .into(iv);
-        waitingForInternet = view.findViewById(R.id.iv_waiting_for_internet);
-        Glide.with(getContext())
-                .asGif()
-                .load(R.drawable.waiting_for_internet)
-                .into(waitingForInternet);
-        easeUsers = new ArrayList<EaseUser>();
-        new Thread() {
-            @Override
-            public void run() {
-                //初始化联系人列表
-                try {
-                    List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
-                    Log.e(TAG, "onCreateView: " + usernames);
-                    ParentUtil.getAllContacts(usernames, handler, getContext());
-                } catch (HyphenateException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+
+        initViews(view);
 
         setContactListClickListener();
 
         newFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick: ");
                 startActivity(new Intent(getContext(), NewFriendsActivity.class));
             }
         });
@@ -183,14 +156,47 @@ public class ContactFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 初始化控件
+     *
+     * @param view
+     */
+    private void initViews(View view) {
+        easeContactList = view.findViewById(R.id.ease_contact_list);
+        newFriends = view.findViewById(R.id.new_friends);
+        iv = view.findViewById(R.id.iv);
+        Glide.with(this)
+                .load(R.drawable.newfriend)
+                .transform(new GlideRoundImage(getContext(), 8))
+                .into(iv);
+        waitingForInternet = view.findViewById(R.id.iv_waiting_for_internet);
+        Glide.with(getContext())
+                .asGif()
+                .load(R.drawable.waiting_for_internet)
+                .into(waitingForInternet);
+        easeUsers = new ArrayList<EaseUser>();
+        easeContactList.init(easeUsers);
+        new Thread() {
+            @Override
+            public void run() {
+                //初始化联系人列表
+                try {
+                    List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    ParentUtil.getAllContacts(usernames, handler, getContext());
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     private void setContactListClickListener() {
         //设置联系人列表item的点击事件，跳转到聊天页面
         easeContactList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG, "onItemClick: ");
-                EaseParentUtil.toChatUserAvator = easeUsers.get(position).getAvatar();
-                EaseParentUtil.toChatUserRemark = easeUsers.get(position).getNickname();
+                //根据conversationId从SQLite中查询,并设置当前聊天对象的昵称，备注和头像
+                ParentUtil.setToChatParentInfo(getContext(), easeUsers.get(position).getUsername());
                 startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, easeUsers.get(position).getUsername()));
             }
         });
@@ -202,7 +208,8 @@ public class ContactFragment extends Fragment {
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 Log.e(TAG, "onCreateContextMenu: ");
                 menu.add(0, 0, 0, "修改备注");
-                menu.add(0, 1, 0, "删除联系人");
+                menu.add(0, 1, 0, "删除该联系人");
+                menu.add(0, 2, 0, "查看个人信息");
             }
         });
     }
@@ -267,7 +274,6 @@ public class ContactFragment extends Fragment {
                 @Override
                 public void run() {
                     //初始化联系人列表
-                    Log.e(TAG, "onResumerun: 更新联系人列表");
                     try {
                         List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
                         ParentUtil.getAllContacts(usernames, handler, getContext());
@@ -305,6 +311,11 @@ public class ContactFragment extends Fragment {
                 break;
             case 1:
                 showDeleteContactDialog(position);
+                break;
+            case 2:
+                ParentUtil.setToChatParentInfo(getContext(), easeUsers.get(position).getUsername());
+                startActivity(new Intent(getContext(), ContactInfoActivity.class).putExtra("username", easeUsers.get(position).getUsername()));
+                break;
         }
         return super.onContextItemSelected(item);
     }
@@ -327,7 +338,7 @@ public class ContactFragment extends Fragment {
                             @Override
                             public void onSuccess() {
                                 //在本地数据库中删除彼此的备注信息
-                                deleteRemark(EMClient.getInstance().getCurrentUser(),easeUsers.get(position).getUsername());
+                                deleteRemark(EMClient.getInstance().getCurrentUser(), easeUsers.get(position).getUsername());
                                 //更新列表
                                 easeUsers.remove(position);
                                 easeContactList.refresh();
@@ -351,14 +362,14 @@ public class ContactFragment extends Fragment {
     }
 
     private void deleteRemark(String currentUser, String username) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                OkHttpClient okHttpClient=new OkHttpClient();
-                FormBody formBody=new FormBody.Builder().add("fromPhone",currentUser)
-                        .add("toPhone",username).build();
-                Request request=new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS+"DeleteRemarkServlet").post(formBody).build();
-                Call call=okHttpClient.newCall(request);
+                OkHttpClient okHttpClient = new OkHttpClient();
+                FormBody formBody = new FormBody.Builder().add("fromPhone", currentUser)
+                        .add("toPhone", username).build();
+                Request request = new Request.Builder().url(ConfigUtil.SERVICE_ADDRESS + "DeleteRemarkServlet").post(formBody).build();
+                Call call = okHttpClient.newCall(request);
                 try {
                     call.execute();
                 } catch (IOException e) {

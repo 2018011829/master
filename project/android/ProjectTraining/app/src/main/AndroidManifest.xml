@@ -124,6 +124,19 @@
         <activity android:name=".books.activity.MoreBooksActivity" />
         <activity android:name=".books.activity.MoreContentActivity" />
         <activity android:name=".books.activity.ReadBookActivity" />
+        <!--百度地图-->
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v5.0.0" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="UGhTVL0ZwayM9IRxVfB62gn0p7SYgme9"/>
     </application>
 
 </manifest>
