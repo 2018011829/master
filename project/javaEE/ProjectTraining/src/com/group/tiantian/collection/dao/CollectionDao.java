@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.group.tiantian.entity.Collection;
 import com.group.tiantian.util.DBUtil;
@@ -104,5 +106,29 @@ public class CollectionDao {
 		}
 		
 		return b;
+	}
+	
+	/**
+	 * 从数据库中查找已收藏的图书名称
+	 * @return collection_content
+	 */
+	public List<String> searchBookFromCollection(String phone,String cname,String type) {
+		List<String> bookNames = new ArrayList<>();
+		String sql="select collection_content from collections where phone_num=? and child_name=? and collection_type=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, phone);
+			preparedStatement.setString(2, cname);
+			preparedStatement.setString(3, type);
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				System.out.println("getbookName:"+rs.getString(1));
+				bookNames.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return bookNames;
 	}
 }

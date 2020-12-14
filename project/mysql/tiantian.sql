@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-14 15:02:51
+Date: 2020-12-14 18:21:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1084,46 +1084,6 @@ INSERT INTO `child` VALUES ('2', '赵义', '二年级', '女', '19831127142');
 INSERT INTO `child` VALUES ('3', '让人', '一年级', '男', '19831127142');
 
 -- ----------------------------
--- Table structure for `child_copy`
--- ----------------------------
-DROP TABLE IF EXISTS `child_copy`;
-CREATE TABLE `child_copy` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cname` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` varchar(20) NOT NULL DEFAULT '1',
-  `sex` varchar(10) NOT NULL,
-  `parentPhone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of child_copy
--- ----------------------------
-INSERT INTO `child_copy` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
-INSERT INTO `child_copy` VALUES ('2', '赵义', '二年级', '女', '19831127142');
-INSERT INTO `child_copy` VALUES ('3', '让人', '一年级', '男', '19831127142');
-
--- ----------------------------
--- Table structure for `child_copy1`
--- ----------------------------
-DROP TABLE IF EXISTS `child_copy1`;
-CREATE TABLE `child_copy1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cname` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` varchar(20) NOT NULL DEFAULT '1',
-  `sex` varchar(10) NOT NULL,
-  `parentPhone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of child_copy1
--- ----------------------------
-INSERT INTO `child_copy1` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
-INSERT INTO `child_copy1` VALUES ('2', '赵义', '二年级', '女', '19831127142');
-INSERT INTO `child_copy1` VALUES ('3', '让人', '一年级', '男', '19831127142');
-
--- ----------------------------
 -- Table structure for `classifyidiom`
 -- ----------------------------
 DROP TABLE IF EXISTS `classifyidiom`;
@@ -1195,8 +1155,9 @@ CREATE TABLE `collections` (
 -- ----------------------------
 INSERT INTO `collections` VALUES ('18730094411', '', 'book', '洋葱头历险记');
 INSERT INTO `collections` VALUES ('18831158249', '小明', 'book', '白客');
-INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '动物庄园');
-INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '安娜卡列尼娜');
+INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '动物庄园');
+INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '安娜卡列尼娜');
+INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '阿甘正传');
 
 -- ----------------------------
 -- Table structure for `contacts_status`

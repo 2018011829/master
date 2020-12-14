@@ -36,4 +36,15 @@ public class MoreBooksService {
 		
 		return list;
 	}
+	
+	/**
+	 * 从数据库中根据书名查找书籍
+	 * 
+	 * @param name 书的名称
+	 * @return 返回该名称的书
+	 */
+	public Book getBooksByName(String name) {
+		
+		return bookDao.getBookByName(name);
+	}
 }
