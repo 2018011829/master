@@ -131,9 +131,9 @@
                 android:layout_height="wrap_content"/>
 
             <HorizontalScrollView
-                android:padding="6dp"
+                android:padding="5dp"
                 android:scrollbars="none"
-                android:layout_height="200dp"
+                android:layout_height="210dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:background="@android:color/white">
@@ -163,25 +163,32 @@
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/imageview_circle_border"/>
                         </RelativeLayout>
-                        <TextView
-                            android:textSize="14sp"
-                            android:text="安徒生童话"
+                        <LinearLayout
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:textSize="11sp"
-                            android:gravity="center"
-                            android:text="安徒生笔下的梦幻王国"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="14sp"
+                                android:text="安徒生童话"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"/>
+                            <TextView
+                                android:textSize="11sp"
+                                android:gravity="center"
+                                android:text="安徒生笔下的梦幻王国"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linear_guess2"
                         android:orientation="vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
                         <RelativeLayout
@@ -198,19 +205,26 @@
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/imageview_circle_border"/>
                         </RelativeLayout>
-                        <TextView
-                            android:textSize="14sp"
+                        <LinearLayout
                             android:gravity="center"
-                            android:text="窗边的小豆豆"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:textSize="11sp"
-                            android:gravity="center"
-                            android:text="生态式教育温暖孩子"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:text="窗边的小豆豆"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"/>
+                            <TextView
+                                android:textSize="11sp"
+                                android:gravity="center"
+                                android:text="生态式教育温暖孩子"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -233,19 +247,26 @@
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/imageview_circle_border"/>
                         </RelativeLayout>
-                        <TextView
-                            android:textSize="14sp"
-                            android:text="动物庄园"
+                        <LinearLayout
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:textSize="11sp"
-                            android:gravity="center"
-                            android:text="猪篡取动物革命果实"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="14sp"
+                                android:text="动物庄园"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"/>
+                            <TextView
+                                android:textSize="11sp"
+                                android:gravity="center"
+                                android:text="猪篡取动物革命果实"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -268,19 +289,26 @@
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/imageview_circle_border"/>
                         </RelativeLayout>
-                        <TextView
-                            android:textSize="14sp"
-                            android:text="王尔德童话"
+                        <LinearLayout
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:textSize="11sp"
-                            android:gravity="center"
-                            android:text="意境高洁悠远益人心智"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="14sp"
+                                android:text="王尔德童话"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"/>
+                            <TextView
+                                android:textSize="11sp"
+                                android:gravity="center"
+                                android:text="意境高洁悠远益人心智"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -303,19 +331,26 @@
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/imageview_circle_border"/>
                         </RelativeLayout>
-                        <TextView
-                            android:textSize="14sp"
-                            android:text="一千零一夜"
+                        <LinearLayout
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:textSize="11sp"
-                            android:gravity="center"
-                            android:text="朴素现实和浪漫幻想"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="14sp"
+                                android:text="一千零一夜"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"/>
+                            <TextView
+                                android:textSize="11sp"
+                                android:gravity="center"
+                                android:text="朴素现实和浪漫幻想"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>

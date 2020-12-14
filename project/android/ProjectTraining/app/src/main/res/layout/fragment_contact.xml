@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".contact.fragment.ContactFragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/new_friends"
@@ -32,34 +30,36 @@ tools:context=".contact.fragment.ContactFragment">
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
             android:src="@drawable/mine_return" />
     </RelativeLayout>
 
     <include
-    android:layout_below="@+id/new_friends"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:id="@+id/search_bar_view"
-    layout="@layout/ease_search_bar_with_padding"
-    />
-    <RelativeLayout
-        android:layout_below="@+id/search_bar_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<com.hyphenate.easeui.widget.EaseContactList
+        android:id="@+id/search_bar_view"
+        layout="@layout/ease_search_bar_with_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_friends" />
 
-    android:id="@+id/ease_contact_list"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-    <include layout="@layout/frame_waitting_for_internet" />
-    <ImageView
-        android:layout_centerInParent="true"
-        android:id="@+id/iv_waiting_for_internet"
-        android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="60dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_bar_view">
+
+        <com.hyphenate.easeui.widget.EaseContactList
+            android:id="@+id/ease_contact_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/frame_waitting_for_internet" />
+
+        <ImageView
+            android:id="@+id/iv_waiting_for_internet"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
     </RelativeLayout>
 
 </RelativeLayout>
