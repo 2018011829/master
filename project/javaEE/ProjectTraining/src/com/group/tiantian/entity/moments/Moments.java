@@ -1,9 +1,5 @@
 package com.group.tiantian.entity.moments;
 
-import java.util.List;
-
-import com.google.gson.Gson;
-
 public class Moments {
 	private int id;//id
 	private String phoneNumber;//发表人手机号

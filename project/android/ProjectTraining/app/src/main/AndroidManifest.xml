@@ -81,7 +81,13 @@
             android:name=".idiom.activitys.IdiomInfoActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
-        <activity android:name=".idiom.activitys.IdiomShareActivity" />
+        <activity android:name=".idiom.activitys.IdiomShareActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".MainActivity" /> <!-- 设置环信应用的AppKey -->
         <meta-data
