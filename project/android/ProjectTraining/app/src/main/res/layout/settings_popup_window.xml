@@ -18,25 +18,17 @@
             android:layout_weight="1"
             android:src="@mipmap/back_white"/>
 
-        <EditText
+        <TextView
             android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="7"
-            android:hint="请输入要搜索的文字"
             android:textColor="@android:color/white"/>
-
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/search_white"/>
 
         <ImageView
             android:id="@+id/iv_listen"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:src="@mipmap/listen_white"/>
     </LinearLayout>

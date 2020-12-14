@@ -133,18 +133,18 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             //修改之后
             TianTianSQLiteOpenHelper tianTianSQLiteOpenHelper=TianTianSQLiteOpenHelper.getInstance(getContext());
             SQLiteDatabase sqLiteDatabase=tianTianSQLiteOpenHelper.getReadableDatabase();
-            Cursor cursor=sqLiteDatabase.query("parents",new String[]{"avatar","nickname"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
+            Cursor cursor=sqLiteDatabase.query("parentInfos",new String[]{"avatar","remark"},"phone=?",new String[]{conversation.conversationId()},null,null,null);
             cursor.moveToNext();
             if(cursor.getCount()>0){
                 String avatar=cursor.getString(0);
-                String nickname=cursor.getString(1);
+                String remark=cursor.getString(1);
                 RequestOptions requestOptions=new RequestOptions().optionalTransform(new GlideRoundImage(getContext(),8));
                 Glide.with(getContext())
                         .load(avatar)
                         .apply(requestOptions)
                         .placeholder(R.drawable.ease_contact_place_holder)
                         .into(holder.avatar);
-                holder.name.setText(nickname);
+                holder.name.setText(remark);
                 holder.motioned.setVisibility(View.GONE);
             }
             sqLiteDatabase.close();

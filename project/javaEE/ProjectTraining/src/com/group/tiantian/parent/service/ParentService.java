@@ -112,11 +112,11 @@ public class ParentService {
 		
 	}
 	//得到所有联系人的信息
-	public String getAllContacts(String usernames) {
+	public String getAllContacts(String currentUsername,String usernames) {
 		Gson gson=new Gson();
 		Type type=new TypeToken<List<String>>(){}.getType();
 		List<String> usernamesList=gson.fromJson(usernames, type);
-		return gson.toJson(parentDao.selectAllContact(usernamesList));
+		return gson.toJson(parentDao.selectAllContact(currentUsername,usernamesList));
 	}
 	//得到邀请我的人，我邀请的人，以及邀请历史
 	public String getContactsStatus(String username) {
@@ -152,6 +152,27 @@ public class ParentService {
 	public int rejectInvitation(String idStr) {
 		int id=Integer.parseInt(idStr);
 		return parentDao.rejectUpdate(id);
+	}
+
+	/**
+	 * 修改fromPhone对toPhone的备注
+	 * @param fromPhone
+	 * @param toPhone
+	 * @param remark
+	 */
+	public int changeRemark(String fromPhone, String toPhone, String remark) {
+		// TODO Auto-generated method stub
+		return parentDao.updateRemark(fromPhone,toPhone,remark);
+	}
+
+	public void addRemarks(String fromPhone, String fromPhoneNickname, String toPhone, String toPhoneNickname) {
+		ParentDao.insertRemarks(fromPhone,fromPhoneNickname,toPhone,toPhoneNickname);
+	}
+
+	public void deleteRemarks(String fromPhone, String toPhone) {
+		// TODO Auto-generated method stub
+		ParentDao.deleteRemarks(fromPhone,toPhone);
+		
 	}
 	
 	

@@ -33,7 +33,7 @@ public class GetOneParentInfoServlet extends HttpServlet {
 		System.out.println("µÃµ½phone"+phone);
 		ParentService parentService=ParentService.getInstance();
 		response.getWriter().write(parentService.getOneParentInfo(phone));
-		System.out.println(parentService.getOneParentInfo(phone));
+
 	}
 	
 

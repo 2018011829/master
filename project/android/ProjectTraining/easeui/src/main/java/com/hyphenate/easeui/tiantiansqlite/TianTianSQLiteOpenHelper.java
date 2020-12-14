@@ -26,7 +26,7 @@ public class TianTianSQLiteOpenHelper extends SQLiteOpenHelper {
     //重写的方法
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table parents(id int primary key,phone char(11),password varchar(15),nickname varchar(20),avatar varchar(20))");
+        db.execSQL("create table parentInfos(phone char(11) primary key,nickname varchar(50),avatar varchar(50),remark varchar(50))");
     }
 
     @Override

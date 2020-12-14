@@ -45,10 +45,24 @@ public class HomePageService {
 			treeMap=new TreeMap<String,List<Book>>();
 			for(BookType bookType:bookTypes) {
 				String type=bookType.getType();
-				List<Book> books=bookDao.getSixBooksByType(type,grades);
-				treeMap.put(type, books);
+				if(bookDao.getSixBooksByType(type,grades).size()!=0) {
+					List<Book> books=bookDao.getSixBooksByType(type,grades);
+					treeMap.put(type, books);
+				}else {
+					continue;
+				}
 			}
 		}
 		return treeMap;
+	}
+	
+	/**
+	 * 根据书名获取书籍的所有信息
+	 * @param bookName
+	 * @return
+	 */
+	public Book getBookByName(String bookName) {
+		Book book = bookDao.getBookByName(bookName);
+		return book;
 	}
 }

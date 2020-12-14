@@ -6,6 +6,7 @@
 <io.codetail.widget.RevealFrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
@@ -22,7 +23,7 @@
 
             <TextView
                 android:id="@+id/idiom_type_name"
-                android:textSize="28sp"
+                android:textSize="33sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -31,7 +32,7 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <GridView

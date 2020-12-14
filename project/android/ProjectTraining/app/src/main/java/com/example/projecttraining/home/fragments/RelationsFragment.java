@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.adapter.ContactSectionPagerAdapter;
+import com.example.projecttraining.util.ParentUtil;
 import com.google.android.material.tabs.TabLayout;
+import com.hyphenate.chat.EMClient;
 
 /**
  * 联系人的fragment

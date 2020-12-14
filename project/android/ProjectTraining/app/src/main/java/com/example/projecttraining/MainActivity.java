@@ -1,6 +1,5 @@
 package com.example.projecttraining;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTabHost;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /*
          * 引导页代码
          * 哪个页面是默认显示页面就把这段代码添加到哪里
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                            runOnUiThread(new Runnable() {
                                @Override
                                public void run() {
-                                   tab1.setIcon(R.mipmap.relations_black_noreaded_message);
+                                   tab1.setIcon(R.mipmap.relations_noreaded_message0);
                                }
                            });
 
@@ -127,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void run() {
                if(EMClient.getInstance().chatManager().getUnreadMessageCount()==0){
-                   tab1.setIcon(R.mipmap.relations_black);
+                   tab1.setIcon(R.mipmap.relations_img0);
                }else{
-                   tab1.setIcon(R.mipmap.relations_black_noreaded_message);
+                   tab1.setIcon(R.mipmap.relations_noreaded_message0);
                }
            }
        }.start();
@@ -141,17 +139,17 @@ public class MainActivity extends AppCompatActivity {
                 super.onTabSelected(tab);
                 switch (tab.getPosition()){
                     case 0:
-                        tab.setIcon(R.mipmap.home_green);
+                        tab.setIcon(R.mipmap.home_img1);
                         break;
                     case 1:
-                        tab.setIcon(R.mipmap.relations_green);
+                        tab.setIcon(R.mipmap.relations_img1);
                         ParentUtil.isSelectedRelationTab=true;
                         break;
                     case 2:
-                        tab.setIcon(R.mipmap.moments_green);
+                        tab.setIcon(R.mipmap.moments_img1);
                         break;
                     case 3:
-                        tab.setIcon(R.mipmap.my_green);
+                        tab.setIcon(R.mipmap.my_img1);
                         break;
                 }
             }
@@ -160,16 +158,16 @@ public class MainActivity extends AppCompatActivity {
             public void onTabUnselected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        tab.setIcon(R.mipmap.home_black);
+                        tab.setIcon(R.mipmap.home_img0);
                         break;
                     case 1:
-                        tab.setIcon(R.mipmap.relations_black);
+                        tab.setIcon(R.mipmap.relations_img0);
                         break;
                     case 2:
-                        tab.setIcon(R.mipmap.moments_black);
+                        tab.setIcon(R.mipmap.moments_img0);
                         break;
                     case 3:
-                        tab.setIcon(R.mipmap.my_black);
+                        tab.setIcon(R.mipmap.my_img0);
                         break;
                 }
             }

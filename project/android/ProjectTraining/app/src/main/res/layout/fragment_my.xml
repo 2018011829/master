@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
+    android:id="@+id/sv_root"
     android:background="#F5F5F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -133,10 +134,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/iv_mine_myChildImg"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/mine_child"/>
                     <TextView
+                        android:id="@+id/tv_mine_myChildName"
                         android:text="我的孩子"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"
@@ -154,6 +157,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_mine_mycollection"
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
