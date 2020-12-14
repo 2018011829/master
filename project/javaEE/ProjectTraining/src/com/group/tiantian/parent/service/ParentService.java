@@ -6,8 +6,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.group.tiantian.entity.ContactsStatus;
+import com.group.tiantian.entity.Parent;
 import com.group.tiantian.entity.ParentMessage;
 import com.group.tiantian.parent.dao.ParentDao;
+import com.group.tiantian.util.Page;
+
+
 
 public class ParentService {
 	private static ParentService parentService;
@@ -173,6 +177,24 @@ public class ParentService {
 		// TODO Auto-generated method stub
 		ParentDao.deleteRemarks(fromPhone,toPhone);
 		
+	}
+
+	/**
+	 * 获取一页的用户信息，用于后台管理系统展示
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public Page<Parent> getPage(int pageNum, int pageSize) {
+		Page<Parent> page=new Page<Parent>(pageNum,pageSize);
+		int count=ParentDao.countAll();
+		List<Parent> list=ParentDao.selectPage(pageNum,pageSize);
+		page.setList(list);
+		page.setTotalCount(count);
+		System.out.println("测试page中的count"+count);
+		System.out.println("测试page中的list"+list.size());
+		System.out.println(list.get(2).getNickname());
+		return page;
 	}
 	
 	
