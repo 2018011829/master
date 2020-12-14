@@ -139,6 +139,35 @@ public class ParentDao {
 		return parent;
 
 	}
+	
+	/**
+	 * 分页查询
+	 * 查询所有的父母信息，用于向后台管理系统展示
+	 * @return
+	 */
+	public List<Parent> selectAllParent() {
+		List<Parent> parents=new ArrayList<Parent>();
+		String sql = "select * from parents";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Parent parent = new Parent();
+				parent.setId(resultSet.getInt(1));
+				parent.setPhone(resultSet.getString(2));
+				parent.setPassword(resultSet.getString(3));
+				parent.setNickname(resultSet.getString(4));
+				parent.setAvator(resultSet.getString(5));
+				parents.add(parent);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return parents;
+
+	}
 
 	public List<Parent> queryParentsByPhone(String query) {
 		String sql = "select * from parents where phone=?";
@@ -430,4 +459,54 @@ public class ParentDao {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 查询数据库一共多少个数据
+	 * @return
+	 */
+	public static int countAll() {
+		int count=0;
+		try {
+			preparedStatement =connection.prepareStatement("select count(id) from parents");
+			ResultSet resultSet=preparedStatement.executeQuery();
+			resultSet.next();
+			count=resultSet.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	/**
+	 * 查询一页的数据，
+	 * @param pageNum 当前页数
+	 * @param pageSize 每页的数据个数
+	 * @return 返回picture的list集合
+	 */
+	public static List<Parent> selectPage(int pageNum, int pageSize) {
+		List<Parent> list=new ArrayList<Parent>();
+		try {
+			preparedStatement=connection.prepareStatement("select * from parents limit ?,?");
+			preparedStatement.setInt(1, (pageNum-1)*pageSize);
+			preparedStatement.setInt(2, pageSize);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				System.out.println("添加一个用户");
+				Parent parent=new Parent();
+				parent.setId(resultSet.getInt(1));
+				parent.setPhone(resultSet.getString(2));
+				parent.setPassword(resultSet.getString(3));
+				parent.setNickname(resultSet.getString(4));
+				parent.setAvator(resultSet.getString(5));
+				list.add(parent);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 }

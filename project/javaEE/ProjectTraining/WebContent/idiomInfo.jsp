@@ -38,7 +38,7 @@
                         <img src="imgs-server/home/xiala.png" id="xiala1">
                     </li>
                     <ul class="user_menu"  id="click_user_menu" style="display: none">
-                        <li onclick="showMenu_info1()" id="user_info"><a href="userInfo.jsp">用户信息</a></li>
+                        <li onclick="showMenu_info1()" id="user_info"><a href="AllParentsInfoServlet">用户信息</a></li>
                         <li onclick="showMenu_add1()" id="user_add"><a href="addUser.jsp">新增用户</a></li>
                     </ul>
                     <li id="idiom" onclick="showIdiomMenu()">
