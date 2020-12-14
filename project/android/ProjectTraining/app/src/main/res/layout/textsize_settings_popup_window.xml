@@ -37,13 +37,13 @@
 
         </LinearLayout>
 
-        <View
+        <!--        <View-->
 
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#aa000000" />
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_marginLeft="5dp"-->
+        <!--            android:layout_marginRight="5dp"-->
+        <!--            android:background="#aa000000" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,6 +82,47 @@
                 android:textColor="@android:color/white"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|left"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="慢"/>
+
+            <SeekBar
+                android:id="@+id/sb_auto_scroll_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="50"
+                android:layout_weight="1"
+                android:maxHeight="1dp"
+                android:minHeight="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="快"/>
+
+            <TextView
+                android:id="@+id/tv_auto_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:background="@drawable/setting_btn_bg2"
+                android:layout_weight="2.3"
+                android:text="自动滚屏"
+                android:textColor="@android:color/white" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

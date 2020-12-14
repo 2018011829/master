@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50506
+Source Server Version : 50701
 Source Host           : localhost:3306
 Source Database       : tiantian
 
 Target Server Type    : MYSQL
-Target Server Version : 50506
+Target Server Version : 50701
 File Encoding         : 65001
 
-Date: 2020-12-13 23:15:43
+Date: 2020-12-14 10:13:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,13 +46,13 @@ CREATE TABLE `books` (
   `author` varchar(50) NOT NULL,
   `grades` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES ('1', '格林童话', '《格林童话》是由德国语言学家雅可布·格林和威廉·格林兄弟收集、整理、加工完成的德国民间文学。《格林童话》里面约有200多个故事，大部分源自民间的口头传说，其中的《灰姑娘》、《白雪公主》、《小红帽》、《青蛙王子》等童话故事较为闻名。它是世界童话的经典之作，自问世以来，在世界各地影响十分广泛。格林兄弟以其丰富的想象、优美的语言给孩子们讲述了一个个神奇而又浪漫的童话故事。', '童话', 'gelintonghua.png', '《格林童话》.TXT', '雅可布·格林和威廉·格林兄弟', 'big');
-INSERT INTO `books` VALUES ('2', '安徒生童话', '《安徒生童话》是丹麦作家安徒生创作的童话集，共由166篇故事组成。该bai作爱憎分明，热情歌颂劳动人民、赞美他们的善良和纯洁的优秀品德；无情地揭露和批判王公贵族们的愚蠢、无能、贪婪和残暴。其中较为闻名的故事有：《小人鱼》、《丑小鸭》、《卖火柴的小女孩》、《拇指姑娘》等。《安徒生童话》已经被译为150多种语言出版发行。他的童话故事还激发了大量电影、芭蕾舞剧、舞台剧以及电影动画的制作。', '童话', 'antushengtonghua.png', '《安徒生童话集》.TXT', '安徒生', 'small');
+INSERT INTO `books` VALUES ('1', '格林童话', '《格林童话》是由德国语言学家雅可布·格林和威廉·格林兄弟收集、整理、加工完成的德国民间文学。《格林童话》里面约有200多个故事，大部分源自民间的口头传说，其中的《灰姑娘》、《白雪公主》、《小红帽》、《青蛙王子》等童话故事较为闻名。它是世界童话的经典之作，自问世以来，在世界各地影响十分广泛。格林兄弟以其丰富的想象、优美的语言给孩子们讲述了一个个神奇而又浪漫的童话故事。', '童话', 'gelintonghua.png', '格林童话.txt', '雅可布·格林和威廉·格林兄弟', 'big');
+INSERT INTO `books` VALUES ('2', '安徒生童话', '《安徒生童话》是丹麦作家安徒生创作的童话集，共由166篇故事组成。该bai作爱憎分明，热情歌颂劳动人民、赞美他们的善良和纯洁的优秀品德；无情地揭露和批判王公贵族们的愚蠢、无能、贪婪和残暴。其中较为闻名的故事有：《小人鱼》、《丑小鸭》、《卖火柴的小女孩》、《拇指姑娘》等。《安徒生童话》已经被译为150多种语言出版发行。他的童话故事还激发了大量电影、芭蕾舞剧、舞台剧以及电影动画的制作。', '童话', 'antushengtonghua.png', '安徒生童话集.txt', '安徒生', 'small');
 INSERT INTO `books` VALUES ('3', '意大利童话', '意大利是文艺复兴的发源地，也是欧洲童话的故乡，童话在意大利的产生远比其他欧洲国家要早得多。也许同意大利民族热烈奔放的性格有关，意大利童话中对于真理、正义、善良、慷慨、真诚、勤劳、勇敢等优秀品质的拥护和赞颂更加热情，同时对于虚伪、邪恶、凶残、贪婪、狡猾、懒惰、怯懦等丑陋品质的憎恶和谴责也更加严厉。', '童话', 'yidalitonghua.jpg', '意大利童话.txt', '伊塔洛·卡尔维诺', 'big');
 INSERT INTO `books` VALUES ('4', '十二生肖的故事', '中国传统文化中有很多独特、有趣的内容，十二生肖文化就是其中之一。子鼠、丑牛、寅虎、卯兔、辰龙、巳蛇、午马、未羊、申猴、酉鸡、戌狗、亥猪，十二种动物与十二地支相配，形成有意思的组合，而在这种组合背后还有着丰富的内涵和深厚的文化积淀。《十二生肖的故事》通过故事的形式，讲述十二生肖背后的文化内涵，使学生了解生肖不同的象征意义，体悟其中蕴含的智慧、勤劳、质朴、亲情等中华民族传统美德，体验中华祖先文化遗泽的博大。', '童话', 'shiershengxiaodegushi.jpg', '十二生肖的故事.txt', '成坊，姚勤 ', 'small');
 INSERT INTO `books` VALUES ('5', '洋葱头历险记', '该作讲述主人公洋葱头，是一个有主张、有正义感的男孩。洋葱头的正义感和智慧可以在各个方面表现出来。老洋葱不小心踩了柠檬王一脚而被关进了监狱。洋葱头来探监时老洋葱告诉他，关押在这个监狱里的都是可怜的人，他们都没有犯罪，可是做坏事的那些人却被养在皇宫里。洋葱头决定救出监狱里善良的人们，却不幸也被投入黑牢。在鼹鼠太太、小樱桃和小草莓的帮助下，洋葱头和朋友们最后终于逃出了监狱，然后又和村民们一起占领了城堡，最后柠檬兵们也纷纷放下武器投降了。大家团结起来，一起推翻了柠檬王的统治，获得了自由。', '童话', 'yangcongtoulixianji.jpg', '洋葱头历险记.txt', '贾尼·罗大里', 'small');
@@ -73,7 +73,13 @@ INSERT INTO `books` VALUES ('19', '风又三郎', '传说每年立春后的第�
 INSERT INTO `books` VALUES ('20', '古斯柯布多力传记', '在伊哈特卜北部某座大森林中，古斯柯布多力（小栗旬 配音）和父亲（林隆三 配音）、母亲（草刈民代 配音）以及妹妹妮莉（忽那汐里 配音）过着幸福宁静的生活。某一年，严寒席卷森林，饥饿让此地的生灵们倍受煎熬。布多力的父母相继消失在森林深处，只剩下他和年幼的妹妹相依为命...', '童话', 'gusikebuduolizhuan.png', '古斯柯布多力传记.txt', '[日本]宫泽贤治', 'small');
 INSERT INTO `books` VALUES ('21', '银河铁道之夜', '长篇童话《银河铁道之夜》是宫泽贤治的代表作，亦是一部广受喜爱的永恒杰作。它凝聚了作者思想、信仰、教养的全部精髓，被视为宫泽贤治作品的集大成者。作品借焦班尼和柯贝内拉之口，探讨了什么是死亡，什么是真正的幸福这一深重的话题。虽为童话，却是随着阅历和年龄的增长，才能真正领悟其真谛的、贯穿读者一生的重量级文学作品。', '童话', 'yinhetiedaozhiye.png', '银河铁道之夜.txt', '[日本]宫泽贤治', 'big');
 INSERT INTO `books` VALUES ('22', '白客', '这个故事发生在一个再婚的家庭里。孔若君的父母在他高考之前离婚了。这个打击对孔若君来说实在太大了，尽管被认为是心理素质一惯很好，在高考中还是名落孙山。继父带来一个女儿，殷静，长得如花似玉，可就是对孔若君从不正眼相看，一副居高临下的公主架子，编偏考上了电影学院......', '悬疑推理', 'baike.png', '白客.txt', '郑渊洁', 'big');
-INSERT INTO `books` VALUES ('23', '金拇指', '《金拇指》是郑渊洁2001年创作的19万字长篇小说。女一号欧阳宁秀是下岗工人，家境贫寒。一次同学聚会改变了她的命运。偶然的发现使她得知自己的某个大拇指是能洞悉股市未来行情的金拇指。金拇指给她的家庭、友谊、生命制造的悲欢离合可谓登峰造极。', '小说', 'jinmuzhi.png', '金拇指.txt', '郑渊洁', 'big');
+INSERT INTO `books` VALUES ('23', '金拇指', '《金拇指》是郑渊洁2001年创作的19万字长篇小说。女一号欧阳宁秀是下岗工人，家境贫寒。一次同学聚会改变了她的命运。偶然的发现使她得知自己的某个大拇指是能洞悉股市未来行情的金拇指。金拇指给她的家庭、友谊、生命制造的悲欢离合可谓登峰造极。', '悬疑推理', 'jinmuzhi.png', '金拇指.txt', '郑渊洁', 'big');
+INSERT INTO `books` VALUES ('24', '麦田里的守望者', '该书的主人公霍尔顿是个中学生，出生于富裕的中产阶级家庭。他虽只有16岁，但比常人高一头，整日穿着风衣，戴着猎帽，游游荡荡，不愿读书。他对学校里的一切——老师、同学、功课、球赛......', '文学名著', 'maitianlideshouwangzhe.png', '麦田里的守望者.txt', '【美】杰罗姆·大卫·塞林格', 'small');
+INSERT INTO `books` VALUES ('25', '追风筝的人', '小说以第一人称的角度讲述了阿米尔的故事。阿米尔生于1963年喀布尔的一个富人社区中的一个富裕家庭。其父亲是一个正直的普什图人，一名法官的儿子和成功的地毯商人。阿米尔家的仆人阿里的儿子哈桑则是哈扎拉人......', '文学名著', 'zhuifengzhengderen.png', '追风筝的人.txt', '【美】卡勒德·胡赛尼', 'small');
+INSERT INTO `books` VALUES ('26', '水浒传', '北宋末年，宋徽宗在位时期，\r\n央视版《水浒传》人物\r\n央视版《水浒传》人物(35张)\r\n天下瘟疫流行，官府无道，官逼民反。在梁山泊聚集起来自江湖上的许多英雄好汉，打州劫府、济困扶贫、严重动摇了北宋朝廷的统治，但宋江对朝廷的投降导致了梁山农民起义最终走向失败的悲惨结局......', '文学名著', 'shuihuzhuan.png', '水浒传.txt', '施耐庵', 'big');
+INSERT INTO `books` VALUES ('27', '战争与和平', '该作以1812年的卫国战争为中心，反映从1805到1820年间的重大历史事件。以鲍尔康斯、别祖霍夫、罗斯托夫和库拉金四大贵族的经历为主线，在战争与和平的交替描写中把众多的事件和人物串联起来......', '文学名著', 'zhanzhengyuheping.png', '战争与和平.txt', '[俄]列夫·尼古拉耶维奇·托尔斯泰', 'big');
+INSERT INTO `books` VALUES ('28', '罪与罚', '小说描写穷大学生拉斯柯尔尼科夫受无政府主义思想毒害，认为自己可以为所欲为。为生计所迫，他杀死放高利贷的老太婆阿廖娜和她的无辜妹妹丽扎韦塔，制造了一起震惊全俄的凶杀案。经历了一场内心痛苦的忏悔后，他最终......', '文学名著', 'zuiyufa.png', '罪与罚.txt', '[俄]陀思妥耶夫斯基', 'big');
+INSERT INTO `books` VALUES ('29', '童年', '该作讲述了阿廖沙（高尔基的乳名）三岁到十岁这一时期的童年生活，生动地再现了19世纪七八十年代沙俄下层人民的生活状况，写出了高尔基对苦难的认识，对社会人生的独特见解，字里行间涌动着一股生生不息的热望与坚强......', '文学名著', 'tongnian.png', '童年.txt', '[苏联]马克西姆·高尔基', 'small');
 
 -- ----------------------------
 -- Table structure for `bookshelf`
@@ -90,6 +96,7 @@ CREATE TABLE `bookshelf` (
 -- Records of bookshelf
 -- ----------------------------
 INSERT INTO `bookshelf` VALUES ('18730094415', '小明', '安娜卡列尼娜');
+INSERT INTO `bookshelf` VALUES ('18831158249', '小明', '白客');
 INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '安娜卡列尼娜');
 INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '窗边的小豆豆');
 
@@ -1076,6 +1083,46 @@ INSERT INTO `child` VALUES ('2', '赵义', '二年级', '女', '19831127142');
 INSERT INTO `child` VALUES ('3', '让人', '一年级', '男', '19831127142');
 
 -- ----------------------------
+-- Table structure for `child_copy`
+-- ----------------------------
+DROP TABLE IF EXISTS `child_copy`;
+CREATE TABLE `child_copy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of child_copy
+-- ----------------------------
+INSERT INTO `child_copy` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
+INSERT INTO `child_copy` VALUES ('2', '赵义', '二年级', '女', '19831127142');
+INSERT INTO `child_copy` VALUES ('3', '让人', '一年级', '男', '19831127142');
+
+-- ----------------------------
+-- Table structure for `child_copy1`
+-- ----------------------------
+DROP TABLE IF EXISTS `child_copy1`;
+CREATE TABLE `child_copy1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of child_copy1
+-- ----------------------------
+INSERT INTO `child_copy1` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
+INSERT INTO `child_copy1` VALUES ('2', '赵义', '二年级', '女', '19831127142');
+INSERT INTO `child_copy1` VALUES ('3', '让人', '一年级', '男', '19831127142');
+
+-- ----------------------------
 -- Table structure for `classifyidiom`
 -- ----------------------------
 DROP TABLE IF EXISTS `classifyidiom`;
@@ -1145,6 +1192,7 @@ CREATE TABLE `collections` (
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
+INSERT INTO `collections` VALUES ('18831158249', '小明', 'book', '白客');
 INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '动物庄园');
 INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '安娜卡列尼娜');
 
@@ -1158,13 +1206,17 @@ CREATE TABLE `contacts_status` (
   `to_phone` char(11) NOT NULL,
   `contacts_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of contacts_status
 -- ----------------------------
-INSERT INTO `contacts_status` VALUES ('35', '13730024418', '18730094411', '1');
-INSERT INTO `contacts_status` VALUES ('36', '18730094411', '13730024418', '1');
+INSERT INTO `contacts_status` VALUES ('1', '18730094411', '18730094412', '0');
+INSERT INTO `contacts_status` VALUES ('2', '18730094411', '18730094413', '1');
+INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
+INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
+INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
+INSERT INTO `contacts_status` VALUES ('6', '18831158249', '19831127142', '1');
 
 -- ----------------------------
 -- Table structure for `idiom`
@@ -1787,11 +1839,12 @@ CREATE TABLE `moments` (
   `comments` char(255) DEFAULT NULL,
   `moments_time` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments
 -- ----------------------------
+INSERT INTO `moments` VALUES ('1', '19831127142', null, null, null, null, null, null, '2020-12-12 at 10:23:18 GMT+08:00');
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -1819,11 +1872,12 @@ CREATE TABLE `moments_content` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_content
 -- ----------------------------
+INSERT INTO `moments_content` VALUES ('1', 'QQ', '1', '2020-12-12 at 10:23:18 GMT+08:00', '19831127142');
 
 -- ----------------------------
 -- Table structure for `moments_friendname`
@@ -1851,7 +1905,7 @@ CREATE TABLE `moments_likegiveperson` (
   `likegivePersonPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `likegiveNumber` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_likegiveperson
@@ -1868,11 +1922,12 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_pictureurl
 -- ----------------------------
+INSERT INTO `moments_pictureurl` VALUES ('1', 'android1607739799264.jpg', '1', '2020-12-12 at 10:23:18 GMT+08:00', '19831127142');
 
 -- ----------------------------
 -- Table structure for `parentmessage`
@@ -2003,4 +2058,3 @@ CREATE TABLE `types` (
 INSERT INTO `types` VALUES ('1', '童话');
 INSERT INTO `types` VALUES ('2', '文学名著');
 INSERT INTO `types` VALUES ('3', '悬疑推理');
-INSERT INTO `types` VALUES ('4', '小说');

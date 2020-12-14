@@ -58,19 +58,18 @@ public class BooksHomeAdapter extends BaseAdapter {
     public Object getItem(int i) {
         List<Book> list=null;
         if (treeMap!=null){
-            list=treeMap.get(keys.get(i));
+            if(treeMap.get(keys.get(i)).size()!=0){
+
+                list=treeMap.get(keys.get(i));
+                return list;
+            }
         }
-        return list;
+        return null;
     }
 
     @Override
     public long getItemId(int i) {
-        long id=0;
-        if (getItem(i)!=null){
-            List<Book> list= (List<Book>) getItem(i);
-            id=list.get(i).getId();
-        }
-        return id;
+        return i;
     }
 
     @Override
@@ -102,222 +101,227 @@ public class BooksHomeAdapter extends BaseAdapter {
         }
         //给控件赋值
         final List<Book> listBooks= (List<Book>) getItem(i);
-        holder.tvType.setText(keys.get(i));
-        for (int j=0;j<listBooks.size();++j){
-            if (j==0){
-                holder.tvName1.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg1);
+        if (listBooks!=null){
+
+            holder.tvType.setText(keys.get(i));
+            Book book=listBooks.get(0);
+
+            for (int j=0;j<listBooks.size();++j){
+                if (j==0){
+                    holder.tvName1.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg1);
+                }
+                if (j==1){
+                    holder.tvName2.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg2);
+                }
+                if (j==2){
+                    holder.tvName3.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg3);
+                }
+                if (j==3){
+                    holder.tvName4.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg4);
+                }
+                if (j==4){
+                    holder.tvName5.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg5);
+                }
+                if (j==5){
+                    Log.e("j",""+j);
+                    holder.tvName6.setText(listBooks.get(j).getName());
+                    Glide.with(mContext)
+                            .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
+                            .placeholder(R.mipmap.loading)
+                            .error(R.drawable.faliure)
+                            .fallback(R.drawable.faliure)
+                            .transform(new GlideRoundImage(mContext,10))
+                            .into(holder.ivImg6);
+                }
             }
-            if (j==1){
-                holder.tvName2.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg2);
-            }
-            if (j==2){
-                holder.tvName3.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg3);
-            }
-            if (j==3){
-                holder.tvName4.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg4);
-            }
-            if (j==4){
-                holder.tvName5.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg5);
-            }
-            if (j==5){
-                Log.e("j",""+j);
-                holder.tvName6.setText(listBooks.get(j).getName());
-                Glide.with(mContext)
-                        .load(ConfigUtil.SERVICE_ADDRESS+"bookImgs/"+listBooks.get(j).getImg())
-                        .placeholder(R.mipmap.loading)
-                        .error(R.drawable.faliure)
-                        .fallback(R.drawable.faliure)
-                        .transform(new GlideRoundImage(mContext,10))
-                        .into(holder.ivImg6);
-            }
+
+            final String type=holder.tvType.getText().toString();
+            //更多的点击事件
+            holder.tvGetMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, MoreBooksActivity.class);
+                    //传递类型参数
+                    intent.putExtra("type",type);
+                    intent.putExtra("grades", book.getGrades());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.ivGetMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, MoreBooksActivity.class);
+                    //传递类型参数
+                    intent.putExtra("type",type);
+                    intent.putExtra("grades", book.getGrades());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            //某本书的点击事件
+            holder.ivImg1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(0));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(0));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            holder.ivImg2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(1));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(1));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            holder.ivImg3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(2));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(2));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            holder.ivImg4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(3));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(3));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            holder.ivImg5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(4));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(4));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
+            holder.ivImg6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(5));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.tvName6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(mContext, BookInfoActivity.class);
+                    //传递类型参数
+                    intent.putExtra("book",listBooks.get(5));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
         }
-
-        final String type=holder.tvType.getText().toString();
-        //更多的点击事件
-        holder.tvGetMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, MoreBooksActivity.class);
-                //传递类型参数
-                intent.putExtra("type",type);
-                intent.putExtra("grades", GradesPagerAdapter.grades);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.ivGetMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, MoreBooksActivity.class);
-                //传递类型参数
-                intent.putExtra("type",type);
-                intent.putExtra("grades", GradesPagerAdapter.grades);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        //某本书的点击事件
-        holder.ivImg1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(0));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(0));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        holder.ivImg2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(1));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(1));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        holder.ivImg3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(2));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(2));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        holder.ivImg4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(3));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(3));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        holder.ivImg5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(4));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(4));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-
-        holder.ivImg6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(5));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.tvName6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(mContext, BookInfoActivity.class);
-                //传递类型参数
-                intent.putExtra("book",listBooks.get(5));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
 
         return view;
     }

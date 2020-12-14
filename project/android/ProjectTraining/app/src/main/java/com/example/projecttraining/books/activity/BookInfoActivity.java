@@ -122,9 +122,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                         case "书已经收藏":
                             ivShouCang.setImageDrawable(getResources().getDrawable(R.mipmap.shoucangchenggong, null));
                             currentIvShoucang = R.mipmap.shoucangchenggong;
-                            Toast.makeText(BookInfoActivity.this,
-                                    "书已经收藏",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(BookInfoActivity.this,
+//                                    "书已经收藏",
+//                                    Toast.LENGTH_SHORT).show();
                             break;
                     }
 
@@ -155,9 +155,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                             btnAddBookshelf.setTextColor(getResources().getColor(android.R.color.black,null));
                             btnAddBookshelf.setBackgroundColor(getResources().getColor(android.R.color.darker_gray,null));
                             currentBtnBookshelf=android.R.color.black;
-                            Toast.makeText(BookInfoActivity.this,
-                                    "书已经加入书架！",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(BookInfoActivity.this,
+//                                    "书已经加入书架！",
+//                                    Toast.LENGTH_SHORT).show();
                             break;
                     }
 
@@ -181,7 +181,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         findViews();
         //获取intent中的数据，并进行解析显示在控件中
         Intent intent = getIntent();
-        BooksHomePageActivity.activity.finish();
+//        BooksHomePageActivity.activity.finish();
         book = (Book) intent.getSerializableExtra("book");
         grades=intent.getStringExtra("grades");
         flag = intent.getStringExtra("flag");
@@ -250,7 +250,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 Log.e("BookInfoActivity", "请求失败");
                 Message msg = handler.obtainMessage();
                 msg.what = 2;
-                msg.obj = "目录信息获取失败！";
+                msg.obj = "网络错误！";
                 handler.sendMessage(msg);
             }
 
@@ -304,10 +304,11 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                     intent.putExtra("type", type);
                     intent.putExtra("grades",grades);
                     startActivity(intent);
-                } else {
-                    Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);
-                    startActivity(intent);
                 }
+//                else {
+//                    Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);
+//                    startActivity(intent);
+//                }
                 finish();
                 break;
             case R.id.tv_get_more_content://点击显示更多目录
@@ -412,7 +413,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 Log.e("BookInfoActivity", "加入书架或取消失败！");
                 Message msg = handler.obtainMessage();
                 msg.what = 2;
-                msg.obj = "加入书架或取消失败！";
+                msg.obj = "网络错误！";
                 handler.sendMessage(msg);
             }
 
@@ -460,7 +461,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 Log.e("BookInfoActivity", "收藏或取消收藏失败！");
                 Message msg = handler.obtainMessage();
                 msg.what = 2;
-                msg.obj = "收藏或取消收藏失败！";
+                msg.obj = "网络错误！";
                 handler.sendMessage(msg);
             }
 
@@ -490,10 +491,11 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 intent.putExtra("type", type);
                 intent.putExtra("grades",grades);
                 startActivity(intent);
-            } else {
-                Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);
-                startActivity(intent);
             }
+//            else {
+//                Intent intent = new Intent(BookInfoActivity.this, BooksHomePageActivity.class);
+//                startActivity(intent);
+//            }
 
             finish();
             return true;
