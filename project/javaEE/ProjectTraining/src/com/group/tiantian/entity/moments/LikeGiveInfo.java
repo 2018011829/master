@@ -1,7 +1,5 @@
 package com.group.tiantian.entity.moments;
 
-import java.util.List;
-
 public class LikeGiveInfo {
 	private int id;//点赞信息id
 	private int momentsId;//被点赞说说id

@@ -29,6 +29,7 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
     private TextView tvChangeTextStyle;
     private SeekBar changeLight; //调整系统亮度的进度条
     private int currentLight; //当前亮度
+    private TextView autoScroll; //自动滚屏
 
 
     public void setTvShowSize() {
@@ -84,6 +85,8 @@ public class TextSizeSettingPopupWindow extends PopupWindow {
         this.tvShowSize=mMenuView.findViewById(R.id.tv_show_text_size);
         this.tvShowSize.setText(ReadBookActivity.currentTextSize+"");
         this.tvChangeTextStyle=mMenuView.findViewById(R.id.tv_change_text_style);
+        this.autoScroll=mMenuView.findViewById(R.id.tv_auto_scroll);
+        autoScroll.setOnClickListener(itemsOnclick);
         ivChangeSmall.setOnClickListener(itemsOnclick);
         ivChangeBig.setOnClickListener(itemsOnclick);
         tvChangeTextStyle.setOnClickListener(itemsOnclick);

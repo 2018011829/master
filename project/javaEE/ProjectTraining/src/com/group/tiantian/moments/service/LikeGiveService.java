@@ -39,8 +39,36 @@ public class LikeGiveService {
 		PersonalInfo personalInfo=likeGiveDao.getPersonalInfo(phoneNum);
 		return personalInfo;
 	}
+	
 	/**
-	 * 将说说id，点赞人昵称，点赞人手机号存入点赞表中，点赞人数通过说说id查询点赞人的个数再写入点赞表
+	 * 通过说说id和点赞人手机号查询表中是否有这一条记录
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回说说对象
+	 */
+	public boolean selectLikeGive(int momentsId,String likegivePersonPhone) {
+		boolean b =  likeGiveDao.selectLikeGive(momentsId, likegivePersonPhone);
+		return b;
+	}
+	
+
+	/**
+	 * 通过说说id和点赞人手机号查询表是否点赞
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回说说对象
+	 */
+	public int selectLikeGiveboolean(int momentsId,String likegivePersonPhone) {
+		int temp = likeGiveDao.selectLikeGiveboolean(momentsId, likegivePersonPhone);
+		return temp;
+	}
+	
+	/**
+	 * 将说说id，点赞人昵称，点赞人手机号存入点赞表中
 	 * @param start
 	 * @param end
 	 * @param articleName

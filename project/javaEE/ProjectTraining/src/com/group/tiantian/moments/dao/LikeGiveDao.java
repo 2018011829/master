@@ -56,8 +56,65 @@ public class LikeGiveDao {
 		}
 		return personalInfo;
 	}
+	
 	/**
-	 * 将说说id，点赞人昵称，点赞人手机号存入点赞表中，点赞人数通过说说id查询点赞人的个数再写入点赞表
+	 * 通过说说id和点赞人手机号查询表中是否有这一条记录
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回说说对象
+	 */
+	public boolean selectLikeGive(int momentsId,String likegivePersonPhone) {
+		boolean b = false;
+		String sql = "select * from moments_likegivePerson where momentsId = ? and likegivePersonPhone = ?";		
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			preparedStatement.setString(2,likegivePersonPhone);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs.next()) {
+				b = true;
+			}else {
+				b = false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 通过说说id和点赞人手机号查询表是否点赞
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回说说对象
+	 */
+	public int selectLikeGiveboolean(int momentsId,String likegivePersonPhone) {
+		int temp = 0;
+		String sql = "select likegiveboolen from moments_likegivePerson  where momentsId = ? and likegivePersonPhone = ?";		
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			preparedStatement.setString(2,likegivePersonPhone);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs.next()) {
+				temp = rs.getInt("likegiveboolen");
+			}else {
+				temp = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return temp;
+	}
+	
+	/**
+	 * 将说说id，点赞人昵称，点赞人手机号存入点赞表中
 	 * @param start
 	 * @param end
 	 * @param articleName
@@ -66,19 +123,37 @@ public class LikeGiveDao {
 	 */
 	public boolean insertLikeGiveInfo(int momentsId,String likegivePersonName,String likegivePersonPhone) {
 		boolean b = false;
-		String sql = "insert into moments_likegivePerson(momentsId,likegivePersonName,likegivePersonPhone) values(?,?,?)";
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1,momentsId);
-			preparedStatement.setString(2,likegivePersonName);
-			preparedStatement.setString(3,likegivePersonPhone);
-			int row=preparedStatement.executeUpdate();
-			if(row>0) {
-				b=true;
+		//先从表中查询点赞信息，如果有，直接修改likegiveboolen,如果没有，插入数据
+		System.out.println(selectLikeGive(momentsId,likegivePersonPhone));
+		if(!selectLikeGive(momentsId,likegivePersonPhone)) {
+			String sql = "insert into moments_likegivePerson(momentsId,likegivePersonName,likegivePersonPhone,likegiveboolen) values(?,?,?,?)";
+			try {
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setInt(1,momentsId);
+				preparedStatement.setString(2,likegivePersonName);
+				preparedStatement.setString(3,likegivePersonPhone);
+				preparedStatement.setInt(4,1);
+				int row=preparedStatement.executeUpdate();
+				if(row>0) {
+					b=true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}else {
+			String sql = "update moments_likegivePerson set likegiveboolen = ?";
+			try {
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setInt(1,1);
+				int row=preparedStatement.executeUpdate();
+				if(row>0) {
+					b=true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return b;
 	}
@@ -92,9 +167,11 @@ public class LikeGiveDao {
 	 */
 	public List<String> likeGiveNames(int momentsId){
 		List<String> likeGiveNames = new ArrayList<>();
-		String sql="select * from moments_likegivePerson";
+		String sql="select * from moments_likegivePerson where momentsId = ? and likegiveboolen = ?";
 		try {
 			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			preparedStatement.setInt(2,1);
 			ResultSet rs=preparedStatement.executeQuery();
 			if(rs!=null) {
 				while(rs.next()) {
@@ -118,7 +195,7 @@ public class LikeGiveDao {
 	 */
 	public boolean deleteLikeGiveInfo(int momentsId,String likegivePersonPhone) {
 		boolean b = false;
-		String sql = "delete from moments_likegiveperson where momentsId = ? and likegivePersonPhone = ?";
+		String sql = "delete from moments_likegivePerson where momentsId = ? and likegivePersonPhone = ?";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1,momentsId);

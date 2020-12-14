@@ -7,11 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -211,8 +209,7 @@ public class UploadDynamic extends AppCompatActivity {
                     sendPictureToServer(pictureUrls.get(i));//循环发送多张图片
                 }
                 Toast.makeText(UploadDynamic.this,"上传成功",Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(UploadDynamic.this,MainActivity.class);
-//                startActivity(intent);
+                finish();
                 break;
         }
     }
@@ -267,7 +264,7 @@ public class UploadDynamic extends AppCompatActivity {
 
     //向服务端发送图片
     private void sendPictureToServer(String urlPath) {
-        final String path=ConfigUtil.SERVICE_ADDRESS+"MomentsPicturesServlet";
+        final String path= ConfigUtil.SERVICE_ADDRESS+"MomentsPicturesServlet";
         new Thread(){
             @Override
             public void run() {

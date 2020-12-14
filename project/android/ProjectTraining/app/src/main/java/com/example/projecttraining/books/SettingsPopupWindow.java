@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -19,8 +18,6 @@ public class SettingsPopupWindow extends PopupWindow {
 
     private View mMenuView;
     private ImageView ivBack;
-    private EditText etSearch;
-    private ImageView ivSearch;
     private ImageView ivListen;
     private TextView tvBeforeContent;
     private TextView tvNextContent;
@@ -83,9 +80,6 @@ public class SettingsPopupWindow extends PopupWindow {
         //获取控件
         this.ivBack=mMenuView.findViewById(R.id.iv_back);
         ivBack.setOnClickListener(itemsOnclick);
-        this.etSearch=mMenuView.findViewById(R.id.et_search);
-        this.ivSearch=mMenuView.findViewById(R.id.iv_search);
-        ivSearch.setOnClickListener(itemsOnclick);
         this.ivListen=mMenuView.findViewById(R.id.iv_listen);
         ivListen.setOnClickListener(itemsOnclick);
         this.tvBeforeContent=mMenuView.findViewById(R.id.before_text);

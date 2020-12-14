@@ -25,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
 import com.baidu.tts.client.SpeechSynthesizer;
@@ -73,6 +76,9 @@ import static com.example.projecttraining.idiom.read.util.IOfflineResourceConst.
 
 public class ReadBookActivity extends Activity {
 
+    private ScrollView scrollView;
+    private int y=0,x=0;
+    private DrawerLayout drawerLayout;
     private boolean stopThread=false;
     private int i=0;
     private List<String> textList; //保存分割出来的文字，用于语音合成
@@ -81,7 +87,7 @@ public class ReadBookActivity extends Activity {
     public static String currentReadText="还未开始播放!"; //当前听到的话
     private static int currentReadTextIndex=0;
     private int currentTextColor; //当前字体的颜色
-    public static int currentTextSize=20; //当前字体大小
+    public static int currentTextSize=14; //当前字体大小
     public static String currentModelText="夜间模式"; //当前模式名称
     public static int currentModelImg= R.mipmap.nightmodel; //当前模式图片
     private int currentIndex; //当前章节下标
@@ -208,6 +214,8 @@ public class ReadBookActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_read_book);
 
+        scrollView=findViewById(R.id.scrollView_read_book);
+        drawerLayout=findViewById(R.id.simple_navigation_drawer);
         currentTextColor=getResources().getColor(android.R.color.black,null);
         linearWholeBook=findViewById(R.id.whole_read_book);
         linearDrawerBookContents=findViewById(R.id.linear_drawer_book_contents);
@@ -343,48 +351,204 @@ public class ReadBookActivity extends Activity {
         }
     }
 
+
+
     private class TouchListener implements View.OnTouchListener {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {//按下事件
                 //获取点击的位置的坐标
-                int y = (int) motionEvent.getY();
-                int x = (int) motionEvent.getX();
+                y = (int) motionEvent.getY();
+                x = (int) motionEvent.getX();
                 Log.e("x", "" + x);
                 Log.e("y", "" + y);
-                //获取屏幕高度、宽度
-                WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-                int screenWidth = windowManager.getDefaultDisplay().getWidth();
-                int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
-                //屏幕中间的高度
-                int middenHeight = screenHeight / 2;
-                //屏幕中间的宽度
-                int middenWidth = screenWidth / 2;
-                //点击屏幕中间
-                if (middenWidth - 200 <= x && middenWidth + 200 >= x) {
-                    settingsPopupWindow = new SettingsPopupWindow(getApplicationContext(),
-                            itemClickListener);
-                    settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),
-                            Gravity.NO_GRAVITY, 0, 0);
-                }
-                if (0 <= x && 200 >= x) {
-                    if (flag1!=null){
-                        Toast.makeText(ReadBookActivity.this,
-                                "亲，您现在是全文阅读哦！",
-                                Toast.LENGTH_SHORT).show();
-                    }else {
-                        //上一章
-                        mSpeechSynthesizer.stop();
-                        if (currentIndex == 0) {
+//                //获取屏幕高度、宽度
+//                WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+//                int screenWidth = windowManager.getDefaultDisplay().getWidth();
+//                int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+//                //屏幕中间的高度
+//                int middenHeight = screenHeight / 2;
+//                //屏幕中间的宽度
+//                int middenWidth = screenWidth / 2;
+//                //点击屏幕中间
+//                if (middenWidth - 200 <= x && middenWidth + 200 >= x) {
+//                    settingsPopupWindow = new SettingsPopupWindow(getApplicationContext(),
+//                            itemClickListener);
+//                    settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),
+//                            Gravity.NO_GRAVITY, 0, 0);
+//                }
+//                if (0 <= x && 200 >= x) {
+//                    if (flag1!=null){
+//                        Toast.makeText(ReadBookActivity.this,
+//                                "亲，您现在是全文阅读哦！",
+//                                Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        //上一章
+//                        mSpeechSynthesizer.stop();
+//                        if (currentIndex == 0) {
+//                            Toast.makeText(ReadBookActivity.this,
+//                                    "亲，已经到头了！",
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            currentIndex = currentIndex - 1;
+//                            currentContent = contentObj.get(currentIndex);
+//                            nextContent = contentObj.get(currentIndex + 1);
+//                            //从服务器获取上一章的内容
+//                            getBookTextFromServer();
+//
+//                            adapter.setCurrentItem(currentIndex);
+//                            adapter.setClick(true);
+//                            adapter.notifyDataSetChanged();
+//
+//                            stopThread=true;
+//                            currentReadStatus= R.mipmap.listen_white;
+//                            currentReadTextIndex=0;
+////                            Toast.makeText(ReadBookActivity.this,
+////                                    "暂停播放:"+currentReadTextIndex,
+////                                    Toast.LENGTH_SHORT).show();
+//                            if (myThread.isAlive()){
+//                                myThread.interrupt();
+//                            }
+//
+//                            myThread=new MyThread();
+//                            stopThread=false;
+//                            changeModelImage();
+//                        }
+//                    }
+//
+//                }
+//                if (screenWidth - 200 <= x && screenWidth >= x) {
+//                    if (flag1!=null){
+//                        Toast.makeText(ReadBookActivity.this,
+//                                "亲，您现在是全文阅读哦！",
+//                                Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        //下一章
+//                        mSpeechSynthesizer.stop();
+//                        if (currentIndex == contentObj.size() - 1) {
+//                            nextContent = contentObj.get(currentIndex);
+//                            Toast.makeText(ReadBookActivity.this,
+//                                    "亲，已经到最后一章了！",
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            currentIndex = currentIndex + 1;
+//                            Log.e("currentIndex", "" + currentIndex);
+//                            currentContent = contentObj.get(currentIndex);
+//                            if (currentIndex == contentObj.size() - 1) {
+//                                nextContent = contentObj.get(currentIndex);
+//                            }else {
+//                                nextContent = contentObj.get(currentIndex+1);
+//                            }
+//                        }
+//                        //从服务器获取下一章的内容
+//                        getBookTextFromServer();
+//
+//                        adapter.setCurrentItem(currentIndex);
+//                        adapter.setClick(true);
+//                        adapter.notifyDataSetChanged();
+//
+//                        stopThread=true;
+//                        currentReadStatus= R.mipmap.listen_white;
+//                        currentReadTextIndex=0;
+////                        Toast.makeText(ReadBookActivity.this,
+////                                "暂停播放:"+currentReadTextIndex,
+////                                Toast.LENGTH_SHORT).show();
+//                        if (myThread.isAlive()){
+//                            myThread.interrupt();
+//                        }
+//
+//                        myThread=new MyThread();
+//                        stopThread=false;
+//                        changeModelImage();
+//                    }
+//
+//                }
+                return true;
+            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP){//抬起事件
+                int x1= (int) motionEvent.getX();
+                int y1= (int) motionEvent.getY();
+                if (Math.abs(y1 - y) < 5 && Math.abs(x1 - x) < 5){
+                    //获取屏幕高度、宽度
+                    WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+                    int screenWidth = windowManager.getDefaultDisplay().getWidth();
+                    int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+                    //屏幕中间的高度
+                    int middenHeight = screenHeight / 2;
+                    //屏幕中间的宽度
+                    int middenWidth = screenWidth / 2;
+                    //点击屏幕中间
+                    if (middenWidth - 200 <= x1 && middenWidth + 200 >= x1) {
+                        settingsPopupWindow = new SettingsPopupWindow(getApplicationContext(),
+                                itemClickListener);
+                        settingsPopupWindow.showAtLocation(ReadBookActivity.this.findViewById(R.id.main),
+                                Gravity.NO_GRAVITY, 0, 0);
+                    }
+                    if (0 <= x1 && 200 >= x1) {
+                        if (flag1!=null){
                             Toast.makeText(ReadBookActivity.this,
-                                    "亲，已经到头了！",
+                                    "亲，您现在是全文阅读哦！",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-                            currentIndex = currentIndex - 1;
-                            currentContent = contentObj.get(currentIndex);
-                            nextContent = contentObj.get(currentIndex + 1);
-                            //从服务器获取上一章的内容
+                        }else {
+                            //上一章
+                            mSpeechSynthesizer.stop();
+                            if (currentIndex == 0) {
+                                Toast.makeText(ReadBookActivity.this,
+                                        "亲，已经到头了！",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                currentIndex = currentIndex - 1;
+                                currentContent = contentObj.get(currentIndex);
+                                nextContent = contentObj.get(currentIndex + 1);
+                                //从服务器获取上一章的内容
+                                getBookTextFromServer();
+
+                                adapter.setCurrentItem(currentIndex);
+                                adapter.setClick(true);
+                                adapter.notifyDataSetChanged();
+
+                                stopThread=true;
+                                currentReadStatus= R.mipmap.listen_white;
+                                currentReadTextIndex=0;
+//                            Toast.makeText(ReadBookActivity.this,
+//                                    "暂停播放:"+currentReadTextIndex,
+//                                    Toast.LENGTH_SHORT).show();
+                                if (myThread.isAlive()){
+                                    myThread.interrupt();
+                                }
+
+                                myThread=new MyThread();
+                                stopThread=false;
+                                changeModelImage();
+                            }
+                        }
+
+                    }
+                    if (screenWidth - 200 <= x1 && screenWidth >= x1) {
+                        if (flag1!=null){
+                            Toast.makeText(ReadBookActivity.this,
+                                    "亲，您现在是全文阅读哦！",
+                                    Toast.LENGTH_SHORT).show();
+                        }else {
+                            //下一章
+                            mSpeechSynthesizer.stop();
+                            if (currentIndex == contentObj.size() - 1) {
+                                nextContent = contentObj.get(currentIndex);
+                                Toast.makeText(ReadBookActivity.this,
+                                        "亲，已经到最后一章了！",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                currentIndex = currentIndex + 1;
+                                Log.e("currentIndex", "" + currentIndex);
+                                currentContent = contentObj.get(currentIndex);
+                                if (currentIndex == contentObj.size() - 1) {
+                                    nextContent = contentObj.get(currentIndex);
+                                }else {
+                                    nextContent = contentObj.get(currentIndex+1);
+                                }
+                            }
+                            //从服务器获取下一章的内容
                             getBookTextFromServer();
 
                             adapter.setCurrentItem(currentIndex);
@@ -394,9 +558,9 @@ public class ReadBookActivity extends Activity {
                             stopThread=true;
                             currentReadStatus= R.mipmap.listen_white;
                             currentReadTextIndex=0;
-                            Toast.makeText(ReadBookActivity.this,
-                                    "暂停播放:"+currentReadTextIndex,
-                                    Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ReadBookActivity.this,
+//                                "暂停播放:"+currentReadTextIndex,
+//                                Toast.LENGTH_SHORT).show();
                             if (myThread.isAlive()){
                                 myThread.interrupt();
                             }
@@ -405,56 +569,9 @@ public class ReadBookActivity extends Activity {
                             stopThread=false;
                             changeModelImage();
                         }
+
                     }
-
                 }
-                if (screenWidth - 200 <= x && screenWidth >= x) {
-                    if (flag1!=null){
-                        Toast.makeText(ReadBookActivity.this,
-                                "亲，您现在是全文阅读哦！",
-                                Toast.LENGTH_SHORT).show();
-                    }else {
-                        //下一章
-                        mSpeechSynthesizer.stop();
-                        if (currentIndex == contentObj.size() - 1) {
-                            nextContent = contentObj.get(currentIndex);
-                            Toast.makeText(ReadBookActivity.this,
-                                    "亲，已经到最后一章了！",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            currentIndex = currentIndex + 1;
-                            Log.e("currentIndex", "" + currentIndex);
-                            currentContent = contentObj.get(currentIndex);
-                            if (currentIndex == contentObj.size() - 1) {
-                                nextContent = contentObj.get(currentIndex);
-                            }else {
-                                nextContent = contentObj.get(currentIndex+1);
-                            }
-                        }
-                        //从服务器获取下一章的内容
-                        getBookTextFromServer();
-
-                        adapter.setCurrentItem(currentIndex);
-                        adapter.setClick(true);
-                        adapter.notifyDataSetChanged();
-
-                        stopThread=true;
-                        currentReadStatus= R.mipmap.listen_white;
-                        currentReadTextIndex=0;
-                        Toast.makeText(ReadBookActivity.this,
-                                "暂停播放:"+currentReadTextIndex,
-                                Toast.LENGTH_SHORT).show();
-                        if (myThread.isAlive()){
-                            myThread.interrupt();
-                        }
-
-                        myThread=new MyThread();
-                        stopThread=false;
-                        changeModelImage();
-                    }
-
-                }
-                return true;
             }
             return false;
         }
@@ -506,9 +623,9 @@ public class ReadBookActivity extends Activity {
                             stopThread=true;
                             currentReadStatus= R.mipmap.listen_white;
                             currentReadTextIndex=0;
-                            Toast.makeText(ReadBookActivity.this,
-                                    "暂停播放:"+currentReadTextIndex,
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ReadBookActivity.this,
+//                                    "暂停播放:"+currentReadTextIndex,
+//                                    Toast.LENGTH_SHORT).show();
                             if (myThread.isAlive()){
                                 myThread.interrupt();
                             }
@@ -551,9 +668,9 @@ public class ReadBookActivity extends Activity {
 
                         currentReadStatus= R.mipmap.listen_white;
                         currentReadTextIndex=0;
-                        Toast.makeText(ReadBookActivity.this,
-                                "暂停播放:"+currentReadTextIndex,
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ReadBookActivity.this,
+//                                "暂停播放:"+currentReadTextIndex,
+//                                Toast.LENGTH_SHORT).show();
                         if (myThread.isAlive()){
                             myThread.interrupt();
                         }
@@ -632,15 +749,13 @@ public class ReadBookActivity extends Activity {
                     }
 
                     break;
-                case R.id.iv_search://点击搜索
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击搜索",
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.book_contents_list://点击目录
-                    Toast.makeText(ReadBookActivity.this,
-                            "点击目录",
-                            Toast.LENGTH_SHORT).show();
+                case R.id.book_contents_list://点击目录 打开左侧滑菜单
+//                    Toast.makeText(ReadBookActivity.this,
+//                            "点击目录",
+//                            Toast.LENGTH_SHORT).show();
+                    settingsPopupWindow.dismiss();
+                    drawerLayout.openDrawer(GravityCompat.START);
+
                     break;
                 case R.id.tv_change_text_style://点击改变字体样式
                     Toast.makeText(ReadBookActivity.this,
@@ -692,7 +807,12 @@ public class ReadBookActivity extends Activity {
                     }
 
                     break;
-
+                case R.id.tv_auto_scroll://点击自动滚屏
+                    Toast.makeText(ReadBookActivity.this,
+                            "自动滚屏",
+                            Toast.LENGTH_SHORT).show();
+//                    scrollView.scrollBy(0,10);
+                    break;
             }
         }
     };

@@ -48,12 +48,9 @@ public class LikegivePersonAndMomentsIdDelete extends HttpServlet {
 		System.out.println("手机号" + likegivePerson + ":" + momentsId);
 		
 		LikeGiveService likeGiveService = LikeGiveService.getInstance();// 创建点赞service对象
-		likeGiveService.deleteLikeGiveInfo(momentsId, likegivePerson);// 将被点赞说说id，点赞人昵称和点赞人手机号存入数据库
-		List<String> likeGiveNames = likeGiveService.likeGiveNames(momentsId);// 获取该条说说点赞人昵称列表
-		String json0 = gson.toJson(likeGiveNames);//将点赞人昵称列表构造成json对象
-		LikeGiveInfo likeGiveInfo = new LikeGiveInfo(momentsId,json0, likeGiveNames.size());// 将点赞人列表和点赞人的数量构造成一个点赞信息对象
-		//序列化
-        String json = gson.toJson(likeGiveInfo);//将信息对象变成json串
+		likeGiveService.deleteLikeGiveInfo(momentsId, likegivePerson);
+		
+		
 	}
 	/**
 	 * 初始化Gson对象

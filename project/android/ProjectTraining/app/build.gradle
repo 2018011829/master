@@ -126,6 +126,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'  //圆的依赖
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
+
+    //点赞的小爱心
+    implementation 'com.ldoublem.thumbUplib:ThumbUplib:0.5'
+
+    //点赞部分的依赖
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:25.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:25.0.0'
 }
 buildscript {
     repositories {

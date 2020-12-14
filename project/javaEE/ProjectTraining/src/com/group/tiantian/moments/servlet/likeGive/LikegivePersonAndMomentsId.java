@@ -51,13 +51,9 @@ public class LikegivePersonAndMomentsId extends HttpServlet {
 		PersonalInfo personalInfo = likeGiveService.getPersonalInfo(likegivePerson);// 根据点赞人的手机号得到点赞人的个人信息
 		String likeGiveName = personalInfo.getName();// 得到点赞人的昵称
 		likeGiveService.insertLikeGiveInfo(momentsId, likeGiveName, likegivePerson);// 将被点赞说说id，点赞人昵称和点赞人手机号存入数据库
-		List<String> likeGiveNames = likeGiveService.likeGiveNames(momentsId);// 获取该条说说点赞人昵称列表
-		String json0 = gson.toJson(likeGiveNames);//将点赞人昵称列表构造成json对象
-		LikeGiveInfo likeGiveInfo = new LikeGiveInfo(momentsId,json0, likeGiveNames.size());// 将点赞人列表和点赞人的数量构造成一个点赞信息对象
-		//序列化
-        String json = gson.toJson(likeGiveInfo);//将信息对象变成json串
-		// 返回响应
-		response.getWriter().write(json);
+		
+		
+		response.getWriter().write("收到数据");
 	}
 
 	/**

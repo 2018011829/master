@@ -6,7 +6,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-
 import com.example.projecttraining.R;
 
 import java.util.ArrayList;

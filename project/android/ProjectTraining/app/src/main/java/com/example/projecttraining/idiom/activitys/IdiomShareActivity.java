@@ -3,20 +3,21 @@ package com.example.projecttraining.idiom.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.idiom.FlowLayout;
+import com.example.projecttraining.util.IdiomShareUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,6 +41,7 @@ import butterknife.OnClick;
 
 /**
  * 2020-12-6
+ * 2020-12-14
  * @author lrf
  */
 public class IdiomShareActivity extends AppCompatActivity {
@@ -191,12 +194,11 @@ public class IdiomShareActivity extends AppCompatActivity {
         finish();
     }
 
-    // 将截图分享
+    // 将截图分享到QQ、微信、微博
     @OnClick(R.id.share_now)
     public void clickShare(){
         Bitmap bitmap = cutScreenImg(idiomShare);
-        //TODO
-        Toast.makeText(this,"点击了立即分享",Toast.LENGTH_SHORT).show();
+        showPopupWindow(bitmap);
     }
 
     // 将截图保存到本地相册
@@ -263,6 +265,64 @@ public class IdiomShareActivity extends AppCompatActivity {
         // 最后通知图库更新
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(file.getPath()))));
         return flag;
+    }
+
+    /**
+     * 弹出窗口，选择要分享到的目标app
+     * @param bitmap
+     */
+    private void showPopupWindow(Bitmap bitmap){
+        //创建PopupWindow对象
+        final PopupWindow popupWindow = new PopupWindow(this);
+        //设置弹出窗口的宽度
+        popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        //设置它的视图
+        View view = getLayoutInflater().inflate(R.layout.idiom_share_popupwindow,null);
+        // 将bitmap转换为uri
+        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null,null));
+        //设置视图当中控件的属性和监听器
+        LinearLayout idiomToQQ = view.findViewById(R.id.idiom_share_to_qq);
+        LinearLayout idiomToWeChat = view.findViewById(R.id.idiom_share_to_wechat);
+        LinearLayout idiomToWeiBo = view.findViewById(R.id.idiom_share_to_weibo);
+        idiomToQQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IdiomShareUtil.checkFileUriExposure();
+                IdiomShareUtil.shareIdiom(IdiomShareActivity.this,uri,"com.tencent.mobileqq");
+            }
+        });
+        idiomToWeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IdiomShareUtil.checkFileUriExposure();
+                IdiomShareUtil.shareIdiom(IdiomShareActivity.this,uri,"com.tencent.mm");
+            }
+        });
+        idiomToWeiBo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IdiomShareUtil.checkFileUriExposure();
+                IdiomShareUtil.shareIdiom(IdiomShareActivity.this,uri,"com.sina.weibo");
+            }
+        });
+        popupWindow.setContentView(view);
+        //显示PopupWindow(必须指定显示的位置)
+        ScrollView scrollView = findViewById(R.id.idiom_scrollview);
+        popupWindow.showAtLocation(scrollView, Gravity.CENTER,0,0);
+        // 判断获取触屏位置如果在选择框外面则销毁弹出框
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int heightBottom = view.findViewById(R.id.share_bottom).getTop();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < heightBottom) {
+                        popupWindow.dismiss();
+                    }
+                }
+                return true;
+            }
+        });
     }
 
 }

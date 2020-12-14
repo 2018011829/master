@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--底部导航栏-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mine_collection_tl"
+        android:elevation="0dp"
+        app:tabSelectedTextColor="@android:color/holo_red_dark"
+        app:tabIndicatorColor="@android:color/holo_red_dark"
+        app:tabTextColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/collection_ti_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图书收藏"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/collection_ti_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="成语收藏"/>
+    </com.google.android.material.tabs.TabLayout>
+    <!--底部导航栏-->
+    <com.example.projecttraining.ui.NoScrollViewPager
+        android:id="@+id/mine_collection_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"/>
+</LinearLayout>

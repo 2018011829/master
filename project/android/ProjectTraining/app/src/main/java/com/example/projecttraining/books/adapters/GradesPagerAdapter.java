@@ -20,7 +20,6 @@ public class GradesPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                grades="small";
                 return new SmallGradesFragment();
 
             case 1:
