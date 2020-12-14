@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-14 10:40:57
+Date: 2020-12-14 15:02:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,6 +95,7 @@ CREATE TABLE `bookshelf` (
 -- ----------------------------
 -- Records of bookshelf
 -- ----------------------------
+INSERT INTO `bookshelf` VALUES ('18730094411', '', '动物庄园');
 INSERT INTO `bookshelf` VALUES ('18730094415', '小明', '安娜卡列尼娜');
 INSERT INTO `bookshelf` VALUES ('18831158249', '小明', '白客');
 INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '安娜卡列尼娜');
@@ -1192,6 +1193,7 @@ CREATE TABLE `collections` (
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
+INSERT INTO `collections` VALUES ('18730094411', '', 'book', '洋葱头历险记');
 INSERT INTO `collections` VALUES ('18831158249', '小明', 'book', '白客');
 INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '动物庄园');
 INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '安娜卡列尼娜');
@@ -1871,7 +1873,7 @@ CREATE TABLE `moments_comments` (
   `PersonHead` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `momentsClass` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_comments
@@ -1880,6 +1882,7 @@ INSERT INTO `moments_comments` VALUES ('15', '39', '说点什么吧', '187300944
 INSERT INTO `moments_comments` VALUES ('16', '39', '第一个', '18730094418', '小隐隐约约', 'default_avatar.png', null);
 INSERT INTO `moments_comments` VALUES ('17', '42', '啦啦啦', '18730094418', '小隐隐约约', 'default_avatar.png', null);
 INSERT INTO `moments_comments` VALUES ('18', '42', '！！\n？？', '18730094418', '小隐隐约约', 'default_avatar.png', null);
+INSERT INTO `moments_comments` VALUES ('19', '39', '好vv局v就', '18730094411', '老大', '18730094411.png', null);
 
 -- ----------------------------
 -- Table structure for `moments_content`
@@ -1926,17 +1929,18 @@ CREATE TABLE `moments_likegiveperson` (
   `likegivePersonPhone` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `likegiveboolen` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_likegiveperson
 -- ----------------------------
-INSERT INTO `moments_likegiveperson` VALUES ('107', '40', '老大', '18730094411', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('116', '40', '李哲的小迷弟', '19831127142', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('129', '39', '李哲的小迷弟', '19831127142', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('133', '42', '小隐隐约约', '18730094418', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('134', '40', '小隐隐约约', '18730094418', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('136', '39', '小隐隐约约', '18730094418', '1');
+INSERT INTO `moments_likegiveperson` VALUES ('142', '40', '老大', '18730094411', '1');
+INSERT INTO `moments_likegiveperson` VALUES ('143', '39', '老大', '18730094411', '1');
 
 -- ----------------------------
 -- Table structure for `moments_pictureurl`
@@ -2009,9 +2013,9 @@ DROP TABLE IF EXISTS `parents`;
 CREATE TABLE `parents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `phone` char(11) NOT NULL,
-  `password` varchar(15) NOT NULL,
-  `nickname` varchar(20) NOT NULL DEFAULT 'tiantian8808',
-  `avatar` varchar(20) NOT NULL DEFAULT 'default_avatar.png',
+  `password` varchar(20) NOT NULL,
+  `nickname` varchar(50) NOT NULL DEFAULT 'tiantian8808',
+  `avatar` varchar(50) NOT NULL DEFAULT 'default_avatar.png',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
@@ -2030,7 +2034,7 @@ INSERT INTO `parents` VALUES ('11', '18831158249', '123456', '小迷糊吖', 'de
 INSERT INTO `parents` VALUES ('12', '19831127377', 'yayu15212', '琪琪', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('13', '18730094400', 'yayu152152', '小鸠', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('14', '15230048998', 'yayu12152', '妈咪', 'default_avatar.png');
-INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'default_avatar.png');
+INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'android1607929267454.png');
 INSERT INTO `parents` VALUES ('16', '13730024416', 'aaaaaa', '大家都', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('17', '17831194418', 'kjdssks', 'kdjdj', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian8808', 'default_avatar.png');
