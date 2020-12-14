@@ -1,30 +1,25 @@
-package com.group.tiantian.moments.servlet.likeGive;
+package com.group.tiantian.moments.servlet.attention;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group.tiantian.entity.moments.Moments;
-import com.group.tiantian.entity.moments.PersonalInfo;
-import com.group.tiantian.moments.service.AddMomentsService;
-import com.group.tiantian.moments.service.LikeGiveService;
+import com.group.tiantian.moments.service.AttentionService;
 
 /**
- * Servlet implementation class Test
+ * Servlet implementation class DeleteAttention
  */
-@WebServlet("/Test")
-public class Test extends HttpServlet {
+@WebServlet("/DeleteAttention")
+public class DeleteAttention extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Test() {
+	public DeleteAttention() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -35,10 +30,17 @@ public class Test extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		LikeGiveService likeGiveService = LikeGiveService.getInstance();// 创建点赞service对象
-		 PersonalInfo personalInfo = likeGiveService.getPersonalInfo("19831127375");//
-		
-		System.out.println(personalInfo);
+		// 设置编码方式
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		// 获取请求数据
+		String personPhone = request.getParameter("personPhone");
+		String momentsPhone = request.getParameter("momentsPhone");
+		AttentionService attentionService = AttentionService.getInstance();
+		attentionService.deleteAttention(personPhone, momentsPhone);
+
+		// 返回响应
+		response.getWriter().write("收到数据：" + personPhone);
 	}
 
 	/**

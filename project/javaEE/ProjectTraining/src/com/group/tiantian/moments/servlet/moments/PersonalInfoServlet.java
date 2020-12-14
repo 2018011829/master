@@ -1,4 +1,4 @@
-package com.group.tiantian.moments.servlet.addMoments;
+package com.group.tiantian.moments.servlet.moments;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,22 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.group.tiantian.entity.moments.PersonalInfo;
 import com.group.tiantian.moments.service.AddMomentsService;
 
-
-
 /**
- * Servlet implementation class TimeStringServlet
+ * Servlet implementation class PersonalInfoServlet
  */
-@WebServlet("/TimeStringServlet")
-public class TimeStringServlet extends HttpServlet {
+@WebServlet("/PersonalInfoServlet")
+public class PersonalInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public TimeStringServlet() {
+	public PersonalInfoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,21 +40,13 @@ public class TimeStringServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		// 获取请求数据
-		String time = request.getParameter("time");
+		String name = request.getParameter("name");
+		String photoUrl = request.getParameter("photoUrl");
 		String personalPhone = request.getParameter("personalPhone");
-		System.out.println("time"+time);
-		System.out.println("personalPhone"+personalPhone);
-		
-		ServletContext application = this.getServletContext();//将time写入作用域
-		application.setAttribute("time",time);
-		application.setAttribute("personalPhone",personalPhone);
+		System.out.println("收到数据:" + name + ":" + photoUrl + ":" + personalPhone);
 		// 返回响应
-		response.getWriter().write("收到数据：" + time);
-
-		AddMomentsService addMomentsService =AddMomentsService.getInstance();
-		addMomentsService.insertPersonalInfo(personalPhone,time);
+		response.getWriter().write("收到数据：" + name + "--" + photoUrl);
 		
-	
 	}
 
 	/**

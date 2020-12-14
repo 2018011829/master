@@ -50,15 +50,15 @@ public class Tools {
      */
     public static void openGallery(AppCompatActivity activity, int maxSize) {
         PictureSelector.create(activity)
-                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 //.theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(maxSize)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(3)// 每行显示个数 int
                 .imageEngine(GlideEngine.createGlideEngine())
                 //.selectionMode()// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-                //.isPreviewImage(true)// 是否可预览图片 true or false
-                //.isPreviewVideo()// 是否可预览视频 true or false
+                .isPreviewImage(true)// 是否可预览图片 true or false
+                .isPreviewVideo(true)// 是否可预览视频 true or false
                 //.freeStyleCropEnabled() // 是否可播放音频 true or false
                 .isCamera(false)// 是否显示拍照按钮 true or false
                 //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
@@ -81,7 +81,7 @@ public class Tools {
                 .minimumCompressSize(100)// 小于100kb的图片不压缩
                 //.synOrAsy(true)//同步true或异步false 压缩 默认同步
                 //.cropImageWideHigh()// 裁剪宽高比，设置如果大于图片本身宽高则无效 int
-                //.rotateEnabled(true) // 裁剪是否可旋转图片 true or false
+                .rotateEnabled(true) // 裁剪是否可旋转图片 true or false
                 .scaleEnabled(true)// 裁剪是否可放大缩小图片 true or false
                 //.videoQuality()// 视频录制质量 0 or 1 int
                 //.videoMaxSecond(15)// 显示多少秒以内的视频or音频也可适用 int
@@ -104,17 +104,19 @@ public class Tools {
      */
     public static void galleryPictures(AppCompatActivity activity, int maxSize) {
         PictureSelector.create(activity)
-                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 //.theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(maxSize)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageEngine(GlideEngine.createGlideEngine())
                 .imageSpanCount(3)// 每行显示个数 int
+                .isPreviewImage(true)// 是否可预览图片 true or false
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                //.isEnableCrop(true)// 是否裁剪 true or false
+                .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
                 .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .rotateEnabled(true) // 裁剪是否可旋转图片 true or false
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 

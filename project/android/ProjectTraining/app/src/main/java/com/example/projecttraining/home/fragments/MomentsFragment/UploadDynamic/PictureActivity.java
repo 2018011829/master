@@ -1,8 +1,5 @@
 package com.example.projecttraining.home.fragments.MomentsFragment.UploadDynamic;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,21 +7,18 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -70,7 +64,7 @@ public class PictureActivity extends AppCompatActivity {
 
     //向服务端发送图片
     private void sendPictureToServer(String urlPath) {
-        final String path=ConfigUtil.SERVICE_ADDRESS+"MomentsInfoServlet";
+        final String path= ConfigUtil.SERVICE_ADDRESS+"MomentsInfoServlet";
         new Thread(){
             @Override
             public void run() {

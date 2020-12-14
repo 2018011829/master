@@ -1,31 +1,27 @@
-package com.group.tiantian.moments.servlet.addMoments;
+package com.group.tiantian.moments.servlet.attention;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.group.tiantian.entity.moments.PersonalInfo;
-import com.group.tiantian.moments.service.AddMomentsService;
+import com.group.tiantian.moments.service.AttentionService;
 
 /**
- * Servlet implementation class PersonalInfoServlet
+ * Servlet implementation class AddAttentionServlet
  */
-@WebServlet("/PersonalInfoServlet")
-public class PersonalInfoServlet extends HttpServlet {
+@WebServlet("/AddAttentionServlet")
+public class AddAttentionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PersonalInfoServlet() {
+	public AddAttentionServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -40,13 +36,14 @@ public class PersonalInfoServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		// 获取请求数据
-		String name = request.getParameter("name");
-		String photoUrl = request.getParameter("photoUrl");
-		String personalPhone = request.getParameter("personalPhone");
-		System.out.println("收到数据:" + name + ":" + photoUrl + ":" + personalPhone);
+		String personPhone = request.getParameter("personPhone");
+		String momentsPhone = request.getParameter("momentsPhone");
+		AttentionService attentionService = AttentionService.getInstance();
+		attentionService.insertAttention(personPhone, momentsPhone);
+		System.out.println("收到手机号和发说说人手机号:"+personPhone+"+"+momentsPhone);
+
 		// 返回响应
-		response.getWriter().write("收到数据：" + name + "--" + photoUrl);
-		
+		response.getWriter().write("收到数据：" + personPhone);
 	}
 
 	/**

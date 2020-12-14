@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.projecttraining.R;
 
 import java.util.List;

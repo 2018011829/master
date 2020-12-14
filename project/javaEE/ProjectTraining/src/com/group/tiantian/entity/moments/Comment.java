@@ -2,40 +2,38 @@ package com.group.tiantian.entity.moments;
 
 public class Comment {
 	private int id;//id
-	private String name; //评论者
-    private String content; //评论内容
-    private int momentsId;
+	private int momentsId;//被评论的说说id
+	private String comment;//评论内容
+	private String personPhone; //评论者手机号
+	private String personName;//评论者昵称
+	private String personHead;//评论者头像
+
     public Comment(){
 
     }
+	public Comment(int id,int momentsId, String comment, String personPhone, String personName,String personHead) {
+		super();
+		this.id = id;
+		this.momentsId = momentsId;
+		this.comment = comment;
+		this.personPhone = personPhone;
+		this.personName = personName;
+		this.personHead = personHead;
+	}
 
-    public Comment(String name, String content){
-        this.name = name;
-        this.content = content;
-    }
-    public int getId() {
+	public String getPersonHead() {
+		return personHead;
+	}
+	public void setPersonHead(String personHead) {
+		this.personHead = personHead;
+	}
+	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
 	public int getMomentsId() {
 		return momentsId;
@@ -44,7 +42,28 @@ public class Comment {
 	public void setMomentsId(int momentsId) {
 		this.momentsId = momentsId;
 	}
-    
-    
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getPersonPhone() {
+		return personPhone;
+	}
+
+	public void setPersonPhone(String personPhone) {
+		this.personPhone = personPhone;
+	}
+
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
 }

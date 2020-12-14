@@ -13,9 +13,11 @@ public class Moments {
     private String content;//用户发表的文字内容
     private String pictureUrl;//用户发表的图片路径(多张图片)
     private int praiseNumber;//点赞数
-    private List<String> friendName;//点赞人的昵称
-    private List<Comment> comments;//用户评论
-    
+    private String likeGiveName;//点赞人的昵称
+    private int likegiveboolen;//当前用户是否已经点赞该说说
+    private String comments;//用户评论
+    private String replyContent;//回复信息
+    private String attentionList;//关注列表
     public Moments() {
     }
     
@@ -25,11 +27,15 @@ public class Moments {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Moments(String headPortraitUrl, String name, String content, String pictureUrl) {
+	public Moments(String headPortraitUrl, String name, String content, String pictureUrl,String likeGiveName,int likegiveboolen,String comments,String replyContent) {
         this.headPortraitUrl = headPortraitUrl;
         this.name = name;
         this.content = content;
         this.pictureUrl = pictureUrl;
+        this.likeGiveName = likeGiveName;
+        this.likegiveboolen = likegiveboolen;
+        this.comments = comments;
+        this.replyContent = replyContent;
     }
     
 
@@ -100,20 +106,55 @@ public class Moments {
         this.praiseNumber = praiseNumber;
     }
 
-    public List<String> getFriendName() {
-        return friendName;
-    }
+    
 
-    public void setFriendName(List<String> friendName) {
-        this.friendName = friendName;
-    }
+    public String getLikeGiveName() {
+		return likeGiveName;
+	}
 
-    public List<Comment> getComments() {
+
+	public void setLikeGiveName(String likeGiveName) {
+		this.likeGiveName = likeGiveName;
+	}
+
+
+	
+	public int getLikegiveboolen() {
+		return likegiveboolen;
+	}
+
+
+	public void setLikegiveboolen(int likegiveboolen) {
+		this.likegiveboolen = likegiveboolen;
+	}
+
+
+	public String getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(String comments) {
         this.comments = comments;
     }
 
+
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+
+
+	public String getAttentionList() {
+		return attentionList;
+	}
+
+
+	public void setAttentionList(String attentionList) {
+		this.attentionList = attentionList;
+	}
+   
 }

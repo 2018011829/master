@@ -251,18 +251,31 @@ public class AddMomentsDao {
 		}
 		return personalInfo;
 	}
-	
-	
-
-	
 	/**
-	 * 通过时间和手机号查询说说id
+	 * 通过说说id查询手机号
 	 * @param start
 	 * @param end
 	 * @param articleName
 	 * @param contentName
 	 * @return 返回一个说说id
 	 */
+	public Moments getMomentsInfo(int momentsId){
+		Moments moment=null;
+		String sql="select * from moments where id=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs!=null) {
+				if(rs.next()) {
+					moment= new Moments(rs.getInt("id"),rs.getString("phoneNumber"));	
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return moment;
+	}
 
 
 }

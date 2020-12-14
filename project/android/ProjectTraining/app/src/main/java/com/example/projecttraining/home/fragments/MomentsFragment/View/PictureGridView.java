@@ -1,4 +1,4 @@
-package com.example.projecttraining.home.fragments.MomentsFragment.PictureGridView;
+package com.example.projecttraining.home.fragments.MomentsFragment.View;
 
 import android.content.Context;
 import android.util.AttributeSet;

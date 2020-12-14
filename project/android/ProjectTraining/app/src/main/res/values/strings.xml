@@ -20,4 +20,7 @@
     -->
     <string name="hello_world">Hello Square World!</string>
 
+    <string name="description_image_1" translatable="false">description_image_1</string>
+    <string name="description_zoom_touch_close" translatable="false">description_zoom_touch_close</string>
+
 </resources>

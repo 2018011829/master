@@ -7,19 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MomentsFragment.Adapter.Frag01Adapter;
+import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Attention;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hyphenate.chat.EMClient;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
@@ -32,6 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -53,16 +55,27 @@ public class Frag01 extends Fragment {
         handler = new Handler(){//handlerThread.getLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
+
                 switch (msg.what){
+
+                    case 2:
+//                        String json1 = (String)msg.obj;//接收
+//                        Log.e("json1",json1);
+//                        Attention[] attention = gson.fromJson(json1, Attention[].class);//关注列表反序列化
+//                        attentions = Arrays.asList(attention);
+                        break;
                     case 3:
                         //获取图片资源路径
-                        String imgUrl = (String) msg.obj;//接收到的是一个说说对象
-
-                        String json = imgUrl;
+                        String json = (String) msg.obj;//接收到的是一个说说对象
+                        Log.e("json",json);
                         //反序列化
                         Moments[] moments = gson.fromJson(json, Moments[].class);//说说对象反序列化
 
-                        initView(Arrays.asList(moments),view);//准备adapter
+                        String att = moments[0].getAttentionList();
+                        Attention[] attentions = gson.fromJson(att,Attention[].class);
+                        Log.e("att",att);
+
+                        initView(Arrays.asList(moments),view, Arrays.asList(attentions));//准备adapter
                         break;
                 }
             }
@@ -91,32 +104,8 @@ public class Frag01 extends Fragment {
                 downLoadImgNameFromServerRequest();
             }
         }.start();
-
-//        initDate(view);//准备数据
-//        initView(moments,view);//配置adapter
         momentsListView = view.findViewById(R.id.lv_moments_list);
-        //初始化数据
-        moments = initData(view);
-        //实例化Adapter
-        frag01Adapter = new Frag01Adapter(getContext(),moments, R.layout.fragment_moments_frag01_item);
-        momentsListView.setAdapter(frag01Adapter);
-        //给ListView注册监听器
-        momentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Moments moment = moments.get(position);
-                Toast.makeText(
-                        getContext(),
-                        moment.getName() + ":" + moment.getContent(),
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-        });
         srl = view.findViewById(R.id.srl);
-        //设置Header和Footer的样式
-        //创建Header样式对象
-//        WaveSwipeHeader header = new WaveSwipeHeader(this);
-//        srl.setRefreshHeader(header);
         //创建Footer样式
         FalsifyFooter footer = new FalsifyFooter(getContext());
         //设置Footer样式
@@ -130,12 +119,6 @@ public class Frag01 extends Fragment {
                 refreshData(view);
                 //通知刷新完毕
                 srl.finishRefresh();
-                new Thread(){//创建线程发送请求说说数据的命令
-                    @Override
-                    public void run() {
-                        downLoadImgNameFromServerRequest();
-                    }
-                }.start();
             }
         });
         //给智能刷新控件注册上拉加载更多事件监听器
@@ -144,6 +127,12 @@ public class Frag01 extends Fragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 //加载更多数据(假设超过10条数据则加载完毕）
                 if(moments.size() < 10) {
+                    new Thread(){//创建线程发送请求说说数据的命令
+                        @Override
+                        public void run() {
+                            downLoadImgNameFromServerRequest();
+                        }
+                    }.start();
                     loadMoreData();
                     //通知加载数据完毕
                     srl.finishLoadMore();
@@ -159,8 +148,6 @@ public class Frag01 extends Fragment {
      * 初始化Gson对象
      */
     private void initGson() {
-//       gson = new Gson();
-        // 允许配置参数的Gson对象初始化
         gson = new GsonBuilder()// 创建GsonBuilder对象
                 .setPrettyPrinting()// 格式化输出
                 .serializeNulls()// 允许输出Null值属性
@@ -178,8 +165,18 @@ public class Frag01 extends Fragment {
      * 从服务端获取图片资源的网络路径
      */
     private void downLoadImgNameFromServerRequest() {
+        //2 创建Request对象
+        //1) 使用RequestBody封装请求数据
+        //获取待传输数据对应的MIME类型
+        MediaType type = MediaType.parse("text/plain");
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("PersonPhone",getPersonalPhone())
+                        .build();
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS + "DownPictureServlet")
+                .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
         try {
@@ -194,18 +191,42 @@ public class Frag01 extends Fragment {
         }
     }
 
+    /**
+     * 从服务端获取关注列表
+     */
+    private void attentionInfo() {
+        Log.e("调用","调用");
+        //2 创建Request对象
+        //1) 使用RequestBody封装请求数据
+        //获取待传输数据对应的MIME类型
+        MediaType type = MediaType.parse("text/plain");
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("personPhone",getPersonalPhone())
+                        .build();
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS + "AttentionServlet")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            String img = response.body().string();
+            Message msg = handler.obtainMessage();
+            msg.what = 2;
+            msg.obj = img;
+            handler.sendMessage(msg);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
-
-    //准备数据
-    public List<Moments> initData(View view){
-        List<Moments> list = new ArrayList<>();
-        moments.clear();
-        List<String> pictureUrl = new ArrayList<>();
-        String url1 = "321";
-        pictureUrl.add(url1);
-        Moments moment = new Moments("123","李仕奇","气死本仕奇了","123");//测试数据
-        moments.add(moment);
-        return list;
+    //加载个人信息的布局文件
+    private String getPersonalPhone(){
+        String phone = EMClient.getInstance().getCurrentUser();
+        Log.e("lzz",phone);
+        return phone;
     }
     /**
      * 模拟加载更多数据
@@ -224,14 +245,15 @@ public class Frag01 extends Fragment {
      */
     private void refreshData(View view) {
         moments.clear();
-        moments.addAll(initData(view));//stus = initData()
         frag01Adapter.notifyDataSetChanged();
     }
 
     //配置adapter
-    private void initView(List<Moments> moments,View view) {
-        frag01Adapter = new Frag01Adapter(getContext(), moments, R.layout.fragment_moments_frag01_item);
+    private void initView(List<Moments> moments, View view, List<Attention> attentions) {
+        frag01Adapter = new Frag01Adapter(getContext(), moments, R.layout.fragment_moments_frag01_item,attentions);
         momentsListView = view.findViewById(R.id.lv_moments_list);
         momentsListView.setAdapter(frag01Adapter);
     }
+
+
 }

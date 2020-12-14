@@ -1,6 +1,12 @@
-package com.group.tiantian.moments.servlet.addMoments;
+package com.group.tiantian.moments.servlet.moments;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -9,19 +15,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.group.tiantian.moments.service.AddMomentsService;
 
 /**
- * Servlet implementation class MomentsContentServlet
+ * Servlet implementation class MomentsInfoServlet
  */
-@WebServlet("/MomentsContentServlet")
-public class MomentsContentServlet extends HttpServlet {
+@WebServlet("/MomentsPicturesServlet")
+public class MomentsPicturesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MomentsContentServlet() {
+	public MomentsPicturesServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -35,22 +44,33 @@ public class MomentsContentServlet extends HttpServlet {
 		// 设置编码方式
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		// 获取请求数据
-		String content = request.getParameter("content");
-		System.out.println("收到数据:" + content);
-		// 返回响应
-		response.getWriter().write("收到数据：" + content);
+		// 下载客户端发来的图片
+		InputStream is = request.getInputStream();
+		// 获取本地输出流
+		String path = getServletContext().getRealPath("/");
+		System.out.println(path);
+		String pictureName = "android" + System.currentTimeMillis() + ".jpg";// 图片命名
+		System.out.println(pictureName);
+		OutputStream os = new FileOutputStream(path + "imgs/" + pictureName);
+		// 循环读写
+		int b = -1;
+		while ((b = is.read()) != -1) {
+			os.write(b);
+		}
+		is.close();
+		os.close();
+		System.out.println("下载完成！");
 		
 		ServletContext application = this.getServletContext();
 		String time = (String) application.getAttribute("time");//获取当前发说说的时间
 		String personalPhone = (String) application.getAttribute("personalPhone");//获取当前发说说的手机号
-		System.out.println("文案time："+time);
-		System.out.println("文案personalPhone："+personalPhone);
+		System.out.println("图片time："+time);
+		System.out.println("图片personalPhone："+personalPhone);
 		
 		AddMomentsService addMomentsService =AddMomentsService.getInstance();
 		int momentsId = addMomentsService.serchMomentsId(personalPhone, time);//得到手机号和时间对应的说说的id
-		System.out.println("文案momentsId："+momentsId);
-		addMomentsService.insertContent(content, momentsId, time,personalPhone);//将图片名称，说说id，手机号，时间存入数据库
+		addMomentsService.insertPictureUrl(pictureName, momentsId, time,personalPhone);//将图片名称，说说id，手机号，时间存入数据库
+		
 		
 	}
 

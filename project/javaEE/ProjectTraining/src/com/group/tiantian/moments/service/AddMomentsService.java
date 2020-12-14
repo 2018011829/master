@@ -128,4 +128,17 @@ public class AddMomentsService {
 		PersonalInfo personalInfo=addMomentsDao.getPersonalInfo(phoneNum);
 		return personalInfo;
 	}
+	
+	/**
+	 * 通过说说id查询手机号
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 返回一个说说id
+	 */
+	public Moments getMomentsInfo(int momentsId){
+		Moments moment=addMomentsDao.getMomentsInfo(momentsId);
+		return moment;
+	}
 }
