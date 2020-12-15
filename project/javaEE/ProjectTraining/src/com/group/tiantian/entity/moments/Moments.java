@@ -8,6 +8,7 @@ public class Moments {
 	private int id;//id
 	private String phoneNumber;//发表人手机号
     private String headPortraitUrl;//用户头像地址
+    private String time;//发表说说的时间
     private String name;//用户昵称
     private String remark;//用户备注
     private String content;//用户发表的文字内容
@@ -22,9 +23,10 @@ public class Moments {
     }
     
 
-    public Moments(int id,String phoneNumber) {
+    public Moments(int id,String phoneNumber,String time) {
 		this.id = id;
 		this.phoneNumber = phoneNumber;
+		this.time = time;
 	}
 
 	public Moments(String headPortraitUrl, String name, String content, String pictureUrl,String likeGiveName,int likegiveboolen,String comments,String replyContent) {
@@ -50,8 +52,19 @@ public class Moments {
 	public String getPhoneNumber() {
         return phoneNumber;
     }
+	
 
-    public void setPhoneNumber(String phoneNumber) {
+    public String getTime() {
+		return time;
+	}
+
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+
+	public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

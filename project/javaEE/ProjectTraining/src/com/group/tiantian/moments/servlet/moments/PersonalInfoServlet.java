@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.group.tiantian.entity.moments.PersonalInfo;
-import com.group.tiantian.moments.service.AddMomentsService;
+import com.group.tiantian.moments.service.MomentsService;
 
 /**
  * Servlet implementation class PersonalInfoServlet

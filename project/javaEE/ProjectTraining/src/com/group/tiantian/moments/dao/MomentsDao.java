@@ -13,9 +13,9 @@ import com.group.tiantian.entity.moments.MomentsPicture;
 import com.group.tiantian.entity.moments.PersonalInfo;
 import com.group.tiantian.util.DBUtil;
 
-public class AddMomentsDao {
+public class MomentsDao {
 	public static Connection connection;
-	public static AddMomentsDao addMomentsDao;
+	public static MomentsDao addMomentsDao;
 	public static PreparedStatement preparedStatement;
 
 	/**
@@ -23,9 +23,9 @@ public class AddMomentsDao {
 	 * 
 	 * @return BookDao
 	 */
-	public static AddMomentsDao getInstance() {
+	public static MomentsDao getInstance() {
 		if (null == addMomentsDao) {
-			addMomentsDao = new AddMomentsDao();
+			addMomentsDao = new MomentsDao();
 		}
 		if (null == connection) {
 			connection = DBUtil.getConnection();
@@ -158,7 +158,7 @@ public class AddMomentsDao {
 			if(rs!=null) {
 				moments=new ArrayList<>();
 				while(rs.next()) {
-					Moments moment=new Moments(rs.getInt("id"),rs.getString("phoneNumber"));
+					Moments moment=new Moments(rs.getInt("id"),rs.getString("phoneNumber"),rs.getString("moments_time"));
 					moments.add(moment);
 				}
 			}
@@ -268,13 +268,42 @@ public class AddMomentsDao {
 			ResultSet rs=preparedStatement.executeQuery();
 			if(rs!=null) {
 				if(rs.next()) {
-					moment= new Moments(rs.getInt("id"),rs.getString("phoneNumber"));	
+					moment= new Moments(rs.getInt("id"),rs.getString("phoneNumber"),rs.getString("moments_time"));	
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return moment;
+	}
+	
+	/**
+	 * 通过手机号查询说说列表获取说说信息
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public List<Moments> getMomentsByPhone(String personPhone){
+		List<Moments> moments=null;
+		String sql="select * from moments where phoneNumber = ?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,personPhone);
+			ResultSet rs=preparedStatement.executeQuery();
+			if(rs!=null) {
+				moments=new ArrayList<>();
+				while(rs.next()) {
+					Moments moment=new Moments(rs.getInt("id"),rs.getString("phoneNumber"),rs.getString("moments_time"));
+					moments.add(moment);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return moments;
 	}
 
 
