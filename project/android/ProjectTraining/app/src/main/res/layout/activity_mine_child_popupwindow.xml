@@ -22,13 +22,13 @@
 
             <TextView
                 android:id="@+id/tv_relation_ok"
+                android:text="确定"
+                android:textSize="20sp"
                 android:layout_marginRight="30dp"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="确定"
-                android:textColor="#90EE90"
-                android:textSize="20sp" />
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/holo_blue_light"/>
             <TextView
                 android:id="@+id/tv_relation_cancle"
                 android:layout_marginLeft="30dp"

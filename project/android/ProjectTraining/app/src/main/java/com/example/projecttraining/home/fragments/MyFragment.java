@@ -124,11 +124,11 @@ public class MyFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_my,container,false);
 
 
-        //TODO 获取控件引用
+        //获取控件引用
         findViews();
-        //TODO 设置控件内容
+        //设置控件内容
 //        init();
-        //TODO 给控件添加监听器
+        //给控件添加监听器
         setClickListener();
         return view;
     }
