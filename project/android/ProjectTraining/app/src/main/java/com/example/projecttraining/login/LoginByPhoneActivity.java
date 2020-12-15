@@ -232,7 +232,7 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
         public void onTick(long l) {//获取验证码按钮被点击
             btnGetCheckNum.setClickable(false);
             btnGetCheckNum.setTextColor(getResources().getColor(android.R.color.black,null));
-            btnGetCheckNum.setBackgroundColor(getResources().getColor(android.R.color.darker_gray,null));
+            btnGetCheckNum.setBackground(getResources().getDrawable(R.drawable.half_circle_button_clicked,null));
             btnGetCheckNum.setText(l/1000 + "秒后重新获取");
         }
 
@@ -241,7 +241,7 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
             btnGetCheckNum.setClickable(true);
             btnGetCheckNum.setText("获取验证码");
             btnGetCheckNum.setTextColor(getResources().getColor(android.R.color.white,null));
-            btnGetCheckNum.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
+            btnGetCheckNum.setBackground(getResources().getDrawable(R.drawable.half_circle_button_failure,null));
         }
     }
     //对返回键进行监听

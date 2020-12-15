@@ -1,5 +1,7 @@
 package com.group.tiantian.collection.service;
 
+import java.util.List;
+
 import com.group.tiantian.collection.dao.CollectionDao;
 import com.group.tiantian.entity.Collection;
 
@@ -53,5 +55,15 @@ public class CollectionService {
 		boolean b=collectionDao.deleteCollection(collection);
 		
 		return b;
+	}
+	
+	
+	/**
+	 * 查询收藏的图书名称
+	 */
+	public List<String> searchBookFromCollection(String phone,String cname,String type) {
+		
+		List<String> names=collectionDao.searchBookFromCollection(phone, cname, type);
+		return names;
 	}
 }

@@ -45,11 +45,9 @@ public class AddFriendsActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 3:
-                    Log.e(TAG, "handleMessage: 搜到搜索到的用户" );
-                    parents = (List<Parent>) msg.obj;
-                    AddFriendAdapter addFriendAdapter = new AddFriendAdapter(getApplicationContext(), parents, R.layout.contact_item_add_friend);
-                    lvSearchResult.setAdapter(addFriendAdapter);
-//                    addFriendAdapter.notifyDataSetChanged();
+                    parents.clear();
+                    parents.addAll((List<Parent>) msg.obj);
+                    addFriendAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -100,6 +98,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                 ParentUtil.searchParentsByPhone(s.toString(),handler);
             }
         });
+
         clearSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

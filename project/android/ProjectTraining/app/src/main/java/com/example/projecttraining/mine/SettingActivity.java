@@ -36,7 +36,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()){
             case R.id.btn_mine_logout:
                 EMClient.getInstance().logout(true);
-                startActivity(new Intent(SettingActivity.this, LoginByPasswordActivity.class));
+                //跳转登录到饿activity之前，清空所有的活动栈，否则一直返回会返回到上一个用户的登录状态
+                startActivity(new Intent(SettingActivity.this, LoginByPasswordActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 break;
         }
     }

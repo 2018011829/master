@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="#2B333E"
+    android:background="#2B3355"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

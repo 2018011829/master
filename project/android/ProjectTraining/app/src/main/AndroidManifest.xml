@@ -81,7 +81,13 @@
             android:name=".idiom.activitys.IdiomInfoActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".idiom.activitys.IdiomActivity" />
-        <activity android:name=".idiom.activitys.IdiomShareActivity" />
+        <activity android:name=".idiom.activitys.IdiomShareActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
         <activity android:name=".MainActivity" /> <!-- 设置环信应用的AppKey -->
         <meta-data
@@ -125,6 +131,19 @@
         <activity android:name=".books.activity.MoreBooksActivity" />
         <activity android:name=".books.activity.MoreContentActivity" />
         <activity android:name=".books.activity.ReadBookActivity" />
+        <!--百度地图-->
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v5.0.0" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="UGhTVL0ZwayM9IRxVfB62gn0p7SYgme9"/>
     </application>
 
 </manifest>

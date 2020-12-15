@@ -124,11 +124,11 @@ public class MyFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_my,container,false);
 
 
-        //TODO 获取控件引用
+        //获取控件引用
         findViews();
-        //TODO 设置控件内容
+        //设置控件内容
 //        init();
-        //TODO 给控件添加监听器
+        //给控件添加监听器
         setClickListener();
         return view;
     }
@@ -164,7 +164,11 @@ public class MyFragment extends Fragment {
                     }
                     break;
                 case R.id.rl_mine_mycollection:
-                    startActivity(new Intent().setClass(getContext(), MyCollectionActivity.class));
+                    if(childName.equals("")){
+                        Toast.makeText(getActivity(),"当前暂无您孩子的信息，请先选择您的孩子！",Toast.LENGTH_SHORT).show();
+                    }else {
+                        startActivity(new Intent().setClass(getContext(), MyCollectionActivity.class));
+                    }
                     break;
             }
         }

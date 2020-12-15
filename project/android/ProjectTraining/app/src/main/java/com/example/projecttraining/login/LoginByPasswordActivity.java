@@ -24,6 +24,7 @@ import com.example.projecttraining.util.ConfigUtil;
 import com.example.projecttraining.util.ParentUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginByPasswordActivity extends AppCompatActivity implements View.OnClickListener {
-private final static String TAG="LoginByPasswordActivity";
+    private final static String TAG = "LoginByPasswordActivity";
 
 
     private EditText etPhone;
@@ -59,7 +60,7 @@ private final static String TAG="LoginByPasswordActivity";
                         //登录成功 跳转到首页
                         Intent intent = new Intent();
                         intent.setClass(LoginByPasswordActivity.this, MainActivity.class);
-                        intent.putExtra("phone",etPhone.getText().toString().trim());
+                        intent.putExtra("phone", etPhone.getText().toString().trim());
                         startActivity(intent);
                         finish();
                     } else {//登录失败 显示错误信息
@@ -80,11 +81,11 @@ private final static String TAG="LoginByPasswordActivity";
     }
 
     private void findViews() {
-        etPhone=findViewById(R.id.et_phone);
-        etPassword=findViewById(R.id.et_password);
-        btnLogin=findViewById(R.id.btn_login);
-        tvLoginByMsg=findViewById(R.id.tv_login_by_msg);
-        tvRegister=findViewById(R.id.tv_register);
+        etPhone = findViewById(R.id.et_phone);
+        etPassword = findViewById(R.id.et_password);
+        btnLogin = findViewById(R.id.btn_login);
+        tvLoginByMsg = findViewById(R.id.tv_login_by_msg);
+        tvRegister = findViewById(R.id.tv_register);
         btnLogin.setOnClickListener(this);
         tvLoginByMsg.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
@@ -92,7 +93,7 @@ private final static String TAG="LoginByPasswordActivity";
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_login://点击登录按钮
                 //检查手机号和密码是否存在
                 checkPhoneNumAndPassword();
@@ -144,8 +145,8 @@ private final static String TAG="LoginByPasswordActivity";
                     @Override
                     public void onSuccess() {
                         //存储当前用户的昵称和头像
-                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),null);
-                        ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(),new ArrayList<>());
+                        ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(), null);
+                        ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(), new ArrayList<>());
                         startActivity(new Intent(LoginByPasswordActivity.this, MainActivity.class));
                         finish();
                         Looper.prepare();
@@ -203,6 +204,7 @@ private final static String TAG="LoginByPasswordActivity";
             }
         });
     }
+
     //对返回键进行监听
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -60,4 +60,14 @@ public class IdiomServiceImpl {
 		return new IdiomDaoImpl().idiomIsSaved(phone, childName, idiomName);
 	}
 	
+	/**
+	 * 根据手机号和孩子名称查询收藏的成语
+	 * @param phone
+	 * @param childName
+	 * @return
+	 */
+	public List<String> findSaveIdiomByInfo(String phone, String childName) {
+		return new IdiomDaoImpl().findSaveIdiomByInfo(phone, childName);
+	}
+	
 }
