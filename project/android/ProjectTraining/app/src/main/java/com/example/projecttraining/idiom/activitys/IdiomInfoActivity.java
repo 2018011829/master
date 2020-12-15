@@ -67,6 +67,7 @@ import butterknife.OnClick;
  * 2020-12-2
  * 2020-12-5
  * 2020-12-6
+ * 2020-12-15
  * @author lrf
  */
 public class IdiomInfoActivity extends AppCompatActivity implements IOfflineResourceConst {
@@ -181,7 +182,9 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
         Intent intent = getIntent();
         idiomName = intent.getStringExtra("name");
 
-        idiomIsSave(ConfigUtil.SERVICE_ADDRESS + "SendIdiomIsSaveServlet");
+        if(!MyFragment.phoneNum.equals("") && !MyFragment.childName.equals("")){
+            idiomIsSave(ConfigUtil.SERVICE_ADDRESS + "SendIdiomIsSaveServlet");
+        }
 
         getIdiomInfoFromAPI(idiomName);
 
@@ -230,10 +233,14 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     // 点击收藏
     @OnClick(R.id.idiom_shoucang)
     public void clickShouCang(){
-        if(src == R.drawable.idiom_shoucang){ //收藏
-            saveIdiom(ConfigUtil.SERVICE_ADDRESS + "SaveIdiomServlet");
-        }else{ //取消收藏
-            cancelSaveIdiom(ConfigUtil.SERVICE_ADDRESS + "CancelSaveIdiomServlet");
+        if(!MyFragment.phoneNum.equals("") && !MyFragment.childName.equals("")){
+            if(src == R.drawable.idiom_shoucang){ //收藏
+                saveIdiom(ConfigUtil.SERVICE_ADDRESS + "SaveIdiomServlet");
+            }else{ //取消收藏
+                cancelSaveIdiom(ConfigUtil.SERVICE_ADDRESS + "CancelSaveIdiomServlet");
+            }
+        }else {
+            Toast.makeText(getBaseContext(),"请确保您已登录，且选择了孩子！",Toast.LENGTH_SHORT).show();
         }
     }
 

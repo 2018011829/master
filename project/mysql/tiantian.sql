@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-14 18:21:03
+Date: 2020-12-15 20:14:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,7 +95,6 @@ CREATE TABLE `bookshelf` (
 -- ----------------------------
 -- Records of bookshelf
 -- ----------------------------
-INSERT INTO `bookshelf` VALUES ('18730094411', '', '动物庄园');
 INSERT INTO `bookshelf` VALUES ('18730094415', '小明', '安娜卡列尼娜');
 INSERT INTO `bookshelf` VALUES ('18831158249', '小明', '白客');
 INSERT INTO `bookshelf` VALUES ('19831127142', '小明', '安娜卡列尼娜');
@@ -1074,7 +1073,7 @@ CREATE TABLE `child` (
   `sex` varchar(10) NOT NULL,
   `parentPhone` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of child
@@ -1082,6 +1081,47 @@ CREATE TABLE `child` (
 INSERT INTO `child` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
 INSERT INTO `child` VALUES ('2', '赵义', '二年级', '女', '19831127142');
 INSERT INTO `child` VALUES ('3', '让人', '一年级', '男', '19831127142');
+INSERT INTO `child` VALUES ('4', '天天', '三年级', '女', '18730094411');
+
+-- ----------------------------
+-- Table structure for `child_copy`
+-- ----------------------------
+DROP TABLE IF EXISTS `child_copy`;
+CREATE TABLE `child_copy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of child_copy
+-- ----------------------------
+INSERT INTO `child_copy` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
+INSERT INTO `child_copy` VALUES ('2', '赵义', '二年级', '女', '19831127142');
+INSERT INTO `child_copy` VALUES ('3', '让人', '一年级', '男', '19831127142');
+
+-- ----------------------------
+-- Table structure for `child_copy1`
+-- ----------------------------
+DROP TABLE IF EXISTS `child_copy1`;
+CREATE TABLE `child_copy1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) NOT NULL DEFAULT 'child',
+  `grade` varchar(20) NOT NULL DEFAULT '1',
+  `sex` varchar(10) NOT NULL,
+  `parentPhone` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of child_copy1
+-- ----------------------------
+INSERT INTO `child_copy1` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
+INSERT INTO `child_copy1` VALUES ('2', '赵义', '二年级', '女', '19831127142');
+INSERT INTO `child_copy1` VALUES ('3', '让人', '一年级', '男', '19831127142');
 
 -- ----------------------------
 -- Table structure for `classifyidiom`
@@ -1153,11 +1193,9 @@ CREATE TABLE `collections` (
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
-INSERT INTO `collections` VALUES ('18730094411', '', 'book', '洋葱头历险记');
 INSERT INTO `collections` VALUES ('18831158249', '小明', 'book', '白客');
-INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '动物庄园');
-INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '安娜卡列尼娜');
-INSERT INTO `collections` VALUES ('19831127142', '熊熊', 'book', '阿甘正传');
+INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '动物庄园');
+INSERT INTO `collections` VALUES ('19831127142', '小明', 'book', '安娜卡列尼娜');
 
 -- ----------------------------
 -- Table structure for `contacts_status`
@@ -1169,7 +1207,7 @@ CREATE TABLE `contacts_status` (
   `to_phone` char(11) NOT NULL,
   `contacts_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of contacts_status
@@ -1180,6 +1218,8 @@ INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
 INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
 INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
 INSERT INTO `contacts_status` VALUES ('6', '18831158249', '19831127142', '1');
+INSERT INTO `contacts_status` VALUES ('7', '18730094411', '18831158249', '1');
+INSERT INTO `contacts_status` VALUES ('8', '18730094412', '18831158249', '0');
 
 -- ----------------------------
 -- Table structure for `idiom`
@@ -1776,7 +1816,7 @@ CREATE TABLE `idiom_save` (
   `childName` varchar(20) NOT NULL,
   `idiomName` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of idiom_save
@@ -1786,6 +1826,34 @@ INSERT INTO `idiom_save` VALUES ('2', '18831158249', '糖糖', '海阔天空');
 INSERT INTO `idiom_save` VALUES ('3', '18730094411', '小明', '龙飞凤舞');
 INSERT INTO `idiom_save` VALUES ('4', '18730094411', '小明', '龙生九子');
 INSERT INTO `idiom_save` VALUES ('5', '18730094411', '小明', '麟凤龟龙');
+INSERT INTO `idiom_save` VALUES ('6', '18730094411', '天天', '春暖花开');
+INSERT INTO `idiom_save` VALUES ('7', '18730094412', '天天', '金枝玉叶');
+
+-- ----------------------------
+-- Table structure for `idiom_search_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `idiom_search_history`;
+CREATE TABLE `idiom_search_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phone` char(11) NOT NULL,
+  `childName` varchar(20) NOT NULL,
+  `searchStr` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of idiom_search_history
+-- ----------------------------
+INSERT INTO `idiom_search_history` VALUES ('1', '18730094411', '天天', '五湖四海', '1');
+INSERT INTO `idiom_search_history` VALUES ('2', '18730094411', '天天', '九洲四海', '1');
+INSERT INTO `idiom_search_history` VALUES ('3', '18730094411', '天天', '一丁点儿', '1');
+INSERT INTO `idiom_search_history` VALUES ('4', '18730094411', '天天', '一席之地', '1');
+INSERT INTO `idiom_search_history` VALUES ('5', '18730094411', '天天', '心粗胆壮', '1');
+INSERT INTO `idiom_search_history` VALUES ('6', '18730094411', '天天', '一丝不紊', '1');
+INSERT INTO `idiom_search_history` VALUES ('7', '18730094411', '天天', '一丝不挂', '1');
+INSERT INTO `idiom_search_history` VALUES ('8', '18730094411', '天天', '促膝长谈', '1');
+INSERT INTO `idiom_search_history` VALUES ('9', '18730094411', '天天', '局促不安', '1');
 
 -- ----------------------------
 -- Table structure for `moments`
@@ -1797,7 +1865,7 @@ CREATE TABLE `moments` (
   `moments_time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `remark` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments
@@ -1815,7 +1883,7 @@ CREATE TABLE `moments_attention` (
   `momentsPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `whetherAttention` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_attention
@@ -1843,7 +1911,7 @@ INSERT INTO `moments_comments` VALUES ('15', '39', '说点什么吧', '187300944
 INSERT INTO `moments_comments` VALUES ('16', '39', '第一个', '18730094418', '小隐隐约约', 'default_avatar.png', null);
 INSERT INTO `moments_comments` VALUES ('17', '42', '啦啦啦', '18730094418', '小隐隐约约', 'default_avatar.png', null);
 INSERT INTO `moments_comments` VALUES ('18', '42', '！！\n？？', '18730094418', '小隐隐约约', 'default_avatar.png', null);
-INSERT INTO `moments_comments` VALUES ('19', '39', '好vv局v就', '18730094411', '老大', '18730094411.png', null);
+INSERT INTO `moments_comments` VALUES ('19', '39', '四角围晋级赛', '18730094411', '老大', '18730094411.png', null);
 
 -- ----------------------------
 -- Table structure for `moments_content`
@@ -1856,7 +1924,7 @@ CREATE TABLE `moments_content` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_content
@@ -1890,7 +1958,7 @@ CREATE TABLE `moments_likegiveperson` (
   `likegivePersonPhone` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `likegiveboolen` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_likegiveperson
@@ -1900,8 +1968,6 @@ INSERT INTO `moments_likegiveperson` VALUES ('129', '39', '李哲的小迷弟', 
 INSERT INTO `moments_likegiveperson` VALUES ('133', '42', '小隐隐约约', '18730094418', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('134', '40', '小隐隐约约', '18730094418', '1');
 INSERT INTO `moments_likegiveperson` VALUES ('136', '39', '小隐隐约约', '18730094418', '1');
-INSERT INTO `moments_likegiveperson` VALUES ('142', '40', '老大', '18730094411', '1');
-INSERT INTO `moments_likegiveperson` VALUES ('143', '39', '老大', '18730094411', '1');
 
 -- ----------------------------
 -- Table structure for `moments_pictureurl`
@@ -1914,7 +1980,7 @@ CREATE TABLE `moments_pictureurl` (
   `time` char(255) CHARACTER SET utf8 DEFAULT NULL,
   `personalPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of moments_pictureurl
@@ -1974,9 +2040,9 @@ DROP TABLE IF EXISTS `parents`;
 CREATE TABLE `parents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `phone` char(11) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `nickname` varchar(50) NOT NULL DEFAULT 'tiantian8808',
-  `avatar` varchar(50) NOT NULL DEFAULT 'default_avatar.png',
+  `password` varchar(15) NOT NULL,
+  `nickname` varchar(20) NOT NULL DEFAULT 'tiantian8808',
+  `avatar` varchar(20) NOT NULL DEFAULT 'default_avatar.png',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
@@ -1995,7 +2061,7 @@ INSERT INTO `parents` VALUES ('11', '18831158249', '123456', '小迷糊吖', 'de
 INSERT INTO `parents` VALUES ('12', '19831127377', 'yayu15212', '琪琪', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('13', '18730094400', 'yayu152152', '小鸠', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('14', '15230048998', 'yayu12152', '妈咪', 'default_avatar.png');
-INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'android1607929267454.png');
+INSERT INTO `parents` VALUES ('15', '13730024418', 'yay152162', '发扣扣', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('16', '13730024416', 'aaaaaa', '大家都', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('17', '17831194418', 'kjdssks', 'kdjdj', 'default_avatar.png');
 INSERT INTO `parents` VALUES ('18', '19831127142', 'li0816', 'tiantian8808', 'default_avatar.png');
@@ -2040,7 +2106,7 @@ CREATE TABLE `remark` (
   `to_phone` char(11) NOT NULL,
   `remark` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of remark
@@ -2059,6 +2125,8 @@ INSERT INTO `remark` VALUES ('28', '19831127375', '18730094411', '老大');
 INSERT INTO `remark` VALUES ('29', '18730094411', '19831127375', '小吴');
 INSERT INTO `remark` VALUES ('61', '13730024418', '18730094411', '老大');
 INSERT INTO `remark` VALUES ('62', '18730094411', '13730024418', '巴巴');
+INSERT INTO `remark` VALUES ('63', '18831158249', '18730094411', '老大');
+INSERT INTO `remark` VALUES ('64', '18730094411', '18831158249', '小迷糊吖');
 
 -- ----------------------------
 -- Table structure for `types`
