@@ -54,8 +54,8 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
 
 
     private String grades;
-    private static int currentBtnBookshelf; //当前加入书架控件中显示的字体颜色
-    private static int currentIvShoucang; //当前收藏控件中显示的图片的id
+    private int currentBtnBookshelf; //当前加入书架控件中显示的字体颜色
+    private int currentIvShoucang; //当前收藏控件中显示的图片的id
     private ProgressBar progressbar; //进度条
     private TextView tvGetMoreContents;
     private LinearLayout ivBack;
@@ -190,6 +190,18 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
 
         //获取文章的章节列表，并显示在Listview中
         getArticleFromServer(book.getContent());
+
+        if (MyFragment.phoneNum != null) {
+            Log.e("BookInfoActivity已登录", "手机号：" + MyFragment.phoneNum);
+            if (MyFragment.childName != null && !MyFragment.childName.equals("")) {
+                //判断当前是否添加了孩子
+                //获取服务器数据，判断该用户是否已经收藏过该书
+                getDataAboutCollectionFromServer();
+
+                //获取服务器数据，判断该用户是否已经将该书加入书架
+                getDataAboutAddToBookshelfFromServer();
+            }
+        }
     }
 
     /**
@@ -286,12 +298,6 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         tvBookType.setText("类型：" + book.getType());
         tvBookIntroduce.setText(book.getIntroduce());
         type = book.getType();
-
-        //获取服务器数据，判断该用户是否已经收藏过该书
-        getDataAboutCollectionFromServer();
-
-        //获取服务器数据，判断该用户是否已经将该书加入书架
-        getDataAboutAddToBookshelfFromServer();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -323,8 +329,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 //判断当前是否登录
                 if (MyFragment.phoneNum != null) {
                     Log.e("BookInfoActivity已登录", "手机号：" + MyFragment.phoneNum);
-                    if (MyFragment.childName != null) {
+                    if (MyFragment.childName != null && !MyFragment.childName.equals("")) {
                         //判断当前是否添加了孩子
+
                         Log.e("BookInfoActivity已添加孩子", "孩子姓名：" + MyFragment.childName);
                         if (currentIvShoucang == R.mipmap.shoucangchenggong) {
                             collection("DeleteBookFromCollection");
@@ -348,8 +355,9 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
                 //判断当前是否登录
                 if (MyFragment.phoneNum != null) {
                     Log.e("BookInfoActivity已登录", "手机号：" + MyFragment.phoneNum);
-                    if (MyFragment.childName != null) {
+                    if (MyFragment.childName != null && !MyFragment.childName.equals("")) {
                         //判断当前是否添加了孩子
+
                         Log.e("BookInfoActivity已添加孩子", "孩子姓名：" + MyFragment.childName);
                         if (currentBtnBookshelf == android.R.color.black) {
                             bookshelf("DeleteBookFromBookshelf");
