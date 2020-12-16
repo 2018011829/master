@@ -10,7 +10,125 @@ import com.group.tiantian.entity.Book;
 import com.group.tiantian.util.DBUtil;
 
 public class BookDao {
+	
+	/**
+	 * 根据id删除书籍
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public static boolean deleteBookType(int id) {
+		boolean b=false;
+		String sql="delete from types where id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setInt(1, id);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 修改图书信息
+	 * @param book
+	 * @return
+	 */
+	public static boolean updateBookType(int id,String type) {
+		boolean b=false;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="update types set type=? where id=?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, type);
+			pstamt.setInt(2, id);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	
+	/**
+	 * 根据id删除书籍
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public static boolean deleteBook(int id) {
+		boolean b=false;
+		String sql="delete from books where id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setInt(1, id);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 
+	/**
+	 * 查找类型名是否已经存在
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public static boolean searchBookType(String type) {
+		boolean b=false;
+		String sql="select * from types where type=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, type);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 将书的信息添加到数据库
+	 * @param book
+	 * @return
+	 */
+	public static boolean addBookType(String type) {
+		boolean b=false;
+		String sql="insert into types(type) values(?)";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, type);  //从第几条开始
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	
 	/**
 	 * 修改图书信息
 	 * @param book

@@ -1,0 +1,63 @@
+package com.group.tiantian.server.book.servlet;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.group.tiantian.server.book.service.BookTypeService;
+
+/**
+ * Servlet implementation class DeleteBookTypeServlet
+ */
+@WebServlet("/DeleteBookTypeServlet")
+public class DeleteBookTypeServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DeleteBookTypeServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		System.out.println("GetBookInfoServlet");
+		String userName = request.getParameter("userName");
+		String idStr = request.getParameter("id");
+		// 获取当前页
+		String page = request.getParameter("page");
+		// 默认显示第一页
+		int pageNum = 1, pageSize = 6;
+		if (page != null && !page.equals("")) {
+			pageNum = Integer.parseInt(page);
+		}
+		if (userName != null && !userName.equals("")) {
+			// 根据id删除书籍 并返回书籍展示界面
+			int id = Integer.parseInt(idStr);
+			boolean b = BookTypeService.getInstance().deleteBookType(id);
+			request.setAttribute("userName", userName);
+			request.getRequestDispatcher("GetBookTypesServlet?userName="+userName+"&page="+pageNum).forward(request, response);
+		} else {
+			System.out.println("您还未登录！");
+			response.sendRedirect("error.jsp");
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
