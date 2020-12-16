@@ -60,12 +60,13 @@ public class IdiomFragment extends Fragment {
                     // 反序列化
                     idiomList = gson.fromJson(json,type);
                     Log.e("lrf_收藏的成语",idiomList.toString());
-                    FlowLayout flowLayout = new FlowLayout(getContext());
-                    flowLayout.setPadding(15,20,15,20);
-                    flowLayout.setVerticalSpacing(40);
-                    flowLayout.setHorizontalSpacing(30);
-                    idiomSaved.addView(flowLayout);
-                    if(null != idiomList){
+
+                    if(!idiomList.isEmpty()){
+                        FlowLayout flowLayout = new FlowLayout(getContext());
+                        flowLayout.setPadding(15,20,15,20);
+                        flowLayout.setVerticalSpacing(40);
+                        flowLayout.setHorizontalSpacing(30);
+                        idiomSaved.addView(flowLayout);
                         for(int i = 0; i < idiomList.size(); ++i){
                             final Button button = new Button(getContext());
                             button.setId(i);
@@ -91,14 +92,8 @@ public class IdiomFragment extends Fragment {
                         }
                     }else {
                         ImageView imageView = new ImageView(getContext());
-//                        imageView.setImageResource(R.drawable.);
-                        TextView textView = new TextView(getContext());
-                        textView.setText("您还没有收藏成语，先去成语专区看看吧！");
-                        textView.setTextSize(18);
-                        //添加到布局文件中去
-                        flowLayout.addView(textView);
-                        //更新界面
-                        flowLayout.invalidate();
+                        imageView.setImageResource(R.drawable.mine_collection_null);
+                        idiomSaved.addView(imageView);
                     }
                     break;
             }
