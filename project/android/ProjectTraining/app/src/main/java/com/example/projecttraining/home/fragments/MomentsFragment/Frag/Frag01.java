@@ -77,6 +77,20 @@ public class Frag01 extends Fragment {
             }
         };
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            initOkHttpClient();//初始化okHttp对象
+            new Thread(){//创建线程发送请求说说数据的命令
+                @Override
+                public void run() {
+                    moments.clear();
+                    downLoadImgNameFromServerRequest();
+                }
+            }.start();
+        }
+    }
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,12 +136,6 @@ public class Frag01 extends Fragment {
         });
         return view;
     }
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e("1", "onStop: ");
-    }
-
     //刷新
     private void refreshData(View view) {
         moments.clear();

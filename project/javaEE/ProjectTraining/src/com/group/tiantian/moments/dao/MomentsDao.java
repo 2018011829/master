@@ -305,6 +305,30 @@ public class MomentsDao {
 		
 		return moments;
 	}
+	/**
+	 * 通过说说id,删除该条说说信息
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMoment(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments where id = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 
 }

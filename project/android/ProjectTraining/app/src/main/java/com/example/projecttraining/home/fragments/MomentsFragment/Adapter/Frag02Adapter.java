@@ -84,6 +84,7 @@ public class Frag02Adapter extends BaseAdapter {
                     case 2:
                         break;
                     case 3:
+                        moments.clear();
                         //获取图片资源路径
                         String imgUrl = (String) msg.obj;//接收到的是一个说说对象
                         String json = imgUrl;
@@ -209,7 +210,7 @@ public class Frag02Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdAdd(view, i);
-                            downLoadImgNameFromServerRequest();
+                            attentionMoments();
                         }
                     }.start();
                 }
@@ -225,7 +226,7 @@ public class Frag02Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdDelete(view, i);
-                            downLoadImgNameFromServerRequest();
+                            attentionMoments();
                         }
                     }.start();
                 }
@@ -235,6 +236,19 @@ public class Frag02Adapter extends BaseAdapter {
         Glide.with(mContext)
                 .load(R.mipmap.concern3)
                 .into(ivConcern);
+        ivConcern.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        personPhoneAndMomentsPnoneDelete(i);
+                        attentionMoments();
+                    }
+                }.start();
+                Toast.makeText(mContext, "取关成功", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //评论的点击事件
         edtComment.setOnClickListener(new OnClickListener() {
@@ -286,6 +300,7 @@ public class Frag02Adapter extends BaseAdapter {
     private class ViewHolder {
         PictureGridView gridview;
     }
+
 
     //使用POST方式提交点赞人和该说说id,向数据库添加数据
     private void likegivePersonAndMomentsIdAdd(View view,int i) {
@@ -400,10 +415,9 @@ public class Frag02Adapter extends BaseAdapter {
         okHttpClient = new OkHttpClient();
     }
 
-    /**
-     * 从服务端获取图片资源的网络路径
-     */
-    private void downLoadImgNameFromServerRequest() {
+    //从服务端获取图片资源的网络路径
+    private void attentionMoments() {
+        Log.e("2", "attentionMoments: ");
         //2 创建Request对象
         //1) 使用RequestBody封装请求数据
         //获取待传输数据对应的MIME类型
@@ -414,7 +428,7 @@ public class Frag02Adapter extends BaseAdapter {
                         .add("PersonPhone",getPersonalPhone())
                         .build();
         Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS + "DownPictureServlet")
+                .url(ConfigUtil.SERVICE_ADDRESS + "AttentionMomentsService")
                 .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -524,7 +538,7 @@ public class Frag02Adapter extends BaseAdapter {
                         public void run() {
                             Log.e( "run: ","123" );
                             commentsAdd(commentContent,i);//向服务端发送评论内容
-                            downLoadImgNameFromServerRequest();
+                            attentionMoments();
                         }
                     }.start();
                     //commentOnWork(commentContent);

@@ -244,6 +244,18 @@ public class Frag01Adapter extends BaseAdapter {
             Glide.with(mContext)
                     .load(R.mipmap.delete)
                     .into(ivConcern);
+            ivConcern.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            deleteMoments(moments.get(i).getId());
+                            downLoadImgNameFromServerRequest();
+                        }
+                    }.start();
+                }
+            });
         }else{
             int temp = 0;
             //关注部分
@@ -259,7 +271,6 @@ public class Frag01Adapter extends BaseAdapter {
                             public void run() {
                                 personPhoneAndMomentsPnoneAdd(i);
                                 downLoadImgNameFromServerRequest();
-                                //frag02Adapter.notifyDataSetChanged();
                             }
                         }.start();
                     }
@@ -549,6 +560,36 @@ public class Frag01Adapter extends BaseAdapter {
         //创建请求对象
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS + "DeleteAttention")
+                .post(formBody)
+                .build();
+        //3. 创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //4. 提交请求并获取响应
+        try {
+            Response response = call.execute();
+            //获取响应的字符串信息
+            String result = response.body().string();
+            Log.e("result",result);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            msg.obj = result;
+            handler.sendMessage(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //使用POST方式提交当前用户手机号和说说手机号
+    private void deleteMoments(int momentsId) {
+        //1. OkClient对象
+        //2. 创建Request请求对象（提前准备好Form表单数据封装）
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("momentsId", String.valueOf(momentsId))
+                        .build();
+        //创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS + "DeleteMoment")
                 .post(formBody)
                 .build();
         //3. 创建CALL对象

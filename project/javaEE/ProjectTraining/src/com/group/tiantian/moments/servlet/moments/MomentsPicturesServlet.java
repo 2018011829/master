@@ -78,8 +78,6 @@ public class MomentsPicturesServlet extends HttpServlet {
 			// 返回响应
 			response.getWriter().write("图片上传失败");
 		}
-		
-		
 	}
 
 	/**

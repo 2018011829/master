@@ -154,5 +154,17 @@ public class MomentsService {
 		List<Moments> moments=addMomentsDao.getMomentsByPhone(personPhone);
 		return moments;
 	}
+	/**
+	 * 通过说说id,删除该条说说信息
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMoment(int momentsId) {
+		boolean b = addMomentsDao.deleteMoment(momentsId);
+		return b;
+	}
 
 }
