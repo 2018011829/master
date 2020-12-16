@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 					if (b) {
 						System.out.println("ÓÃ»§´æÔÚ£¡");
 						request.getSession().setAttribute("userName", userName);
-						request.getRequestDispatcher("home").forward(request, response);
+						request.getRequestDispatcher("HomeServlet").forward(request, response);
 					} else {
 						System.out.println("ÃÜÂë´íÎó£¡");
 						request.setAttribute("errorInfo", "ÃÜÂë´íÎó£¡");

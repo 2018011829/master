@@ -18,7 +18,7 @@
     <div id="login_frame">
         <p id="image_logo"><img src="imgs-server/login/logo.png" height="100px" width="260px"></p>
      
-        <form method="post" action="home">
+        <form method="post" action="login">
      
             <p><label class="label_input">用户名</label><input type="text" id="username" name="userName" value="${userName }" class="text_field"/></p>
             <p><label class="label_input">密码</label><input type="password" id="password" name="userPwd" value="${userPwd }" class="text_field"/></p>

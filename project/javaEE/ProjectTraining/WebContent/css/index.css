@@ -90,10 +90,7 @@
     	#admin_settings li:hover{
     		background-color: #009688;
     		color: #FCFCFC;
-    	}		
-    	#index_home div{
-			float: left;
-		}
+    	}
     	#menu{
     		height: 1000px;
     		background: #1A1B20;
@@ -102,12 +99,12 @@
     		z-index:2;
     	}
     	#info{
-    		width: 1050px;
-    		height: 990px;
+    		width: 1100px;
     		position: absolute;
     		top: 80px;
     		right: 0px;
-    		background: #F2F2F2;
+    		background: #FFFFFF;
+    		text-align:center
     	}
     	.menu li{
     		height: 50px;
@@ -169,11 +166,22 @@
 	   		font-size: 15px;
 		}
 		
-		.parent_td{
-		
-		  padding: 0.3em 0.3em;
-		  
-		}
-				
-		
-		
+.table{
+    width:1000px;
+    margin:0 auto;
+    border-collapse: collapse;
+}
+.table td {
+    width: 100px;
+    text-align: center;
+    line-height: 40px;
+}
+.table tr td { 
+    border:1px solid #E6E6E6; 
+}
+.table { 
+    border:1px solid #E6E6E6; 
+}
+tr:hover{
+	background:#F2F2F2;
+}

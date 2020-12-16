@@ -8,7 +8,6 @@ public class Book {
 	private String img;
 	private String content;
 	private String author;
-
 	private String grades;
 
 	public String getGrades() {
@@ -62,10 +61,11 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", name=" + name + ", introduce=" + introduce + ", type=" + type + ", img=" + img
-				+ ", content=" + content + ", author=" + author + "]";
+				+ ", content=" + content + ", author=" + author + ", grades=" + grades + "]";
 	}
 	
 	
