@@ -91,7 +91,8 @@
 							<input type="hidden" name="userName" value="${userName }">
 							<input type="submit" value="提交"
 								style="width: 100px; height: 35px; background: #009688; color: white">
-						</p>
+						</p><br>
+                        <p class="notice" style="font-size:20px">${errorInfo }</p>
 					</form>
 				</div>
 			</div>
