@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50701
+Source Server Version : 50506
 Source Host           : localhost:3306
 Source Database       : tiantian
 
 Target Server Type    : MYSQL
-Target Server Version : 50701
+Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-12-16 14:35:03
+Date: 2020-12-16 17:10:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1545,46 +1545,6 @@ INSERT INTO `child` VALUES ('3', '让人', '一年级', '男', '19831127142');
 INSERT INTO `child` VALUES ('4', '洋洋', '三年级', '男', '18730094411');
 
 -- ----------------------------
--- Table structure for `child_copy`
--- ----------------------------
-DROP TABLE IF EXISTS `child_copy`;
-CREATE TABLE `child_copy` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cname` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` varchar(20) NOT NULL DEFAULT '1',
-  `sex` varchar(10) NOT NULL,
-  `parentPhone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of child_copy
--- ----------------------------
-INSERT INTO `child_copy` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
-INSERT INTO `child_copy` VALUES ('2', '赵义', '二年级', '女', '19831127142');
-INSERT INTO `child_copy` VALUES ('3', '让人', '一年级', '男', '19831127142');
-
--- ----------------------------
--- Table structure for `child_copy1`
--- ----------------------------
-DROP TABLE IF EXISTS `child_copy1`;
-CREATE TABLE `child_copy1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cname` varchar(20) NOT NULL DEFAULT 'child',
-  `grade` varchar(20) NOT NULL DEFAULT '1',
-  `sex` varchar(10) NOT NULL,
-  `parentPhone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of child_copy1
--- ----------------------------
-INSERT INTO `child_copy1` VALUES ('1', '熊熊', '一年级', '男', '19831127142');
-INSERT INTO `child_copy1` VALUES ('2', '赵义', '二年级', '女', '19831127142');
-INSERT INTO `child_copy1` VALUES ('3', '让人', '一年级', '男', '19831127142');
-
--- ----------------------------
 -- Table structure for `classifyidiom`
 -- ----------------------------
 DROP TABLE IF EXISTS `classifyidiom`;
@@ -1679,6 +1639,27 @@ INSERT INTO `contacts_status` VALUES ('3', '18730094414', '18730094411', '2');
 INSERT INTO `contacts_status` VALUES ('4', '18730094415', '18730094411', '1');
 INSERT INTO `contacts_status` VALUES ('5', '18730094411', '18730094415', '1');
 INSERT INTO `contacts_status` VALUES ('6', '18831158249', '19831127142', '1');
+
+-- ----------------------------
+-- Table structure for `daily_recommend`
+-- ----------------------------
+DROP TABLE IF EXISTS `daily_recommend`;
+CREATE TABLE `daily_recommend` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `synopsis` varchar(500) NOT NULL,
+  `img` varchar(60) NOT NULL,
+  `article` varchar(2000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of daily_recommend
+-- ----------------------------
+INSERT INTO `daily_recommend` VALUES ('1', '    人生的航程，不总是─帆风顺。有风有雨，才能承载生命的厚重；风轻云淡，才适合静静领悟。', 'dailyImg/img1.jpg', '    人生的航程，不总是─帆风顺。有风有雨，才能承载生命的厚重；风轻云淡，才适合静静领悟。喜欢追梦的人，切记不要被梦想主宰。善于谋划的人，切记空想达不到目标。拥有实干精神的人，切记选对方向比努力做事重要。\n');
+INSERT INTO `daily_recommend` VALUES ('2', '    快乐带来的智慧存在于清晰的心灵感觉中，不因担心惶恐而困惑、出现盲点。', 'dailyImg/img2.jpg', '    快乐带来的智慧存在于清晰的心灵感觉中，不因担心惶恐而困惑、出现盲点。太阳不会因为你的失意，明天不再升起;月亮不会因为你的抱怨，今晚不再降落。蒙住自己的眼睛，不等于世界就漆黑一团;蒙住别人的眼睛，不等于光明就属于自己!\n');
+INSERT INTO `daily_recommend` VALUES ('3', '    天高又怎样，踮起脚尖就更接近阳光。微笑拥抱每一天，做像向日葵般温暖的女孩。', 'dailyImg/img3.jpg', '    天高又怎样，踮起脚尖就更接近阳光。微笑拥抱每一天，做像向日葵般温暖的女孩。以前认为水不可能倒流，那是还没有找到发明抽水机的方法;现在认为太阳不可能从西边出来，这是还没住到太阳从西边出来的星球上。这个世界只有想不到的，没有做不到的!\n');
+INSERT INTO `daily_recommend` VALUES ('4', '    路再长也会有终点，夜再长也会有尽头，乌云永远遮不住微笑的太阳!', 'dailyImg/img4.jpg', '    路再长也会有终点，夜再长也会有尽头，乌云永远遮不住微笑的太阳!种子放在水泥地板上会被晒死，种子放在水里会被淹死，种子放到肥沃的土壤里就生根发芽结果。选择决定命运，环境造就人生!\n');
+INSERT INTO `daily_recommend` VALUES ('5', '    别让承载负重了心灵，别让琐碎凌乱了平静;以风的执念飞翔，以雨的心胸求索，在平淡中快乐，在精彩中淡然。', 'dailyImg/img5.jpg', '    别让承载负重了心灵，别让琐碎凌乱了平静;以风的执念飞翔，以雨的心胸求索，在平淡中快乐，在精彩中淡然。终而复始，日月是也。死而复生，四时是也。奇正相生，循环无端，涨跌相生，循环无端，涨跌相生，循环无穷。机遇孕育着挑战，挑战中孕育着机遇，这是千古验证了的定律!\n');
 
 -- ----------------------------
 -- Table structure for `idiom`
@@ -2289,6 +2270,42 @@ INSERT INTO `idiom_save` VALUES ('6', '18730094411', '洋洋', '众星拱月');
 INSERT INTO `idiom_save` VALUES ('7', '18730094411', '洋洋', '一年一度');
 
 -- ----------------------------
+-- Table structure for `idiom_search_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `idiom_search_history`;
+CREATE TABLE `idiom_search_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phone` char(11) NOT NULL,
+  `childName` varchar(20) NOT NULL,
+  `searchStr` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of idiom_search_history
+-- ----------------------------
+INSERT INTO `idiom_search_history` VALUES ('1', '18730094411', '天天', '五湖四海', '1');
+INSERT INTO `idiom_search_history` VALUES ('2', '18730094411', '天天', '九洲四海', '1');
+INSERT INTO `idiom_search_history` VALUES ('3', '18730094411', '天天', '一丁点儿', '1');
+INSERT INTO `idiom_search_history` VALUES ('4', '18730094411', '天天', '一席之地', '1');
+INSERT INTO `idiom_search_history` VALUES ('5', '18730094411', '天天', '心粗胆壮', '1');
+INSERT INTO `idiom_search_history` VALUES ('6', '18730094411', '天天', '一丝不紊', '1');
+INSERT INTO `idiom_search_history` VALUES ('7', '18730094411', '天天', '一丝不挂', '1');
+INSERT INTO `idiom_search_history` VALUES ('8', '18730094411', '天天', '促膝长谈', '1');
+INSERT INTO `idiom_search_history` VALUES ('9', '18730094411', '天天', '局促不安', '1');
+INSERT INTO `idiom_search_history` VALUES ('10', '18730094415', '李仕奇', '卧冰哭竹', '1');
+INSERT INTO `idiom_search_history` VALUES ('11', '18730094415', '李仕奇', '一不扭众', '1');
+INSERT INTO `idiom_search_history` VALUES ('12', '18730094415', '李仕奇', '一事不知', '1');
+INSERT INTO `idiom_search_history` VALUES ('13', '18831158249', '糖糖', '与世无争', '1');
+INSERT INTO `idiom_search_history` VALUES ('14', '18831158249', '糖糖', '秦晋之好', '1');
+INSERT INTO `idiom_search_history` VALUES ('15', '18831158249', '糖糖', '三个臭皮匠，赛过诸葛亮', '1');
+INSERT INTO `idiom_search_history` VALUES ('16', '18831158249', '糖糖', '个抒几见', '1');
+INSERT INTO `idiom_search_history` VALUES ('17', '18831158249', '糖糖', '姑妄言之', '1');
+INSERT INTO `idiom_search_history` VALUES ('18', '18831158249', '糖糖', '姑息养奸', '1');
+INSERT INTO `idiom_search_history` VALUES ('19', '18831158249', '糖糖', '丰衣足食', '1');
+
+-- ----------------------------
 -- Table structure for `moments`
 -- ----------------------------
 DROP TABLE IF EXISTS `moments`;
@@ -2309,6 +2326,22 @@ CREATE TABLE `moments` (
 -- Records of moments
 -- ----------------------------
 INSERT INTO `moments` VALUES ('1', '19831127142', null, null, null, null, null, null, '2020-12-12 at 10:23:18 GMT+08:00');
+
+-- ----------------------------
+-- Table structure for `moments_attention`
+-- ----------------------------
+DROP TABLE IF EXISTS `moments_attention`;
+CREATE TABLE `moments_attention` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `personPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `momentsPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `whetherAttention` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of moments_attention
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `moments_comments`
@@ -2392,6 +2425,28 @@ CREATE TABLE `moments_pictureurl` (
 -- Records of moments_pictureurl
 -- ----------------------------
 INSERT INTO `moments_pictureurl` VALUES ('1', 'android1607739799264.jpg', '1', '2020-12-12 at 10:23:18 GMT+08:00', '19831127142');
+
+-- ----------------------------
+-- Table structure for `moments_reply`
+-- ----------------------------
+DROP TABLE IF EXISTS `moments_reply`;
+CREATE TABLE `moments_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `momentsId` int(11) DEFAULT NULL,
+  `position` int(11) DEFAULT NULL,
+  `replyContent` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `PersonPhone` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `PersonName` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  `PersonHead` char(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of moments_reply
+-- ----------------------------
+INSERT INTO `moments_reply` VALUES ('1', '39', '0', '说啥呢', '18730094412', '老二', '18730094412.png');
+INSERT INTO `moments_reply` VALUES ('2', '39', '1', '啦啦', '18730094412', '老二', '18730094412.png');
+INSERT INTO `moments_reply` VALUES ('3', '39', '0', '哈哈哈', '18730094412', '老二', '18730094412.png');
 
 -- ----------------------------
 -- Table structure for `parentmessage`
