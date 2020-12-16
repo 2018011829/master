@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>天天学堂</title>
     <link rel="stylesheet" type="text/css" href="css/login.css" />
-    <script type="text/javascript" src="js/login.js"></script>
     <style type="text/css">
         body {
             background-image: url("imgs-server/login/bg.jpg");
