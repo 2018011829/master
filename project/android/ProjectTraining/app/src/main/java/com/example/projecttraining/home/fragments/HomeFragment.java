@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }
                     }
                 };
-            }
+        }
         });
 
         //阅读
