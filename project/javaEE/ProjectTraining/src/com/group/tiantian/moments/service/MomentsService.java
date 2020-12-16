@@ -10,23 +10,23 @@ import com.group.tiantian.books.service.BookContentsService;
 import com.group.tiantian.entity.moments.Moments;
 import com.group.tiantian.entity.moments.MomentsPicture;
 import com.group.tiantian.entity.moments.PersonalInfo;
-import com.group.tiantian.moments.dao.AddMomentsDao;
+import com.group.tiantian.moments.dao.MomentsDao;
 
-public class AddMomentsService {
-	private static AddMomentsService addMomentsService;
-	public static AddMomentsDao addMomentsDao;
+public class MomentsService {
+	private static MomentsService addMomentsService;
+	public static MomentsDao addMomentsDao;
 	
 	/**
 	 * 得到一个AddMomentsService实例
 	 * 
 	 * @return
 	 */
-	public static AddMomentsService getInstance() {
+	public static MomentsService getInstance() {
 		if (null == addMomentsService) {
-			addMomentsService = new AddMomentsService();
+			addMomentsService = new MomentsService();
 		}
 		if (null == addMomentsDao) {
-			addMomentsDao = AddMomentsDao.getInstance();
+			addMomentsDao = MomentsDao.getInstance();
 		}
 		return addMomentsService;
 	}
@@ -141,4 +141,30 @@ public class AddMomentsService {
 		Moments moment=addMomentsDao.getMomentsInfo(momentsId);
 		return moment;
 	}
+	
+	/**
+	 * 通过手机号查询说说列表获取说说信息
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public List<Moments> getMomentsByPhone(String personPhone){
+		List<Moments> moments=addMomentsDao.getMomentsByPhone(personPhone);
+		return moments;
+	}
+	/**
+	 * 通过说说id,删除该条说说信息
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMoment(int momentsId) {
+		boolean b = addMomentsDao.deleteMoment(momentsId);
+		return b;
+	}
+
 }

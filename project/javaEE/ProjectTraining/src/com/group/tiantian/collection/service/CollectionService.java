@@ -57,7 +57,6 @@ public class CollectionService {
 		return b;
 	}
 	
-	
 	/**
 	 * 查询收藏的图书名称
 	 */

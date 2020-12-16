@@ -14,7 +14,7 @@
         android:background="@color/colorPrimary">
         <TextView
             android:text="分  享"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_width="match_parent"

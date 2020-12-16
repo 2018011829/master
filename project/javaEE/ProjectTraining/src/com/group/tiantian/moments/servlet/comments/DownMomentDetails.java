@@ -17,7 +17,7 @@ import com.group.tiantian.entity.moments.Moments;
 import com.group.tiantian.entity.moments.MomentsPicture;
 import com.group.tiantian.entity.moments.PersonalInfo;
 import com.group.tiantian.entity.moments.ReplyContent;
-import com.group.tiantian.moments.service.AddMomentsService;
+import com.group.tiantian.moments.service.MomentsService;
 import com.group.tiantian.moments.service.CommentsService;
 import com.group.tiantian.moments.service.LikeGiveService;
 import com.group.tiantian.moments.service.ReplyContentService;
@@ -76,7 +76,7 @@ public class DownMomentDetails extends HttpServlet {
 		String urlPath = ConfigUtil.SERVICE_ADDRESS + "imgs/";
 
 		// 获取当前所有说说id，根据说说id获取图片名称和说说文案
-		AddMomentsService addMomentsService = AddMomentsService.getInstance();
+		MomentsService addMomentsService = MomentsService.getInstance();
 		LikeGiveService likeGiveService = LikeGiveService.getInstance();
 		CommentsService commentsService = CommentsService.getInstance();
 		ReplyContentService replyContentService = ReplyContentService.getInstance();
@@ -90,11 +90,6 @@ public class DownMomentDetails extends HttpServlet {
 		commentInfo = commentsService.commentsInfo(momentsId);// 根据说说id获取评论情况
 		replyContentInfo = replyContentService.replyContentInfo(momentsId);
 		//根据说说id获取回复情况
-		if (commentInfo.isEmpty()) {
-			Comment comment = new Comment();
-			comment.setComment("没有人评论呦");
-			commentInfo.add(comment);
-		}
 		if (likeGiveNames.isEmpty()) {
 			likeGiveNames.add("没有人点赞呦");
 		}

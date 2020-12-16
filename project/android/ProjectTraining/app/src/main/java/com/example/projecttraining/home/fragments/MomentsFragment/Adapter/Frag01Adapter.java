@@ -74,6 +74,7 @@ public class Frag01Adapter extends BaseAdapter {
     private CommentExpandableListView expandableListView;
     private Toolbar toolbar;
     private CommentBean commentBean;
+    private Frag02Adapter frag02Adapter;
 
     //初始化Handler对象
     private void initHandler(View view, int i) {
@@ -93,7 +94,7 @@ public class Frag01Adapter extends BaseAdapter {
                         moments = Arrays.asList(gson.fromJson(json, Moments[].class));//说说对象反序列化
 
                         String att = moments.get(0).getAttentionList();
-                        attentions = Arrays.asList(gson.fromJson(att,Attention[].class));
+                        attentions = Arrays.asList(gson.fromJson(att, Attention[].class));
 
                         notifyDataSetChanged();
                         break;
@@ -102,7 +103,7 @@ public class Frag01Adapter extends BaseAdapter {
         };
     }
 
-    public Frag01Adapter(Context mContext, List<Moments> moments, int itemLayoutRes,List<Attention> attentions) {
+    public Frag01Adapter(Context mContext, List<Moments> moments, int itemLayoutRes, List<Attention> attentions) {
         this.mContext = mContext;
         this.moments = moments;
         this.itemLayoutRes = itemLayoutRes;
@@ -177,33 +178,29 @@ public class Frag01Adapter extends BaseAdapter {
         initHandler(view, i);//初始化handler
         initGson();//初始化gson对象
 
-        List<String> pictureUrl = new ArrayList<>();//图片列表
-        List<String> list = new ArrayList<>();//临时字符串列表，用来存放带引号的图片路径
         String img = String.valueOf(moments.get(i).getPictureUrl());//说说对象中的图片部分
-        String imgs = img.substring(1, img.length() - 2);//将图片对象去掉头部和尾部的中括号
-        list = Arrays.asList(imgs.split(","));//将图片部分按逗号分隔开
-        for (int j = 0; j < list.size(); j++) {
-            String str = list.get(j).substring(4, list.get(j).length() - 1);//将带引号的图片路径去掉引号
-            pictureUrl.add(str);
-        }
+        //反序列化
+        List<String> pictureUrl = Arrays.asList(gson.fromJson(img, String[].class));//说说对象反序列化
 
 
-        List<String> likeGiveNames = new ArrayList<>();//点赞人的名称列表
-        List<String> list1 = new ArrayList<>();//临时字符串列表，用来存放带引号的点赞人昵称
         String likegivename = String.valueOf(moments.get(i).getLikeGiveName());//说说对象中点赞人部分
-        String likegivenames = likegivename.substring(1, likegivename.length() - 2);//将昵称对象去掉头部和尾部的中括号
-        list1 = Arrays.asList(likegivenames.split(","));
-        for (int j = 0; j < list1.size(); j++) {
-            String str1 = list1.get(j).substring(4, list1.get(j).length() - 1);//将带引号的昵称去掉引号
-            likeGiveNames.add(str1);
+        List<String> likeGiveNames = Arrays.asList(gson.fromJson(likegivename, String[].class));
+        for(int j=0;j<likeGiveNames.size();j++){
+            Log.e("likeGiveNames.get(j)",likeGiveNames.get(j));
         }
+
         if (likeGiveNames.size() == 1) {
-            likeGive = likeGiveNames.get(0);
+            if(likeGiveNames.get(0).equals("没有人点赞呦")){
+                likeGive = likeGiveNames.get(0);
+            }else {
+                likeGive = likeGiveNames.get(0)+"觉得赞";
+            }
         } else if (likeGiveNames.size() > 1) {
             likeGive = likeGiveNames.get(0);
             for (int j = 1; j < likeGiveNames.size(); j++) {
                 likeGive += "," + likeGiveNames.get(j);
             }
+            likeGive += "觉得赞";
         }
         tvLikeGive.setText(likeGive);
         //点赞部分
@@ -242,27 +239,27 @@ public class Frag01Adapter extends BaseAdapter {
             });
         }
 
-        //关注部分
-        for(int j=0;j<attentions.size();j++){
-            if (moments.get(i).getPhoneNumber().equals(attentions.get(j).getMomentsPhone())){
-                if(attentions.get(j).getWhetherAttention()==1){
-                    Glide.with(mContext)
-                            .load(R.mipmap.concern2)
-                            .into(ivConcern);
-                    ivConcern.setOnClickListener(new OnClickListener() {
+        //先判断是不是当前用户发的说说
+        if(moments.get(i).getPhoneNumber().equals(getPersonalPhone())){
+            Glide.with(mContext)
+                    .load(R.mipmap.delete)
+                    .into(ivConcern);
+            ivConcern.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(){
                         @Override
-                        public void onClick(View view) {
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    personPhoneAndMomentsPnoneDelete(i);
-                                    downLoadImgNameFromServerRequest();
-                                }
-                            }.start();
+                        public void run() {
+                            deleteMoments(moments.get(i).getId());
+                            downLoadImgNameFromServerRequest();
                         }
-                    });
+                    }.start();
                 }
-            }else {
+            });
+        }else{
+            int temp = 0;
+            //关注部分
+            if(attentions.size()==0){
                 Glide.with(mContext)
                         .load(R.mipmap.concern1)
                         .into(ivConcern);
@@ -278,8 +275,50 @@ public class Frag01Adapter extends BaseAdapter {
                         }.start();
                     }
                 });
+            }else {
+                for(int j=0;j<attentions.size();j++){
+                    if(attentions.get(j).getMomentsPhone().equals(moments.get(i).getPhoneNumber())){
+                        temp = 1;
+                    }
+                }
+                if(temp==1){
+                    Glide.with(mContext)
+                            .load(R.mipmap.concern2)
+                            .into(ivConcern);
+                    ivConcern.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    personPhoneAndMomentsPnoneDelete(i);
+                                    downLoadImgNameFromServerRequest();
+                                    //frag02Adapter.notifyDataSetChanged();
+                                }
+                            }.start();
+                        }
+                    });
+                }else {
+                    Glide.with(mContext)
+                            .load(R.mipmap.concern1)
+                            .into(ivConcern);
+                    ivConcern.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    personPhoneAndMomentsPnoneAdd(i);
+                                    downLoadImgNameFromServerRequest();
+                                }
+                            }.start();
+                        }
+                    });
+                }
+
             }
         }
+
         //评论的点击事件
         edtComment.setOnClickListener(new OnClickListener() {
             @Override
@@ -521,6 +560,36 @@ public class Frag01Adapter extends BaseAdapter {
         //创建请求对象
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS + "DeleteAttention")
+                .post(formBody)
+                .build();
+        //3. 创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //4. 提交请求并获取响应
+        try {
+            Response response = call.execute();
+            //获取响应的字符串信息
+            String result = response.body().string();
+            Log.e("result",result);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            msg.obj = result;
+            handler.sendMessage(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //使用POST方式提交当前用户手机号和说说手机号
+    private void deleteMoments(int momentsId) {
+        //1. OkClient对象
+        //2. 创建Request请求对象（提前准备好Form表单数据封装）
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("momentsId", String.valueOf(momentsId))
+                        .build();
+        //创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS + "DeleteMoment")
                 .post(formBody)
                 .build();
         //3. 创建CALL对象

@@ -44,7 +44,7 @@ public class MoreBooksService {
 	 * @return 返回该名称的书
 	 */
 	public Book getBooksByName(String name) {
-		
+
 		return bookDao.getBookByName(name);
 	}
 }

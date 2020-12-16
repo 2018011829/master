@@ -56,4 +56,54 @@ public class TypeDao {
 		}
 		return list;
 	}
+	
+	/**
+	 * 获取类型总数量
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public int getCount() {
+		int count=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select count(*) from types";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+				System.out.println(count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+	
+	/**
+	 * 获取数据库中某页的类型
+	 * @return
+	 */
+	public List<BookType> getTypes(int pageNum,int pageSize){
+		List<BookType> types=new ArrayList<>();
+		String sql="select * from types limit ?,?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1,(pageNum-1)*pageSize);  //从第几条开始
+			preparedStatement.setInt(2, pageSize);         //数量
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				BookType type=new BookType();
+				type.setId(rs.getInt("id"));
+				type.setType(rs.getString("type"));
+				types.add(type);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return types;
+	}
 }

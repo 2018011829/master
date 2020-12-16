@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -56,6 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout linearGuess5;
     private Handler myHandler;
     private Banner mBanner;
+    private LinearLayout changeRecommend;
     private List<Integer> imgPath = new ArrayList<>();
     private MyImageLoader myImageLoader = new MyImageLoader();
     private View view;
@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void handleMessage(@NonNull Message msg) {
                         switch (msg.what){
-                            case 1:
+                            case 0:
                                 String str = (String) msg.obj;
                                 Intent intent = new Intent();
                                 intent.setClass(getContext(), IdiomActivity.class);
@@ -159,6 +159,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews() {
+        changeRecommend = view.findViewById(R.id.change);
         mBanner = view.findViewById(R.id.home_banner);
         linearGuess1=view.findViewById(R.id.linear_guess1);
         linearGuess2=view.findViewById(R.id.linear_guess2);
@@ -170,11 +171,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         linearGuess3.setOnClickListener(this);
         linearGuess4.setOnClickListener(this);
         linearGuess5.setOnClickListener(this);
+        changeRecommend.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.change:
+                Toast.makeText(getContext(),"没有更多推荐了哟",Toast.LENGTH_SHORT).show();
+                break;
             case R.id.linear_guess1://安徒生童话
                 getBookByNameFromServer("安徒生童话");
                 break;
@@ -260,7 +265,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     //获取Message对象
                     Message msg = myHandler.obtainMessage();
                     //设置Message对象的属性(what、obj)
-                    msg.what = 1;
+                    msg.what = 0;
                     msg.obj = result;
                     //发送Message对象
                     myHandler.sendMessage(msg);

@@ -37,7 +37,7 @@ public class ReadBookAndExpressList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		//书的名称
-		String bookName="金拇指.txt";
+		String bookName="意大利童话.txt";
 		//拼接读取路径
 		String path=getServletContext().getRealPath("/books/")+bookName;
 		System.out.println(path);
@@ -57,13 +57,14 @@ public class ReadBookAndExpressList extends HttpServlet {
 //			if(testString.trim().matches("([第](\\s{1}).{1,5}(\\s{1})[章])")) {
 //			if(testString.trim().matches("^[1234567890]{1,5}")) {
 //			if(testString.trim().matches("^[@].{2,}")) {
+//			if(testString.trim().matches("^[1234567890]{1,2}")) {
 				part=testString;
 				System.out.println(part);
-//				boolean b=BookContentsService.getInstance().insertContentData(j, i, bookName, part);
-//				System.out.println(part+":"+b);
-//				if(b) {
-//					j++;
-//				}
+				boolean b=BookContentsService.getInstance().insertContentData(j, i, bookName, part);
+				System.out.println(part+":"+b);
+				if(b) {
+					j++;
+				}
 			}
 //			if(testString.trim().matches("\\s{0,}([第].{1,5}[章节卷回])(\\s{0,})(.{0,})")) {
 //				System.out.println(testString);

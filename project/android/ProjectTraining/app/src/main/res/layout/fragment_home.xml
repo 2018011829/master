@@ -6,6 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:background="#F0F0F0"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -357,17 +358,38 @@
 
             </HorizontalScrollView>
 
-            <TextView
-                android:text="每日推荐"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#2B333E"
+            <RelativeLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="每日推荐"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#2B333E"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"/>
+                <LinearLayout
+                    android:id="@+id/change"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:src="@drawable/change"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"/>
+                    <TextView
+                        android:text="换一换"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
-                android:padding="10dp"
+                android:padding="5dp"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -376,16 +398,16 @@
 
                 <ImageView
                     android:layout_width="60dp"
-                    android:layout_height="70dp"
-                    android:src="@mipmap/mine_head_photo"/>
+                    android:layout_height="75dp"
+                    android:src="@drawable/img1"/>
                 <TextView
-                    android:textSize="17sp"
-                    android:layout_height="90dp"
+                    android:textSize="15sp"
+                    android:textColor="#6E6E6E"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
-                    android:text="程序员暂时不想设置这个推荐"
-                    android:textColor="@android:color/black"/>
+                    android:layout_height="match_parent"
+                    android:text="    人生的航程，不总是─帆风顺。有风有雨，才能承载生命的厚重；风轻云淡，才适合静静领悟。" />
             </LinearLayout>
 
             <LinearLayout
@@ -398,18 +420,86 @@
 
                 <ImageView
                     android:layout_width="60dp"
-                    android:layout_height="70dp"
-                    android:src="@mipmap/mine_head_photo"/>
+                    android:layout_height="75dp"
+                    android:src="@drawable/img2"/>
                 <TextView
-                    android:textSize="17sp"
-                    android:layout_height="90dp"
+                    android:textSize="15sp"
+                    android:textColor="#6E6E6E"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
-                    android:text="程序员暂时不想设置这个推荐"
-                    android:textColor="@android:color/black"/>
+                    android:layout_height="match_parent"
+                    android:text="    快乐带来的智慧存在于清晰的心灵感觉中，不因担心惶恐而困惑、出现盲点。" />
             </LinearLayout>
 
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/img3"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="#6E6E6E"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="    天高又怎样，踮起脚尖就更接近阳光。微笑拥抱每一天，做像向日葵般温暖的女孩。" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/img4"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="#6E6E6E"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="    路再长也会有终点，夜再长也会有尽头，乌云永远遮不住微笑的太阳!" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/img5"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="#6E6E6E"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="    别让承载负重了心灵，别让琐碎凌乱了平静;以风的执念飞翔，以雨的心胸求索，在平淡中快乐，在精彩中淡然。" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

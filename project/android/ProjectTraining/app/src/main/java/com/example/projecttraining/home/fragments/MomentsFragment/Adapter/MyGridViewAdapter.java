@@ -89,7 +89,7 @@ public class MyGridViewAdapter extends BaseAdapter {
         thumbView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomImageFromThumb(thumbView,pictureUrl.get(position),view);
+               // zoomImageFromThumb(thumbView,pictureUrl.get(position),view);
             }
         });
         return img;

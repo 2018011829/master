@@ -37,14 +37,6 @@
 
         </LinearLayout>
 
-        <!--        <View-->
-
-        <!--            android:layout_width="fill_parent"-->
-        <!--            android:layout_height="1dp"-->
-        <!--            android:layout_marginLeft="5dp"-->
-        <!--            android:layout_marginRight="5dp"-->
-        <!--            android:background="#aa000000" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -120,7 +112,6 @@
                 android:layout_weight="2.3"
                 android:text="自动滚屏"
                 android:textColor="@android:color/white" />
-
 
         </LinearLayout>
 

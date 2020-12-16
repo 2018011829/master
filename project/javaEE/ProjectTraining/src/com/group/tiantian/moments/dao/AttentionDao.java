@@ -146,14 +146,12 @@ public class AttentionDao {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, personPhone);
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				Attention attention = new Attention(rs.getString("momentsPhone"),rs.getInt("whetherAttention"));
 				attentions.add(attention);
-			}else {
-				Attention attention = new Attention();
-				attention.setWhetherAttention(0);
-				attentions.add(attention);
 			}
+			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

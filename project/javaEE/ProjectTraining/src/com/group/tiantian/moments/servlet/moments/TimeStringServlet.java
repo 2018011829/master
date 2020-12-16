@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.group.tiantian.moments.service.AddMomentsService;
+import com.group.tiantian.moments.service.MomentsService;
 
 /**
  * Servlet implementation class TimeStringServlet
@@ -42,22 +42,25 @@ public class TimeStringServlet extends HttpServlet {
 		String time = request.getParameter("time");//当前发说说的时间
 		String personalPhone = request.getParameter("personalPhone");//当前发说说人的手机号
 		String content = request.getParameter("content");//当前说说的文案
-		System.out.println("time" + time);
-		System.out.println("personalPhone" + personalPhone);
-
+		
+	
 		ServletContext application = this.getServletContext();// 将time写入作用域
 		application.setAttribute("time", time);
 		application.setAttribute("personalPhone", personalPhone);
 
-		AddMomentsService addMomentsService = AddMomentsService.getInstance();
-		addMomentsService.insertPersonalInfo(personalPhone, time);//将时间和手机号存入数据库
-		
+		MomentsService addMomentsService = MomentsService.getInstance();
+		addMomentsService.insertPersonalInfo(personalPhone, time);//将时间和手机号存入数据库	
 		int momentsId = addMomentsService.serchMomentsId(personalPhone, time);//得到手机号和时间对应的说说的id
-		System.out.println("文案momentsId："+momentsId);
-		addMomentsService.insertContent(content, momentsId, time,personalPhone);//将图片名称，说说id，手机号，时间存入数据库
+		boolean b1 = addMomentsService.insertContent(content, momentsId, time,personalPhone);//将图片文案手机号,说说id,时间存入数据库
 
-		// 返回响应
-		response.getWriter().write("收到数据：" + time);
+		if(b1) {
+			// 返回响应
+			response.getWriter().write("文字上传成功");
+		}else {
+			// 返回响应
+			response.getWriter().write("文字上传失败");
+		}
+		
 
 	}
 

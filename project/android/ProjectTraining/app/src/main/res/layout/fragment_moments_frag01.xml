@@ -21,8 +21,9 @@
             android:layout_height="wrap_content"/>-->
         <!--        自定义Header样式-->
         <pl.droidsonroids.gif.GifImageView
+            android:background="#ffffff"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:src="@mipmap/refresh"
             fab:ignore="MissingClass" />
         <ListView
@@ -33,10 +34,6 @@
         <!--<com.scwang.smartrefresh.layout.footer.BallPulseFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="尾部样式"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </RelativeLayout>
