@@ -7,12 +7,12 @@
     <title>天天学堂</title>
     <link rel="stylesheet" type="text/css" href="css/login.css" />
     <style type="text/css">
-        body {
-            background-image: url("imgs-server/login/bg.jpg");
-            background-size: 100%;
-            background-repeat: no-repeat;
-        }
-    </style>
+		body {
+		    background-image: url("imgs-server/login/bg.png");
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		}
+	</style>
 </head>
 <body>
     <div id="login_frame">
