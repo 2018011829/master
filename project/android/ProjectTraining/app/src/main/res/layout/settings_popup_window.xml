@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -13,16 +13,20 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="0dp"
+            android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_weight="1"
-            android:src="@mipmap/back_white"/>
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/back_white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
 
         <TextView
             android:id="@+id/et_search"
-            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="7"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_back"
+            android:layout_toLeftOf="@id/iv_listen"
             android:textColor="@android:color/white"/>
 
         <ImageView
@@ -30,8 +34,10 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/listen_white"/>
-    </LinearLayout>
+            android:src="@mipmap/listen_white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bottom"
@@ -67,8 +73,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"/>
         </LinearLayout>
-        <View
 
+        <View
             android:layout_width="fill_parent"
             android:layout_marginTop="10dp"
             android:layout_height="1dp"
