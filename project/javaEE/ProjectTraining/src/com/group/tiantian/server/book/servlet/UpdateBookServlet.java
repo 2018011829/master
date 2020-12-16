@@ -106,17 +106,18 @@ public class UpdateBookServlet extends HttpServlet {
 //						System.out.println(path + "/" + name + ext);
 					}
 					if (item.getFieldName().equals("book")) {
+						String str = "" + System.currentTimeMillis();
 						String name = item.getName();
 						if(name!=null && !name.equals("")) {
 							System.out.println("图书文件不为空！");
-							book.setContent(name);
+							String ext = name.substring(name.lastIndexOf("."), item.getName().length());
+							book.setContent(str+ext);
 							itemFile=item;
 //						System.out.println(path + "/" + name );
 						}else {
 							book.setImg(beforeBookName);
 						}
 					}
-					
 				}
 			}
 			System.out.println("修改的图书信息："+book.toString());

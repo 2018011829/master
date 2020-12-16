@@ -76,6 +76,11 @@
                 <div style="width: 1100px; margin-bottom: 20px">
                     <form action="UpdateBookServlet" method="post"
                         enctype="multipart/form-data">
+                        	<input type="hidden" name="id" value="${page }">
+                        	<input type="hidden" name="id" value="${newBook.id }">
+                        	<input type="hidden" name="beforeImg" value="${newBook.img }">
+                        	<input type="hidden" name="beforeContent" value="${newBook.content }">
+                            <input type="hidden" name="userName" value="${userName }">
                         <br> <span>图书名称：<input class="inp" type="text" name="bookName"
                             style="width: 200px; height: 25px;" value="${newBook.name }">
                         </span>
@@ -121,11 +126,6 @@
                             <p class="notice"></p>
                         </div>
                         <p style="line-height: 40px;">
-                        	<input type="hidden" name="id" value="${page }">
-                        	<input type="hidden" name="id" value="${newBook.id }">
-                        	<input type="hidden" name="beforeImg" value="${newBook.img }">
-                        	<input type="hidden" name="beforeContent" value="${newBook.content }">
-                            <input type="hidden" name="userName" value="${userName }">
                             <input type="submit" value="提交"
                                 style="width: 100px; height: 35px; background: #009688; color: white">
                         </p>
