@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,10 +99,34 @@ public class Frag03 extends Fragment {
             }
         }.start();
         momentsListView = view.findViewById(R.id.lv_moments_list);
+        srl = view.findViewById(R.id.srl);
+        //设置回弹时间
+        srl.setReboundDuration(100);
+        //给智能刷新控件注册下拉刷新事件监听器
+        srl.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData(view);
+                new Thread(){//创建线程发送请求说说数据的命令
+                    @Override
+                    public void run() {
+                        moments.clear();
+                        mineMoments();
+                    }
+                }.start();
+                //通知刷新完毕
+                srl.finishRefresh();
+            }
+        });
 
         return view;
     }
 
+    //刷新
+    private void refreshData(View view) {
+        moments.clear();
+        frag03Adapter.notifyDataSetChanged();
+    }
     //初始化Gson对象
     private void initGson() {
         gson = new GsonBuilder()// 创建GsonBuilder对象

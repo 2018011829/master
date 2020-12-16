@@ -89,7 +89,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.fragments.MomentsFragment.UploadDynamic.PhotoViewActivity" />
-        <activity android:name=".MainActivity" /> <!-- 设置环信应用的AppKey -->
+        <activity android:name=".MainActivity" android:windowSoftInputMode="adjustPan" /> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="1157201101107092#demo" /> <!-- 声明sdk所需的service SDK核心功能 -->
