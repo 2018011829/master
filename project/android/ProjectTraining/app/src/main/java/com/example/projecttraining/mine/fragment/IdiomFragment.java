@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +90,8 @@ public class IdiomFragment extends Fragment {
                             });
                         }
                     }else {
+                        ImageView imageView = new ImageView(getContext());
+//                        imageView.setImageResource(R.drawable.);
                         TextView textView = new TextView(getContext());
                         textView.setText("您还没有收藏成语，先去成语专区看看吧！");
                         textView.setTextSize(18);
