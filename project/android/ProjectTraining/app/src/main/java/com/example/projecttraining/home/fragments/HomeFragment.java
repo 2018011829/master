@@ -22,11 +22,13 @@ import com.example.projecttraining.books.activity.BooksHomePageActivity;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.home.MyImageLoader;
 import com.example.projecttraining.idiom.activitys.IdiomActivity;
+import com.example.projecttraining.idiom.activitys.IdiomInfoActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -122,7 +124,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }
                     }
                 };
-            }
+        }
         });
 
         //阅读
@@ -142,8 +144,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if(tag<=0) {
             imgPath.add(R.drawable.banner0);
             imgPath.add(R.drawable.banner1);
-            imgPath.add(R.drawable.banner2);
             imgPath.add(R.drawable.banner3);
+            imgPath.add(R.drawable.banner4);
             tag++;
         }
 
@@ -155,7 +157,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 .isAutoPlay(true)
                 .setDelayTime(2000)
                 .start();
-
     }
 
     private void initViews() {

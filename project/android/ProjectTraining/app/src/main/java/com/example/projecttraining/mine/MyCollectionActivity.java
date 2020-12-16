@@ -1,6 +1,8 @@
 package com.example.projecttraining.mine;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,14 +13,24 @@ import com.example.projecttraining.mine.adapter.CollectionPagerAdapter;
 import com.example.projecttraining.ui.NoScrollViewPager;
 import com.google.android.material.tabs.TabLayout;
 
+import butterknife.BindView;
+
 public class MyCollectionActivity extends AppCompatActivity {
     private TabLayout tabLayout;
+    private LinearLayout back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_mycollection);
 
+        back = findViewById(R.id.linear_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         //为ViewPager设置Adapter
         ViewPager viewPager = setViewPagerAdapter();
@@ -45,8 +57,6 @@ public class MyCollectionActivity extends AppCompatActivity {
     private ViewPager setViewPagerAdapter() {
         //得到ViewPager和SectionsPagerAdapter，并为ViewPager设置Adapter
         NoScrollViewPager viewPager=findViewById(R.id.mine_collection_view_pager);
-        //设置不可滑动
-//        viewPager.setNoScroll(true);
         CollectionPagerAdapter collectionPagerAdapter=new CollectionPagerAdapter(getSupportFragmentManager(),1);
         viewPager.setAdapter(collectionPagerAdapter);
         return viewPager;

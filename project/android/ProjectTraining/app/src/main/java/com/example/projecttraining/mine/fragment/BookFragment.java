@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ import okhttp3.Response;
 public class BookFragment extends Fragment {
     private View view;
     private ListView listView;
+    private ImageView iv_collectionbook_null;
     private BookCollectionAdapter bookCollectionAdapter;
     private List<Book> books = new ArrayList<>();
     private Handler handler = new Handler(Looper.getMainLooper()){
@@ -60,17 +62,28 @@ public class BookFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    initListView();
+                    if(books.isEmpty()){
+                        iv_collectionbook_null.setImageDrawable(BookFragment.this.getContext().getDrawable(R.drawable.mine_collection_null));
+                    }else {
+                        initListView();
+                    }
                     break;
             }
         }
     };
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        books.clear();
+        queryCollectionBook();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mine_collectionbook,container,false);
-        queryCollectionBook();
+        iv_collectionbook_null = view.findViewById(R.id.iv_collectionbook_null);
         return view;
     }
 

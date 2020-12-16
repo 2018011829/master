@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_marginBottom="5dp"
-    >
+    android:orientation="vertical">
     <!--顶部导航栏-->
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        >
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/frag01"
             android:layout_width="0dp"
@@ -36,32 +35,34 @@
             android:layout_weight="1"
             android:text="我的" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.example.projecttraining.util.DoNotSlideUtil
             android:id="@+id/viewpager01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             tools:ignore="MissingClass" />
+
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:background="@drawable/floatbutton"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
             android:src="@mipmap/pen"
             app:elevation="8dp"
             app:fabSize="mini"
-            app:pressedTranslationZ="10dp"
-            app:rippleColor="#ffffff"
             app:layout_behavior="com.voctex.ui.tablayout.other.ScrollingViewBehavior"
-            />
+            app:pressedTranslationZ="10dp"
+            app:rippleColor="#ffffff" />
 
     </RelativeLayout>
 
