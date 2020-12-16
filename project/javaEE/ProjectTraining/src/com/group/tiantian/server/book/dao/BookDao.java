@@ -12,6 +12,37 @@ import com.group.tiantian.util.DBUtil;
 public class BookDao {
 
 	/**
+	 * 修改图书信息
+	 * @param book
+	 * @return
+	 */
+	public static boolean updateBook(Book book) {
+		boolean b=false;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="update books set name=?,introduce=?,type=?,img=?,content=?,author=?,grades=? where id=?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, book.getName());  //从第几条开始
+			pstamt.setString(2, book.getIntroduce());         //数量
+			pstamt.setString(3, book.getType());
+			pstamt.setString(4, book.getImg());
+			pstamt.setString(5, book.getContent());
+			pstamt.setString(6, book.getAuthor());
+			pstamt.setString(7, book.getGrades());
+			pstamt.setInt(8, book.getId());
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	
+	/**
 	 * 根据id查找书的信息
 	 * @param 
 	 * @return 

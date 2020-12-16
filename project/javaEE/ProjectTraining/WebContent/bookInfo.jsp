@@ -59,7 +59,8 @@
 				</ul>
 			</div>
 
-			<div id="info" style="height: 700px;">
+			<div id="info" style="height: 2200px;">
+				<br>
 				<!-- 显示表格 -->
 				<div
 					style="height: 40px; width: 1100px; text-align: center; line-height: 40px; font-weight: 600; font-size: 20px; color: #009688; margin-top: 10px">
@@ -85,6 +86,7 @@
 							<td style="background: #F2F2F2">图书类型</td>
 							<td style="background: #F2F2F2">作者</td>
 							<td style="background: #F2F2F2">适合年级</td>
+							<td style="background: #F2F2F2">电子书籍</td>
 							<td style="background: #F2F2F2; width: 400px">图书介绍</td>
 							<td style="background: #F2F2F2">操作1</td>
 							<td style="background: #F2F2F2">操作2</td>
@@ -100,7 +102,8 @@
 								<td>${book.type }</td>
 								<td>${book.author }</td>
 								<td>${book.grades }</td>
-								<td>${book.introduce }</td>
+								<td>${book.content }</td>
+								<td style="font-size:12px">${book.introduce }</td>
 								<td><a
 									href="UpdateBook?id=${book.id }&userName=${userName }&page=${page.prePageNum+1 }"
 									style="color: black">修改</a></td>

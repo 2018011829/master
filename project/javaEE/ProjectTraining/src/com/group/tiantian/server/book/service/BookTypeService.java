@@ -29,6 +29,16 @@ public class BookTypeService {
 	}
 	
 	/**
+	 * 修改图书信息
+	 * @param book
+	 * @return
+	 */
+	public boolean updateBook(Book book) {
+		boolean b=BookDao.updateBook(book);
+		return b;
+	}
+	
+	/**
 	 * 根据id查找书的信息
 	 * @param 
 	 * @return 
