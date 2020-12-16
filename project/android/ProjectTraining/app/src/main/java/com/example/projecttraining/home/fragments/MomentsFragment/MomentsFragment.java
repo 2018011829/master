@@ -51,9 +51,6 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
         }
         //加载布局文件
         view=inflater.inflate(R.layout.fragment_moments, container, false);
-        ////禁止滑动代码
-        //doNotSlideUtil = view.findViewById(R.id.viewpager01);
-        //doNotSlideUtil.setScanScroll(false);
         //初始化方法
         initView();
         initBtnListener();
@@ -91,6 +88,13 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
         //显示PopupWindow
         mPopWindow.showAtLocation(root, Gravity.BOTTOM, 0, 0);
         btnCancel = contentView.findViewById(R.id.btn_cancel);
+        RelativeLayout rl_popuplayout = contentView.findViewById(R.id.rl_popuplayout);
+        rl_popuplayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+            }
+        });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,14 +153,20 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
         switch (v.getId()){
             case R.id.frag01:
                 button01.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
+                button02.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
+                button03.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.frag02:
                 button02.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
+                button01.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
+                button03.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.frag03:
                 button03.setTextColor(Color.parseColor("#2aa515"));//设置滚动时文字颜色
+                button01.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
+                button02.setTextColor(Color.parseColor("#000000"));//设置滚动时文字颜色
                 viewPager.setCurrentItem(2);
                 break;
         }

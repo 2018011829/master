@@ -28,7 +28,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
-import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Attention;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Comment;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.CommentBean;
 import com.example.projecttraining.home.fragments.MomentsFragment.Beans.CommentDetailBean;
@@ -56,10 +55,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class Frag01Adapter extends BaseAdapter {
+public class Frag03Adapter extends BaseAdapter {
     private Context mContext;//环境上下文
     private List<Moments> moments = new ArrayList<>();//动态列表
-    private List<Attention> attentions = new ArrayList<>();//关注列表
     private int itemLayoutRes;//
     private LinearLayout llDynamicDetails;//点击查看详情
     private OkHttpClient okHttpClient;//定义OKHTTPClient对象属性
@@ -74,7 +72,6 @@ public class Frag01Adapter extends BaseAdapter {
     private CommentExpandableListView expandableListView;
     private Toolbar toolbar;
     private CommentBean commentBean;
-    private Frag02Adapter frag02Adapter;
 
     //初始化Handler对象
     private void initHandler(View view, int i) {
@@ -93,9 +90,6 @@ public class Frag01Adapter extends BaseAdapter {
                         //反序列化
                         moments = Arrays.asList(gson.fromJson(json, Moments[].class));//说说对象反序列化
 
-                        String att = moments.get(0).getAttentionList();
-                        attentions = Arrays.asList(gson.fromJson(att, Attention[].class));
-
                         notifyDataSetChanged();
                         break;
                 }
@@ -103,11 +97,10 @@ public class Frag01Adapter extends BaseAdapter {
         };
     }
 
-    public Frag01Adapter(Context mContext, List<Moments> moments, int itemLayoutRes, List<Attention> attentions) {
+    public Frag03Adapter(Context mContext, List<Moments> moments, int itemLayoutRes) {
         this.mContext = mContext;
         this.moments = moments;
         this.itemLayoutRes = itemLayoutRes;
-        this.attentions = attentions;
     }
 
     @Override
@@ -239,74 +232,9 @@ public class Frag01Adapter extends BaseAdapter {
             });
         }
 
-        //先判断是不是当前用户发的说说
-        if(moments.get(i).getPhoneNumber().equals(getPersonalPhone())){
-            Glide.with(mContext)
-                    .load(R.mipmap.delete)
-                    .into(ivConcern);
-        }else{
-            int temp = 0;
-            //关注部分
-            if(attentions.size()==0){
-                Glide.with(mContext)
-                        .load(R.mipmap.concern1)
-                        .into(ivConcern);
-                ivConcern.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new Thread(){
-                            @Override
-                            public void run() {
-                                personPhoneAndMomentsPnoneAdd(i);
-                                downLoadImgNameFromServerRequest();
-                                //frag02Adapter.notifyDataSetChanged();
-                            }
-                        }.start();
-                    }
-                });
-            }else {
-                for(int j=0;j<attentions.size();j++){
-                    if(attentions.get(j).getMomentsPhone().equals(moments.get(i).getPhoneNumber())){
-                        temp = 1;
-                    }
-                }
-                if(temp==1){
-                    Glide.with(mContext)
-                            .load(R.mipmap.concern2)
-                            .into(ivConcern);
-                    ivConcern.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    personPhoneAndMomentsPnoneDelete(i);
-                                    downLoadImgNameFromServerRequest();
-                                    //frag02Adapter.notifyDataSetChanged();
-                                }
-                            }.start();
-                        }
-                    });
-                }else {
-                    Glide.with(mContext)
-                            .load(R.mipmap.concern1)
-                            .into(ivConcern);
-                    ivConcern.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    personPhoneAndMomentsPnoneAdd(i);
-                                    downLoadImgNameFromServerRequest();
-                                }
-                            }.start();
-                        }
-                    });
-                }
-
-            }
-        }
+        Glide.with(mContext)
+                .load(R.mipmap.concern1)
+                .into(ivConcern);
 
         //评论的点击事件
         edtComment.setOnClickListener(new OnClickListener() {

@@ -141,4 +141,22 @@ public class Moments {//动态类（每个说说）
         this.attentionList = attentionList;
     }
 
+    @Override
+    public String toString() {
+        return "Moments{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", headPortraitUrl='" + headPortraitUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", content='" + content + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", praiseNumber=" + praiseNumber +
+                ", likeGiveName='" + likeGiveName + '\'' +
+                ", comments='" + comments + '\'' +
+                ", likegiveboolen=" + likegiveboolen +
+                ", replyContent='" + replyContent + '\'' +
+                ", attentionList='" + attentionList + '\'' +
+                '}';
+    }
 }

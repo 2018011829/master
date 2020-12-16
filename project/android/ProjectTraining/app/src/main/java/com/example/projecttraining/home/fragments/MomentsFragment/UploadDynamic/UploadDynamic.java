@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projecttraining.R;
-import com.example.projecttraining.home.fragments.MomentsFragment.Beans.Moments;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -111,6 +110,9 @@ public class UploadDynamic extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what){
                     case 1://如果服务端返回的数据是字符串
+                        //获取图片资源路径
+                        String json = (String) msg.obj;//接收到的是一个说说对象
+                        Toast.makeText(UploadDynamic.this,json,Toast.LENGTH_SHORT).show();
                     case 2:
                     case 3:
                         break;
@@ -201,8 +203,7 @@ public class UploadDynamic extends AppCompatActivity {
                 }
                 Log.e(TAG, "内容: " + content);
                 Log.e(TAG, "图片: " + allSelectList.toString());
-                sendTimeStringToServer();//发送当前时间字符串
-                sendContentToServer(content);//发送文本
+                sendTimeAndContentToServer(content);//向服务端发送当前用户手机号，当前时间和说说文本
                 String pictureUrl = allSelectList.toString().substring(1,allSelectList.toString().length()-1);//图片路径集合
                 List<String> pictureUrls = Arrays.asList(pictureUrl.split(", "));//将图片路径集合分割开
                 for(int i=0;i<pictureUrls.size();i++){
@@ -220,47 +221,6 @@ public class UploadDynamic extends AppCompatActivity {
         Log.e("lzz",phone);
         return phone;
     }
-
-    /**
-     * 采用POST请求方式说说信息
-     */
-    private void sendContentToServer(String content) {
-        //2 创建Request对象
-        //1) 使用RequestBody封装请求数据
-        //获取待传输数据对应的MIME类型
-        MediaType type = MediaType.parse("text/plain");
-        //创建FormBody对象
-        Moments moments = new Moments(content);
-        //序列化
-        String json = gson.toJson(allSelectList);
-        FormBody formBody =
-                new FormBody.Builder()
-                        .add("content",content)
-                        .build();
-        //2) 创建请求对象
-        Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS +"MomentsContentServlet")
-                .post(formBody)
-                .build();
-        //3. 创建CALL对象
-        Call call = okHttpClient.newCall(request);
-        //4. 提交请求并获取响应
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.i("lww", "请求失败");
-            }
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String result = response.body().string();
-                Message msg = handler.obtainMessage();
-                msg.what = 1;
-                msg.obj = result;
-                handler.sendMessage(msg);
-            }
-        });
-    }
-
 
     //向服务端发送图片
     private void sendPictureToServer(String urlPath) {
@@ -292,7 +252,7 @@ public class UploadDynamic extends AppCompatActivity {
     /**
      * 采用POST请求方式提交当前时间的字符串用于区分动态
      */
-    private void sendTimeStringToServer() {
+    private void sendTimeAndContentToServer(String content) {
         //2 创建Request对象
         //1) 使用RequestBody封装请求数据
         //获取待传输数据对应的MIME类型
@@ -306,6 +266,7 @@ public class UploadDynamic extends AppCompatActivity {
                 new FormBody.Builder()
                         .add("time",formatter.format(date))
                         .add("personalPhone",personalPhone)
+                        .add("content",content)
                         .build();
         //2) 创建请求对象
         Request request = new Request.Builder()
