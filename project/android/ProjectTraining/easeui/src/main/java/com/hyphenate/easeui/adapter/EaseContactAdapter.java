@@ -106,10 +106,10 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
 //        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
         //修改
         holder.nameView.setText(copyUserList.get(position).getNickname());
-        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(getContext(),8));
+//        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(getContext(),8));
         Glide.with(getContext())
                 .load(copyUserList.get(position).getAvatar())
-                .apply(requestOptions)
+                .circleCrop()
                 .placeholder(R.drawable.ease_contact_place_holder)
                 .into(holder.avatar);
         

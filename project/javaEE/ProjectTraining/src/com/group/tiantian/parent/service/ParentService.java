@@ -196,6 +196,18 @@ public class ParentService {
 		System.out.println(list.get(2).getNickname());
 		return page;
 	}
+
+	public Page<Parent> getPage(int pageNum, int pageSize, String searchInfo) {
+		Page<Parent> page=new Page<Parent>(pageNum,pageSize);
+		int count=ParentDao.countAll(searchInfo);
+		List<Parent> list=ParentDao.selectPage(pageNum,pageSize,searchInfo);
+		page.setList(list);
+		page.setTotalCount(count);
+		System.out.println("测试page中的count"+count);
+		System.out.println("测试page中的list"+list.size());
+//		System.out.println(list.get(2).getNickname());
+		return page;
+	}
 	
 	
 }

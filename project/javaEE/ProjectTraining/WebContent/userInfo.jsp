@@ -58,20 +58,22 @@
 				</ul>
 			</div>
 
-            <div id="info" style="height: 700px;">
+            <div id="info" style="height: 1200px;">
             	<div
 					style="height: 40px; width: 1100px; text-align: center; line-height: 40px; font-weight: 600; font-size: 20px; color: #009688; margin-top: 10px">
 					<p>用户信息展示</p>
 				</div>
 				<div style="height: 40px; line-height: 40px; margin-bottom: 20px">
-					<span> <input type="text" name="bookTypeSearch"
-						style="height: 25px; width: 200px; vertical-align: bottom"
-						placeholder="请输入类型的信息">
-					</span> <span> <a href="SearchBookType"><img alt="搜索"
-							src="imgs-server/home/search.png"
-							style="width: 40px; height: 30px; vertical-align: bottom">
-					</a>
-					</span>
+					<form action="SearchUserServlet">
+						<span> <input type="text" name="searchInfo"
+							style="height: 25px; width: 200px; vertical-align: bottom"
+							placeholder="请输入要查找的用户信息" value="${searchInfo }">
+						</span> 
+						<span> 
+							<input value="" type="submit" style="border:none;width:40px;height:30px;background: url('imgs-server/home/search.png');background-size: 40px 30px; vertical-align: bottom">
+						</span>
+						<input type="hidden" name="userName" value="${userName }">
+					</form>
 				</div>
 				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
 	                 <table class="table">

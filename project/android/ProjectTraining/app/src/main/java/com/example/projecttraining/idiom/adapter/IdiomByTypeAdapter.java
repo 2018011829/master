@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.projecttraining.R;
@@ -57,13 +58,14 @@ public class IdiomByTypeAdapter extends BaseAdapter {
         }
 
         // 获取控件引用
+        LinearLayout linearIdiom = view.findViewById(R.id.linear_idiom);
         TextView tvIdiomByType = view.findViewById(R.id.tv_idiom_by_type);
 
         // 设置控件内容
         tvIdiomByType.setText(idioms.get(i));
 
         // 设置监听器（点击某个成语，跳转到该成语的详情界面）
-        tvIdiomByType.setOnClickListener(new View.OnClickListener() {
+        linearIdiom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();

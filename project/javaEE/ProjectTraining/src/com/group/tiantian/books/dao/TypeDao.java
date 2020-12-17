@@ -106,4 +106,53 @@ public class TypeDao {
 		
 		return types;
 	}
+
+	public List<BookType> getTypes(int pageNum, int pageSize, String searchInfo) {
+		List<BookType> types=new ArrayList<>();
+		String sql="select * from types where type like ? limit ?,?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			preparedStatement.setString(1, str);
+			preparedStatement.setInt(2,(pageNum-1)*pageSize);  //从第几条开始
+			preparedStatement.setInt(3, pageSize);         //数量
+			ResultSet rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				BookType type=new BookType();
+				type.setId(rs.getInt("id"));
+				type.setType(rs.getString("type"));
+				types.add(type);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return types;
+	}
+	
+	/**
+	 * 模糊查找书籍的总数量
+	 * @param searchInfo
+	 * @return
+	 */
+	public int getCount(String searchInfo) {
+		int count=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select count(*) from types where type like ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+				System.out.println(count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
 }

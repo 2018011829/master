@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.group.tiantian.entity.Book;
 import com.google.gson.Gson;
 import com.group.tiantian.entity.Book;
 import com.group.tiantian.server.entity.ChildType;
@@ -387,6 +388,71 @@ public class IdiomDao {
 			e.printStackTrace();
 		}
 		return tag;
+	}
+
+	public static boolean deleteIdiom(int id) {
+		boolean b=false;
+		String sql="delete from idiom where id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setInt(1, id);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public static int getCount(String searchInfo) {
+		int count=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select count(*) from idiom where idiom like ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+				System.out.println(count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+
+	public static List<Idiom> getIdioms(int pageNum, int pageSize, String searchInfo) {
+		List<Idiom> list=new ArrayList<>();
+		String sql="select * from idiom where idiom like ? limit ?,?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			pstamt.setInt(2,(pageNum-1)*pageSize);  //从第几条开始
+			pstamt.setInt(3, pageSize);         //数量
+			ResultSet rs=pstamt.executeQuery();
+			while(rs.next()) {
+				Idiom idiom=new Idiom();
+				idiom.setId(rs.getInt("id"));
+				idiom.setIdiom(rs.getString("idiom"));
+				idiom.setIdiomType(getIdiomTypeById(rs.getInt("classification")));
+				list.add(idiom);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }
 

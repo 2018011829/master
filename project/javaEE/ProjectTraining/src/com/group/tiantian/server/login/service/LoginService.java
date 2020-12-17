@@ -57,4 +57,15 @@ public class LoginService {
 		
 		return b;
 	}
+
+	public String searchPwd(String userName) {
+		String pwd=LoginDao.searchPwd(userName);
+		return pwd;
+	}
+
+	public boolean updatePwd(String userName,String password) {
+		boolean b=loginDao.updatePwd(userName,password);
+		
+		return b;
+	}
 }

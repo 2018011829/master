@@ -92,7 +92,8 @@
                         <span>图书类型：<select name="bookType"
                             style="width: 200px; height: 25px;">
                                 <c:forEach var="bookType" items="${bookTypes }">
-                                    <option value="${bookType.type }">${bookType.type }</option>
+                                    <option value="${bookType.type }" 
+                                    <c:if test="${bookType.type eq newBook.type}">selected</c:if>>${bookType.type }</option>
                                 </c:forEach>
                         </select></span><br><br>
                         <div style="margin: 0 auto; width: 302px">
@@ -105,13 +106,13 @@
                             style="width: 200px; height: 25px;"></span><br><br>
                          <span>适合的年级：</span> <select name="bookGrades"
                             style="width: 200px; height: 25px">
-                            <option value="small">1-3年级</option>
-                            <option value="big">4-6年级</option>
+                            <option value="small" <c:if test="${'1-3年级' == newBook.grades}">selected</c:if>>1-3年级</option>
+                            <option value="big" <c:if test="${'4-6年级' == newBook.grades}">selected</c:if>>4-6年级</option>
                         </select>
                         <br><br>
                         <div style="margin: 0 auto; width: 302px">
                             <div style="width: 100px; float: left">旧电子书:</div>
-                            <div style="margin-right:100px">
+                            <div style="margin-right:50px">
                                 ${newBook.content }
                             </div>
                         </div>

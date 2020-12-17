@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,9 +58,31 @@
 				</ul>
 			</div>
 
-			<div id="info">
-				<h3>admin信息展示</h3>
+			<div id="info" style="height:550px">
+				<br>
+				<div
+					style="height: 40px; width: 1100px; text-align: center; line-height: 40px; font-weight: 600; font-size: 20px; color: #009688; margin-top: 10px">
+					<p>admin信息展示</p>
+				</div>
+				<br>
+				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
+					<table class="table">
+						<tr>
+							<td style="background: #F2F2F2">用户名</td>
+							<td style="background: #F2F2F2">密码</td>
+							<td style="background: #F2F2F2">操作</td>
+						</tr>
+						<tr>
+								<td>${userName }</td>
+								<td>${userPwd }</td>
+								<td><a
+									href="UpdateAdminInfo?userName=${userName }&userPwd=${userPwd }"
+									style="color: black">修改</a></td>
+							</tr>
+					</table>
+				</div>
 			</div>
+			
 		</div>
 	</div>
 

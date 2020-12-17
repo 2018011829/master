@@ -258,7 +258,7 @@ public class UploadDynamic extends AppCompatActivity {
         //获取待传输数据对应的MIME类型
         MediaType type = MediaType.parse("text/plain");
         //创建FormBody对象
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         String personalPhone = getPersonalPhone();
         //序列化

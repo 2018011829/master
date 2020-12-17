@@ -15,19 +15,21 @@ import com.group.tiantian.server.book.service.BookTypeService;
 @WebServlet("/DeleteBookTypeServlet")
 public class DeleteBookTypeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DeleteBookTypeServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public DeleteBookTypeServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		System.out.println("GetBookInfoServlet");
@@ -44,8 +46,14 @@ public class DeleteBookTypeServlet extends HttpServlet {
 			// 根据id删除书籍 并返回书籍展示界面
 			int id = Integer.parseInt(idStr);
 			boolean b = BookTypeService.getInstance().deleteBookType(id);
-			request.setAttribute("userName", userName);
-			request.getRequestDispatcher("GetBookTypesServlet?userName="+userName+"&page="+pageNum).forward(request, response);
+			if (b) {
+
+				request.setAttribute("userName", userName);
+				request.getRequestDispatcher("GetBookTypesServlet?userName=" + userName + "&page=" + pageNum)
+						.forward(request, response);
+			} else {
+				System.out.println("书籍类型删除失败！");
+			}
 		} else {
 			System.out.println("您还未登录！");
 			response.sendRedirect("error.jsp");
@@ -53,9 +61,11 @@ public class DeleteBookTypeServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

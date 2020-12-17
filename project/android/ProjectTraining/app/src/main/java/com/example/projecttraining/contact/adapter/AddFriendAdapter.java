@@ -78,10 +78,10 @@ public class AddFriendAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         //设置控件内容
-        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
+//        RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
         Glide.with(context)
                 .load(ConfigUtil.SETVER_AVATAR+parents.get(position).getAvator())
-                .apply(requestOptions)
+                .circleCrop()
                 .into(holder.avatar);
         holder.nickname.setText(parents.get(position).getNickname());
         if(ParentUtil.allContacts.contains(parents.get(position).getPhone())){

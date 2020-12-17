@@ -175,7 +175,7 @@ public class BookTypeService {
 	}
 	
 	/**
-	 * 根据当前页获取书的类型
+	 * 根据当前页获取书
 	 * @param pageNum
 	 * @param pageSize
 	 * @return
@@ -207,5 +207,41 @@ public class BookTypeService {
 	public int getBookshelfCount() {
 		int count=BookDao.getBookshelfCount();
 		return count;
+	}
+
+	/**
+	 * 模糊查找相关书籍
+	 * @param pageNum
+	 * @param pageSize
+	 * @param searchInfo
+	 * @return
+	 */
+	public Page<Book> getBooksByPage(int pageNum, int pageSize, String searchInfo) {
+		Page<Book> page = new Page<Book>(pageNum, pageSize);
+		int count = BookDao.getCount(searchInfo);
+		List<Book> list = BookDao.getBooksByPage(pageNum, pageSize,searchInfo);
+		System.out.println(list.toString());
+		page.setList(list);
+		page.setTotalCount(count);
+		
+		return page;
+	}
+
+	/**
+	 * 模糊查找书籍类型
+	 * @param pageNum
+	 * @param pageSize
+	 * @param searchInfo
+	 * @return
+	 */
+	public Page<BookType> listByPage(int pageNum, int pageSize, String searchInfo) {
+		Page<BookType> page = new Page<BookType>(pageNum, pageSize);
+		int count = typeDao.getCount(searchInfo);
+		List<BookType> list = typeDao.getTypes(pageNum, pageSize,searchInfo);
+		System.out.println(list.toString());
+		page.setList(list);
+		page.setTotalCount(count);
+		
+		return page;
 	}
 }
