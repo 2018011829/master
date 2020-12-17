@@ -1,12 +1,16 @@
 package com.group.tiantian.server.idiom.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group.tiantian.server.entity.IdiomType;
 import com.group.tiantian.server.idiom.service.IdiomTypeService;
 
 /**
@@ -34,6 +38,7 @@ public class AddIdiomTypeServlet extends HttpServlet {
 		String idiomParentType = request.getParameter("idiomParentType");//父类型
 		String idiomChildType = request.getParameter("idiomChildType");//子类型
 		if(userName!=null && !userName.equals("")) {
+			request.setAttribute("userName", userName);
 			IdiomTypeService idionTypeService = IdiomTypeService.getInstance();
 			if(idiomParentType.equals("")) {//父类型为空
 				boolean temp = false;
@@ -44,8 +49,10 @@ public class AddIdiomTypeServlet extends HttpServlet {
 				}else {
 					temp = idionTypeService.addIdiomParentType(idiomChildType);//如果不存在，将子类型存入表中，父类型为0
 				}
-				if(temp) {
-					request.getRequestDispatcher("idiomType.jsp").forward(request, response);
+				if(temp) {//父类型添加成功 更新站点数据
+					IdiomTypeService idiomTypeService=IdiomTypeService.getInstance();
+					this.getServletContext().setAttribute("idiomTypes", idiomTypeService.getAllTypes());
+					request.getRequestDispatcher("GetIdiomTypesServlet?userName="+userName).forward(request, response);
 				}else {
 					request.setAttribute("errorInfo", "存入失败");
 					request.getRequestDispatcher("addIdiomType.jsp").forward(request, response);
@@ -60,13 +67,12 @@ public class AddIdiomTypeServlet extends HttpServlet {
 					temp = idionTypeService.addIdiomChildType(idiomChildType, parentId);//将子类型的名字和父类型的id存入数据库中
 				}
 				if(temp) {
-					request.getRequestDispatcher("idiomType.jsp").forward(request, response);
+					request.getRequestDispatcher("GetIdiomTypesServlet?userName="+userName).forward(request, response);
 				}else {
 					request.setAttribute("errorInfo", "存入失败");
 					request.getRequestDispatcher("addIdiomType.jsp").forward(request, response);
 				}
 			}
-			request.setAttribute("userName", userName);
 		}else {
 			System.out.println("您还未登录！");
 			response.sendRedirect("error.jsp");

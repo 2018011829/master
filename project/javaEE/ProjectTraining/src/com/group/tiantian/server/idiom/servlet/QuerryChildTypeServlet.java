@@ -28,8 +28,8 @@ public class QuerryChildTypeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int parentId=Integer.parseInt(request.getParameter("parentId"));
-		
+		int parentId=Integer.parseInt(request.getParameter("parentTypeId"));
+		System.out.println("QuerryChildTypeServlet"+parentId);
 		response.getWriter().write(IdiomTypeService.getInstance().getChildType(parentId));
 	}
 	

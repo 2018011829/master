@@ -71,18 +71,20 @@
 				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
 					<form action="AddIdiomTypeServlet">
 						<p>
-							<span>成语父类型：</span> <select name="idiomParentType"
+							<span>成语一级类型：</span> <select name="idiomParentType"
 								style="width: 200px; height: 25px;">
 								<option value="first"></option>
-								<c:forEach var="idiomParentType" items="${idiomParentsTypes }">
-									<option value="${idiomParentType }">${idiomParentType }</option>
+								<c:forEach var="idiomType" items="${idiomTypes }">
+									<c:if test="${idiomType.childType=='空' }">
+										<option value="${idiomType.parentType }">${idiomType.parentType }</option>
+									</c:if>
 								</c:forEach>
 							</select>
 						</p>
 						<br>
 						<br>
 						<p>
-							<span>成语子类型：</span> <input name="idiomChildType"
+							<span>成语二级类型：</span> <input name="idiomChildType"
 								style="width: 200px; height: 25px;">
 						</p>
 						<br>

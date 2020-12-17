@@ -38,6 +38,9 @@ public class AddIdiomType extends HttpServlet {
 		String userName=request.getParameter("userName");
 		if(userName!=null && !userName.equals("")) {
 			request.setAttribute("userName", userName);
+			//成语类型数
+			IdiomTypeService idiomTypeService=IdiomTypeService.getInstance();
+			this.getServletContext().setAttribute("idiomTypes", idiomTypeService.getAllTypes());
 			request.getRequestDispatcher("addIdiomType.jsp").forward(request, response);
 		}else {
 			System.out.println("您还未登录！");

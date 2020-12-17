@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group.tiantian.entity.Idiom;
 import com.group.tiantian.server.idiom.service.IdiomTypeService;
 
 /**
@@ -28,7 +29,21 @@ public class AddIdiomServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String idiom=request.getParameter("idiom");
+		int idiomParentType=Integer.parseInt(request.getParameter("idiomParentType"));
+		int idiomType=Integer.parseInt(request.getParameter("idiomType"));
+		int type=0;
+		if(idiomType==0) {
+			type=idiomParentType;
+		}else {
+			type=idiomType;
+		}
+		boolean isSuccess=IdiomTypeService.getInstance().addIdiom(idiom,type);
+		if(isSuccess) {
+			response.sendRedirect("addIdiomSuccess.html");
+		}else {
+			
+		}
 		
 	}
 

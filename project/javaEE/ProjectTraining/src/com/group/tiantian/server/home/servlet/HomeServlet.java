@@ -65,14 +65,7 @@ public class HomeServlet extends HttpServlet {
 			//获取站点数据信息
 			//成语类型数
 			int idiomTypeCount=idiomTypeService.getCount();
-			this.getServletContext().setAttribute("pageIdiomTypes", idiomTypeService.getAllTypes());
-			List<String> list=new ArrayList<String>();
-			for(IdiomType idiomType:idiomTypeService.getAllTypes()) {
-				if(!list.contains(idiomType.getParentType())) {
-					list.add(idiomType.getParentType());
-				}
-			}
-			this.getServletContext().setAttribute("idiomParentsTypes", list);
+			this.getServletContext().setAttribute("idiomTypes", idiomTypeService.getAllTypes());
 			//成语总数
 			int idiomCount=idiomTypeService.getIdiomCount();
 			//书籍类型数
