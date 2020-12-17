@@ -78,18 +78,22 @@
 						<p>
 							<span>成语一级类型：</span> <select name="idiomParentType"
 								style="width: 200px; height: 25px;">
-								<c:forEach var="idiomType" items="${idiomParentsTypes }">
-									<option value="${idiomType }">${idiomType }</option>
+								<c:forEach var="idiomType" items="${idiomTypes }">
+									<c:if test="${idiomType.childType=='空' }">
+										<option value="${idiomType.parentType }">${idiomType.parentType }</option>
+									</c:if>
 								</c:forEach>
 							</select>
 						</p>
 						<br>
 						<br>
 						<p>
-							<span>成语二级类型：</span> <select name="idiomChildType"
+							<span>成语二级类型：</span> <select name="idiomType"
 								style="width: 200px; height: 25px;">
 								<c:forEach var="idiomType" items="${idiomTypes }">
-									<option value="${idiomType.childType }">${idiomType.childType }</option>
+									<c:if test="${idiomType.childType!='空' }">
+										<option value="${idiomType.childType }">${idiomType.childType }</option>
+									</c:if>
 								</c:forEach>
 							</select>
 						</p>

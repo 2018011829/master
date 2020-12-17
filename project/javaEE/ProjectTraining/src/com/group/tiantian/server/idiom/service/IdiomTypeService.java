@@ -1,19 +1,15 @@
 package com.group.tiantian.server.idiom.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import com.group.tiantian.classifyidiom.dao.ClassifyIdiomDaoImpl;
+import com.group.tiantian.server.book.dao.BookDao;
 import com.group.tiantian.server.entity.Idiom;
 import com.group.tiantian.server.entity.IdiomType;
 import com.group.tiantian.server.entity.Page;
 import com.group.tiantian.server.idiom.dao.IdiomDao;
-import com.group.tiantian.util.DBUtil;
 
 public class IdiomTypeService {
 
@@ -32,7 +28,28 @@ public class IdiomTypeService {
 	}
 	
 	/**
-	 * 从数据库中查找所有图书的类型
+	 * 修改成语类型
+	 * @param id
+	 * @param idiomType
+	 * @return
+	 */
+	public static boolean updateIdiomType(IdiomType idiomType) {
+		boolean b=IdiomDao.updateIdiomType(idiomType);
+		return b;
+	}
+	
+	/**
+	 * 根据id找到该类型对象
+	 * @param id
+	 * @return
+	 */
+	public IdiomType getIdiomTypeObjById(int id) {
+		IdiomType idiomType=IdiomDao.getIdiomTypeObjById(id);
+		return idiomType;
+	}
+	
+	/**
+	 * 从数据库中查找所有成语的类型
 	 * @return 返回所有图书类型的集合
 	 */
 	public List<IdiomType> getAllTypes(){
@@ -43,9 +60,11 @@ public class IdiomTypeService {
 			list=new ArrayList<IdiomType>();
 			for(Entry<String, List<String>> entry : link.entrySet()) {
 	            System.out.println("key:" + entry.getKey() + "   value:" + entry.getValue());
+	            IdiomType idiomParentType=new IdiomType(classifyIdiomDaoImpl.findIdByClassifyName(entry.getKey()), entry.getKey(), "空");
+            	list.add(idiomParentType);
 	            for(String idiom:entry.getValue()) {
-	            	IdiomType idiomType=new IdiomType(classifyIdiomDaoImpl.findIdByClassifyName(idiom), entry.getKey(), idiom);
-	            	list.add(idiomType);
+	            	IdiomType idiomChildType=new IdiomType(classifyIdiomDaoImpl.findIdByClassifyName(idiom), entry.getKey(), idiom);
+	            	list.add(idiomChildType);
 	            }
 	        }
 		}
@@ -97,7 +116,7 @@ public class IdiomTypeService {
 		List<IdiomType> list=new ArrayList<IdiomType>();
 		int i=0;
 		for(IdiomType idiom:getAllTypes()) {
-			if((pageNum-1)*pageSize<=i && i<=(pageNum-1)*pageSize+pageSize) {
+			if((pageNum-1)*pageSize<=i && i<(pageNum-1)*pageSize+pageSize) {
 				list.add(idiom);
 			}
 			i++;
@@ -142,7 +161,7 @@ public class IdiomTypeService {
 	 * @param book
 	 * @return
 	 */
-	public static boolean idiomIfExist(String classifyName) {
+	public boolean idiomIfExist(String classifyName) {
 		boolean temp = IdiomDao.idiomIfExist(classifyName);
 		return temp;
 	}
@@ -152,7 +171,7 @@ public class IdiomTypeService {
 	 * @param book
 	 * @return
 	 */
-	public static boolean addIdiomParentType(String classifyName) {
+	public boolean addIdiomParentType(String classifyName) {
 		boolean b=IdiomDao.addIdiomParentType(classifyName);
 		return b;
 	}
@@ -162,7 +181,7 @@ public class IdiomTypeService {
 	 * @param book
 	 * @return
 	 */
-	public static int getIdiomId(String classifyName) {
+	public int getIdiomId(String classifyName) {
 		int id=IdiomDao.getIdiomId(classifyName);
 		return id;
 	}
@@ -173,8 +192,14 @@ public class IdiomTypeService {
 	 * @param book
 	 * @return
 	 */
-	public static boolean addIdiomChildType(String classifyName,int parentId) {
+	public boolean addIdiomChildType(String classifyName,int parentId) {
 		boolean b=IdiomDao.addIdiomChildType(classifyName, parentId);
+		return b;
+	}
+
+	public boolean deleteIdiomType(int id) {
+		boolean b=IdiomDao.deleteIdiomType(id);
+		
 		return b;
 	}
 
