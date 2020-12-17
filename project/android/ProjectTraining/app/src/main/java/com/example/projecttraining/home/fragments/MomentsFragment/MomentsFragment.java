@@ -2,7 +2,9 @@ package com.example.projecttraining.home.fragments.MomentsFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,17 +15,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MomentsFragment.Adapter.MomentsFragmentAdapter;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag01;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag02;
 import com.example.projecttraining.home.fragments.MomentsFragment.Frag.Frag03;
 import com.example.projecttraining.home.fragments.MomentsFragment.UploadDynamic.UploadDynamic;
+import com.example.projecttraining.home.fragments.MyFragment;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +43,10 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
     private FloatingActionButton floatingActionButton;//浮动按钮
     private PopupWindow mPopWindow;//菜单
     private Button btnCancel;//取消按钮
+    private TextView titleName;
     //禁止滑动工具对象
     //private DoNotSlideUtil doNotSlideUtil;
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //为了防止第二次加载的时候重复调用这个方法的onCreateView(),重新new了一个pagedapter导致子fragment不显示，显示空白
@@ -51,6 +59,8 @@ public class MomentsFragment extends Fragment implements ViewPager.OnPageChangeL
         }
         //加载布局文件
         view=inflater.inflate(R.layout.fragment_moments, container, false);
+        titleName = view.findViewById(R.id.top_title_name);
+        titleName.setText("圈  子");
         //初始化方法
         initView();
         initBtnListener();

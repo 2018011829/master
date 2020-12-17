@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MyFragment;
 import com.example.projecttraining.idiom.FlowLayout;
@@ -134,6 +135,7 @@ public class SearchIdiomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idiom_search);
+        ChangeStatusBarColor.initSystemBar(this);
 
         ButterKnife.bind(this);
 

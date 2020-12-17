@@ -14,6 +14,7 @@ public class IntroAppActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChangeStatusBarColor.initSystemBar(this);
         addSlide(new Fragment(R.layout.fragment_appintro1));
         addSlide(new Fragment(R.layout.fragment_appintro3));
         addSlide(new Fragment(R.layout.fragment_appintro2));

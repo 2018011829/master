@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.adapters.MoreBooksAdapter;
 import com.example.projecttraining.books.entitys.Book;
@@ -99,6 +100,7 @@ public class MoreBooksActivity extends Activity {
         /**标题是属于View的，所以窗口所有的修饰部分被隐藏后标题依然有效,需要去掉标题**/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_more_books);
+        ChangeStatusBarColor.initSystemBar(this);
 
         pb=findViewById(R.id.progressbar);
         smartRefreshLayout=findViewById(R.id.srl);

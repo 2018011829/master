@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.adapters.GradesPagerAdapter;
@@ -59,6 +60,7 @@ public class BooksHomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books_home_page);
+        ChangeStatusBarColor.initSystemBar(this);
 
         //为ViewPager设置Adapter
         ViewPager viewPager = setViewPagerAdapter();
