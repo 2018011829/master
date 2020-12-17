@@ -1,15 +1,18 @@
 package com.example.projecttraining.mine.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
+import com.example.projecttraining.books.activity.BookInfoActivity;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.util.ConfigUtil;
 
@@ -47,6 +50,7 @@ public class BookCollectionAdapter extends BaseAdapter {
             holder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.more_books_griditem, null);
             holder.iv_book_img = view.findViewById(R.id.iv_book_img);
+            holder.ll_child_bookcollection = view.findViewById(R.id.ll_child_bookcollection);
             holder.tv_book_name = view.findViewById(R.id.tv_book_name);
             holder.tv_book_author = view.findViewById(R.id.tv_book_author);
             holder.tv_book_introduce = view.findViewById(R.id.tv_book_introduce);
@@ -62,6 +66,17 @@ public class BookCollectionAdapter extends BaseAdapter {
         holder.tv_book_author.setText("作者："+books.get(i).getAuthor());
         holder.tv_book_type.setText("类型："+books.get(i).getType());
         holder.tv_book_introduce.setText("简介："+books.get(i).getIntroduce());
+
+
+        holder.ll_child_bookcollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, BookInfoActivity.class);
+                intent.putExtra("book",books.get(i));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -74,5 +89,6 @@ public class BookCollectionAdapter extends BaseAdapter {
         TextView tv_book_author;
         TextView tv_book_type;
         TextView tv_book_introduce;
+        LinearLayout ll_child_bookcollection;
     }
 }

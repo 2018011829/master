@@ -19,32 +19,33 @@ import com.group.tiantian.entity.Book;
 import com.group.tiantian.server.book.service.BookTypeService;
 
 /**
- * Servlet implementation class AddBookServlet
+ * Servlet implementation class UpdateBookServlet
  */
-@WebServlet("/AddBookServlet")
-public class AddBookServlet extends HttpServlet {
+@WebServlet("/UpdateBookServlet")
+public class UpdateBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UpdateBookServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public AddBookServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		// 获取信息
 		String userName = null;
-		FileItem itemImg = null;
-		FileItem itemFile = null;
+		FileItem itemImg=null;
+		FileItem itemFile=null;
+		String beforeBookName=null;
+		String beforeBookImg=null;
+		int page=1;
 		Book book = new Book();
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
@@ -52,6 +53,13 @@ public class AddBookServlet extends HttpServlet {
 			List<FileItem> listItem = upload.parseRequest(request);
 			for (FileItem item : listItem) {
 				if (item.isFormField()) {// 判断是否为文件
+					if (item.getFieldName().equals("id")) {
+						String idStr=item.getString("utf-8");
+						if(idStr!=null && !idStr.equals("")) {
+							int id=Integer.parseInt(idStr);
+							book.setId(id);
+						}
+					}
 					if (item.getFieldName().equals("bookAuthor")) {
 						book.setAuthor(item.getString("utf-8"));
 					}
@@ -72,78 +80,81 @@ public class AddBookServlet extends HttpServlet {
 						userName = item.getString("utf-8");
 //						System.out.println(user);
 					}
+					if (item.getFieldName().equals("beforeImg")) {
+						beforeBookImg=item.getString("utf-8");
+					}
+					if (item.getFieldName().equals("beforeContent")) {
+						beforeBookName=item.getString("utf-8");
+					}
+					if (item.getFieldName().equals("page")) {
+						String pageStr=item.getString("utf-8");
+						if(pageStr!=null && !pageStr.equals("")) {
+							page=Integer.parseInt(pageStr);
+						}
+					}
 				} else {// 是文件 进行文件的读写
 					if (item.getFieldName().equals("bookImg")) {
 						String name = "" + System.currentTimeMillis();
-						if (item.getName() != null && !item.getName().equals("")) {
+						if(item.getName()!=null && !item.getName().equals("")) {
 							System.out.println("添加图片不为空");
-							String ext = item.getName().substring(item.getName().lastIndexOf("."),
-									item.getName().length());
+							String ext = item.getName().substring(item.getName().lastIndexOf("."), item.getName().length());
 							book.setImg(name + ext);
-							itemImg = item;
+							itemImg=item;
+						}else {
+							book.setImg(beforeBookImg);
 						}
 //						System.out.println(path + "/" + name + ext);
 					}
 					if (item.getFieldName().equals("book")) {
 						String str = "" + System.currentTimeMillis();
 						String name = item.getName();
-						if (name != null && !name.equals("")) {
+						if(name!=null && !name.equals("")) {
 							System.out.println("图书文件不为空！");
 							String ext = name.substring(name.lastIndexOf("."), item.getName().length());
-							book.setContent(str + ext);
-							itemFile = item;
+							book.setContent(str+ext);
+							itemFile=item;
 //						System.out.println(path + "/" + name );
+						}else {
+							book.setImg(beforeBookName);
 						}
 					}
-
 				}
 			}
-			System.out.println("添加的图书信息：" + book.toString());
-			if (userName != null && !userName.equals("")) {
-				// 将数据添加到数据库
-				BookTypeService bookTypeService = BookTypeService.getInstance();
-				// 查找书籍是否已经存在
-				boolean a = bookTypeService.searchBook(book.getName());
-				if (!a) {
-					if (itemImg != null) {
-						if (itemFile != null) {
-							boolean b = bookTypeService.addBook(book);
-							if (b) {
-								// 将资源保存到站点
-								String path = this.getServletContext().getRealPath("");
-								if (itemImg != null) {
-									itemImg.write(new File(path + "/bookImgs/" + book.getImg()));
-									if (itemFile != null) {
-										itemFile.write(new File(path + "/books/" + book.getContent()));
-									}
-								}
-								request.setAttribute("userName", userName);
-								request.getRequestDispatcher("GetBookInfoServlet?userName=" + userName).forward(request,
-										response);
-							} else {
-								request.setAttribute("userName", userName);
-								request.setAttribute("newBook", book);
-								request.setAttribute("errorInfo", "添加失败！");
-								request.getRequestDispatcher("addBook.jsp").forward(request, response);
-							}
-						} else {
-							request.setAttribute("userName", userName);
-							request.setAttribute("newBook", book);
-							request.setAttribute("errorInfo", "书籍已存在！");
-							request.getRequestDispatcher("addBook.jsp").forward(request, response);
+			System.out.println("修改的图书信息："+book.toString());
+			if(userName!=null && !userName.equals("")) {
+				//更新数据 修改数据库
+				BookTypeService bookTypeService=BookTypeService.getInstance();
+				//查找书籍是否已经存在
+				boolean a=bookTypeService.searchBook(book.getName());
+				if(a) {
+					boolean b=bookTypeService.updateBook(book);
+					if(b) {
+						//将资源保存到站点
+						String path = this.getServletContext().getRealPath("");
+						if(itemImg!=null) {
+							itemImg.write(new File(path + "/bookImgs/" + book.getImg()));
 						}
-					} else {
+						if(itemFile!=null) {
+							itemFile.write(new File(path + "/books/" + book.getContent() ));
+						}
+						//跳转到展示图书界面
+						request.setAttribute("page", page);
 						request.setAttribute("userName", userName);
-						request.setAttribute("errorInfo", "电子书籍不能为空！");
+						request.getRequestDispatcher("GetBookInfoServlet?userName="+userName+"&page="+page).forward(request, response);
+					}else {
+						request.setAttribute("userName", userName);
+						request.setAttribute("newBook", book);
+						request.setAttribute("errorInfo", "修改失败！");
 						request.getRequestDispatcher("addBook.jsp").forward(request, response);
 					}
-				} else {
+				}else {
 					request.setAttribute("userName", userName);
-					request.setAttribute("errorInfo", "书的照片不能为空！");
+					request.setAttribute("newBook", book);
+					request.setAttribute("errorInfo", "书籍不存在！");
 					request.getRequestDispatcher("addBook.jsp").forward(request, response);
 				}
-
-			} else {
+				
+			}else {
 				System.out.println("您还未登录！");
 				response.sendRedirect("error.jsp");
 			}
@@ -153,11 +164,9 @@ public class AddBookServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

@@ -39,10 +39,10 @@
 					<li id="book" onclick="showBookMenu()"><a>图书信息管理</a> <img
 						src="imgs-server/home/xiala.png" id="xiala3"></li>
 					<ul class="book_menu" id="click_book_menu" style="display: block">
-						<li onclick="showMenu_type3()" id="book_type"><a
+						<li onclick="showMenu_type3()" id="book_type" style="background: #009688"><a
 							href="GetBookTypesServlet?userName=${userName }">图书分类</a></li>
 						<li onclick="showMenu_add_type3()" id="book_add_type"
-							style="background: #009688"><a href="AddBookType?userName=${userName }">新增分类</a></li>
+							><a href="AddBookType?userName=${userName }">新增分类</a></li>
 						<li onclick="showMenu_info3()" id="book_info"><a
 							href="GetBookInfoServlet?userName=${userName }">图书展示</a></li>
 						<li onclick="showMenu_add3()" id="book_add"><a
@@ -63,20 +63,21 @@
 				<br>
 				<div
 					style="height: 40px; width: 1100px; text-align: center; line-height: 40px; font-weight: 600; font-size: 20px; color: #009688; margin-top: 10px">
-					<p>新增图书分类</p>
+					<p>图书分类修改</p>
 				</div>
 				<br>
 				<br>
 				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
-					<form action="AddBookTypeServlet">
+					<form action="UpdateBookTypeServlet">
 						<p>
 							<span>图书类型：</span> <input type="text" name="newBookType"
-								style="width: 200px; height: 25px;">
+								style="width: 200px; height: 25px;" value="${type }">
 						</p>
 						<br>
 						<br>
 						<p style="line-height: 40px;">
 							<input type="hidden" name="userName" value="${userName }">
+							<input type="hidden" name="id" value="${idStr }">
 							<input type="submit" value="提交"
 								style="width: 100px; height: 35px; background: #009688; color: white">
 						</p>

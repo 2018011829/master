@@ -42,14 +42,14 @@ public class RegisterServlet extends HttpServlet {
 				// 检查用输入的信息是否合法
 				if (userName.length() < 6 || userName.length() > 10) {
 					System.out.println("用户名不合法！");
-					request.setAttribute("errorInfo", "用户名位数为1~10位之间！");
+					request.setAttribute("errorInfo", "用户名位数为6~10位之间！");
 					request.setAttribute("userName", userName);
 					request.setAttribute("userPwd", userPwd);
 					request.getRequestDispatcher("register.jsp").forward(request, response);
 				} else {
 					if (userPwd.length() < 8 || userPwd.length() > 20) {
 						System.out.println("密码不合法！");
-						request.setAttribute("errorInfo", "密码位数为1~20位之间！");
+						request.setAttribute("errorInfo", "密码位数为8~20位之间！");
 						request.setAttribute("userName", userName);
 						request.setAttribute("userPwd", userPwd);
 						request.getRequestDispatcher("register.jsp").forward(request, response);

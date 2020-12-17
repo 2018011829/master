@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <include layout="@layout/mycollection_bar"/>
 
     <!--底部导航栏-->
     <com.google.android.material.tabs.TabLayout

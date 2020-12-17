@@ -46,12 +46,10 @@ public class Frag01 extends Fragment {
     private View view;
     private List<String> pictureUrl = new ArrayList<>();//图片网络路径列表
     private OkHttpClient okHttpClient;//定义OKHTTPClient对象属性
-    private Handler handler;//定义Handler对象属性
     // 定义Gson对象属性
     private Gson gson;
     //初始化Handler对象
-    private void initHandler(View view) {
-        handler = new Handler(){//handlerThread.getLooper()){
+    private Handler handler = new Handler(){//handlerThread.getLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
 
@@ -76,8 +74,9 @@ public class Frag01 extends Fragment {
                 }
             }
         };
-    }
     @Override
+
+
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
@@ -107,7 +106,6 @@ public class Frag01 extends Fragment {
         view=inflater.inflate(R.layout.fragment_moments_frag01, container, false);
 
         initGson();//初始化gson对象
-        initHandler(view);//初始化handler对象
         initOkHttpClient();//初始化okHttp对象
         new Thread(){//创建线程发送请求说说数据的命令
             @Override

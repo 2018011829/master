@@ -69,8 +69,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/user_logo"
-                            android:layout_marginLeft="16dp"
-                            />
+                            android:layout_marginLeft="16dp" />
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -152,54 +151,56 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:elevation="2dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/detail_page_do_comment_details"
-            android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_weight="1"
-            android:textColor="#B6B6B6"
             android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="#B6B6B6"
             android:text="说点什么吧..."
-            android:background="@drawable/comment_bt_selector"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="22dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="18dp"/>
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/icon_collect"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#9A9A9A"
-            android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            android:text="32"/>
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/comment_bt_selector"/>
+<!--        <ImageView-->
+<!--            android:layout_width="22dp"-->
+<!--            android:layout_height="22dp"-->
+<!--            android:src="@drawable/icon_collect"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="#9A9A9A"-->
+<!--            android:textSize="14sp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:text="32"/>-->
 
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/icon_work_like"
-            android:layout_marginLeft="20dp" />
+            android:layout_toLeftOf="@id/tv_like_num"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@mipmap/praise3"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"/>
         <TextView
+            android:id="@+id/tv_like_num"
+            android:text="66"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#9A9A9A"
-            android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="14dp"
-            android:text="66"/>
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

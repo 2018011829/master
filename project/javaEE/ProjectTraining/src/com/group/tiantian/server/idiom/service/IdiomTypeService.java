@@ -1,5 +1,9 @@
 package com.group.tiantian.server.idiom.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,6 +13,7 @@ import com.group.tiantian.server.entity.Idiom;
 import com.group.tiantian.server.entity.IdiomType;
 import com.group.tiantian.server.entity.Page;
 import com.group.tiantian.server.idiom.dao.IdiomDao;
+import com.group.tiantian.util.DBUtil;
 
 public class IdiomTypeService {
 
@@ -131,4 +136,48 @@ public class IdiomTypeService {
 		count=IdiomDao.getCount();
 		return count;
 	}
+	
+	/**
+	 * 通过classifyidiom查询该classifyidiom是否存在于表中
+	 * @param book
+	 * @return
+	 */
+	public static boolean idiomIfExist(String classifyName) {
+		boolean temp = IdiomDao.idiomIfExist(classifyName);
+		return temp;
+	}
+	
+	/**
+	 * 如果没有父类型，将分类名称存进表
+	 * @param book
+	 * @return
+	 */
+	public static boolean addIdiomParentType(String classifyName) {
+		boolean b=IdiomDao.addIdiomParentType(classifyName);
+		return b;
+	}
+	
+	/**
+	 * 如果有父类型，通过分类名称查询该分类名称的id
+	 * @param book
+	 * @return
+	 */
+	public static int getIdiomId(String classifyName) {
+		int id=IdiomDao.getIdiomId(classifyName);
+		return id;
+	}
+	
+	
+	/**
+	 * 将子类型添加到数据库
+	 * @param book
+	 * @return
+	 */
+	public static boolean addIdiomChildType(String classifyName,int parentId) {
+		boolean b=IdiomDao.addIdiomChildType(classifyName, parentId);
+		return b;
+	}
+
+	
+	
 }

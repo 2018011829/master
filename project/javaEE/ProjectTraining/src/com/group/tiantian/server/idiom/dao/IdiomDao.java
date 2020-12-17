@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.group.tiantian.entity.Book;
 import com.group.tiantian.server.entity.Idiom;
 import com.group.tiantian.util.DBUtil;
 
@@ -132,5 +133,106 @@ public class IdiomDao {
 		}
 		
 		return count;
+	}
+	
+	/**
+	 * 通过classifyidiom查询该classifyidiom是否存在于表中
+	 * @param book
+	 * @return
+	 */
+	public static boolean idiomIfExist(String classifyName) {
+		boolean temp = false;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select * from classifyidiom where classifyName = ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, classifyName);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				temp = true;
+			}else {
+				temp = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	
+	/**
+	 * 如果没有父类型，将分类名称存进表
+	 * @param book
+	 * @return
+	 */
+	public static boolean addIdiomParentType(String classifyName) {
+		boolean b=false;
+		String sql="insert into classifyidiom(classifyName,parentId) values(?,?)";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1,classifyName);  //分类名称
+			pstamt.setInt(2,0);         //父类型id
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	
+	/**
+	 * 如果有父类型，通过分类名称查询该分类名称的id
+	 * @param book
+	 * @return
+	 */
+	public static int getIdiomId(String classifyName) {
+		int id=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select id from classifyidiom where classifyName = ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, classifyName);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				id=rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
+	
+	
+	/**
+	 * 将子类型添加到数据库
+	 * @param book
+	 * @return
+	 */
+	public static boolean addIdiomChildType(String classifyName,int parentId) {
+		boolean b=false;
+		String sql="insert into classifyidiom(classifyName,parentId) values(?,?)";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1,classifyName);  //分类名称
+			pstamt.setInt(2,parentId);         //父类型id
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return b;
 	}
 }
