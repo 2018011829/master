@@ -7,11 +7,12 @@ public class Comment {
 	private String personPhone; //评论者手机号
 	private String personName;//评论者昵称
 	private String personHead;//评论者头像
+	private String time;//评论时间
 
     public Comment(){
 
     }
-	public Comment(int id,int momentsId, String comment, String personPhone, String personName,String personHead) {
+	public Comment(int id,int momentsId, String comment, String personPhone, String personName,String personHead,String time) {
 		super();
 		this.id = id;
 		this.momentsId = momentsId;
@@ -19,6 +20,7 @@ public class Comment {
 		this.personPhone = personPhone;
 		this.personName = personName;
 		this.personHead = personHead;
+		this.time = time;
 	}
 
 	public String getPersonHead() {
@@ -66,4 +68,11 @@ public class Comment {
 	public void setPersonName(String personName) {
 		this.personName = personName;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
 }

@@ -9,13 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.activity.BookInfoActivity;
 import com.example.projecttraining.books.activity.BooksHomePageActivity;
@@ -25,6 +28,7 @@ import com.example.projecttraining.idiom.activitys.IdiomActivity;
 import com.example.projecttraining.idiom.activitys.IdiomInfoActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -55,6 +59,8 @@ public class HomeFragment extends Fragment implements OnBannerListener{
     private LinearLayout linearGuess3;
     private LinearLayout linearGuess4;
     private LinearLayout linearGuess5;
+    private ImageView photo;
+    private TextView titleName;
     private Handler myHandler;
     private Banner mBanner;
     private LinearLayout changeRecommend;
@@ -141,10 +147,17 @@ public class HomeFragment extends Fragment implements OnBannerListener{
     }
 
     private void initData() {
+        Glide.with(getContext())
+                .load(EaseParentUtil.currentUserAvatar)
+                .circleCrop()
+                .into(photo);
+        titleName.setText("主  页");
         if(tag<=0) {
             imgPath.add(R.drawable.banner0);
             imgPath.add(R.drawable.banner1);
+            imgPath.add(R.drawable.banner6);
             imgPath.add(R.drawable.banner3);
+            imgPath.add(R.drawable.banner7);
             tag++;
         }
 
@@ -160,6 +173,8 @@ public class HomeFragment extends Fragment implements OnBannerListener{
     }
 
     private void initViews() {
+        photo = view.findViewById(R.id.photo);
+        titleName = view.findViewById(R.id.top_title_name);
         changeRecommend = view.findViewById(R.id.change);
         mBanner = view.findViewById(R.id.home_banner);
         linearGuess1=view.findViewById(R.id.linear_guess1);

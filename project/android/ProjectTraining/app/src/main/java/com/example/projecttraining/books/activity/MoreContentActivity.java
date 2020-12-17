@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Content;
@@ -33,6 +34,7 @@ public class MoreContentActivity extends Activity {
         /**标题是属于View的，所以窗口所有的修饰部分被隐藏后标题依然有效,需要去掉标题**/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_more_content);
+        ChangeStatusBarColor.initSystemBar(this);
 
         allContentList=findViewById(R.id.all_content_list);
         ivBack=findViewById(R.id.iv_back);

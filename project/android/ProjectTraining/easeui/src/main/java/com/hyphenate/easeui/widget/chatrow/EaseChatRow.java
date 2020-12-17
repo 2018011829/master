@@ -150,15 +150,15 @@ public abstract class EaseChatRow extends LinearLayout {
         if(userAvatarView != null) {
             //set nickname and avatar
             //修改,设置聊天界面用户头像
-            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
+//            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
             if (message.direct() == Direct.SEND) {
                 Glide.with(context)
                         .load(EaseParentUtil.currentUserAvatar)
-                        .apply(requestOptions)
+                        .circleCrop()
                         .into(userAvatarView);
 
             } else {
-                Glide.with(context).load(EaseParentUtil.toChatUserAvator).apply(requestOptions).into(userAvatarView);
+                Glide.with(context).load(EaseParentUtil.toChatUserAvator).circleCrop().into(userAvatarView);
                 EaseUserUtils.setUserNick(message.getFrom(), usernickView);
             }
         }

@@ -3,6 +3,7 @@ package com.example.projecttraining.contact.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
@@ -18,6 +19,8 @@ public class ChatActivity extends EaseBaseActivity{
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
+        ChangeStatusBarColor.initSystemBar(this);
+
         activityInstance = this;
         //user or group id
         toChatUsername=getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);

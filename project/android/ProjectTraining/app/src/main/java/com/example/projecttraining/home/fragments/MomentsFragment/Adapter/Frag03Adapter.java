@@ -43,8 +43,10 @@ import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -147,6 +149,7 @@ public class Frag03Adapter extends BaseAdapter {
         TextView tvLikeGive = view.findViewById(R.id.tv_likeGive);//点赞昵称的字符串
         TextView edtComment = view.findViewById(R.id.edt_comment);//评论输入框
         ImageView ivConcern = view.findViewById(R.id.iv_concern);//关注按钮
+        TextView tvMomentsTime = view.findViewById(R.id.tv_moments_time);//发布时间
 
         tvName.setText(moments.get(i).getName());//设置昵称的值
         tvContent.setText(moments.get(i).getContent());//设置评论的值
@@ -165,6 +168,7 @@ public class Frag03Adapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+        tvMomentsTime.setText(moments.get(i).getTime());
 
 
         initOkHttpClient();//初始化okHttp对象
@@ -209,7 +213,7 @@ public class Frag03Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdAdd(view, i);
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                 }
@@ -225,7 +229,7 @@ public class Frag03Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdDelete(view, i);
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                 }
@@ -233,8 +237,21 @@ public class Frag03Adapter extends BaseAdapter {
         }
 
         Glide.with(mContext)
-                .load(R.mipmap.concern1)
+                .load(R.mipmap.delete)
                 .into(ivConcern);
+        ivConcern.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        deleteMoments(moments.get(i).getId());
+                        mineMoments();
+                    }
+                }.start();
+                Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //评论的点击事件
         edtComment.setOnClickListener(new OnClickListener() {
@@ -320,6 +337,36 @@ public class Frag03Adapter extends BaseAdapter {
             e.printStackTrace();
         }
     }
+    //使用POST方式提交当前用户手机号和说说手机号
+    private void deleteMoments(int momentsId) {
+        //1. OkClient对象
+        //2. 创建Request请求对象（提前准备好Form表单数据封装）
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("momentsId", String.valueOf(momentsId))
+                        .build();
+        //创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS + "DeleteMoment")
+                .post(formBody)
+                .build();
+        //3. 创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //4. 提交请求并获取响应
+        try {
+            Response response = call.execute();
+            //获取响应的字符串信息
+            String result = response.body().string();
+            Log.e("result",result);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            msg.obj = result;
+            handler.sendMessage(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //使用POST方式提交点赞人和该说说id,从数据库中删除数据
     private void likegivePersonAndMomentsIdDelete(View view,int i) {
         //1. OkClient对象
@@ -359,6 +406,8 @@ public class Frag03Adapter extends BaseAdapter {
         //1. OkClient对象
         //2. 创建Request请求对象（提前准备好Form表单数据封装）
         //创建FormBody对象
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
         String likegivePerson = getPersonalPhone();//获取点赞人的手机号
         int momentsId = moments.get(i).getId();//获取当前说说id
         FormBody formBody =
@@ -366,6 +415,7 @@ public class Frag03Adapter extends BaseAdapter {
                         .add("momentsId", String.valueOf(momentsId))//被评论说说id
                         .add("likegivePerson", likegivePerson)//评论人的手机号
                         .add("commentContent", commentContent)//评论内容
+                        .add("time",formatter.format(date))
                         .build();
         //创建请求对象
         Request request = new Request.Builder()
@@ -400,10 +450,8 @@ public class Frag03Adapter extends BaseAdapter {
         okHttpClient = new OkHttpClient();
     }
 
-    /**
-     * 从服务端获取图片资源的网络路径
-     */
-    private void downLoadImgNameFromServerRequest() {
+    //从服务端获取图片资源的网络路径
+    private void mineMoments() {
         //2 创建Request对象
         //1) 使用RequestBody封装请求数据
         //获取待传输数据对应的MIME类型
@@ -414,7 +462,7 @@ public class Frag03Adapter extends BaseAdapter {
                         .add("PersonPhone",getPersonalPhone())
                         .build();
         Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS + "DownPictureServlet")
+                .url(ConfigUtil.SERVICE_ADDRESS + "MineMomentsInfoSerclet")
                 .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -422,7 +470,7 @@ public class Frag03Adapter extends BaseAdapter {
             Response response = call.execute();
             String img = response.body().string();
             Message msg = handler.obtainMessage();
-            msg.what = 3;
+            msg.what = 1;
             msg.obj = img;
             handler.sendMessage(msg);
         }catch (IOException e){
@@ -524,7 +572,7 @@ public class Frag03Adapter extends BaseAdapter {
                         public void run() {
                             Log.e( "run: ","123" );
                             commentsAdd(commentContent,i);//向服务端发送评论内容
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                     //commentOnWork(commentContent);
@@ -572,7 +620,7 @@ public class Frag03Adapter extends BaseAdapter {
                     comment[j].getId(),
                     comment[j].getPersonName(),
                     comment[j].getComment(),
-                    "刚刚",
+                    comment[j].getTime(),
                     comment[j].getPersonHead());
             commentsList.add(detailBean);
         }

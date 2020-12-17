@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 import com.hyphenate.chat.EMClient;
@@ -70,6 +71,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
     private EditText edt_name;
     private String headName;
     private Bitmap bitmap;
+    private LinearLayout linearBack;
     private Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -88,6 +90,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_editor_parent);
+        ChangeStatusBarColor.initSystemBar(this);
 
         //给界面添加返回按钮相关代码
         ActionBar actionBar = getSupportActionBar();
@@ -98,6 +101,12 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
 
         findViews();
         initData();
+        linearBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     //给界面添加返回按钮相关代码
@@ -125,7 +134,7 @@ public class EditorParentActivity extends AppCompatActivity implements View.OnCl
         iv_head = findViewById(R.id.iv_mine_editorParent_head);
         edt_name = findViewById(R.id.edt_mine_editorName);
         btn_commit = findViewById(R.id.btn_mine_editorCommit);
-
+        linearBack = findViewById(R.id.linear_toback);
         iv_head.setOnClickListener(this);
         btn_commit.setOnClickListener(this);
     }

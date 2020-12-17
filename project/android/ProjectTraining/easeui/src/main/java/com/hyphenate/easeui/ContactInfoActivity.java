@@ -50,8 +50,8 @@ public class ContactInfoActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tv_username);
         tvUserRemark = findViewById(R.id.tv_remark);
 
-        RequestOptions requestOptions = new RequestOptions().transform(new GlideRoundImage(getApplicationContext(), 8));
-        Glide.with(this).load(avatarPath).apply(requestOptions).into(ivAvatar);
+//        RequestOptions requestOptions = new RequestOptions().transform(new GlideRoundImage(getApplicationContext(), 8));
+        Glide.with(this).load(avatarPath).circleCrop().into(ivAvatar);
         tvNickname.setText(nickname);
         tvUsername.setText(username);
         tvUserRemark.setText(remark);

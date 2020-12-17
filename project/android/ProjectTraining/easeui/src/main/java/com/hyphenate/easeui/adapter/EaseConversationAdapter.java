@@ -138,10 +138,10 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if(cursor.getCount()>0){
                 String avatar=cursor.getString(0);
                 String remark=cursor.getString(1);
-                RequestOptions requestOptions=new RequestOptions().optionalTransform(new GlideRoundImage(getContext(),8));
+//                RequestOptions requestOptions=new RequestOptions().optionalTransform(new GlideRoundImage(getContext(),8));
                 Glide.with(getContext())
                         .load(avatar)
-                        .apply(requestOptions)
+                        .circleCrop()
                         .placeholder(R.drawable.ease_contact_place_holder)
                         .into(holder.avatar);
                 holder.name.setText(remark);

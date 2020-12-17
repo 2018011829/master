@@ -25,6 +25,7 @@ import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.home.fragments.MyFragment;
 import com.example.projecttraining.idiom.entity.IdiomInfo;
@@ -176,6 +177,7 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
 
 
         setContentView(R.layout.activity_idiom_info);
+        ChangeStatusBarColor.initSystemBar(this);
 
         ButterKnife.bind(this);
 

@@ -65,7 +65,7 @@ public class MyFragment extends Fragment {
     private String cname;
     private String cgrade;
     private String csex;
-    private ImageView iv_headPhoto;
+    public static ImageView iv_headPhoto;
     private RelativeLayout rl_mine_addChild;
     private LinearLayout ll_mine_editorParent;
     private RelativeLayout rl_mine_setting;
@@ -149,6 +149,7 @@ public class MyFragment extends Fragment {
                     break;
                 case R.id.rl_mine_setting:
                     Intent intent = new Intent();
+                    intent.setClass(getContext(), SettingActivity.class);
                     intent.setClass(getContext(), SettingActivity.class);
                     startActivity(intent);
                     break;
@@ -294,10 +295,10 @@ public class MyFragment extends Fragment {
         tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
         tv_mine_useName.setText(EaseParentUtil.currentUserNickname);
         //12-07得到一个设置圆角的requestOptions
-        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());
+//        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());
         Glide.with(getContext())
                 .load(EaseParentUtil.currentUserAvatar)
-                .apply(requestOptions)
+                .circleCrop()
                 .into(iv_headPhoto);
         if(!childName.equals("")&&childSex.equals("男")){
             tv_mine_myChildName.setText(childName);

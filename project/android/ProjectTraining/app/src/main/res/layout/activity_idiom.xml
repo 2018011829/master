@@ -5,6 +5,7 @@
 <!--2020-11-28-->
 <!--@author lrf-->
 <LinearLayout
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

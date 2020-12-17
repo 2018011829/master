@@ -40,6 +40,7 @@ import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.SettingsPopupWindow;
 import com.example.projecttraining.books.TextSizeSettingPopupWindow;
@@ -213,6 +214,7 @@ public class ReadBookActivity extends Activity {
         /**标题是属于View的，所以窗口所有的修饰部分被隐藏后标题依然有效,需要去掉标题**/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_read_book);
+        ChangeStatusBarColor.initSystemBar(this);
 
         scrollView=findViewById(R.id.scrollView_read_book);
         drawerLayout=findViewById(R.id.simple_navigation_drawer);

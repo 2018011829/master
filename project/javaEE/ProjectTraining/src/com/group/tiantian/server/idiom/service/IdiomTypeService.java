@@ -198,6 +198,16 @@ public class IdiomTypeService {
 		return b;
 	}
 
+
+	/**
+	 * 得到父类型的所有子类型
+	 * @param parentId
+	 * @return
+	 */
+	public String getChildType(int parentId) {
+		return IdiomDao.querryChildTypeByParentId(parentId);
+	}
+
 	public boolean deleteIdiomType(int id) {
 		boolean b=IdiomDao.deleteIdiomType(id);
 		
@@ -259,6 +269,20 @@ public class IdiomTypeService {
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * 添加成语
+	 * @param idiom
+	 * @param type
+	 */
+	public boolean addIdiom(String idiom, int type) {
+		// TODO Auto-generated method stub
+		if(IdiomDao.insertIdiom(idiom,type)>0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	

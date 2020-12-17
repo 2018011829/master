@@ -43,8 +43,10 @@ import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -57,6 +59,8 @@ import okhttp3.Response;
 
 public class Frag02Adapter extends BaseAdapter {
     private Context mContext;//环境上下文
+    private List<String> momentList = new ArrayList<>();//说说列表的列表
+    private List<Moments> moment = new ArrayList<>();//说说列表子列表
     private List<Moments> moments = new ArrayList<>();//动态列表
     private int itemLayoutRes;//
     private LinearLayout llDynamicDetails;//点击查看详情
@@ -88,8 +92,17 @@ public class Frag02Adapter extends BaseAdapter {
                         //获取图片资源路径
                         String imgUrl = (String) msg.obj;//接收到的是一个说说对象
                         String json = imgUrl;
+                        Log.e("json",json);
                         //反序列化
-                        moments = Arrays.asList(gson.fromJson(json, Moments[].class));//说说对象反序列化
+
+                        momentList = Arrays.asList(gson.fromJson(json,String[].class));
+                        for(int i=0;i<momentList.size();i++){
+                            //反序列化
+                            moment = Arrays.asList(gson.fromJson(momentList.get(i), Moments[].class));//说说对象反序列化
+                            for (int j=0;j<moment.size();j++){
+                                moments.add(moment.get(j));
+                            }
+                        }
 
                         notifyDataSetChanged();
                         break;
@@ -148,6 +161,7 @@ public class Frag02Adapter extends BaseAdapter {
         TextView tvLikeGive = view.findViewById(R.id.tv_likeGive);//点赞昵称的字符串
         TextView edtComment = view.findViewById(R.id.edt_comment);//评论输入框
         ImageView ivConcern = view.findViewById(R.id.iv_concern);//关注按钮
+        TextView tvMomentsTime = view.findViewById(R.id.tv_moments_time);//发布时间
 
         tvName.setText(moments.get(i).getName());//设置昵称的值
         tvContent.setText(moments.get(i).getContent());//设置评论的值
@@ -166,6 +180,7 @@ public class Frag02Adapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+        tvMomentsTime.setText(moments.get(i).getTime());
 
 
         initOkHttpClient();//初始化okHttp对象
@@ -374,6 +389,8 @@ public class Frag02Adapter extends BaseAdapter {
         //1. OkClient对象
         //2. 创建Request请求对象（提前准备好Form表单数据封装）
         //创建FormBody对象
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
         String likegivePerson = getPersonalPhone();//获取点赞人的手机号
         int momentsId = moments.get(i).getId();//获取当前说说id
         FormBody formBody =
@@ -381,6 +398,7 @@ public class Frag02Adapter extends BaseAdapter {
                         .add("momentsId", String.valueOf(momentsId))//被评论说说id
                         .add("likegivePerson", likegivePerson)//评论人的手机号
                         .add("commentContent", commentContent)//评论内容
+                        .add("time",formatter.format(date))
                         .build();
         //创建请求对象
         Request request = new Request.Builder()
@@ -586,7 +604,7 @@ public class Frag02Adapter extends BaseAdapter {
                     comment[j].getId(),
                     comment[j].getPersonName(),
                     comment[j].getComment(),
-                    "刚刚",
+                    comment[j].getTime(),
                     comment[j].getPersonHead());
             commentsList.add(detailBean);
         }
