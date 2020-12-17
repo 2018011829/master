@@ -121,7 +121,7 @@ public class LoginDao {
 		boolean b=false;
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pstamt=null;
-		String sql="update types set password=? where user_name = ?";
+		String sql="update admins set password=? where user_name = ?";
 		try {
 			pstamt=conn.prepareStatement(sql);
 			pstamt.setString(1, password);

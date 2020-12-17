@@ -43,6 +43,7 @@ public class UpdateAdminInfoServlet extends HttpServlet {
 			}else {
 				request.setAttribute("errorInfo", "ÐÞ¸ÄÊ§°Ü£¡");
 				request.setAttribute("userName", userName);
+				request.setAttribute("userPwd", userPwd);
 				request.getRequestDispatcher("updateAdminInfo.jsp").forward(request, response);
 			}
 			
