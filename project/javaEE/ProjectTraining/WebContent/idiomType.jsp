@@ -83,8 +83,7 @@
 							<td style="background: #F2F2F2">id</td>
 							<td style="background: #F2F2F2">成语一级类型</td>
 							<td style="background: #F2F2F2">成语二级类型</td>
-							<td style="background: #F2F2F2">操作1</td>
-							<td style="background: #F2F2F2">操作2</td>
+							<td style="background: #F2F2F2">操作</td>
 						</tr>
 						<!-- 循环输出菜单 -->
 						<c:forEach var="idiomType" items="${page.list }">
@@ -94,10 +93,7 @@
 								<td>${idiomType.parentType }</td>
 								<td>${idiomType.childType }</td>
 								<td><a
-									href="msgIdiomType?id=${idiomType.id }&userName=${userName }&parentType=${idiomType.parentType }&childType=${idiomType.childType }"
-									style="color: black">修改</a></td>
-								<td><a
-									href="deleteIdiomType?id=${idiomType.id }&userName=${userName }"
+									href="DeleteIdiomTypeServlet?id=${idiomType.id }&userName=${userName }&page=${page.prePageNum+1 }"
 									style="color: black">删除</a></td>
 							</tr>
 						</c:forEach>

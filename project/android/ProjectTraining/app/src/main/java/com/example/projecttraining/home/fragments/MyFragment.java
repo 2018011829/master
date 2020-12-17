@@ -65,7 +65,7 @@ public class MyFragment extends Fragment {
     private String cname;
     private String cgrade;
     private String csex;
-    private ImageView iv_headPhoto;
+    public static ImageView iv_headPhoto;
     private RelativeLayout rl_mine_addChild;
     private LinearLayout ll_mine_editorParent;
     private RelativeLayout rl_mine_setting;

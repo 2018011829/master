@@ -9,13 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.activity.BookInfoActivity;
 import com.example.projecttraining.books.activity.BooksHomePageActivity;
@@ -25,6 +28,7 @@ import com.example.projecttraining.idiom.activitys.IdiomActivity;
 import com.example.projecttraining.idiom.activitys.IdiomInfoActivity;
 import com.example.projecttraining.util.ConfigUtil;
 import com.google.gson.Gson;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -47,7 +51,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements OnBannerListener{
     private LinearLayout linearToIdiom;//成语专区
     private LinearLayout linearToRead;//阅读专区
     private LinearLayout linearGuess1;
@@ -55,6 +59,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout linearGuess3;
     private LinearLayout linearGuess4;
     private LinearLayout linearGuess5;
+    private ImageView photo;
+    private TextView titleName;
     private Handler myHandler;
     private Banner mBanner;
     private LinearLayout changeRecommend;
@@ -62,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MyImageLoader myImageLoader = new MyImageLoader();
     private View view;
     private int tag = 0;
-
+    private String[] idiomNames = {"夸父逐日","水浒传","女娲补天","巴黎圣母院","精卫填海"};
     private Handler handler=new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -141,11 +147,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
+        Glide.with(getContext())
+                .load(EaseParentUtil.currentUserAvatar)
+                .circleCrop()
+                .into(photo);
+        titleName.setText("主  页");
         if(tag<=0) {
             imgPath.add(R.drawable.banner0);
             imgPath.add(R.drawable.banner1);
+            imgPath.add(R.drawable.banner6);
             imgPath.add(R.drawable.banner3);
-            imgPath.add(R.drawable.banner4);
+            imgPath.add(R.drawable.banner7);
             tag++;
         }
 
@@ -156,10 +168,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 .setIndicatorGravity(BannerConfig.CENTER)
                 .isAutoPlay(true)
                 .setDelayTime(2000)
+                .setOnBannerListener(this)
                 .start();
     }
 
     private void initViews() {
+        photo = view.findViewById(R.id.photo);
+        titleName = view.findViewById(R.id.top_title_name);
         changeRecommend = view.findViewById(R.id.change);
         mBanner = view.findViewById(R.id.home_banner);
         linearGuess1=view.findViewById(R.id.linear_guess1);
@@ -167,37 +182,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         linearGuess3=view.findViewById(R.id.linear_guess3);
         linearGuess4=view.findViewById(R.id.linear_guess4);
         linearGuess5=view.findViewById(R.id.linear_guess5);
-        linearGuess1.setOnClickListener(this);
-        linearGuess2.setOnClickListener(this);
-        linearGuess3.setOnClickListener(this);
-        linearGuess4.setOnClickListener(this);
-        linearGuess5.setOnClickListener(this);
-        changeRecommend.setOnClickListener(this);
+        MyListener listener = new MyListener();
+        linearGuess1.setOnClickListener(listener);
+        linearGuess2.setOnClickListener(listener);
+        linearGuess3.setOnClickListener(listener);
+        linearGuess4.setOnClickListener(listener);
+        linearGuess5.setOnClickListener(listener);
+        changeRecommend.setOnClickListener(listener);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.change:
-                Toast.makeText(getContext(),"没有更多推荐了哟",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.linear_guess1://安徒生童话
-                getBookByNameFromServer("安徒生童话");
-                break;
-            case R.id.linear_guess2://窗边的小豆豆
-                getBookByNameFromServer("窗边的小豆豆");
-                break;
-            case R.id.linear_guess3://动物庄园
-                getBookByNameFromServer("动物庄园");
-                break;
-            case R.id.linear_guess4://王尔德童话
-                getBookByNameFromServer("王尔德童话");
-                break;
-            case R.id.linear_guess5://一千零一夜
-                getBookByNameFromServer("一千零一夜");
-                break;
+    class MyListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.change:
+                    Toast.makeText(getContext(),"没有更多推荐了哟",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.linear_guess1://安徒生童话
+                    getBookByNameFromServer("安徒生童话");
+                    break;
+                case R.id.linear_guess2://窗边的小豆豆
+                    getBookByNameFromServer("窗边的小豆豆");
+                    break;
+                case R.id.linear_guess3://动物庄园
+                    getBookByNameFromServer("动物庄园");
+                    break;
+                case R.id.linear_guess4://王尔德童话
+                    getBookByNameFromServer("王尔德童话");
+                    break;
+                case R.id.linear_guess5://一千零一夜
+                    getBookByNameFromServer("一千零一夜");
+                    break;
+            }
         }
     }
+
 
     /**
      * 根据名字获取书籍
@@ -205,7 +224,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      */
     private void getBookByNameFromServer(String bookName) {
         //创建OkHttpClient对象
-        OkHttpClient okHttpClient = new OkHttpClient();
+                OkHttpClient okHttpClient = new OkHttpClient();
         //创建请求对象
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS
@@ -228,7 +247,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //获取服务端返回的数据（假设是字符串）
                 String result = response.body().string();
-//                Log.e("BookInfoActivity", result);
 
                 //通知界面信息改变
                 Message msg = handler.obtainMessage();
@@ -277,5 +295,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }.start();
+    }
+
+    /**
+     * 点击轮播图，跳转至对应的成语或者图书详情界面
+     * @param position
+     */
+    @Override
+    public void OnBannerClick(int position) {
+        if(position % 2 == 0){
+            Intent intent = new Intent();
+            intent.setClass(getContext(),IdiomInfoActivity.class);
+            intent.putExtra("name",idiomNames[position]);
+            getContext().startActivity(intent);
+        }else{
+            getBookByNameFromServer(idiomNames[position]);
+        }
     }
 }

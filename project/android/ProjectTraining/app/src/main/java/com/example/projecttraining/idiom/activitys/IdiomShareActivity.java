@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.idiom.FlowLayout;
 import com.example.projecttraining.util.IdiomShareUtil;
@@ -71,6 +72,7 @@ public class IdiomShareActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.idiom_share);
+        ChangeStatusBarColor.initSystemBar(this);
 
         ButterKnife.bind(this);
 

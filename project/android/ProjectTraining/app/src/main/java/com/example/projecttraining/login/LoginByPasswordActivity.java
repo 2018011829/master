@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.ContactManager;
@@ -77,6 +78,7 @@ public class LoginByPasswordActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_by_password);
+        ChangeStatusBarColor.initSystemBar(this);
         findViews();
     }
 

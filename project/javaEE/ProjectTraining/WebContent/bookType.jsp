@@ -90,10 +90,10 @@
 	                            <td>${bookType.id }</td>
 	                            <td>${bookType.type }</td>
 	                            <td><a
-	                                href="msgBookType?id=${bookType.id }&userName=${userName }&typeName=${bookType.type }"
+	                                href="UpdateBookType?id=${bookType.id }&userName=${userName }&type=${bookType.type }"
 	                                style="color: black">修改</a></td>
 	                            <td><a
-	                                href="deleteBookType?id=${bookType.id }&userName=${userName }"
+	                                href="DeleteBookTypeServlet?id=${bookType.id }&userName=${userName }"
 	                                style="color: black">删除</a></td>
 	                        </tr>
 	                    </c:forEach>

@@ -38,7 +38,6 @@ public class AllParentsInfoServlet extends HttpServlet {
 	    ServletContext servletContext=request.getServletContext();
 	    servletContext.setAttribute("avatarPath", ConfigUtil.SETVER_AVATAR);
 		//获取当前页的图片
-	    System.out.println("来到了");
 	    int pageNum=1,pageSize=10;
 	    String page1=request.getParameter("page");
 	    if(page1!=null && !page1.equals("")) {

@@ -13,7 +13,7 @@ import com.group.tiantian.server.book.service.BookTypeService;
 /**
  * Servlet implementation class UpdateBookServlet
  */
-@WebServlet("/UpdateBookServlet")
+@WebServlet("/UpdateBook")
 public class UpdateBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +31,7 @@ public class UpdateBook extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println("UpdateBookServlet");
+		System.out.println("UpdateBook");
 		String userName=request.getParameter("userName");
 		String idStr=request.getParameter("id");
 		//获取当前页

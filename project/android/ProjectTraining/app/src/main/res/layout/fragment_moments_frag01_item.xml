@@ -51,8 +51,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@mipmap/concern1"/>
         </RelativeLayout>
 
@@ -105,8 +105,8 @@
 
             <ImageView
                 android:id="@+id/iv_give_like"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@mipmap/praise1"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"

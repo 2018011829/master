@@ -1,5 +1,8 @@
 package com.group.tiantian.server.book.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.group.tiantian.books.dao.TypeDao;
@@ -7,6 +10,7 @@ import com.group.tiantian.entity.Book;
 import com.group.tiantian.entity.BookType;
 import com.group.tiantian.server.book.dao.BookDao;
 import com.group.tiantian.server.entity.Page;
+import com.group.tiantian.util.DBUtil;
 
 public class BookTypeService {
 
@@ -26,6 +30,68 @@ public class BookTypeService {
 			typeDao = TypeDao.getInstance();
 		}
 		return bookTypeService;
+	}
+	
+	/**
+	 * 根据id删除书籍
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public boolean deleteBookType(int id) {
+		boolean b=BookDao.deleteBookType(id);
+		
+		return b;
+	}
+	
+	/**
+	 * 修改图书信息
+	 * @param book
+	 * @return
+	 */
+	public boolean updateBookType(int id,String type) {
+		boolean b=BookDao.updateBookType(id, type);
+		
+		return b;
+	}
+	
+	/**
+	 * 根据id删除书籍
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public boolean deleteBook(int id) {
+		boolean b=BookDao.deleteBook(id);
+		return b;
+	}
+	
+	/**
+	 * 查找类型名是否已经存在
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public boolean searchBookType(String type) {
+		boolean b=BookDao.searchBookType(type);
+		return b;
+	}
+	
+	/**
+	 * 将书的信息添加到数据库
+	 * @param book
+	 * @return
+	 */
+	public boolean addBookType(String type) {
+		boolean b=BookDao.addBookType(type);
+		return b;
+	}
+	
+	/**
+	 * 修改图书信息
+	 * @param book
+	 * @return
+	 */
+	public boolean updateBook(Book book) {
+		boolean b=BookDao.updateBook(book);
+		return b;
 	}
 	
 	/**

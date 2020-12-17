@@ -68,7 +68,7 @@
 				<br>
 				<br>
 				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
-					<form action="AddBookServlet">
+					<form action="AddBookTypeServlet">
 						<p>
 							<span>图书类型：</span> <input type="text" name="newBookType"
 								style="width: 200px; height: 25px;">
@@ -80,6 +80,7 @@
 							<input type="submit" value="提交"
 								style="width: 100px; height: 35px; background: #009688; color: white">
 						</p>
+						<p class="notice" style="font-size:20px">${errorInfo }</p>
 					</form>
 				</div>
 			</div>

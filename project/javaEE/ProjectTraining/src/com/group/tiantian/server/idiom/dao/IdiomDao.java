@@ -6,12 +6,85 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.google.gson.Gson;
 import com.group.tiantian.entity.Book;
+import com.group.tiantian.server.entity.ChildType;
 import com.group.tiantian.server.entity.Idiom;
+import com.group.tiantian.server.entity.IdiomType;
 import com.group.tiantian.util.DBUtil;
 
+
 public class IdiomDao {
+	
+	/**
+	 * 修改成语类型
+	 * @param id
+	 * @param idiomType
+	 * @return
+	 */
+	public static boolean updateIdiomType(IdiomType idiomType) {
+		boolean b=false;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="update classifyidiom set classifyName=?,parentId=? where id=?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, idiomType.getChildType());
+			pstamt.setInt(2, idiomType.getId());
+			//判断父类型是否为空
+			if(idiomType.getParentType().equals("空")) {
+				pstamt.setInt(3, 0);
+			}else {
+				//查询父类型的id
+				int id=getIdiomId(idiomType.getParentType());
+				pstamt.setInt(3, id);
+			}
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+		return b;
+	}
+		
+	/**
+	 * 根据id找到该类型对象
+	 * @param id
+	 * @return
+	 */
+	public static IdiomType getIdiomTypeObjById(int id) {
+		IdiomType idiomType=null;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select * from classifyidiom where id=?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setInt(1, id);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt("parentId")==0) {
+					idiomType=new IdiomType(id, "空", rs.getString("classifyName"));
+				}else {
+					//继续查询父类型名称
+					int parentId=rs.getInt("parentId");
+					String sql1="select * from classifyidiom where id=?";
+					pstamt=conn.prepareStatement(sql1);
+					pstamt.setInt(1, parentId);
+					ResultSet rs1=pstamt.executeQuery();
+					if(rs1.next()) {
+						idiomType=new IdiomType(id, rs1.getString("classifyName"), rs.getString("classifyName"));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return idiomType;
+	}
 
 	/**
 	 * 根据成语所属分类查询该分类的成语
@@ -91,6 +164,11 @@ public class IdiomDao {
 		return list;
 	}
 	
+	/**
+	 * 根据id找到该类型名称（子或父）
+	 * @param id
+	 * @return
+	 */
 	public static String getIdiomTypeById(int id) {
 		String type=null;
 		Connection conn=DBUtil.getConnection();
@@ -235,4 +313,80 @@ public class IdiomDao {
 		
 		return b;
 	}
+
+	
+	/**
+	 * 得到一个成语父类型的所有子类型
+	 * @param parentId
+	 * @return 所有子类型entity的集合json串
+	 */
+	
+	public static String querryChildTypeByParentId(int parentId) {
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String json="";
+		try {
+			pstamt=conn.prepareStatement("select id,classifyName from classifyidiom where parentId=? and parentId != 0");
+			pstamt.setInt(1, parentId);
+			ResultSet resultSet=pstamt.executeQuery();
+			List<ChildType> childTypes=new ArrayList<ChildType>();
+			while(resultSet.next()) {
+				ChildType childType=new ChildType();
+				childType.setId(resultSet.getInt(1));
+				childType.setClassifyName(resultSet.getString(2));
+				childTypes.add(childType);
+			}
+			Gson gson=new Gson();
+			json=gson.toJson(childTypes);
+			System.out.println("得到子类型的json："+json);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+
+	/**
+	 * 根据id删除书籍
+	 * @param name
+	 * @return 存在返回true
+	 */
+	public static boolean deleteIdiomType(int id) {
+		boolean b=false;
+		String sql="delete from classifyidiom where id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setInt(1, id);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+
+	}
+
+	public static int insertIdiom(String idiom, int type) {
+		// TODO Auto-generated method stub
+		int tag=0;
+		String sql="insert into idiom(idiom,classification) values (?,?)";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, idiom);
+			pstamt.setInt(2, type);
+			tag=pstamt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tag;
+	}
 }
+

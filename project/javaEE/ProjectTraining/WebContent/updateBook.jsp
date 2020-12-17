@@ -51,10 +51,10 @@
                             href="GetBookTypesServlet?userName=${userName }">图书分类</a></li>
                         <li onclick="showMenu_add_type3()" id="book_add_type"><a
                             href="AddBookType?userName=${userName }">新增分类</a></li>
-                        <li onclick="showMenu_info3()" id="book_info"><a
+                        <li onclick="showMenu_info3()" id="book_info" style="background: #009688"><a
                             href="GetBookInfoServlet?userName=${userName }">图书展示</a></li>
                         <li onclick="showMenu_add3()" id="book_add"
-                            style="background: #009688"><a href="AddBook?userName=${userName }">新增图书</a></li>
+                            ><a href="AddBook?userName=${userName }">新增图书</a></li>
                     </ul>
                     <li id="active" onclick="showActiveMenu()"><a>动态信息管理</a><img
                         src="imgs-server/home/xiala.png" id="xiala4"></li>
@@ -66,16 +66,21 @@
                 </ul>
             </div>
 
-            <div id="info" style="height: 700px;">
+            <div id="info" style="height: 800px;">
                 <!-- 显示表格 -->
                 <br>
                 <div
                     style="height: 40px; width: 1100px; text-align: center; line-height: 40px; font-weight: 600; font-size: 20px; color: #009688; margin-top: 10px">
-                    <p>新增图书</p>
+                    <p>修改图书</p>
                 </div>
                 <div style="width: 1100px; margin-bottom: 20px">
-                    <form action="AddBookServlet" method="post"
+                    <form action="UpdateBookServlet" method="post"
                         enctype="multipart/form-data">
+                        	<input type="hidden" name="id" value="${page }">
+                        	<input type="hidden" name="id" value="${newBook.id }">
+                        	<input type="hidden" name="beforeImg" value="${newBook.img }">
+                        	<input type="hidden" name="beforeContent" value="${newBook.content }">
+                            <input type="hidden" name="userName" value="${userName }">
                         <br> <span>图书名称：<input class="inp" type="text" name="bookName"
                             style="width: 200px; height: 25px;" value="${newBook.name }">
                         </span>
@@ -89,18 +94,29 @@
                                 <c:forEach var="bookType" items="${bookTypes }">
                                     <option value="${bookType.type }">${bookType.type }</option>
                                 </c:forEach>
-                        </select></span><br>
-                        <br> <span>图书图片：<input class="inp" type="file" name="bookImg"
-                            style="width: 200px; height: 25px;"></span>
-                        <p class="notice"></p>
+                        </select></span><br><br>
+                        <div style="margin: 0 auto; width: 302px">
+                            <div style="width: 100px; line-height: 100px; float: left">旧图书图片:</div>
+                            <div style="margin-right:100px">
+                                <img alt="${newBook.img }" src="bookImgs/${newBook.img }" height="120px" width="100px">
+                            </div>
+                        </div>
+                        <br> <span>新图书图片：<input type="file" name="bookImg"
+                            style="width: 200px; height: 25px;"></span><br><br>
                          <span>适合的年级：</span> <select name="bookGrades"
                             style="width: 200px; height: 25px">
                             <option value="small">1-3年级</option>
                             <option value="big">4-6年级</option>
-                        </select><br>
-                        <br> <span>电子书：<input class="inp" type="file" name="book"
-                            style="width: 200px; height: 25px;" value="${newBook.content }"></span>
-                        <p class="notice"></p>
+                        </select>
+                        <br><br>
+                        <div style="margin: 0 auto; width: 302px">
+                            <div style="width: 100px; float: left">旧电子书:</div>
+                            <div style="margin-right:100px">
+                                ${newBook.content }
+                            </div>
+                        </div>
+                        <br> <span>新电子书：<input type="file" name="book"
+                            style="width: 200px; height: 25px;"></span><br><br>
                         <div style="margin: 0 auto; width: 302px">
                             <div style="width: 100px; line-height: 100px; float: left">图书简介:</div>
                             <div>
@@ -110,7 +126,6 @@
                             <p class="notice"></p>
                         </div>
                         <p style="line-height: 40px;">
-                            <input type="hidden" name="userName" value="${userName }">
                             <input type="submit" value="提交"
                                 style="width: 100px; height: 35px; background: #009688; color: white">
                         </p>
@@ -163,60 +178,10 @@
         }
         inp[2].onblur=function(){
             if(inp[2].value.length<=0){
-                notice[2].innerHTML="书的图片不能为空！";
+                notice[2].innerHTML="书籍简介不能为空！";
             }
             if(inp[2].value.length>0){
                 notice[2].innerHTML="";
-            }
-        }
-        inp[3].onfocus=function(){
-            if(inp[1].value.length<=0){
-                notice[1].innerHTML="书的作者不能为空！";
-            }
-            if(inp[1].value.length>0){
-                notice[1].innerHTML="";
-            }
-            if(inp[2].value.length<=0){
-                notice[2].innerHTML="书的图片不能为空！";
-            }
-            if(inp[2].value.length>0){
-                notice[2].innerHTML="";
-            }
-        }
-        inp[3].onblur=function(){
-            if(inp[3].value.length<=0){
-                notice[3].innerHTML="电子书籍不能为空！";
-            }
-            if(inp[3].value.length>0){
-                notice[3].innerHTML="";
-            }
-        }
-        inp[4].onfocus=function(){
-            if(inp[1].value.length<=0){
-                notice[1].innerHTML="书的作者不能为空！";
-            }
-            if(inp[1].value.length>0){
-                notice[1].innerHTML="";
-            }
-            if(inp[2].value.length<=0){
-                notice[2].innerHTML="书的图片不能为空！";
-            }
-            if(inp[2].value.length>0){
-                notice[2].innerHTML="";
-            }
-            if(inp[3].value.length<=0){
-                notice[3].innerHTML="电子书籍不能为空！";
-            }
-            if(inp[3].value.length>0){
-                notice[3].innerHTML="";
-            }
-        }
-        inp[4].onblur=function(){
-            if(inp[4].value.length<=0){
-                notice[4].innerHTML="书籍简介不能为空！";
-            }
-            if(inp[4].value.length>0){
-                notice[4].innerHTML="";
             }
         }
 </script>

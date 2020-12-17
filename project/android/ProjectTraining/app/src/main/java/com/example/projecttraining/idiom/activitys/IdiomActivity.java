@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.idiom.fragment.ContentFragment;
 import com.google.gson.Gson;
@@ -75,6 +76,7 @@ public class IdiomActivity extends AppCompatActivity implements ViewAnimator.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idiom);
+        ChangeStatusBarColor.initSystemBar(this);
 
         ButterKnife.bind(this);
 
