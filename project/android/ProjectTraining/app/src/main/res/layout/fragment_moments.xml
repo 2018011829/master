@@ -7,42 +7,70 @@
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
     <LinearLayout
-        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/title_bar"/>
-        <!--顶部导航栏-->
-        <LinearLayout
-            android:id="@+id/ll_top"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="12dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="12dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/title_inform"/>
 
-            <Button
-                android:id="@+id/frag01"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="推荐" />
+            <TextView
+                android:id="@+id/top_title_name"
+                android:textSize="26sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@android:color/white" />
 
-            <Button
-                android:id="@+id/frag02"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="关注" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/title_scan" />
 
-            <Button
-                android:id="@+id/frag03"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="我的" />
-        </LinearLayout>
-
+        </RelativeLayout>
     </LinearLayout>
+    <!--顶部导航栏-->
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/frag01"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="推荐" />
+
+        <Button
+            android:id="@+id/frag02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="关注" />
+
+        <Button
+            android:id="@+id/frag03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="我的" />
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
