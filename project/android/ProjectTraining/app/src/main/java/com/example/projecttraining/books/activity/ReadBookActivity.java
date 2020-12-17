@@ -226,6 +226,9 @@ public class ReadBookActivity extends Activity {
         pb = findViewById(R.id.progressbar);
         pb.setVisibility(View.VISIBLE);
         textContent = findViewById(R.id.text_content);
+        textContent.setTextSize(currentTextSize);
+        currentReadStatus= R.mipmap.listen_white;
+        currentReadTextIndex=0;
 
         //获取信息
         getExtrasFromIntent();
