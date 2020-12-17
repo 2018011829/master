@@ -115,6 +115,12 @@ public class MyFragment extends Fragment {
         super.onResume();
         ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(),handler);
         children.clear();
+        if(!phoneNum.equals(EMClient.getInstance().getCurrentUser())){
+            phoneNum =  EMClient.getInstance().getCurrentUser();
+            childName ="";
+            childSex="";
+            childGrade="";
+        }
         queryChildren();
     }
 
@@ -166,7 +172,7 @@ public class MyFragment extends Fragment {
                     break;
                 case R.id.rl_mine_mycollection:
                     if(childName.equals("")){
-                        Toast.makeText(getActivity(),"当前暂无您孩子的信息，请先选择您的孩子！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"当前暂无您孩子的信息，请点击'我的孩子'选择您的孩子！",Toast.LENGTH_SHORT).show();
                     }else {
                         startActivity(new Intent().setClass(getContext(), MyCollectionActivity.class));
                     }
@@ -292,7 +298,7 @@ public class MyFragment extends Fragment {
         rl_mine_mycollection.setOnClickListener(myOnClickListener);
     }
     private void init(){
-        tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
+        tv_mine_phone.setText("手机号:"+EMClient.getInstance().getCurrentUser());
         tv_mine_useName.setText(EaseParentUtil.currentUserNickname);
         //12-07得到一个设置圆角的requestOptions
 //        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());

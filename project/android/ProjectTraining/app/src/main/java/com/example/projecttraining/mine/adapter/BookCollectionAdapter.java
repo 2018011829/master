@@ -91,4 +91,11 @@ public class BookCollectionAdapter extends BaseAdapter {
         TextView tv_book_introduce;
         LinearLayout ll_child_bookcollection;
     }
+
+
+    // 删除数据
+    public void removeData() {
+        books.clear();
+        this.notifyDataSetChanged();
+    }
 }

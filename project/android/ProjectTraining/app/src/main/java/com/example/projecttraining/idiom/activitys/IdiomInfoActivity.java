@@ -79,7 +79,7 @@ public class IdiomInfoActivity extends AppCompatActivity implements IOfflineReso
     private IdiomInfoResult idiomInfoResult;
     private String phoneNum = MyFragment.phoneNum;
     private String childName = MyFragment.childName;
-    private String APPKEY = "52836ab53d4cf3e9";
+    private String APPKEY = "922ee172234b0479";
     private String url = "https://api.jisuapi.com/chengyu/detail";
 
     @BindView(R.id.tv_idiom_name) TextView tvIdiomName;
