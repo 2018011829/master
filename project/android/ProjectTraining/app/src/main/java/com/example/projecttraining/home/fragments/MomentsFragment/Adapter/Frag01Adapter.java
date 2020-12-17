@@ -44,8 +44,10 @@ import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -442,6 +444,8 @@ public class Frag01Adapter extends BaseAdapter {
         //1. OkClient对象
         //2. 创建Request请求对象（提前准备好Form表单数据封装）
         //创建FormBody对象
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
         String likegivePerson = getPersonalPhone();//获取点赞人的手机号
         int momentsId = moments.get(i).getId();//获取当前说说id
         FormBody formBody =
@@ -449,6 +453,7 @@ public class Frag01Adapter extends BaseAdapter {
                         .add("momentsId", String.valueOf(momentsId))//被评论说说id
                         .add("likegivePerson", likegivePerson)//评论人的手机号
                         .add("commentContent", commentContent)//评论内容
+                        .add("time",formatter.format(date))
                         .build();
         //创建请求对象
         Request request = new Request.Builder()
@@ -685,7 +690,7 @@ public class Frag01Adapter extends BaseAdapter {
                     comment[j].getId(),
                     comment[j].getPersonName(),
                     comment[j].getComment(),
-                    "刚刚",
+                    comment[j].getTime(),
                     comment[j].getPersonHead());
             commentsList.add(detailBean);
         }
