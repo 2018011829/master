@@ -30,8 +30,8 @@ public class AdminInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println("AdminInfoServlet");
 		String userName=request.getParameter("userName");
+		System.out.println("AdminInfoServlet:"+userName);
 		//根据用户名查找密码
 		String userPwd=LoginService.getInstance().searchPwd(userName);
 		if (userName != null && !userName.equals("")) {
