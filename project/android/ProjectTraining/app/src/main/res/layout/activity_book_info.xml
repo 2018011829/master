@@ -10,7 +10,8 @@
         android:id="@+id/linear_title"
         android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:id="@+id/iv_back"
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <ImageView
-                android:src="@mipmap/back"
+                android:src="@drawable/idiom_back"
                 android:layout_width="23dp"
                 android:layout_height="23dp"/>
 
@@ -30,7 +31,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
 
