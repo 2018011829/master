@@ -149,6 +149,7 @@ public class Frag03Adapter extends BaseAdapter {
         TextView tvLikeGive = view.findViewById(R.id.tv_likeGive);//点赞昵称的字符串
         TextView edtComment = view.findViewById(R.id.edt_comment);//评论输入框
         ImageView ivConcern = view.findViewById(R.id.iv_concern);//关注按钮
+        TextView tvMomentsTime = view.findViewById(R.id.tv_moments_time);//发布时间
 
         tvName.setText(moments.get(i).getName());//设置昵称的值
         tvContent.setText(moments.get(i).getContent());//设置评论的值
@@ -167,6 +168,7 @@ public class Frag03Adapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+        tvMomentsTime.setText(moments.get(i).getTime());
 
 
         initOkHttpClient();//初始化okHttp对象
