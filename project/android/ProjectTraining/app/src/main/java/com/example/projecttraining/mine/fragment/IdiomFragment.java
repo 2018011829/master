@@ -100,6 +100,16 @@ public class IdiomFragment extends Fragment {
         }
     };
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        idiomList.clear();
+        idiomSaved.removeAllViews();
+        //从服务端获取收藏的成语信息
+        searchSaveIdiomByInfo();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,8 +118,6 @@ public class IdiomFragment extends Fragment {
         idiomSaved = view.findViewById(R.id.idiom_saved);
         //Gson对象实例化
         initGson();
-        //从服务端获取收藏的成语信息
-        searchSaveIdiomByInfo();
         return view;
     }
 

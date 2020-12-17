@@ -72,10 +72,13 @@ public class BookFragment extends Fragment {
         }
     };
 
+
+
+
     @Override
     public void onResume() {
         super.onResume();
-        books.clear();
+        bookCollectionAdapter.removeData();
         queryCollectionBook();
     }
 
@@ -84,6 +87,7 @@ public class BookFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mine_collectionbook,container,false);
         iv_collectionbook_null = view.findViewById(R.id.iv_collectionbook_null);
+        bookCollectionAdapter =new BookCollectionAdapter(this.getActivity(),books);
         return view;
     }
 
@@ -118,7 +122,7 @@ public class BookFragment extends Fragment {
 
     private void initListView() {
         listView = view.findViewById(R.id.lv_mine_collectionBooks);
-        bookCollectionAdapter = new BookCollectionAdapter(this.getActivity(),books);
+//        bookCollectionAdapter = new BookCollectionAdapter(this.getActivity(),books);
         listView.setAdapter(bookCollectionAdapter);
     }
 }
