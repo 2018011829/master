@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.mine.adapter.CollectionPagerAdapter;
 import com.example.projecttraining.ui.NoScrollViewPager;
@@ -23,6 +24,7 @@ public class MyCollectionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_mycollection);
+        ChangeStatusBarColor.initSystemBar(this);
 
         back = findViewById(R.id.linear_back);
         back.setOnClickListener(new View.OnClickListener() {

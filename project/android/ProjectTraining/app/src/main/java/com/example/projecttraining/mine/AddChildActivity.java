@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.util.ConfigUtil;
 import com.hyphenate.chat.EMClient;
@@ -75,6 +76,7 @@ public class AddChildActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
+        ChangeStatusBarColor.initSystemBar(this);
 
         //给界面添加返回按钮相关代码
         ActionBar actionBar = getSupportActionBar();

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
 import com.example.projecttraining.register.RegisterActivity;
@@ -70,6 +71,7 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ChangeStatusBarColor.initSystemBar(this);
 
         findViews();
         init();

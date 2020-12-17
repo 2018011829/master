@@ -6,34 +6,41 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
-    <!--顶部导航栏-->
     <LinearLayout
-        android:id="@+id/ll_top"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+        <include layout="@layout/title_bar"/>
+        <!--顶部导航栏-->
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/frag01"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="推荐" />
+            <Button
+                android:id="@+id/frag01"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="推荐" />
 
-        <Button
-            android:id="@+id/frag02"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="关注" />
+            <Button
+                android:id="@+id/frag02"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="关注" />
 
-        <Button
-            android:id="@+id/frag03"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="我的" />
+            <Button
+                android:id="@+id/frag03"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="我的" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout

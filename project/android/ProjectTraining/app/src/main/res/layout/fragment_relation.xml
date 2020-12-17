@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
+    <include layout="@layout/title_bar"/>
     <!--顶部导航栏-->
 
     <com.google.android.material.tabs.TabLayout

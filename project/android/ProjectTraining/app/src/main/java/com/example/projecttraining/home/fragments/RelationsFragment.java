@@ -9,12 +9,16 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.adapter.ContactSectionPagerAdapter;
 import com.example.projecttraining.util.ParentUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.EaseParentUtil;
 
 /**
  * 联系人的fragment
@@ -22,16 +26,26 @@ import com.hyphenate.chat.EMClient;
  * @date 2020.11.21
  */
 public class RelationsFragment extends Fragment {
+
+    private ImageView photo;
+    private TextView titleName;
+    public static final String TAG="RelationsFragment";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    public static final String TAG="RelationsFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_relation,container,false);
+        photo = view.findViewById(R.id.photo);
+        titleName = view.findViewById(R.id.top_title_name);
+        Glide.with(getContext())
+                .load(EaseParentUtil.currentUserAvatar)
+                .circleCrop()
+                .into(photo);
+        titleName.setText("联 系 人");
         ViewPager viewPager=setViewPagerAdapter(view);
         BindViewPagerAndTabLayout(viewPager,view);
         return view;

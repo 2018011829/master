@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.adapter.NewFriendAdapter;
 import com.example.projecttraining.contact.dao.ContactsStatus;
@@ -125,6 +127,7 @@ public class NewFriendsActivity extends AppCompatActivity {
         Log.e(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_friends);
+        ChangeStatusBarColor.initSystemBar(this);
 
         findViews();
 

@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.books.entitys.Book;
 import com.example.projecttraining.books.entitys.Bookshelf;
@@ -177,6 +178,7 @@ public class BookInfoActivity extends Activity implements View.OnClickListener {
         /**标题是属于View的，所以窗口所有的修饰部分被隐藏后标题依然有效,需要去掉标题**/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_book_info);
+        ChangeStatusBarColor.initSystemBar(this);
 
         findViews();
         //获取intent中的数据，并进行解析显示在控件中

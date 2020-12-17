@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.login.LoginByPasswordActivity;
 import com.hyphenate.chat.EMClient;
@@ -18,6 +19,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_setting);
+        ChangeStatusBarColor.initSystemBar(this);
 
         findView();
         setListener();

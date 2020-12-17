@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.R;
 import com.example.projecttraining.contact.dao.Parent;
 import com.example.projecttraining.contact.adapter.AddFriendAdapter;
@@ -57,6 +58,8 @@ public class AddFriendsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
+        ChangeStatusBarColor.initSystemBar(this);
+
         lvSearchResult = findViewById(R.id.lv_search_result);
         parents = new ArrayList<>();
         addFriendAdapter = new AddFriendAdapter(getApplicationContext(), parents, R.layout.contact_item_add_friend);
