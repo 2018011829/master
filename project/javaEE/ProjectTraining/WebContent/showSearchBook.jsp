@@ -117,13 +117,13 @@
 					</table>
 					<div style="margin-top: 30px">
 						总共有${page.totalPageNum }页，总共有${page.totalCount }个数据； <a
-							href="GetBookInfoServlet?page=1&userName=${userName }"
+							href="SearchBookServlet?page=1&userName=${userName }&searchInfo=${searchInfo }"
 							style="color: black">首页</a> <a
-							href="GetBookInfoServlet?page=${page.prePageNum }&userName=${userName }"
+							href="SearchBookServlet?page=${page.prePageNum }&userName=${userName }&searchInfo=${searchInfo }"
 							style="color: black">上一页</a> <a
-							href="GetBookInfoServlet?page=${page.nextPageNum }&userName=${userName }"
+							href="SearchBookServlet?page=${page.nextPageNum }&userName=${userName }&searchInfo=${searchInfo }"
 							style="color: black">下一页</a> <a
-							href="GetBookInfoServlet?page=${page.totalPageNum }&userName=${userName }"
+							href="SearchBookServlet?page=${page.totalPageNum }&userName=${userName }&searchInfo=${searchInfo }"
 							style="color: black">末页</a>
 					</div>
 				</div>

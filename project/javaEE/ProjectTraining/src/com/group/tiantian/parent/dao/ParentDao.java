@@ -508,5 +508,54 @@ public class ParentDao {
 		}
 		return list;
 	}
+
+	public static int countAll(String searchInfo) {
+		int count=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select count(*) from parents where nickname like ? or phone like ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			pstamt.setString(2, str);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+				System.out.println(count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	public static List<Parent> selectPage(int pageNum, int pageSize, String searchInfo) {
+		List<Parent> list=new ArrayList<Parent>();
+		try {
+			preparedStatement=connection.prepareStatement("select * from parents where nickname like ? or phone like ? limit ?,?");
+			String str="%"+searchInfo+"%";
+			preparedStatement.setString(1, str);
+			preparedStatement.setString(2, str);
+			preparedStatement.setInt(3, (pageNum-1)*pageSize);
+			preparedStatement.setInt(4, pageSize);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				System.out.println("添加一个用户");
+				Parent parent=new Parent();
+				parent.setId(resultSet.getInt(1));
+				parent.setPhone(resultSet.getString(2));
+				parent.setPassword(resultSet.getString(3));
+				parent.setNickname(resultSet.getString(4));
+				parent.setAvator(resultSet.getString(5));
+				list.add(parent);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 }

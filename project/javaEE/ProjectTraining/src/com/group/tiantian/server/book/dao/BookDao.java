@@ -352,4 +352,73 @@ public class BookDao {
 		
 		return count;
 	}
+
+	/**
+	 * 模糊查找
+	 * @param pageNum
+	 * @param pageSize
+	 * @param searchInfo
+	 * @return
+	 */
+	public static List<Book> getBooksByPage(int pageNum, int pageSize, String searchInfo) {
+		List<Book> list=new ArrayList<>();
+		String sql="select * from books where name like ? limit ?,?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			pstamt.setInt(2,(pageNum-1)*pageSize);  //从第几条开始
+			pstamt.setInt(3, pageSize);         //数量
+			ResultSet rs=pstamt.executeQuery();
+			while(rs.next()) {
+				Book book=new Book();
+				book.setId(rs.getInt("id"));
+				book.setAuthor(rs.getString("author"));
+				book.setName(rs.getString("name"));
+				book.setContent(rs.getString("content"));
+				book.setIntroduce(rs.getString("introduce"));
+				book.setImg(rs.getString("img"));
+				book.setType(rs.getString("type"));
+				if(rs.getString("grades").equals("small")) {
+					book.setGrades("1-3年级");
+				}else {
+					book.setGrades("4-6年级");
+				}
+				
+				list.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	/**
+	 * 模糊查找书籍的总数量
+	 * @param searchInfo
+	 * @return
+	 */
+	public static int getCount(String searchInfo) {
+		int count=0;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="select count(*) from books where name like ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			String str="%"+searchInfo+"%";
+			pstamt.setString(1, str);
+			ResultSet rs=pstamt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+				System.out.println(count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
 }

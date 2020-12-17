@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import com.group.tiantian.classifyidiom.dao.ClassifyIdiomDaoImpl;
+import com.group.tiantian.entity.Book;
 import com.group.tiantian.server.book.dao.BookDao;
 import com.group.tiantian.server.entity.Idiom;
 import com.group.tiantian.server.entity.IdiomType;
@@ -201,6 +202,63 @@ public class IdiomTypeService {
 		boolean b=IdiomDao.deleteIdiomType(id);
 		
 		return b;
+	}
+
+	public boolean deleteIdiom(int id) {
+		boolean b=IdiomDao.deleteIdiom(id);
+		
+		return b;
+	}
+
+	public Page<Idiom> idiomListByPage(int pageNum, int pageSize, String searchInfo) {
+		Page<Idiom> page = new Page<Idiom>(pageNum, pageSize);
+		int count = IdiomDao.getCount(searchInfo);
+		List<Idiom> list = IdiomDao.getIdioms(pageNum, pageSize,searchInfo);
+		System.out.println(list.toString());
+		page.setList(list);
+		page.setTotalCount(count);
+		
+		return page;
+	}
+
+	public Page<IdiomType> listByPage(int pageNum, int pageSize, String searchInfo) {
+		Page<IdiomType> page = new Page<IdiomType>(pageNum, pageSize);
+		int count = getCount(searchInfo);
+		List<IdiomType> list = getTypes(pageNum, pageSize,searchInfo);
+		System.out.println(list.toString());
+		page.setList(list);
+		page.setTotalCount(count);
+		
+		return page;
+	}
+
+	private List<IdiomType> getTypes(int pageNum, int pageSize, String searchInfo) {
+		List<IdiomType> list1=new ArrayList<IdiomType>();
+		List<IdiomType> list=new ArrayList<IdiomType>();
+		int i=0;
+		for(IdiomType idiom:getAllTypes()) {
+			if(idiom.getChildType().contains(searchInfo) || idiom.getParentType().contains(searchInfo)) {
+				list1.add(idiom);
+			}
+		}
+		for(IdiomType idiom:list1) {
+			if((pageNum-1)*pageSize<=i && i<(pageNum-1)*pageSize+pageSize) {
+				list.add(idiom);
+			}
+			i++;
+		}
+		
+		return list;
+	}
+
+	private int getCount(String searchInfo) {
+		int count=0;
+		for(IdiomType idiomType:getAllTypes()) {
+			if(idiomType.getChildType().contains(searchInfo) || idiomType.getParentType().contains(searchInfo)) {
+				count+=1;
+			}
+		}
+		return count;
 	}
 
 	

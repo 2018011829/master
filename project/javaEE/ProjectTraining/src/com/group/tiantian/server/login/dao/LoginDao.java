@@ -99,4 +99,40 @@ public class LoginDao {
 		
 		return b;
 	}
+
+	public static String searchPwd(String userName) {
+		String pwd=null;
+		String sql = "select * from admins where user_name = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, userName);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				pwd=resultSet.getString("password");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pwd;
+	}
+
+	public boolean updatePwd(String userName,String password) {
+		boolean b=false;
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String sql="update types set password=? where user_name = ?";
+		try {
+			pstamt=conn.prepareStatement(sql);
+			pstamt.setString(1, password);
+			pstamt.setString(2, userName);
+			int row=pstamt.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 }

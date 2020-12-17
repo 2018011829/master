@@ -99,10 +99,10 @@
 					    </c:forEach>
 			    	</table>
 			    	<div style="margin-top: 30px">总共有${page.totalPageNum }页，总共有${page.totalCount }个数据；
-					    <a href="AllParentsInfoServlet?page=1" style="color:#1f748a;">首页</a>
-					    <a href="AllParentsInfoServlet?page=${page.prePageNum }" style="color:#1f748a;">上一页</a>
-					    <a href="AllParentsInfoServlet?page=${page.nextPageNum }" style="color:#1f748a;">下一页</a>
-					    <a href="AllParentsInfoServlet?page=${page.totalPageNum }" style="color:#1f748a;">末页</a>
+					    <a href="SearchUserServlet?page=1&userName=${userName }&searchInfo=${searchInfo }" style="color:#1f748a;">首页</a>
+					    <a href="SearchUserServlet?page=${page.prePageNum }&userName=${userName }&searchInfo=${searchInfo }" style="color:#1f748a;">上一页</a>
+					    <a href="SearchUserServlet?page=${page.nextPageNum }&userName=${userName }&searchInfo=${searchInfo }" style="color:#1f748a;">下一页</a>
+					    <a href="SearchUserServlet?page=${page.totalPageNum }&userName=${userName }&searchInfo=${searchInfo }" style="color:#1f748a;">末页</a>
 			    	</div>
             	</div>
         </div>

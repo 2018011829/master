@@ -1,4 +1,4 @@
-package com.group.tiantian.server.book.servlet;
+package com.group.tiantian.server.idiom.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group.tiantian.server.book.service.BookTypeService;
+import com.group.tiantian.server.idiom.service.IdiomTypeService;
 
 /**
- * Servlet implementation class DeleteBookTypeServlet
+ * Servlet implementation class DeleteIdiomServlet
  */
-@WebServlet("/DeleteBookTypeServlet")
-public class DeleteBookTypeServlet extends HttpServlet {
+@WebServlet("/DeleteIdiomServlet")
+public class DeleteIdiomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DeleteBookTypeServlet() {
+	public DeleteIdiomServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,14 +46,13 @@ public class DeleteBookTypeServlet extends HttpServlet {
 		if (userName != null && !userName.equals("")) {
 			// 根据id删除书籍 并返回书籍展示界面
 			int id = Integer.parseInt(idStr);
-			boolean b = BookTypeService.getInstance().deleteBookType(id);
+			boolean b = IdiomTypeService.getInstance().deleteIdiom(id);
 			if (b) {
-
 				request.setAttribute("userName", userName);
-				request.getRequestDispatcher("GetBookTypesServlet?userName=" + userName + "&page=" + pageNum)
+				request.getRequestDispatcher("GetIdiomInfoServlet?userName=" + userName + "&page=" + pageNum)
 						.forward(request, response);
-			} else {
-				System.out.println("书籍类型删除失败！");
+			}else {
+				System.out.println("成语删除失败！");
 			}
 		} else {
 			System.out.println("您还未登录！");
