@@ -14,6 +14,7 @@ public class Moments {//动态类（每个说说）
     private int likegiveboolen;//当前用户是否已经点赞该说说
     private String replyContent;//回复信息
     private String attentionList;//关注列表
+    private String time;//发布说说时间
 
     public Moments() {
     }
@@ -139,6 +140,14 @@ public class Moments {//动态类（每个说说）
     }
     public void setAttentionList(String attentionList) {
         this.attentionList = attentionList;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

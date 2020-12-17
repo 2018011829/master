@@ -52,8 +52,8 @@ public class CommentsService {
 	 * @param content
 	 * @return
 	 */
-	public boolean insertMoments(int momentsId,String comments, String personalPhone,String PersonName,String PersonHead) {
-		boolean b = commentsDao.insertMoments(momentsId, comments, personalPhone, PersonName,PersonHead);
+	public boolean insertMoments(int momentsId,String comments, String personalPhone,String PersonName,String PersonHead,String time) {
+		boolean b = commentsDao.insertMoments(momentsId, comments, personalPhone, PersonName,PersonHead,time);
 		return b;
 	}
 	/**

@@ -37,7 +37,12 @@ public class DeleteMoment extends HttpServlet {
 		int momentsId =  Integer.parseInt(request.getParameter("momentsId"));// 点赞人的手机号
 		
 		MomentsService addMomentsService = MomentsService.getInstance();
-		boolean b1 = addMomentsService.deleteMoment(momentsId);
+		boolean b1 = addMomentsService.deleteMoment(momentsId);//删除说说信息
+		addMomentsService.deleteMomentPictuire(momentsId);//删除说说图片
+		addMomentsService.deleteMomentContent(momentsId);//删除说说
+		addMomentsService.deleteMomentComment(momentsId);//删除说说评论
+		addMomentsService.deleteMomentReply(momentsId);//删除说说回复
+		addMomentsService.deleteMomentLikeGive(momentsId);//删除说说点赞
 		
 		if(b1) {
 			// 返回响应

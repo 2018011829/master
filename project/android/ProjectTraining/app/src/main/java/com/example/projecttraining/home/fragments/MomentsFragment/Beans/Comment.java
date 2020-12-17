@@ -7,6 +7,7 @@ public class Comment {
     private String personPhone; //评论者手机号
     private String personName;//评论者昵称
     private String personHead;//评论者头像
+    private String time;//评论时间
 
     public Comment(){
 
@@ -68,5 +69,13 @@ public class Comment {
 
     public void setPersonHead(String personHead) {
         this.personHead = personHead;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

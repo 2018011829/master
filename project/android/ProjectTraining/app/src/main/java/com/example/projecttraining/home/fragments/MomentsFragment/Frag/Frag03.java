@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -67,16 +66,26 @@ public class Frag03 extends Fragment {
                         break;
 
                     case 2:
-//                        String json1 = (String)msg.obj;//接收
-//                        Log.e("json1",json1);
-//                        Attention[] attention = gson.fromJson(json1, Attention[].class);//关注列表反序列化
-//                        attentions = Arrays.asList(attention);
+
                         break;
                 }
             }
         };
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            new Thread(){//创建线程发送请求说说数据的命令
+                @Override
+                public void run() {
+                    moments.clear();
+                    mineMoments();
+                }
+            }.start();
+        }
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //为了防止第二次加载的时候重复调用这个方法的onCreateView(),重新new了一个pagedapter导致子fragment不显示，显示空白

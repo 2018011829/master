@@ -166,5 +166,71 @@ public class MomentsService {
 		boolean b = addMomentsDao.deleteMoment(momentsId);
 		return b;
 	}
+	
+	/**
+	 * 通过说说id,删除该条说说圖片
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentPictuire(int momentsId) {
+		boolean b = addMomentsDao.deleteMomentPictuire(momentsId);
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说文案
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentContent(int momentsId) {
+		boolean b = addMomentsDao.deleteMomentContent(momentsId);
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说评论
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentComment(int momentsId) {
+		boolean b = addMomentsDao.deleteMomentComment(momentsId);
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说回复
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentReply(int momentsId) {
+		boolean b = addMomentsDao.deleteMomentReply(momentsId);
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说点赞
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentLikeGive(int momentsId) {
+		boolean b = addMomentsDao.deleteMomentLikeGive(momentsId);
+		return b;
+	}
+
 
 }

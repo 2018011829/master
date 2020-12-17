@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,7 +22,6 @@ import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
@@ -65,7 +63,6 @@ public class Frag02 extends Fragment {
                         //获取图片资源路径
                         String json = (String) msg.obj;//接收到的是一个说说对象
                         if(!json.equals("")){
-                            Log.e("json",json);
                             momentList = Arrays.asList(gson.fromJson(json,String[].class));
                             for(int i=0;i<momentList.size();i++){
                                 //反序列化

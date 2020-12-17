@@ -329,6 +329,130 @@ public class MomentsDao {
 		}
 		return b;
 	}
+	/**
+	 * 通过说说id,删除该条说说圖片
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentPictuire(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments_pictureurl where momentsId = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说文案
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentContent(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments_content where momentsId = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说评论
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentComment(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments_comments where momentsId = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说回复
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentReply(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments_reply where momentsId = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	/**
+	 * 通过说说id,删除该条说说点赞
+	 * @param start
+	 * @param end
+	 * @param articleName
+	 * @param contentName
+	 * @return 
+	 */
+	public boolean deleteMomentLikeGive(int momentsId) {
+		boolean b = false;
+		String sql = "delete from moments_likegiveperson where momentsId = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,momentsId);
+			int row=preparedStatement.executeUpdate();
+			if(row>0) {
+				b=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 
 }
