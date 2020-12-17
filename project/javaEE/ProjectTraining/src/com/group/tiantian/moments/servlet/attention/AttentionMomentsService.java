@@ -53,7 +53,6 @@ public class AttentionMomentsService extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		// 获取请求数据
 		String personPhone = request.getParameter("PersonPhone");// 当前用户的手机号
-		System.out.println(personPhone);
 		// Gson对象实例化
 		initGson();
 		List<String> momentList = new ArrayList<>();//存放说说列表的列表
@@ -89,7 +88,6 @@ public class AttentionMomentsService extends HttpServlet {
 		attentionList = attentionService.getAttentionList(personPhone);// 根据当前用户手机号获取关注列表
 
 		for(int k=0;k<attentionList.size();k++) {
-			System.out.println("关注列表手机号"+attentionList.get(k).getMomentsPhone());
 			moments = addMomentsService.getMomentsByPhone(attentionList.get(k).getMomentsPhone());// 获取所有说说信息
 			for (int i = 0; i < moments.size(); i++) {
 				pictures = addMomentsService.getMomentsPicture(moments.get(i).getId());// 根据说说id获取所有图片名称
@@ -123,6 +121,7 @@ public class AttentionMomentsService extends HttpServlet {
 			}
 			// 序列化
 			String json = gson.toJson(moments);
+			System.out.println(json);
 			momentList.add(json);
 		}
 		Collections.reverse(momentList);

@@ -122,7 +122,6 @@ public class MomentsInfoServlet extends HttpServlet {
 		Collections.reverse(moments);
 		 //序列化
         String json = gson.toJson(moments);
-        System.out.println("关注"+json);
 		// 获取网络输出流，并将图片的网络资源路径返回给客户端
 		response.getWriter().write(json);
 		// picturesUrl.toString().substring(1, picturesUrl.toString().length() - 1)

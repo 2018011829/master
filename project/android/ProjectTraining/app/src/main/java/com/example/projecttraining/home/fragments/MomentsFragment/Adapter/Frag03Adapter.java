@@ -209,7 +209,7 @@ public class Frag03Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdAdd(view, i);
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                 }
@@ -225,7 +225,7 @@ public class Frag03Adapter extends BaseAdapter {
                         @Override
                         public void run() {
                             likegivePersonAndMomentsIdDelete(view, i);
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                 }
@@ -233,8 +233,21 @@ public class Frag03Adapter extends BaseAdapter {
         }
 
         Glide.with(mContext)
-                .load(R.mipmap.concern1)
+                .load(R.mipmap.delete)
                 .into(ivConcern);
+        ivConcern.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        deleteMoments(moments.get(i).getId());
+                        mineMoments();
+                    }
+                }.start();
+                Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //评论的点击事件
         edtComment.setOnClickListener(new OnClickListener() {
@@ -302,6 +315,36 @@ public class Frag03Adapter extends BaseAdapter {
         //创建请求对象
         Request request = new Request.Builder()
                 .url(ConfigUtil.SERVICE_ADDRESS + "LikegivePersonAndMomentsId")
+                .post(formBody)
+                .build();
+        //3. 创建CALL对象
+        Call call = okHttpClient.newCall(request);
+        //4. 提交请求并获取响应
+        try {
+            Response response = call.execute();
+            //获取响应的字符串信息
+            String result = response.body().string();
+            Log.e("result",result);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            msg.obj = result;
+            handler.sendMessage(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //使用POST方式提交当前用户手机号和说说手机号
+    private void deleteMoments(int momentsId) {
+        //1. OkClient对象
+        //2. 创建Request请求对象（提前准备好Form表单数据封装）
+        //创建FormBody对象
+        FormBody formBody =
+                new FormBody.Builder()
+                        .add("momentsId", String.valueOf(momentsId))
+                        .build();
+        //创建请求对象
+        Request request = new Request.Builder()
+                .url(ConfigUtil.SERVICE_ADDRESS + "DeleteMoment")
                 .post(formBody)
                 .build();
         //3. 创建CALL对象
@@ -400,10 +443,8 @@ public class Frag03Adapter extends BaseAdapter {
         okHttpClient = new OkHttpClient();
     }
 
-    /**
-     * 从服务端获取图片资源的网络路径
-     */
-    private void downLoadImgNameFromServerRequest() {
+    //从服务端获取图片资源的网络路径
+    private void mineMoments() {
         //2 创建Request对象
         //1) 使用RequestBody封装请求数据
         //获取待传输数据对应的MIME类型
@@ -414,7 +455,7 @@ public class Frag03Adapter extends BaseAdapter {
                         .add("PersonPhone",getPersonalPhone())
                         .build();
         Request request = new Request.Builder()
-                .url(ConfigUtil.SERVICE_ADDRESS + "DownPictureServlet")
+                .url(ConfigUtil.SERVICE_ADDRESS + "MineMomentsInfoSerclet")
                 .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -422,7 +463,7 @@ public class Frag03Adapter extends BaseAdapter {
             Response response = call.execute();
             String img = response.body().string();
             Message msg = handler.obtainMessage();
-            msg.what = 3;
+            msg.what = 1;
             msg.obj = img;
             handler.sendMessage(msg);
         }catch (IOException e){
@@ -524,7 +565,7 @@ public class Frag03Adapter extends BaseAdapter {
                         public void run() {
                             Log.e( "run: ","123" );
                             commentsAdd(commentContent,i);//向服务端发送评论内容
-                            downLoadImgNameFromServerRequest();
+                            mineMoments();
                         }
                     }.start();
                     //commentOnWork(commentContent);

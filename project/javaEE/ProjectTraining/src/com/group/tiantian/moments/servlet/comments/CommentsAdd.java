@@ -39,14 +39,15 @@ public class CommentsAdd extends HttpServlet {
 		String commentPerson = request.getParameter("likegivePerson");// 得到评论人的手机号
 		int momentsId = Integer.parseInt(request.getParameter("momentsId"));// 得到被评论说说的id
 		String commentContent = request.getParameter("commentContent");//评论内容
-		System.out.println("手机号" + commentPerson + ":" + momentsId+":"+commentContent);
+		String time = request.getParameter("time");//评论时间
+		System.out.println("手机号" + commentPerson + ":" + momentsId+":"+commentContent+":"+time);
 
 		CommentsService commentsService = CommentsService.getInstance();// 创建添加评论service对象
 		PersonalInfo personalInfo = commentsService.getPersonalInfo(commentPerson);// 根据评论人的手机号得到评论人的个人信息
 		String likeGiveName = personalInfo.getName();// 得到评论人的昵称
 		String personHead = personalInfo.getPhotoUrl();//得到评论人头像
 		System.out.println(likeGiveName);
-		commentsService.insertMoments(momentsId,commentContent,commentPerson,likeGiveName,personHead);// 将被点赞说说id，点赞人昵称和点赞人手机号存入数据库
+		commentsService.insertMoments(momentsId,commentContent,commentPerson,likeGiveName,personHead,time);// 将被点赞说说id，点赞人昵称和点赞人手机号存入数据库
 
 		response.getWriter().write("收到数据");
 	}

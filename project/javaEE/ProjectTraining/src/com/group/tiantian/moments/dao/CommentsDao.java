@@ -58,7 +58,7 @@ public class CommentsDao {
 	}
 	
 	/**
-	 * 向数据库中插入说说id,评论内容和评论人的手机号,评论人昵称,评论人头像
+	 * 向数据库中插入说说id,评论内容和评论人的手机号,评论人昵称,评论人头像,评论时间
 	 * 
 	 * @param start
 	 * @param end
@@ -66,9 +66,9 @@ public class CommentsDao {
 	 * @param content
 	 * @return
 	 */
-	public boolean insertMoments(int momentsId,String comments, String personPhone,String PersonName,String PersonHead) {
+	public boolean insertMoments(int momentsId,String comments, String personPhone,String PersonName,String PersonHead,String time) {
 		boolean b = false;
-		String sql = "insert into moments_comments(momentsId,comments,PersonPhone,PersonName,PersonHead) values(?,?,?,?,?)";
+		String sql = "insert into moments_comments(momentsId,comments,PersonPhone,PersonName,PersonHead,commentTime) values(?,?,?,?,?,?)";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1,momentsId);
@@ -76,6 +76,7 @@ public class CommentsDao {
 			preparedStatement.setString(3,personPhone);
 			preparedStatement.setString(4,PersonName);
 			preparedStatement.setString(5,PersonHead);
+			preparedStatement.setString(6,time);
 			int row=preparedStatement.executeUpdate();
 			if(row>0) {
 				b=true;
@@ -108,7 +109,8 @@ public class CommentsDao {
 							rs.getString("comments"),
 							rs.getString("PersonPhone"),
 							rs.getString("PersonName"),
-							ConfigUtil.SERVICE_ADDRESS + "avatar/"+rs.getString("PersonHead")
+							ConfigUtil.SERVICE_ADDRESS + "avatar/"+rs.getString("PersonHead"),
+							rs.getString("commentTime")
 							);
 					commentsInfos.add(comment);
 				}

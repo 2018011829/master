@@ -57,6 +57,8 @@ import okhttp3.Response;
 
 public class Frag02Adapter extends BaseAdapter {
     private Context mContext;//环境上下文
+    private List<String> momentList = new ArrayList<>();//说说列表的列表
+    private List<Moments> moment = new ArrayList<>();//说说列表子列表
     private List<Moments> moments = new ArrayList<>();//动态列表
     private int itemLayoutRes;//
     private LinearLayout llDynamicDetails;//点击查看详情
@@ -88,8 +90,17 @@ public class Frag02Adapter extends BaseAdapter {
                         //获取图片资源路径
                         String imgUrl = (String) msg.obj;//接收到的是一个说说对象
                         String json = imgUrl;
+                        Log.e("json",json);
                         //反序列化
-                        moments = Arrays.asList(gson.fromJson(json, Moments[].class));//说说对象反序列化
+
+                        momentList = Arrays.asList(gson.fromJson(json,String[].class));
+                        for(int i=0;i<momentList.size();i++){
+                            //反序列化
+                            moment = Arrays.asList(gson.fromJson(momentList.get(i), Moments[].class));//说说对象反序列化
+                            for (int j=0;j<moment.size();j++){
+                                moments.add(moment.get(j));
+                            }
+                        }
 
                         notifyDataSetChanged();
                         break;

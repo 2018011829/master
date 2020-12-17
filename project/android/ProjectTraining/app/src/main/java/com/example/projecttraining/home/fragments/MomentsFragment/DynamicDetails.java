@@ -46,8 +46,10 @@ import com.google.gson.GsonBuilder;
 import com.hyphenate.chat.EMClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -77,6 +79,7 @@ public class DynamicDetails extends AppCompatActivity implements View.OnClickLis
     private ImageView detail_page_userLogo;//头像
     private TextView detail_page_story;//文案
     private TextView detail_page_userName;//昵称
+    private TextView tvLikeNum;//点赞数
     //初始化Handler对象
     private void initHandler() {
         handler = new Handler(){//handlerThread.getLooper()){
@@ -104,7 +107,14 @@ public class DynamicDetails extends AppCompatActivity implements View.OnClickLis
                         detail_page_story.setText(moment.getContent());
                         detail_page_userName.setText(moment.getName());
 
-
+                        if(!moment.getLikeGiveName().equals("")){
+                            if(!moment.getLikeGiveName().equals("没有人点赞呦")){
+                                String[] likeNum =  gson.fromJson(moment.getLikeGiveName(), String[].class);//设置点赞个数
+                                tvLikeNum.setText(likeNum.length+"");
+                            }else {
+                                tvLikeNum.setText("");
+                            }
+                        }
                         List<String> pictureUrl = new ArrayList<>();//图片列表
                         List<String> list = new ArrayList<>();//临时字符串列表，用来存放带引号的图片路径
                         String img = String.valueOf(moment.getPictureUrl());//说说对象中的图片部分
@@ -184,6 +194,7 @@ public class DynamicDetails extends AppCompatActivity implements View.OnClickLis
         detail_page_userLogo = findViewById(R.id.detail_page_userLogo);//头像
         detail_page_story = findViewById(R.id.detail_page_story);//文案
         detail_page_userName = findViewById(R.id.detail_page_userName);//昵称
+        tvLikeNum = findViewById(R.id.tv_like_num);
         bt_comment.setOnClickListener(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -208,7 +219,7 @@ public class DynamicDetails extends AppCompatActivity implements View.OnClickLis
                     comment[j].getId(),
                     comment[j].getPersonName(),
                     comment[j].getComment(),
-                    "刚刚",
+                    comment[j].getTime(),
                     comment[j].getPersonHead());
             commentsList.add(detailBean);
         }
@@ -409,12 +420,15 @@ public class DynamicDetails extends AppCompatActivity implements View.OnClickLis
         //1. OkClient对象
         //2. 创建Request请求对象（提前准备好Form表单数据封装）
         //创建FormBody对象
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
         String likegivePerson = getPersonalPhone();//获取点赞人的手机号
         FormBody formBody =
                 new FormBody.Builder()
                         .add("momentsId", String.valueOf(momentsId))//被评论说说id
                         .add("likegivePerson", likegivePerson)//评论人的手机号
                         .add("commentContent", commentContent)//评论内容
+                        .add("time",formatter.format(date))
                         .build();
         //创建请求对象
         Request request = new Request.Builder()
