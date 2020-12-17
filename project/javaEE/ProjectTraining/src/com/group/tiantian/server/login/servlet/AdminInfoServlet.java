@@ -33,8 +33,8 @@ public class AdminInfoServlet extends HttpServlet {
 		String userName=request.getParameter("userName");
 		System.out.println("AdminInfoServlet:"+userName);
 		//根据用户名查找密码
-		String userPwd=LoginService.getInstance().searchPwd(userName);
 		if (userName != null && !userName.equals("")) {
+			String userPwd=LoginService.getInstance().searchPwd(userName);
 			request.setAttribute("userName", userName);
 			request.setAttribute("userPwd", userPwd);
 			request.getRequestDispatcher("adminInfo.jsp").forward(request, response);

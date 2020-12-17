@@ -69,9 +69,13 @@
 				<br>
 				<div style="width: 1100px; text-align: center; margin-bottom: 20px">
 					<form action="UpdateAdminInfoServlet">
-						<p>
-							<span>用户名：${userName }</span> 
-						</p>
+						<div style="margin: 0 auto; width: 300px;line-height: 20px;">
+							<div style="width: 100px; line-height: 20px; float: left">用户名：</div>
+							<div>
+								<span style="margin-right:180px">${userName }</span> 
+							</div>
+						</div>
+							<br><br>
 						<p>
 							<span>密码：</span> <input type="text" name="userPwd"
 								style="width: 200px; height: 25px;" value="${userPwd }">
