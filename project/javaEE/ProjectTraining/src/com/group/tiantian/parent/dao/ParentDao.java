@@ -557,5 +557,27 @@ public class ParentDao {
 		}
 		return list;
 	}
+
+	/**
+	 * 在数据库表中查询某个用户的密码
+	 * @param phone
+	 * @return
+	 */
+	public String selectPasswordByPhone(String phone) {
+		String password="";
+		String sql="select password from parents where phone=?";
+		try {
+			preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, phone);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				password=resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return password;
+	}
 	
 }

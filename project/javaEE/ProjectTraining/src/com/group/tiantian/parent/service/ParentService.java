@@ -208,6 +208,15 @@ public class ParentService {
 //		System.out.println(list.get(2).getNickname());
 		return page;
 	}
+
+	/**
+	 * 通过手机号码获取密码，用来客户端使用手机验证码登录
+	 * @param phone
+	 * @return
+	 */
+	public String getPassword(String phone) {
+		return parentDao.selectPasswordByPhone(phone);
+	}
 	
 	
 }
