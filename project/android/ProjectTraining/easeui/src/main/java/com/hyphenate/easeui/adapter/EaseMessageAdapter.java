@@ -313,4 +313,5 @@ public class EaseMessageAdapter extends BaseAdapter{
         return otherBuddleBg;
     }
 
+
 }

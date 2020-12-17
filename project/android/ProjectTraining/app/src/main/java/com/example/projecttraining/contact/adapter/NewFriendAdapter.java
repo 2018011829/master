@@ -95,10 +95,10 @@ public class NewFriendAdapter extends BaseAdapter {
         ContactsStatus contactsStatus = contactsStatuses.get(position);
         //我发出的，尚未被同意的邀请
         if (contactsStatus.getFrom() == null) {
-            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
+//            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
             Glide.with(context)
                     .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getTo().getAvator())
-                    .apply(requestOptions)
+                    .circleCrop()
                     .into(holder.avatar);
             holder.nickname.setText(contactsStatus.getTo().getNickname());
             holder.agree.setVisibility(View.GONE);
@@ -112,10 +112,10 @@ public class NewFriendAdapter extends BaseAdapter {
                 holder.status.setText("对方已拒绝");
             }
         } else {
-            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
+//            RequestOptions requestOptions=new RequestOptions().transform(new GlideRoundImage(context,8));
             Glide.with(context)
                     .load(ConfigUtil.SETVER_AVATAR + contactsStatus.getFrom().getAvator())
-                    .apply(requestOptions)
+                    .circleCrop()
                     .into(holder.avatar);
             holder.nickname.setText(contactsStatus.getFrom().getNickname());
             if (contactsStatus.getStatus() == 0) {

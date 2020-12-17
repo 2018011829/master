@@ -150,6 +150,7 @@ public class MyFragment extends Fragment {
                 case R.id.rl_mine_setting:
                     Intent intent = new Intent();
                     intent.setClass(getContext(), SettingActivity.class);
+                    intent.setClass(getContext(), SettingActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.ll_mine_mychildren:
@@ -294,10 +295,10 @@ public class MyFragment extends Fragment {
         tv_mine_phone.setText(EMClient.getInstance().getCurrentUser());
         tv_mine_useName.setText(EaseParentUtil.currentUserNickname);
         //12-07得到一个设置圆角的requestOptions
-        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());
+//        RequestOptions requestOptions=EaseParentUtil.getRoundImageTransform(getContext());
         Glide.with(getContext())
                 .load(EaseParentUtil.currentUserAvatar)
-                .apply(requestOptions)
+                .circleCrop()
                 .into(iv_headPhoto);
         if(!childName.equals("")&&childSex.equals("男")){
             tv_mine_myChildName.setText(childName);
