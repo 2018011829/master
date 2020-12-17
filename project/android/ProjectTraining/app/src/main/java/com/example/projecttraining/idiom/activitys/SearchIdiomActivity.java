@@ -68,7 +68,7 @@ public class SearchIdiomActivity extends AppCompatActivity {
     private IdiomResultAdapter resultAdapter;
     private List<Result> resultList = new ArrayList<>();
     private List<String> historyList = new ArrayList<>();
-    private String APPKEY = "52836ab53d4cf3e9";
+    private String APPKEY = "922ee172234b0479";
     private String url = "https://api.jisuapi.com/chengyu/search";
 
     @BindView(R.id.tv_search_idiom) EditText etKeyword;

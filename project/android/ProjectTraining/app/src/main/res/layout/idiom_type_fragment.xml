@@ -15,36 +15,46 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical">
 
-        <LinearLayout
-            android:padding="15dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/idiom_type_name"
-                android:textSize="32sp"
-                android:textColor="#BB0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
             <LinearLayout
+                android:padding="15dp"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <GridView
-                    android:id="@+id/grid_idiom_by_type_name"
-                    android:numColumns="2"
-                    android:verticalSpacing="25dp"
-                    android:horizontalSpacing="15dp"
-                    android:layout_marginBottom="20dp"
+
+                <TextView
+                    android:id="@+id/idiom_type_name"
+                    android:textSize="32sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent">
+                    <GridView
+                        android:id="@+id/grid_idiom_by_type_name"
+                        android:numColumns="2"
+                        android:verticalSpacing="25dp"
+                        android:horizontalSpacing="15dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <ImageView
+                android:layout_height="95dp"
+                android:src="@drawable/idiom_bg1"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
 
     </FrameLayout>
 
