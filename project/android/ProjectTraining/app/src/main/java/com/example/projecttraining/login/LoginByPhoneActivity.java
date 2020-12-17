@@ -22,22 +22,29 @@ import android.widget.Toast;
 import com.example.projecttraining.ChangeStatusBarColor;
 import com.example.projecttraining.MainActivity;
 import com.example.projecttraining.R;
+import com.example.projecttraining.contact.ContactManager;
 import com.example.projecttraining.register.RegisterActivity;
 import com.example.projecttraining.util.ConfigUtil;
+import com.example.projecttraining.util.ParentUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginByPhoneActivity extends AppCompatActivity implements View.OnClickListener {
+    private final String TAG = "LoginByPhoneActivity";
 
     private EditText etPhoneNum;
     private EditText etCheckNum;
@@ -87,10 +94,53 @@ public class LoginByPhoneActivity extends AppCompatActivity implements View.OnCl
 
                 if (result == SMSSDK.RESULT_COMPLETE) { //回调完成
 
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码成功
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //1.环信登录需要用户名和密码，需要先从本地服务器得到该用户的密码
+                        OkHttpClient okHttpClient=new OkHttpClient();
+                        FormBody formBody=new FormBody.Builder().add("phone",etPhoneNum.getText().toString())
+                                .build();
+                        Request request=new Request.Builder().post(formBody).url(ConfigUtil.SERVICE_ADDRESS+"GetPasswordByPhoneServlet").build();
+                        Call call=okHttpClient.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                            }
 
-                        startActivity(new Intent(LoginByPhoneActivity.this, MainActivity.class)); //页面跳转
-                        finish();
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                    String password=response.body().string();
+                                //提交验证码成功
+                                EMClient.getInstance().login(etPhoneNum.getText().toString().trim(),
+                                        password,
+                                        new EMCallBack() {
+                                            @Override
+                                            public void onSuccess() {
+                                                //存储当前用户的昵称和头像
+                                                ParentUtil.storeCurrentParent(EMClient.getInstance().getCurrentUser(), null);
+                                                ContactManager.newFriends.put(EMClient.getInstance().getCurrentUser(), new ArrayList<>());
+                                                startActivity(new Intent(LoginByPhoneActivity.this, MainActivity.class));
+                                                finish();
+                                                Looper.prepare();
+                                                Toast.makeText(getBaseContext(), "登录成功！", Toast.LENGTH_SHORT).show();
+                                                Looper.loop();
+                                            }
+
+                                            @Override
+                                            public void onError(int i, String s) {
+                                                Looper.prepare();
+                                                Toast.makeText(getBaseContext(), "登录失败！", Toast.LENGTH_SHORT).show();
+                                                Looper.loop();
+                                                Log.e(TAG, "登录失败");
+                                            }
+
+                                            @Override
+                                            public void onProgress(int i, String s) {
+
+                                            }
+
+                                        });
+                            }
+                        });
 
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){ //获取验证码成功
 
