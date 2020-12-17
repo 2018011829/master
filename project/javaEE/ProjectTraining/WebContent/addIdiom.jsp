@@ -8,7 +8,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>主页</title>
 <link rel="stylesheet" type="text/css" href="css/index.css" />
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/index.js">
+<!--使用ajax动态局部动态更新一级菜单的二级菜单-->
+$(document).ready(function(){
+    $("#parentTypeId").change(function(){
+        $.get("QuerryChildTypeServlet",{parentTypeId : $("#parentTypeId").val()},
+                function(data){
+            var jsons=JSON.parse(data);
+            <!--先移除原有的节点-->
+            var elements=document.getElementsByClassName('childAdd');
+            for(var i = elements.length - 1; i >= 0; i--) { 
+              elements[i].parentNode.removeChild(elements[i]); 
+            }
+            for (var i=0;i<jsons.length;i++){
+                $("#childTypeId").append("<option class=\"childAdd\" value="+jsons[i].id+">"+jsons[i].classifyName+"</option>");
+
+            }
+        })
+    })
+});
+</script>
 </head>
 <body>
 	<div id="box">
@@ -76,10 +96,12 @@
 						<br>
 						<br>
 						<p>
-							<span>成语一级类型：</span> <select name="idiomParentType"
+							<span>成语一级类型：</span> <select name="idiomParentType" id="parentTypeId"
 								style="width: 200px; height: 25px;">
-								<c:forEach var="idiomType" items="${idiomParentsTypes }">
-									<option value="${idiomType }">${idiomType }</option>
+								<c:forEach var="idiomType" items="${idiomTypes }">
+								<c:if test="${idiomType.childType == '空'}">
+									<option value="${idiomType.id }">${idiomType.parentType }</option>
+								</c:if>
 								</c:forEach>
 							</select>
 						</p>
@@ -89,13 +111,14 @@
 							<span>成语二级类型：</span> <select name="idiomChildType"
 								style="width: 200px; height: 25px;">
 								<c:forEach var="idiomType" items="${idiomTypes }">
-									<option value="${idiomType.childType }">${idiomType.childType }</option>
+									<option class="childAdd" value="${idiomType.childType }">${idiomType.childType }</option>
 								</c:forEach>
 							</select>
 						</p>
 						<br>
 						<br>
 						<p style="line-height: 40px;">
+						
 							<input type="hidden" name="userName" value="${userName }">
 							<input type="submit" value="提交"
 								style="width: 100px; height: 35px; background: #009688; color: white">

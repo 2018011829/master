@@ -35,6 +35,7 @@ public class AddIdiom extends HttpServlet {
 		String userName=request.getParameter("userName");
 		if(userName!=null && !userName.equals("")) {
 			request.getServletContext().setAttribute("idiomTypes", IdiomTypeService.getInstance().getAllTypes());
+			System.out.println(IdiomTypeService.getInstance().getAllTypes());
 			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("addIdiom.jsp").forward(request, response);
 		}else {

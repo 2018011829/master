@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.group.tiantian.entity.Book;
+import com.group.tiantian.server.entity.ChildType;
 import com.group.tiantian.server.entity.Idiom;
 import com.group.tiantian.util.DBUtil;
+
 
 public class IdiomDao {
 
@@ -235,4 +238,36 @@ public class IdiomDao {
 		
 		return b;
 	}
+	
+	/**
+	 * 得到一个成语父类型的所有子类型
+	 * @param parentId
+	 * @return 所有子类型entity的集合json串
+	 */
+	
+	public static String querryChildTypeByParentId(int parentId) {
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pstamt=null;
+		String json="";
+		try {
+			pstamt=conn.prepareStatement("select id,classifyName from classifyidiom where parentId=? and parentId != 0");
+			pstamt.setInt(1, parentId);
+			ResultSet resultSet=pstamt.executeQuery();
+			List<ChildType> childTypes=new ArrayList<ChildType>();
+			while(resultSet.next()) {
+				ChildType childType=new ChildType();
+				childType.setId(resultSet.getInt(1));
+				childType.setClassifyName(resultSet.getString(2));
+				childTypes.add(childType);
+			}
+			Gson gson=new Gson();
+			json=gson.toJson(childTypes);
+			System.out.println("得到子类型的json："+json);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;
+	}
 }
+

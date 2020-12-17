@@ -178,6 +178,14 @@ public class IdiomTypeService {
 		return b;
 	}
 
+	/**
+	 * 得到父类型的所有子类型
+	 * @param parentId
+	 * @return
+	 */
+	public String getChildType(int parentId) {
+		return IdiomDao.querryChildTypeByParentId(parentId);
+	}
 	
 	
 }
