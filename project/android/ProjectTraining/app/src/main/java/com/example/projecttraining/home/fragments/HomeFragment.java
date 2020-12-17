@@ -144,9 +144,7 @@ public class HomeFragment extends Fragment implements OnBannerListener{
         if(tag<=0) {
             imgPath.add(R.drawable.banner0);
             imgPath.add(R.drawable.banner1);
-            imgPath.add(R.drawable.banner2);
             imgPath.add(R.drawable.banner3);
-            imgPath.add(R.drawable.banner4);
             tag++;
         }
 
